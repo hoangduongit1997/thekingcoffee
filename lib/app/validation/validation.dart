@@ -18,7 +18,7 @@ class Validation {
   }
 
   static bool isValidPass(String pass) {
-    return pass != null && pass.length > 0;
+    return pass.length > 0;
   }
 
   static bool isValidPhoneNumber(String phonenumber) {
@@ -26,9 +26,7 @@ class Validation {
   }
 
   static bool isValidConfirmPass(String pass, String confirmpass) {
-    if (pass == confirmpass && pass.length > 0 && confirmpass.length > 0)
-      return true;
-    return false;
+    return pass == confirmpass && confirmpass.length > 0;
   }
 
   static bool isValidDate(String date) {
@@ -40,7 +38,7 @@ class Validation {
   }
 
   static bool isValidGmail(String gmail) {
-    return gmail != null && gmail.length > 10 && gmail.contains("@");
+    return gmail.length > 0 && gmail.contains("@");
   }
 
   static Future<bool> isConnectedNetwork() async {

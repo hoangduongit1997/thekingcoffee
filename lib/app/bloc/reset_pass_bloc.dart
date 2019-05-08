@@ -14,15 +14,15 @@ class ResetPassBloc {
       status = false;
       _passcontroller.sink.addError("Pass invalide");
     }
-    if (Validation.isValidGmail(pass)) {
+    if (Validation.isValidPass(pass)) {
       status = true;
       _passcontroller.sink.add("OK");
     }
-    if (!Validation.isValidGmail(confirm)) {
+    if (!Validation.isValidConfirmPass(pass, confirm)) {
       status = false;
-      _confirmcontroller.sink.add("Confirm invalid");
+      _confirmcontroller.sink.addError("Confirm invalid");
     }
-    if (Validation.isValidGmail(confirm)) {
+    if (Validation.isValidConfirmPass(pass, confirm)) {
       status = true;
       _confirmcontroller.sink.add("OK");
     }

@@ -91,7 +91,7 @@ class VerifyPhonePageSate extends State<GmailAuth> {
   void onSubmitClick() async {
     LoadingDialog.showLoadingDialog(context, "Loading...");
     if ((await Validation.isConnectedNetwork()) == true &&
-        resetPassBloc.isValidInfo(_gmail.text.trim().trimRight()) == true) {
+        resetPassBloc.isValidInfo(_gmail.text.trim().toString()) == true) {
       if ((await SendCodeToGmail(_gmail.text.trim().toString())) == true) {
         LoadingDialog.hideLoadingDialog(context);
         Navigator.push(
@@ -99,7 +99,7 @@ class VerifyPhonePageSate extends State<GmailAuth> {
       }
     }
     if ((await Validation.isConnectedNetwork()) &&
-        resetPassBloc.isValidInfo(_gmail.text.trim().trimRight()) == false) {
+        resetPassBloc.isValidInfo(_gmail.text.trim().toString()) == false) {
       LoadingDialog.hideLoadingDialog(context);
     }
 

@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:thekingcoffee/app/bloc/reset_pass_bloc.dart';
+import 'package:thekingcoffee/app/data/repository/reset_pass.dart';
+import 'package:thekingcoffee/app/screens/login.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
+import 'package:thekingcoffee/app/validation/validation.dart';
+import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog.dart';
+import 'package:thekingcoffee/core/components/ui/show_dialog/show_message_dialog.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 
 class ResetPass extends StatefulWidget {
@@ -97,5 +103,34 @@ class _ResetPassState extends State<ResetPass> {
     );
   }
 
-  void onSigninClick() {}
+  void onSigninClick() async {
+    LoadingDialog.showLoadingDialog(context, "Loading...");
+    final prefs = await SharedPreferences.getInstance()
+        .timeout(const Duration(seconds: 4));
+    String code = prefs.getString('code');
+    int id_user = prefs.getInt('id_user');
+    String id_request = prefs.getString('id_request');
+    if ((await Validation.isConnectedNetwork()) == true &&
+        resetpass.isValidInfo(_pass.text.trim().toString(),
+                _confirm.text.trim().toString()) ==
+            true) {
+      if ((await ReSetPass_Res(code, id_user, id_request, _pass.text.trim())) ==
+          true) {
+        LoadingDialog.hideLoadingDialog(context);
+        Navigator.of(context).pushReplacement(
+            MaterialPageRoute(builder: (context) => LoginWithPass()));
+      }
+    }
+    if ((await Validation.isConnectedNetwork()) == true &&
+        resetpass.isValidInfo(_pass.text.trim().toString(),
+                _confirm.text.trim().toString()) ==
+            false) {
+      LoadingDialog.hideLoadingDialog(context);
+    }
+    if ((await Validation.isConnectedNetwork()) == false) {
+      LoadingDialog.hideLoadingDialog(context);
+      MsgDialog.showMsgDialog(
+          context, "No network!", "No network connection found");
+    }
+  }
 }
