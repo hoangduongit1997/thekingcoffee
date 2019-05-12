@@ -139,4 +139,9 @@ class StylesText {
     color: Colors.brown,
     fontWeight: FontWeight.bold,
   );
+  static TextStyle style13Blugray = TextStyle(
+    fontSize: SizeText.size13,
+    color: Colors.blueGrey,
+    fontWeight: FontWeight.normal,
+  );
 }

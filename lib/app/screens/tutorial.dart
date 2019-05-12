@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intro_slider/intro_slider.dart';
-import 'package:thekingcoffee/app/screens/helper/tutorial_helper/tutorial_helper.dart';
+
 import 'package:thekingcoffee/app/screens/login.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
+import 'package:thekingcoffee/core/components/ui/tutorial/tutorial_helper.dart';
 
 
 class Tutorial extends StatelessWidget {
@@ -82,7 +83,7 @@ class MySplashScreenState extends State<MySplashScreen> {
           highlightColorDoneBtn: Color(0xff000000),
           isShowDotIndicator: false,
           // Locale
-          locale: 'en',
+          // locale: 'en',
           // Show or hide status bar
           shouldHideStatusBar: true,
         )));

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:thekingcoffee/app/screens/helper/dashboard_helper/placeholder.dart';
 import 'package:thekingcoffee/app/screens/helper/dashboard_helper/placeholder_home.dart';
+import 'package:thekingcoffee/app/screens/homepage_firebase.dart';
 
 class DashBoard extends StatefulWidget {
   @override
@@ -46,7 +47,6 @@ class _HomeState extends State<DashBoard> {
           ),
         ));
   }
-
   void onTabTapped(int index) {
     setState(() {
       _currentIndex = index;

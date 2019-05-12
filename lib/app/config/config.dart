@@ -4,4 +4,6 @@ class Config {
   static String signup_API = ip + "api/Customer/SignUp";
   static String sendcodetogmail_API = ip + "api/Customer/SendCode_ResetPass";
   static String gmail_auth_API = ip + "api/Customer/ResetPassword";
+  static String get_data_home_cart_API = ip + "api/Product/GetAll";
+  
 }

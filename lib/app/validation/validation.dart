@@ -44,8 +44,7 @@ class Validation {
   static Future<bool> isConnectedNetwork() async {
     bool status = false;
     try {
-      final result = await InternetAddress.lookup('google.com')
-          .timeout(const Duration(seconds: 4));
+      final result = await InternetAddress.lookup('google.com');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         status = true;
       }
