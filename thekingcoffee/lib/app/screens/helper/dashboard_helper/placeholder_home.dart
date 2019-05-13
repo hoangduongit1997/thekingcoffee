@@ -28,6 +28,7 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
 }
 @override
   void initState() {
+    int a=1;
     this.intDataHomeSlider();
     super.initState();
   }
