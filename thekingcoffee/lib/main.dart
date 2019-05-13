@@ -4,6 +4,7 @@ import 'package:thekingcoffee/app/screens/splash_screen.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
+  String b = "222";
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
