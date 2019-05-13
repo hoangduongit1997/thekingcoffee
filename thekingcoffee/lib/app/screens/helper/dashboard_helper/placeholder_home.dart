@@ -28,7 +28,11 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
 }
 @override
   void initState() {
+<<<<<<< HEAD
     int a=1;
+=======
+    String b="2";
+>>>>>>> KhaDaCa
     this.intDataHomeSlider();
     super.initState();
   }
