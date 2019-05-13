@@ -5,6 +5,7 @@ void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
   int a=111;
+  String b = "222";
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
