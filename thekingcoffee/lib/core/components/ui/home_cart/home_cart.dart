@@ -1,5 +1,3 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:thekingcoffee/app/config/config.dart';
@@ -17,21 +15,25 @@ class Home_Card_State extends StatefulWidget {
 
   _Home_CardState createState() => _Home_CardState();
 }
-var data=[];
+
+var data = [];
 int lenght = 0;
+
 class _Home_CardState extends State<Home_Card_State> {
-intDataHomeScreen()async{
- final result = await Get_Data_All_Product();
- setState(() {
-    data=result;
-    lenght=data.length;
+  intDataHomeScreen() async {
+    final result = await Get_Data_All_Product();
+    setState(() {
+      data = result;
+      lenght = data.length;
     });
-}
- @override
+  }
+
+  @override
   void initState() {
     this.intDataHomeScreen();
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -46,7 +48,6 @@ intDataHomeScreen()async{
                   children: <Widget>[
                     Container(
                       height: Dimension.getHeight(0.41),
-                     
                       child: ListView.builder(
                           scrollDirection: Axis.horizontal,
                           shrinkWrap: true,
@@ -188,12 +189,31 @@ intDataHomeScreen()async{
                                                 0, 10, 0, 0),
                                             child: Row(
                                               children: <Widget>[
-                                                Text("recipe by ",
-                                                    style: StylesText
-                                                        .style11BrownNormal),
-                                                Text("Master Chef",
-                                                    style: StylesText
-                                                        .style13BrownBold)
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.all(0.0),
+                                                  child: CircleAvatar(
+                                                    backgroundColor:
+                                                        Colors.white,
+                                                    foregroundColor:
+                                                        Colors.redAccent,
+                                                    radius: 12.0,
+                                                    child: Icon(
+                                                      Icons.monetization_on,
+                                                      color: Colors.redAccent,
+                                                    ),
+                                                  ),
+                                                ),
+                                                Padding(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          5, 0, 0, 0),
+                                                  child: Text(
+                                                      data[index]['Price']
+                                                          .toString(),
+                                                      style: StylesText
+                                                          .style16BrownBold),
+                                                )
                                               ],
                                             ),
                                           ),
@@ -257,15 +277,15 @@ intDataHomeScreen()async{
                                         ],
                                       )),
                                   onTap: () => {
-                                      LoadingDialog_Order.showLoadingDialog(
-                                            context,
-                                            data[index]['Name'],
-                                            data[index]['File_Path'],
-                                            data[index]['Description'],
-                                            data[index]['Price'].toString()
-
-                                            )
-                                       
+                                        LoadingDialog_Order.showLoadingDialog(
+                                          context,
+                                          data[index]['Name'].toString(),
+                                          data[index]['File_Path'].toString(),
+                                          data[index]['Description'].toString(),
+                                          data[index]['Price'].toString(),
+                                          data[index]['Toppings'].toString(),
+                                          data[index]['Size'].toString(),
+                                        )
                                       });
                             }
                           }),

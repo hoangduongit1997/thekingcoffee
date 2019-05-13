@@ -111,7 +111,7 @@ class _RidePickerPageState extends State<RidePickerPage> {
                           
                           itemBuilder: (context, index) {
                             return ListTile(
-                              
+                            
                               title: Text(places.elementAt(index).name),
                               subtitle: Text(places.elementAt(index).address),
                               onTap: () {

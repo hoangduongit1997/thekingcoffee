@@ -1,37 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:thekingcoffee/core/components/lib/number_picker/number_picker.dart';
-class Number_Picker extends StatefulWidget{
-  @override
-  State<StatefulWidget> createState() {
+class Number_Picker extends StatefulWidget {
+  Number_Picker({Key key}) : super(key: key);
 
-    return Number_Picker_Page();
-  }
-
+  _Number_PickerState createState() => _Number_PickerState();
 }
-class Number_Picker_Page extends State<Number_Picker>{
-  int _currentValue = 1;
+
+class _Number_PickerState extends State<Number_Picker> {
   @override
   Widget build(BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        body:Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              new NumberPicker.integer(
-                  initialValue: _currentValue,
-                  minValue: 0,
-                  maxValue: 100,
-                  onChanged: (newValue) =>
-                      setState(() => _currentValue = newValue)),
-              new Text("Current number: $_currentValue"),
-            ],
-          ),
-          )
-        )
-      );
-
+    );
   }
 }

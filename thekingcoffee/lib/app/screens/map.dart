@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:thekingcoffee/app/data/model/get_place_item.dart';
 import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
-import 'package:thekingcoffee/core/components/widgets/ride_picker.dart';
+import 'package:thekingcoffee/core/components/widgets/address_picker.dart';
 
 class MapPage extends StatefulWidget {
   @override

@@ -1,7 +1,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:thekingcoffee/app/data/model/get_place_item.dart';
-import 'package:thekingcoffee/core/components/widgets/ride_picker_page.dart';
+import 'package:thekingcoffee/app/screens/address_picker_page.dart';
+
 
 class RidePicker extends StatefulWidget {
   final Function(Get_Place_Item, bool) onSelected;
@@ -12,8 +13,6 @@ class RidePicker extends StatefulWidget {
 }
 class _RidePickerState extends State<RidePicker> {
   Get_Place_Item fromAddress;
-  // PlaceItemRes toAddress;
-
   @override
   Widget build(BuildContext context) {
     return Container(
