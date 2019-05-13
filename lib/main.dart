@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'The King Coffee',
       debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
+      ///home: SplashScreen(),
     );
   }
 }
