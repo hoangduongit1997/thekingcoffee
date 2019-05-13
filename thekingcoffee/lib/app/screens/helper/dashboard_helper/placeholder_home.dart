@@ -31,6 +31,8 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
     this.intDataHomeSlider();
     super.initState();
   }
+
+//pull request
   @override
   Widget build(BuildContext context) {
     return data.length==0||data==null
