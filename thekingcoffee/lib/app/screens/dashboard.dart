@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:thekingcoffee/app/screens/favorite_page.dart';
 import 'package:thekingcoffee/app/screens/helper/dashboard_helper/placeholder.dart';
 import 'package:thekingcoffee/app/screens/helper/dashboard_helper/placeholder_home.dart';
-import 'package:thekingcoffee/app/screens/homepage_firebase.dart';
 import 'package:thekingcoffee/app/screens/shopping_list.dart';
 
 class DashBoard extends StatefulWidget {
@@ -15,7 +15,7 @@ class _HomeState extends State<DashBoard> {
   int _currentIndex = 0;
   final List<Widget> _children = [
     PlaceholderMainWidget(),
-    PlaceholderWidget(Colors.white),
+    Favorite_Page(),
     Shopping_List (),
     PlaceholderWidget(Colors.black),
   ];
@@ -44,7 +44,7 @@ class _HomeState extends State<DashBoard> {
               BottomNavigationBarItem(
                   icon: Icon(Icons.today), title: Text('Shopping List')),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.settings), title: Text('More')),
+                  icon: Icon(Icons.settings), title: Text('Setting')),
             ],
           ),
         ));

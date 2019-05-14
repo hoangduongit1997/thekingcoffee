@@ -94,6 +94,13 @@ class StylesText {
       fontStyle: FontStyle.italic,
       fontWeight: FontWeight.bold,
       fontFamily: 'Raleway');
+       static TextStyle style20BrownItalicRaleway = TextStyle(
+      fontSize: SizeText.size20,
+      color: Colors.brown,
+      fontStyle: FontStyle.italic,
+      fontWeight: FontWeight.bold,
+      fontFamily: 'Raleway');
+      
   static TextStyle style20BrownNomorlRaleway = TextStyle(
       fontSize: SizeText.size20,
       color: Colors.brown,
@@ -134,6 +141,26 @@ class StylesText {
     color: Colors.brown,
     fontWeight: FontWeight.bold,
   );
+  static TextStyle style13BlackBold = TextStyle(
+    fontSize: SizeText.size13,
+    color: Colors.black,
+    fontWeight: FontWeight.bold,
+  );
+   static TextStyle style13Black = TextStyle(
+    fontSize: SizeText.size13,
+    color: Colors.black,
+    fontWeight: FontWeight.normal,
+  );
+  static TextStyle style15BlackBold = TextStyle(
+    fontSize: SizeText.size15,
+    color: Colors.black,
+    fontWeight: FontWeight.bold,
+  );
+   static TextStyle style15Black = TextStyle(
+    fontSize: SizeText.size15,
+    color: Colors.black,
+    fontWeight: FontWeight.normal,
+  );
   static TextStyle style20BrownBold = TextStyle(
     fontSize: SizeText.size20,
     color: Colors.brown,
@@ -147,6 +174,11 @@ class StylesText {
   static TextStyle style18BrownBold = TextStyle(
     fontSize: SizeText.size18,
     color: Colors.brown,
+    fontWeight: FontWeight.bold,
+  );
+  static TextStyle style18RedaccentBold = TextStyle(
+    fontSize: SizeText.size18,
+    color: Colors.redAccent,
     fontWeight: FontWeight.bold,
   );
 }

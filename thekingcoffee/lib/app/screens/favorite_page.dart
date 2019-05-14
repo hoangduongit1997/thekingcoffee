@@ -4,13 +4,13 @@ import 'package:thekingcoffee/app/screens/helper/dashboard_helper/placeholder_ho
 import 'package:thekingcoffee/app/screens/map.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
-class Shopping_List extends StatefulWidget {
- Shopping_List({Key key}) : super(key: key);
+class Favorite_Page extends StatefulWidget {
+ Favorite_Page({Key key}) : super(key: key);
 
    Shopping_ListState createState() =>  Shopping_ListState();
 }
 
-class  Shopping_ListState extends State <Shopping_List> {
+class  Shopping_ListState extends State <Favorite_Page> {
     var _scaffoldKey = new GlobalKey<ScaffoldState>();
   TextEditingController name=new TextEditingController(text: "Hoàng Dương");
   TextEditingController phone=new TextEditingController(text: "0798353751");
@@ -32,7 +32,7 @@ class  Shopping_ListState extends State <Shopping_List> {
                          child:Icon(Icons.arrow_back,color: Colors.brown,)
                   ),
           backgroundColor: Colors.white,
-          title: Text("Your shopping list",style: StylesText.style20BrownBold,),
+          title: Text("Favorites",style: StylesText.style20BrownBold,),
         ),
         resizeToAvoidBottomInset: false,
         body:SingleChildScrollView(

@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/data/repository/get_data_all_product.dart';
@@ -49,7 +48,7 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                         onPressed: () {
                           _scaffoldKey.currentState.openDrawer();
                         },
-                        child:Icon(Icons.menu) ),
+                        child:Icon(Icons.menu,color:Colors.brown) ),
                 backgroundColor: Colors.white,
                 elevation: 0.8,
                 actions: <Widget>[
