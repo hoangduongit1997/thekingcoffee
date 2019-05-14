@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/data/repository/get_data_all_product.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
+import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart.dart';
 import 'package:thekingcoffee/core/components/ui/slider_card/slide_recipes.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
@@ -20,6 +21,7 @@ var data=[];
 
 
 class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
+  var _scaffoldKey = new GlobalKey<ScaffoldState>();
   intDataHomeSlider()async{
  final result = await Get_Data_All_Product();
  setState(() {
@@ -41,16 +43,17 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
             debugShowCheckedModeBanner: false,
             theme: ThemeData(primaryColor: Colors.orangeAccent),
             home: Scaffold(
+              key: _scaffoldKey,
               appBar: AppBar(
+              leading: FlatButton(
+                        onPressed: () {
+                          _scaffoldKey.currentState.openDrawer();
+                        },
+                        child:Icon(Icons.menu) ),
                 backgroundColor: Colors.white,
-                elevation: 0.0,
+                elevation: 0.8,
                 actions: <Widget>[
-                  IconButton(
-                    icon: Icon(Icons.format_list_bulleted),
-                    color: Colors.brown,
-                    splashColor: Colors.brown,
-                    onPressed: onpresssetting,
-                  ),
+                  
                   IconButton(
                     icon: Icon(Icons.search),
                     color: Colors.brown,
@@ -211,6 +214,9 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                       ],
                     ),
                   )),
+                  drawer: Drawer(
+                    child: HomeMenu(),
+                  ),
             ),
           );
   }

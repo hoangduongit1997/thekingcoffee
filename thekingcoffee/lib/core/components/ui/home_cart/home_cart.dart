@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:thekingcoffee/app/config/config.dart';
+import 'package:thekingcoffee/app/data/model/topping.dart';
 import 'package:thekingcoffee/app/data/repository/get_data_all_product.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog_order.dart';
@@ -15,7 +16,7 @@ class Home_Card_State extends StatefulWidget {
 
   _Home_CardState createState() => _Home_CardState();
 }
-
+var size=[];
 var data = [];
 int lenght = 0;
 
@@ -26,6 +27,7 @@ class _Home_CardState extends State<Home_Card_State> {
       data = result;
       lenght = data.length;
     });
+    
   }
 
   @override
@@ -277,6 +279,8 @@ class _Home_CardState extends State<Home_Card_State> {
                                         ],
                                       )),
                                   onTap: () => {
+                                    size=data[index]['Size'],
+                                    print(size),
                                         LoadingDialog_Order.showLoadingDialog(
                                           context,
                                           data[index]['Name'].toString(),
@@ -285,7 +289,10 @@ class _Home_CardState extends State<Home_Card_State> {
                                           data[index]['Price'].toString(),
                                           data[index]['Toppings'].toString(),
                                           data[index]['Size'].toString(),
-                                        )
+
+                                          
+                                        ),
+                                       
                                       });
                             }
                           }),

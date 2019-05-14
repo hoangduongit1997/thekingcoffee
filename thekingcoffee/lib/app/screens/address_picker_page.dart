@@ -37,7 +37,6 @@ class _RidePickerPageState extends State<RidePickerPage> {
         title: Text("Enter your address"),
       ),
       body: Container(
-        constraints: BoxConstraints.expand(),
         color: Color(0xfff8f8f8),
         child: SingleChildScrollView(
           child: Column(
@@ -77,7 +76,7 @@ class _RidePickerPageState extends State<RidePickerPage> {
                         child: TextField(
                           controller: _addressController,
                           textInputAction: TextInputAction.search,
-                          onChanged: (str) {
+                          onSubmitted: (str) {
                             placeBloc.searchPlace(str);
                           },
                           style:
@@ -111,7 +110,6 @@ class _RidePickerPageState extends State<RidePickerPage> {
                           
                           itemBuilder: (context, index) {
                             return ListTile(
-                            
                               title: Text(places.elementAt(index).name),
                               subtitle: Text(places.elementAt(index).address),
                               onTap: () {

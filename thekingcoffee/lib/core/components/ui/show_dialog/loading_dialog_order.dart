@@ -1,7 +1,6 @@
-import 'package:cached_network_image/cached_network_image.dart';
+
 import 'package:flutter/material.dart';
-import 'package:thekingcoffee/app/config/config.dart';
-import 'package:thekingcoffee/app/styles/styles.dart';
+
 import 'package:thekingcoffee/core/components/ui/show_dialog/order_dialog.dart';
 
 import 'package:thekingcoffee/core/utils/utils.dart';
