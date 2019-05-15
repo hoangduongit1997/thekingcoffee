@@ -37,44 +37,63 @@ class Order_DialogState extends State<Order_Dialog> {
     List<Widget> widgets = [];
     widgets.add(Text(
       "Size",
-      style: StylesText.style13BrownBold,
+      style: StylesText.style16Brown,
     ));
     for (var user in size_product) {
-      widgets.add(
-        Expanded(
-          child: RadioListTile(
+      widgets.add(Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: <Widget>[
+          Radio(
             value: user,
             groupValue: selectedsize,
-            title: Text(
-              user['Name'],
-              style: StylesText.style13BrownBold,
-            ),
             onChanged: (currentUser) {
               money -= t;
               money += int.tryParse(user['PlusMonney'].toString());
               t = int.tryParse(user['PlusMonney'].toString());
-
               setSelectedSize(currentUser);
             },
-            selected: selectedsize == user,
             activeColor: Colors.redAccent,
           ),
-        ),
-      );
+          Text(
+            user['Name'],
+            style: StylesText.style13BrownBold,
+          ),
+        ],
+      )
+
+          // Expanded(
+          // child: RadioListTile(
+          //   value: user,
+          //   groupValue: selectedsize,
+          //   title: Text(
+          //     user['Name'],
+          //     style: StylesText.style13BrownBold,
+          //   ),
+          //   onChanged: (currentUser) {
+          //     money -= t;
+          //     money += int.tryParse(user['PlusMonney'].toString());
+          //     t = int.tryParse(user['PlusMonney'].toString());
+
+          //     setSelectedSize(currentUser);
+          //   },
+          //   selected: selectedsize == user,
+          //   activeColor: Colors.redAccent,
+          // ),
+          // ),
+          );
     }
     return widgets;
   }
 
   List<Widget> createCheckedBoxTopping() {
     List<Widget> widgets = [];
-    widgets.add(Text(
-      "Topping",
-      style: StylesText.style13BrownBold,
-    ));
     for (var topping in list_topping) {
       widgets.add(Expanded(
           child: CheckboxListTile(
-        title: Text(topping['Name'].toString()),
+        title: Text(
+          topping['Name'].toString(),
+          style: StylesText.style13Black,
+        ),
         value: lstSelectedTopping.firstWhere((t) => t == topping['Id'],
                 orElse: () => -1) >
             0,
@@ -82,19 +101,10 @@ class Order_DialogState extends State<Order_Dialog> {
           var element = lstSelectedTopping.firstWhere((t) => t == topping['Id'],
               orElse: () => -1);
           var temp = lstSelectedTopping;
-          var selectedTopping =
-              list_topping.firstWhere((t) => t['Id'] == element);
           if (element > 0) {
             temp.remove(element);
-            // money-=int.tryParse(topping['PlusMonney'].toString());
-            money -= int.parse(selectedTopping['PlusMoney'].toString());
           } else {
             temp.add(topping['Id']);
-            money += int.parse(selectedTopping['PlusMoney'].toString());
-            // setState(() {
-            //   money += int.tryParse(topping['PlusMonney'].toString());
-            // });
-            //cong them tien
           }
           setState(() {
             lstSelectedTopping = temp;
@@ -137,203 +147,227 @@ class Order_DialogState extends State<Order_Dialog> {
       home: Scaffold(
         resizeToAvoidBottomInset: false,
         body: Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.all(Radius.circular(15.0)),
-          ),
-          child: Column(
-            children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.start,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(15.0)),
+            ),
+            child: SingleChildScrollView(
+              child: Column(
                 children: <Widget>[
-                  Column(
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
-                      Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                          child: Container(
-                              height: Dimension.getHeight(0.15),
-                              width: Dimension.getWidth(0.3),
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.circular(8.0),
-                                child: CachedNetworkImage(
-                                    imageUrl: Config.ip + widget.img,
-                                    fit: BoxFit.cover,
-                                    height: Dimension.getHeight(0.3),
-                                    width: Dimension.getWidth(0.5),
-                                    placeholder: (context, url) => new SizedBox(
-                                          child: Center(
-                                              child: CircularProgressIndicator(
-                                            valueColor:
-                                                new AlwaysStoppedAnimation<
-                                                    Color>(Colors.redAccent),
-                                          )),
-                                        )),
-                              )))
-                    ],
-                  ),
-                  Expanded(
-                      child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(2, 10, 0, 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            Container(
-                              margin: const EdgeInsets.all(2.0),
-                              child: Text(
-                                widget.name,
-                                style: StylesText.style20BrownBold,
-                                softWrap: true,
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(2, 10, 0, 0),
-                        child: Row(
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.all(0.0),
-                              child: CircleAvatar(
-                                backgroundColor: Colors.white,
-                                foregroundColor: Colors.redAccent,
-                                radius: 12.0,
-                                child: Icon(
-                                  Icons.monetization_on,
-                                  color: Colors.redAccent,
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
-                              child: Text(widget.price.toString(),
-                                  style: StylesText.style16BrownBold),
-                            )
-                          ],
-                        ),
-                      )
-                    ],
-                  ))
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Expanded(
-                      child:
-                          Text(widget.desc, style: StylesText.style13Blugray),
-                    )
-                  ],
-                ),
-              ),
-              size_product.isEmpty
-                  ? Container()
-                  : Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                      child: Column(
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: createRadioListSize(),
+                          Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                              child: Container(
+                                  height: Dimension.getHeight(0.15),
+                                  width: Dimension.getWidth(0.3),
+                                  child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(8.0),
+                                    child: CachedNetworkImage(
+                                        imageUrl: Config.ip + widget.img,
+                                        fit: BoxFit.cover,
+                                        height: Dimension.getHeight(0.3),
+                                        width: Dimension.getWidth(0.5),
+                                        placeholder: (context, url) =>
+                                            new SizedBox(
+                                              child: Center(
+                                                  child:
+                                                      CircularProgressIndicator(
+                                                valueColor:
+                                                    new AlwaysStoppedAnimation<
+                                                            Color>(
+                                                        Colors.redAccent),
+                                              )),
+                                            )),
+                                  )))
+                        ],
+                      ),
+                      Expanded(
+                          child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: <Widget>[
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(2, 10, 0, 0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                Container(
+                                  margin: const EdgeInsets.all(2.0),
+                                  child: Text(
+                                    widget.name,
+                                    style: StylesText.style20BrownBold,
+                                    softWrap: true,
+                                  ),
+                                )
+                              ],
+                            ),
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(2, 10, 0, 0),
+                            child: Row(
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.all(0.0),
+                                  child: CircleAvatar(
+                                    backgroundColor: Colors.white,
+                                    foregroundColor: Colors.redAccent,
+                                    radius: 12.0,
+                                    child: Icon(
+                                      Icons.monetization_on,
+                                      color: Colors.redAccent,
+                                    ),
+                                  ),
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                                  child: Text(widget.price.toString(),
+                                      style: StylesText.style16BrownBold),
+                                )
+                              ],
+                            ),
                           )
                         ],
-                      )),
-              topping.isEmpty
-                  ? Container()
-                  : Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                      child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: createCheckedBoxTopping()),
-                    ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-                      child: Text(
-                        "Money",
-                        style: StylesText.style16Brown,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Stack(
-                      alignment: AlignmentDirectional.centerStart,
+                      ))
+                    ],
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
-                        Container(
-                          padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
-                          child: Row(
+                        Expanded(
+                          child: Text(widget.desc,
+                              style: StylesText.style13Blugray),
+                        )
+                      ],
+                    ),
+                  ),
+                  size_product.isEmpty
+                      ? Container()
+                      : Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                          child: Column(
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[
-                              Text(
-                                (money + int.tryParse(widget.price)).toString(),
-                                style: StylesText.style20BrownBold,
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: createRadioListSize(),
                               )
+                            ],
+                          )),
+                  topping.isEmpty
+                      ? Container()
+                      : Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                          child: Column(
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  Text(
+                                    "Topping",
+                                    style: StylesText.style16Brown,
+                                  )
+                                ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: createCheckedBoxTopping()),
+                              ),
                             ],
                           ),
                         ),
-                        Container(
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: <Widget>[
-                              Padding(
-                                padding:
-                                    const EdgeInsets.fromLTRB(200, 0, 0, 0),
-                                child: IconButton(
-                                  icon: Icon(Icons.arrow_back_ios,
-                                      color: Colors.brown),
-                                  onPressed: () {
-                                    setState(() {
-                                      number--;
-                                      money -= int.tryParse(widget.price);
-                                    });
-                                  },
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
-                                child: Text(number.toString()),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
-                                child: IconButton(
-                                  icon: Icon(Icons.arrow_forward_ios,
-                                      color: Colors.brown),
-                                  onPressed: () {
-                                    setState(() {
-                                      number++;
-                                      money += int.tryParse(widget.price);
-                                    });
-                                  },
-                                ),
-                              ),
-                            ],
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                          child: Text(
+                            "Money",
+                            style: StylesText.style16Brown,
                           ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: <Widget>[
+                        Stack(
+                          alignment: AlignmentDirectional.centerStart,
+                          children: <Widget>[
+                            Container(
+                              padding: const EdgeInsets.fromLTRB(30, 0, 0, 0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    (money + int.tryParse(widget.price))
+                                        .toString(),
+                                    style: StylesText.style20BrownBold,
+                                  )
+                                ],
+                              ),
+                            ),
+                            Container(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: <Widget>[
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(190, 0, 0, 0),
+                                    child: IconButton(
+                                      icon: Icon(Icons.arrow_back_ios,
+                                          color: Colors.brown),
+                                      onPressed: () {
+                                        setState(() {
+                                          number--;
+                                          money -= int.tryParse(widget.price);
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                                    child: Text(number.toString()),
+                                  ),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                                    child: IconButton(
+                                      icon: Icon(Icons.arrow_forward_ios,
+                                          color: Colors.brown),
+                                      onPressed: () {
+                                        setState(() {
+                                          number++;
+                                          money += int.tryParse(widget.price);
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            )
+                          ],
                         )
                       ],
-                    )
-                  ],
-                ),
+                    ),
+                  ),
+                ],
               ),
-            ],
-          ),
-        ),
+            )),
       ),
     );
   }
