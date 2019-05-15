@@ -2,6 +2,7 @@
 import 'package:flutter/material.dart';
 import 'package:thekingcoffee/app/bloc/place_bloc.dart';
 import 'package:thekingcoffee/app/data/model/get_place_item.dart';
+import 'package:thekingcoffee/core/utils/utils.dart';
 
 class RidePickerPage extends StatefulWidget {
   final String selectedAddress;
@@ -89,9 +90,10 @@ class _RidePickerPageState extends State<RidePickerPage> {
               ),
             ),
             Container(
-              padding: EdgeInsets.only(top: 20),
-              child: SingleChildScrollView(
-                child:  StreamBuilder(
+              padding: EdgeInsets.fromLTRB(0, 10, 0, 20),
+              width: double.infinity,
+              height: Dimension.getHeight(0.8),
+              child:   StreamBuilder(
                   stream: placeBloc.placeStream,
                   builder: (context, snapshot) {
                     if (snapshot.hasData) {
@@ -107,7 +109,7 @@ class _RidePickerPageState extends State<RidePickerPage> {
                       return 
                         ListView.separated(
                           shrinkWrap: true,
-                          
+                          scrollDirection: Axis.vertical,
                           itemBuilder: (context, index) {
                             return ListTile(
                               title: Text(places.elementAt(index).name),
@@ -133,16 +135,16 @@ class _RidePickerPageState extends State<RidePickerPage> {
                       return Container();
                     }
                   }),
-              )
+              
              
             )
           ],
         ),
-        )
+        
         
       ),
+    )
     );
-    
    
   }
 }

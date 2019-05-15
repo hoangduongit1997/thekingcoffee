@@ -17,7 +17,7 @@ class LoadingDialog_Order {
                   borderRadius: BorderRadius.all(Radius.circular(15.0))),
               content: Container(
                   height: Dimension.getHeight(0.5),
-                  width: Dimension.getWidth(1.0),
+                  width: Dimension.getWidth(1.5),
                   child: Order_Dialog(img,name,descript,price,size,topping)),
               actions: <Widget>[
                 FlatButton(

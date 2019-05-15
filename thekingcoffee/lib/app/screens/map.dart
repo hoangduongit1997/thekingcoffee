@@ -27,8 +27,6 @@ class _HomePageState extends State<MapPage> {
         child: Stack(
           children: <Widget>[
             GoogleMap(
-//              key: ggKey,
-//              markers: Set.of(markers.values),
               onMapCreated: (GoogleMapController controller) {
                 _mapController = controller;
               },
@@ -61,10 +59,7 @@ class _HomePageState extends State<MapPage> {
                 ],
               ),
             ),
-            // Positioned(left: 20, right: 20, bottom: 40,
-            //   height: 248,
-            //   child: CarPickup(_tripDistance),
-            // )
+          
           ],
         ),
       ),
@@ -130,33 +125,4 @@ class _HomePageState extends State<MapPage> {
     }
   }
 
-//   void _checkDrawPolyline() {
-// //  remove old polyline
-//     _mapController.clearPolylines();
-
-//     if (_markers.length > 1) {
-//       var from = _markers["from_address"].options.position;
-//       var to = _markers["to_address"].options.position;
-//       PlaceService.getStep(
-//               from.latitude, from.longitude, to.latitude, to.longitude)
-//           .then((vl) {
-//             TripInfoRes infoRes = vl;
-
-//             _tripDistance = infoRes.distance;
-//             setState(() {
-//             });
-//         List<StepsRes> rs = infoRes.steps;
-//         List<LatLng> paths = new List();
-//         for (var t in rs) {
-//           paths
-//               .add(LatLng(t.startLocation.latitude, t.startLocation.longitude));
-//           paths.add(LatLng(t.endLocation.latitude, t.endLocation.longitude));
-//         }
-
-// //        print(paths);
-//         _mapController.addPolyline(PolylineOptions(
-//             points: paths, color: Color(0xFF3ADF00).value, width: 10));
-//       });
-//     }
-//   }
 }

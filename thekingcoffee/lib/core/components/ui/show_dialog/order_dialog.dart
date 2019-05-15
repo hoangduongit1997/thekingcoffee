@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/data/model/size.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
+import 'package:thekingcoffee/core/components/ui/home_cart/home_cart.dart';
 
 import 'package:thekingcoffee/core/utils/utils.dart';
 
@@ -22,27 +23,45 @@ class Order_Dialog extends StatefulWidget {
 class Order_DialogState extends State<Order_Dialog> {
   int number = 1;
   int money = 0;
+  int t=0;
   var topping = [];
-  var size_Id;
-  String radioValue = 'First';
-  setSelectedRadio(int val) {
-    setState(() {
-      size_Id = val;
-    });
-  }
-
-// Declare this variable
+  var selectedsize ;
+  var size_product=[];
   int selectedRadioTile;
+  List<Widget> createRadioListUsers() {
+  List<Widget> widgets = [];
+  widgets.add(Text("Size",style: StylesText.style13BrownBold,));
+  for (var user in size_product) {
+    widgets.add(
+      Expanded(child:RadioListTile(
+        value: user,
+        groupValue: selectedsize,
+        title: Text(user['Name'],style: StylesText.style13BrownBold,),
+        onChanged: (currentUser) {
+          money-=t;
+          money+=int.tryParse(user['PlusMonney'].toString());
+          t=int.tryParse(user['PlusMonney'].toString());
+          
+         setSelectedSize(currentUser);
+        },
+        selected:  selectedsize == user,
+        activeColor: Colors.redAccent,
+      ), ),
 
+    );
+  }
+  return widgets;
+}
   @override
   void initState() {
     super.initState();
-    selectedRadioTile = 0;
+     size_product=size;
+     print("Size"+size_product.toString());
   }
 
-  setSelectedRadioTile(int val) {
+  setSelectedSize(var size_p) {
     setState(() {
-      selectedRadioTile = val;
+      selectedsize =size_p;
     });
   }
 
@@ -150,78 +169,15 @@ class Order_DialogState extends State<Order_Dialog> {
                   ],
                 ),
               ),
-              Padding(
+             size_product.isEmpty?Container():Padding(
                 padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: Text(
-                        "Size",
-                        style: StylesText.style16Brown,
-                      ),
-                    ),
-                    
-                    Expanded(
-                      child: RadioListTile(
-                      value: 1,
-                      groupValue: "selectedRadioTile",
-                      title: Text("Radio 1"),
-                      onChanged: (val) {
-                        print("Radio Tile pressed $val");
-                        setSelectedRadioTile(val);
-                      },
-                      activeColor: Colors.red,
-                      secondary: OutlineButton(
-                        child: Text("Say Hi"),
-                        onPressed: () {
-                          print("Say Hello");
-                        },
-                      ),
-                      selected: true,
-                    ),
-                    ),
-                     Expanded(
-                      child: RadioListTile(
-                      value: 1,
-                      groupValue: "selectedRadioTile",
-                      title: Text("Radio 1"),
-                      onChanged: (val) {
-                        print("Radio Tile pressed $val");
-                        setSelectedRadioTile(val);
-                      },
-                      activeColor: Colors.red,
-                      secondary: OutlineButton(
-                        child: Text("Say Hi"),
-                        onPressed: () {
-                          print("Say Hello");
-                        },
-                      ),
-                      selected: true,
-                    ),
-                    ),
-                     Expanded(
-                      child: RadioListTile(
-                      value: 1,
-                      groupValue: "selectedRadioTile",
-                      title: Text("Radio 1"),
-                      onChanged: (val) {
-                        print("Radio Tile pressed $val");
-                        setSelectedRadioTile(val);
-                      },
-                      activeColor: Colors.red,
-                      secondary: OutlineButton(
-                        child: Text("Say Hi"),
-                        onPressed: () {
-                          print("Say Hello");
-                        },
-                      ),
-                      selected: true,
-                    ),
-                    ),
-                      ],
-                ),
+                child: Column(
+                 children: <Widget>[
+                   Row(
+                     mainAxisAlignment: MainAxisAlignment.start,
+                     children: createRadioListUsers(),)
+                 ], 
+                )
               ),
               topping.isEmpty
                   ? Container()
@@ -232,8 +188,10 @@ class Order_DialogState extends State<Order_Dialog> {
                         children: <Widget>[
                           Padding(
                             padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-                            child:
-                                Text("Topping", style: StylesText.style18Black),
+                            child: Text(
+                              "Topping",
+                              style: StylesText.style16Brown,
+                            ),
                           ),
                         ],
                       ),
@@ -245,7 +203,10 @@ class Order_DialogState extends State<Order_Dialog> {
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-                      child: Text("Money", style: StylesText.style18Black),
+                      child: Text(
+                        "Money",
+                        style: StylesText.style16Brown,
+                      ),
                     ),
                   ],
                 ),

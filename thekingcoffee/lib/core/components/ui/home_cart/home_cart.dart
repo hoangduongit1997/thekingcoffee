@@ -18,6 +18,7 @@ class Home_Card_State extends StatefulWidget {
 }
 var size=[];
 var data = [];
+var topping=[];
 int lenght = 0;
 
 class _Home_CardState extends State<Home_Card_State> {
@@ -280,7 +281,8 @@ class _Home_CardState extends State<Home_Card_State> {
                                       )),
                                   onTap: () => {
                                     size=data[index]['Size'],
-                                    print(size),
+                                    topping=data[index]['Toppings'],
+                                   
                                         LoadingDialog_Order.showLoadingDialog(
                                           context,
                                           data[index]['Name'].toString(),
