@@ -16,6 +16,7 @@ class _HomePageState extends State<MapPage> {
 
   GoogleMapController _mapController;
 
+  MapType _currentMapType = MapType.normal;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -26,16 +27,17 @@ class _HomePageState extends State<MapPage> {
         child: Stack(
           children: <Widget>[
             GoogleMap(
+              mapType: _currentMapType,
               onMapCreated: (GoogleMapController controller) {
                 _mapController = controller;
               },
-              myLocationButtonEnabled: true,
-              myLocationEnabled: true,
               scrollGesturesEnabled: true,
-              compassEnabled: true,
-            
+              rotateGesturesEnabled: true,
+              tiltGesturesEnabled: true,
+              zoomGesturesEnabled: true,
+              trackCameraPosition: true,
               initialCameraPosition: CameraPosition(
-                target: LatLng(10.7915178, 106.7271422),
+                target: LatLng(10.799651, 106.630737),
                 zoom: 14.4746,
               ),
             ),
@@ -53,8 +55,7 @@ class _HomePageState extends State<MapPage> {
                         onPressed: () {
                           _scaffoldKey.currentState.openDrawer();
                         },
-                        child:Icon(Icons.menu) ),
-                   
+                        child: Icon(Icons.menu)),
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 20, left: 20, right: 20),
@@ -63,12 +64,24 @@ class _HomePageState extends State<MapPage> {
                 ],
               ),
             ),
-          
           ],
         ),
       ),
       drawer: Drawer(
         child: HomeMenu(),
+      ),
+      floatingActionButton: Column(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: <Widget>[
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: FloatingActionButton(
+              onPressed: _onMapTypeButtonPressed,
+              tooltip: 'Change style map',
+              child: Icon(Icons.map),
+            ),
+          ),
+        ],
       ),
     );
   }
@@ -78,6 +91,14 @@ class _HomePageState extends State<MapPage> {
     _addMarker(mkId, place);
     _moveCamera();
     // _checkDrawPolyline();
+  }
+
+  void _onMapTypeButtonPressed() {
+    setState(() {
+      _currentMapType = _currentMapType == MapType.normal
+          ? MapType.satellite
+          : MapType.normal;
+    });
   }
 
   void _addMarker(String mkId, Get_Place_Item place) async {
@@ -105,7 +126,7 @@ class _HomePageState extends State<MapPage> {
       var toLatLng = _markers["to_address"].options.position;
 
       var sLat, sLng, nLat, nLng;
-      if(fromLatLng.latitude <= toLatLng.latitude) {
+      if (fromLatLng.latitude <= toLatLng.latitude) {
         sLat = fromLatLng.latitude;
         nLat = toLatLng.latitude;
       } else {
@@ -113,7 +134,7 @@ class _HomePageState extends State<MapPage> {
         nLat = fromLatLng.latitude;
       }
 
-      if(fromLatLng.longitude <= toLatLng.longitude) {
+      if (fromLatLng.longitude <= toLatLng.longitude) {
         sLng = fromLatLng.longitude;
         nLng = toLatLng.longitude;
       } else {
@@ -121,7 +142,8 @@ class _HomePageState extends State<MapPage> {
         nLng = fromLatLng.longitude;
       }
 
-      LatLngBounds bounds = LatLngBounds(northeast: LatLng(nLat, nLng), southwest: LatLng(sLat, sLng));
+      LatLngBounds bounds = LatLngBounds(
+          northeast: LatLng(nLat, nLng), southwest: LatLng(sLat, sLng));
       _mapController.animateCamera(CameraUpdate.newLatLngBounds(bounds, 50));
     } else {
       _mapController.animateCamera(CameraUpdate.newLatLng(
@@ -129,4 +151,5 @@ class _HomePageState extends State<MapPage> {
     }
   }
 
+  void mylocation() {}
 }
