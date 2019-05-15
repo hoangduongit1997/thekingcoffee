@@ -82,21 +82,17 @@ class Order_DialogState extends State<Order_Dialog> {
           var element = lstSelectedTopping.firstWhere((t) => t == topping['Id'],
               orElse: () => -1);
           var temp = lstSelectedTopping;
-          var selectedTopping =
-              list_topping.firstWhere((t) => t['Id'] == element);
-          if (element > 0) {
+          int tempMoney=money;
+         if (element  > 0) {
             temp.remove(element);
-            // money-=int.tryParse(topping['PlusMonney'].toString());
-            money -= int.parse(selectedTopping['PlusMoney'].toString());
+            tempMoney -= int.tryParse(topping['Price'].toString());
           } else {
             temp.add(topping['Id']);
-            money += int.parse(selectedTopping['PlusMoney'].toString());
-            // setState(() {
-            //   money += int.tryParse(topping['PlusMonney'].toString());
-            // });
+            tempMoney += int.tryParse(topping['Price'].toString());
             //cong them tien
           }
           setState(() {
+            money = tempMoney;
             lstSelectedTopping = temp;
           });
         },
@@ -259,7 +255,7 @@ class Order_DialogState extends State<Order_Dialog> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                       child: Text(
                         "Money",
                         style: StylesText.style16Brown,
@@ -282,7 +278,7 @@ class Order_DialogState extends State<Order_Dialog> {
                             mainAxisAlignment: MainAxisAlignment.start,
                             children: <Widget>[
                               Text(
-                                (money + int.tryParse(widget.price)).toString(),
+                                money.toString(),
                                 style: StylesText.style20BrownBold,
                               )
                             ],
