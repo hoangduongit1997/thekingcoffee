@@ -5,7 +5,7 @@ import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/data/model/size.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart.dart';
-
+import 'package:grouped_buttons/grouped_buttons.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 
 class Order_Dialog extends StatefulWidget {
@@ -23,45 +23,109 @@ class Order_Dialog extends StatefulWidget {
 class Order_DialogState extends State<Order_Dialog> {
   int number = 1;
   int money = 0;
-  int t=0;
-  var topping = [];
-  var selectedsize ;
-  var size_product=[];
-  int selectedRadioTile;
-  List<Widget> createRadioListUsers() {
-  List<Widget> widgets = [];
-  widgets.add(Text("Size",style: StylesText.style13BrownBold,));
-  for (var user in size_product) {
-    widgets.add(
-      Expanded(child:RadioListTile(
-        value: user,
-        groupValue: selectedsize,
-        title: Text(user['Name'],style: StylesText.style13BrownBold,),
-        onChanged: (currentUser) {
-          money-=t;
-          money+=int.tryParse(user['PlusMonney'].toString());
-          t=int.tryParse(user['PlusMonney'].toString());
-          
-         setSelectedSize(currentUser);
-        },
-        selected:  selectedsize == user,
-        activeColor: Colors.redAccent,
-      ), ),
+  int t = 0;
+  var _mySelection;
+  var selectedsize;
+  var selecttopping = false;
+  var size_product = [];
+  var list_topping = [];
 
-    );
+  List<int> lstSelectedTopping = [];
+  int selectedRadioTile;
+
+  List<Widget> createRadioListSize() {
+    List<Widget> widgets = [];
+    widgets.add(Text(
+      "Size",
+      style: StylesText.style13BrownBold,
+    ));
+    for (var user in size_product) {
+      widgets.add(
+        Expanded(
+          child: RadioListTile(
+            value: user,
+            groupValue: selectedsize,
+            title: Text(
+              user['Name'],
+              style: StylesText.style13BrownBold,
+            ),
+            onChanged: (currentUser) {
+              money -= t;
+              money += int.tryParse(user['PlusMonney'].toString());
+              t = int.tryParse(user['PlusMonney'].toString());
+
+              setSelectedSize(currentUser);
+            },
+            selected: selectedsize == user,
+            activeColor: Colors.redAccent,
+          ),
+        ),
+      );
+    }
+    return widgets;
   }
-  return widgets;
-}
+
+  List<Widget> createCheckedBoxTopping() {
+    List<Widget> widgets = [];
+    widgets.add(Text(
+      "Topping",
+      style: StylesText.style13BrownBold,
+    ));
+    for (var topping in list_topping) {
+      widgets.add(Expanded(
+          child: CheckboxListTile(
+        title: Text(topping['Name'].toString()),
+        value: lstSelectedTopping.firstWhere((t) => t == topping['Id'],
+                orElse: () => -1) >
+            0,
+        onChanged: (bool value) {
+          var element = lstSelectedTopping.firstWhere((t) => t == topping['Id'],
+              orElse: () => -1);
+          var temp = lstSelectedTopping;
+          var selectedTopping =
+              list_topping.firstWhere((t) => t['Id'] == element);
+          if (element > 0) {
+            temp.remove(element);
+            // money-=int.tryParse(topping['PlusMonney'].toString());
+            money -= int.parse(selectedTopping['PlusMoney'].toString());
+          } else {
+            temp.add(topping['Id']);
+            money += int.parse(selectedTopping['PlusMoney'].toString());
+            // setState(() {
+            //   money += int.tryParse(topping['PlusMonney'].toString());
+            // });
+            //cong them tien
+          }
+          setState(() {
+            lstSelectedTopping = temp;
+          });
+        },
+        selected: selecttopping == topping,
+        activeColor: Colors.redAccent,
+      )));
+    }
+    return widgets;
+  }
+
   @override
   void initState() {
     super.initState();
-     size_product=size;
-     print("Size"+size_product.toString());
+    list_topping = topping;
+
+    size_product = size;
+
+    print("AAAAAAAAAAAAAAAAAAAAAAAAA" + list_topping.toString());
   }
 
   setSelectedSize(var size_p) {
     setState(() {
-      selectedsize =size_p;
+      selectedsize = size_p;
+    });
+  }
+
+  setSelectedTopping(var topping_p) {
+    setState(() {
+      selecttopping = topping_p;
     });
   }
 
@@ -169,32 +233,25 @@ class Order_DialogState extends State<Order_Dialog> {
                   ],
                 ),
               ),
-             size_product.isEmpty?Container():Padding(
-                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                child: Column(
-                 children: <Widget>[
-                   Row(
-                     mainAxisAlignment: MainAxisAlignment.start,
-                     children: createRadioListUsers(),)
-                 ], 
-                )
-              ),
+              size_product.isEmpty
+                  ? Container()
+                  : Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                      child: Column(
+                        children: <Widget>[
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: createRadioListSize(),
+                          )
+                        ],
+                      )),
               topping.isEmpty
                   ? Container()
                   : Padding(
                       padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                       child: Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-                            child: Text(
-                              "Topping",
-                              style: StylesText.style16Brown,
-                            ),
-                          ),
-                        ],
-                      ),
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: createCheckedBoxTopping()),
                     ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),

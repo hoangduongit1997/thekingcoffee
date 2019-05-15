@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:thekingcoffee/app/data/model/get_place_item.dart';
@@ -30,6 +29,11 @@ class _HomePageState extends State<MapPage> {
               onMapCreated: (GoogleMapController controller) {
                 _mapController = controller;
               },
+              myLocationButtonEnabled: true,
+              myLocationEnabled: true,
+              scrollGesturesEnabled: true,
+              compassEnabled: true,
+            
               initialCameraPosition: CameraPosition(
                 target: LatLng(10.7915178, 106.7271422),
                 zoom: 14.4746,
