@@ -99,12 +99,17 @@ class Order_DialogState extends State<Order_Dialog> {
           var element = lstSelectedTopping.firstWhere((t) => t == topping['Id'],
               orElse: () => -1);
           var temp = lstSelectedTopping;
-          if (element > 0) {
+          int tempMoney=money;
+         if (element  > 0) {
             temp.remove(element);
+            tempMoney -= int.tryParse(topping['Price'].toString());
           } else {
             temp.add(topping['Id']);
+            tempMoney += int.tryParse(topping['Price'].toString());
+            //cong them tien
           }
           setState(() {
+            money = tempMoney;
             lstSelectedTopping = temp;
           });
         },
