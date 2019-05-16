@@ -28,8 +28,8 @@ class Order_DialogState extends State<Order_Dialog> {
   var selectedsize;
   var selecttopping = false;
   var size_product = [];
+  bool tem_radio_checked = false;
   var list_topping = [];
-
   List<int> lstSelectedTopping = [];
   int selectedRadioTile;
 
@@ -40,47 +40,45 @@ class Order_DialogState extends State<Order_Dialog> {
       style: StylesText.style16Brown,
     ));
     for (var user in size_product) {
-      widgets.add(Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: <Widget>[
-          Radio(
-            value: user,
-            groupValue: selectedsize,
-            onChanged: (currentUser) {
-              money -= t;
-              money += int.tryParse(user['PlusMonney'].toString());
-              t = int.tryParse(user['PlusMonney'].toString());
-              setSelectedSize(currentUser);
-            },
-            activeColor: Colors.redAccent,
-          ),
-          Text(
+      // widgets.add(Row(
+      //   mainAxisAlignment: MainAxisAlignment.start,
+      //   children: <Widget>[
+      //     Radio(
+      //       value: user,
+      //       groupValue: selectedsize,
+      //       onChanged: (currentUser) {
+      //         money -= t;
+      //         money += int.tryParse(user['PlusMonney'].toString());
+      //         t = int.tryParse(user['PlusMonney'].toString());
+      //         setSelectedSize(currentUser);
+      //       },
+      //       activeColor: Colors.redAccent,
+      //     ),
+      //     Text(
+      //       user['Name'],
+      //       style: StylesText.style13BrownBold,
+      //     ),
+      //   ],
+      // )
+      widgets.add(Expanded(
+        child: RadioListTile(
+          value: true,
+          groupValue: selectedsize,
+          title: Text(
             user['Name'],
             style: StylesText.style13BrownBold,
           ),
-        ],
-      )
+          onChanged: (currentUser) {
+            money -= t;
+            money += int.tryParse(user['PlusMonney'].toString());
+            t = int.tryParse(user['PlusMonney'].toString());
 
-          // Expanded(
-          // child: RadioListTile(
-          //   value: user,
-          //   groupValue: selectedsize,
-          //   title: Text(
-          //     user['Name'],
-          //     style: StylesText.style13BrownBold,
-          //   ),
-          //   onChanged: (currentUser) {
-          //     money -= t;
-          //     money += int.tryParse(user['PlusMonney'].toString());
-          //     t = int.tryParse(user['PlusMonney'].toString());
-
-          //     setSelectedSize(currentUser);
-          //   },
-          //   selected: selectedsize == user,
-          //   activeColor: Colors.redAccent,
-          // ),
-          // ),
-          );
+            setSelectedSize(currentUser);
+          },
+          selected: selectedsize == user,
+          activeColor: Colors.redAccent,
+        ),
+      ));
     }
     return widgets;
   }
@@ -124,7 +122,7 @@ class Order_DialogState extends State<Order_Dialog> {
 
     size_product = size;
 
-    print("AAAAAAAAAAAAAAAAAAAAAAAAA" + list_topping.toString());
+    print(list_topping.toString());
   }
 
   setSelectedSize(var size_p) {
