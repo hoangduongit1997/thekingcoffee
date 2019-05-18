@@ -9,28 +9,26 @@ import 'package:grouped_buttons/grouped_buttons.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 
 class Order_Dialog extends StatefulWidget {
+  final int id;
   final String img;
   final String name;
   final String desc;
-  final String price;
-  final String topping;
-  final String size;
-  Order_Dialog(
-      this.img, this.name, this.desc, this.price, this.size, this.topping);
+  final int price;
+  final List<dynamic> toppings;
+  final List<dynamic> size;
+  Order_Dialog(this.id, this.img, this.name, this.desc, this.price, this.size,
+      this.toppings);
   Order_DialogState createState() => Order_DialogState();
 }
 
 class Order_DialogState extends State<Order_Dialog> {
+  var product = selectedProduct;
   int number = 1;
-  int money = 0;
-  int t = 0;
-  var _mySelection;
+  int money;
+
   var selectedsize;
   var selecttopping = false;
-  var size_product = [];
-  bool tem_radio_checked = false;
-  var list_topping = [];
-  List<int> lstSelectedTopping = [];
+  var lstSelectedTopping = [];
   int selectedRadioTile;
 
   List<Widget> createRadioListSize() {
@@ -39,43 +37,25 @@ class Order_DialogState extends State<Order_Dialog> {
       "Size",
       style: StylesText.style16Brown,
     ));
-    for (var user in size_product) {
-      // widgets.add(Row(
-      //   mainAxisAlignment: MainAxisAlignment.start,
-      //   children: <Widget>[
-      //     Radio(
-      //       value: user,
-      //       groupValue: selectedsize,
-      //       onChanged: (currentUser) {
-      //         money -= t;
-      //         money += int.tryParse(user['PlusMonney'].toString());
-      //         t = int.tryParse(user['PlusMonney'].toString());
-      //         setSelectedSize(currentUser);
-      //       },
-      //       activeColor: Colors.redAccent,
-      //     ),
-      //     Text(
-      //       user['Name'],
-      //       style: StylesText.style13BrownBold,
-      //     ),
-      //   ],
-      // )
+    for (var item in widget.size) {
       widgets.add(Expanded(
         child: RadioListTile(
-          value: true,
+          value: item,
           groupValue: selectedsize,
           title: Text(
-            user['Name'],
+            item['Name'],
             style: StylesText.style13BrownBold,
           ),
-          onChanged: (currentUser) {
-            money -= t;
-            money += int.tryParse(user['PlusMonney'].toString());
-            t = int.tryParse(user['PlusMonney'].toString());
-
-            setSelectedSize(currentUser);
+          onChanged: (value) {
+            money -= selectedsize['PlusMonney'];
+            setState(() {
+              money += value['PlusMonney'];
+            });
+            selectedProduct['Price'] = money;
+            selectedsize = value;
+            selectedProduct['Size'] = selectedsize;
           },
-          selected: selectedsize == user,
+          selected: selectedsize == item,
           activeColor: Colors.redAccent,
         ),
       ));
@@ -85,33 +65,37 @@ class Order_DialogState extends State<Order_Dialog> {
 
   List<Widget> createCheckedBoxTopping() {
     List<Widget> widgets = [];
-    for (var topping in list_topping) {
+    for (var topping in widget.toppings) {
       widgets.add(Expanded(
           child: CheckboxListTile(
         title: Text(
           topping['Name'].toString(),
           style: StylesText.style13Black,
         ),
-        value: lstSelectedTopping.firstWhere((t) => t == topping['Id'],
-                orElse: () => -1) >
-            0,
+        value: lstSelectedTopping.firstWhere((t) => t['Id'] == topping['Id'],
+                orElse: () => null) !=null,
         onChanged: (bool value) {
-          var element = lstSelectedTopping.firstWhere((t) => t == topping['Id'],
-              orElse: () => -1);
+          var element = lstSelectedTopping.firstWhere((t) => t['Id'] == topping['Id'],
+              orElse: () => null);
           var temp = lstSelectedTopping;
-          int tempMoney=money;
-         if (element  > 0) {
+          int tempMoney = money;
+          if (element !=null) {
             temp.remove(element);
-            tempMoney -= int.tryParse(topping['Price'].toString());
+            //tempMoney -= widget.price;
+            tempMoney -= topping['Price'];
+
           } else {
-            temp.add(topping['Id']);
-            tempMoney += int.tryParse(topping['Price'].toString());
+            temp.add(topping);
+            tempMoney += topping['Price'];
+            //tempMoney += widget.price;
             //cong them tien
           }
           setState(() {
             money = tempMoney;
             lstSelectedTopping = temp;
           });
+          selectedProduct['Toppings']=lstSelectedTopping;
+          selectedProduct['Price'] = money;
         },
         selected: selecttopping == topping,
         activeColor: Colors.redAccent,
@@ -123,23 +107,20 @@ class Order_DialogState extends State<Order_Dialog> {
   @override
   void initState() {
     super.initState();
-    list_topping = topping;
+    money = widget.price;
+    if (widget.size.length > 0) {
+      money += widget.size[0]['PlusMonney'];
+    }
+    if (widget.size != null && widget.size.length > 0) {
+      selectedsize = widget.size[0];
+    }
+      selectedProduct['Price'] = money;
+      selectedProduct['Id'] = widget.id;
+      selectedProduct['Img'] = widget.img;
+      selectedProduct['Name'] = widget.name;
+      selectedProduct['Size'] = selectedsize;
+      selectedProduct['Quantity']=number;
 
-    size_product = size;
-
-    print(list_topping.toString());
-  }
-
-  setSelectedSize(var size_p) {
-    setState(() {
-      selectedsize = size_p;
-    });
-  }
-
-  setSelectedTopping(var topping_p) {
-    setState(() {
-      selecttopping = topping_p;
-    });
   }
 
   @override
@@ -251,7 +232,7 @@ class Order_DialogState extends State<Order_Dialog> {
                       ],
                     ),
                   ),
-                  size_product.isEmpty
+                  widget.size == null || widget.size.length < 0
                       ? Container()
                       : Padding(
                           padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
@@ -264,7 +245,7 @@ class Order_DialogState extends State<Order_Dialog> {
                               )
                             ],
                           )),
-                  topping.isEmpty
+                  widget.toppings == null || widget.toppings.length < 0
                       ? Container()
                       : Padding(
                           padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
@@ -316,8 +297,7 @@ class Order_DialogState extends State<Order_Dialog> {
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
-                                    (money + int.tryParse(widget.price))
-                                        .toString(),
+                                    money.toString(),
                                     style: StylesText.style20BrownBold,
                                   )
                                 ],
@@ -336,8 +316,9 @@ class Order_DialogState extends State<Order_Dialog> {
                                       onPressed: () {
                                         setState(() {
                                           number--;
-                                          money -= int.tryParse(widget.price);
+                                          money -= widget.price;
                                         });
+                                        selectedProduct['Quantity']=number;
                                       },
                                     ),
                                   ),
@@ -355,8 +336,9 @@ class Order_DialogState extends State<Order_Dialog> {
                                       onPressed: () {
                                         setState(() {
                                           number++;
-                                          money += int.tryParse(widget.price);
+                                          money += widget.price;
                                         });
+                                        selectedProduct['Quantity']=number;
                                       },
                                     ),
                                   ),

@@ -16,11 +16,12 @@ class Home_Card_State extends StatefulWidget {
 
   _Home_CardState createState() => _Home_CardState();
 }
-var size=[];
-var data = [];
-var topping=[];
-int lenght = 0;
 
+var data = [];
+var data_checked = [];
+int lenght = 0;
+var selectedProduct={};
+var ListOrderProducts=[];
 class _Home_CardState extends State<Home_Card_State> {
   intDataHomeScreen() async {
     final result = await Get_Data_All_Product();
@@ -28,7 +29,6 @@ class _Home_CardState extends State<Home_Card_State> {
       data = result;
       lenght = data.length;
     });
-    
   }
 
   @override
@@ -280,21 +280,17 @@ class _Home_CardState extends State<Home_Card_State> {
                                         ],
                                       )),
                                   onTap: () => {
-                                    size=data[index]['Size'],
-                                    topping=data[index]['Toppings'],
-                                   
                                         LoadingDialog_Order.showLoadingDialog(
                                           context,
-                                          data[index]['Name'].toString(),
-                                          data[index]['File_Path'].toString(),
-                                          data[index]['Description'].toString(),
-                                          data[index]['Price'].toString(),
-                                          data[index]['Toppings'].toString(),
-                                          data[index]['Size'].toString(),
-
-                                          
+                                          data[index]['Id'],
+                                          data[index]['Name'],
+                                          data[index]['File_Path'],
+                                          data[index]['Description'],
+                                          data[index]['Price'],
+                                          data[index]['Toppings'],
+                                          data[index]['Size'],
+                                          ListOrderProducts
                                         ),
-                                       
                                       });
                             }
                           }),
