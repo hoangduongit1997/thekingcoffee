@@ -22,7 +22,7 @@ class LoadingDialog_Order {
         context: context,
         barrierDismissible: false,
         builder: (context) => AlertDialog(
-              contentPadding: EdgeInsets.all(10.0),
+          contentPadding:EdgeInsets.all(10.0),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(15.0))),
               content: Container(

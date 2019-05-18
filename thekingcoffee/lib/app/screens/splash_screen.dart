@@ -22,7 +22,7 @@ class SplashScreenState extends State<SplashScreen> {
 
   Future<Timer> loadSplash() async {
     // Validation.initpref();
-    return Timer(Duration(seconds: 4), onDoneLoading);
+    return Timer(Duration(seconds: 3), onDoneLoading);
   }
 
   onDoneLoading() async {
