@@ -18,13 +18,12 @@ class Home_Card_Coffee extends StatefulWidget {
   _Home_Card_Coffee_State createState() => _Home_Card_Coffee_State();
 }
 
-var size = [];
 var data = [];
-var topping = [];
-var sanpham;
+var data_checked = [];
 int lenght = 0;
-
-class _Home_Card_Coffee_State extends State<Home_Card_Coffee> {
+var selectedProduct={};
+var ListOrderProducts=[];
+class _Home_CardState extends State<Home_Card_State> {
   intDataHomeScreen() async {
     final result = await Get_Coffee_Product();
     setState(() {
@@ -287,17 +286,16 @@ class _Home_Card_Coffee_State extends State<Home_Card_Coffee> {
                                         ],
                                       )),
                                   onTap: () => {
-                                        sanpham = data[index],
-                                        size = data[index]['Size'],
-                                        topping = data[index]['Toppings'],
                                         LoadingDialog_Order.showLoadingDialog(
                                           context,
-                                          data[index]['Name'].toString(),
-                                          data[index]['File_Path'].toString(),
-                                          data[index]['Description'].toString(),
-                                          data[index]['Price'].toString(),
-                                          data[index]['Toppings'].toString(),
-                                          data[index]['Size'].toString(),
+                                          data[index]['Id'],
+                                          data[index]['Name'],
+                                          data[index]['File_Path'],
+                                          data[index]['Description'],
+                                          data[index]['Price'],
+                                          data[index]['Toppings'],
+                                          data[index]['Size'],
+                                          ListOrderProducts
                                         ),
                                       });
                             }
