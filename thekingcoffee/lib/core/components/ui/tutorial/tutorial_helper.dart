@@ -15,7 +15,7 @@ class CarouselWithIndicator extends StatefulWidget {
 
 class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
   int _current = 0;
-  final List child = Map.map<Widget>(
+  final List child = Map_Object.map<Widget>(
     intro_slide,
     (index, i) {
       return Container(
@@ -101,7 +101,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
       ),
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: Map.map<Widget>(
+        children: Map_Object.map<Widget>(
           intro_slide,
           (index, url) {
             return Container(

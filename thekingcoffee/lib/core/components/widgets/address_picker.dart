@@ -1,8 +1,6 @@
-
 import 'package:flutter/material.dart';
 import 'package:thekingcoffee/app/data/model/get_place_item.dart';
 import 'package:thekingcoffee/app/screens/address_picker_page.dart';
-
 
 class RidePicker extends StatefulWidget {
   final Function(Get_Place_Item, bool) onSelected;
@@ -11,6 +9,9 @@ class RidePicker extends StatefulWidget {
   @override
   _RidePickerState createState() => _RidePickerState();
 }
+
+String final_address = "";
+
 class _RidePickerState extends State<RidePicker> {
   Get_Place_Item fromAddress;
   @override
@@ -33,13 +34,15 @@ class _RidePickerState extends State<RidePicker> {
             height: 50,
             child: FlatButton(
               onPressed: () {
-               Navigator.of(context).push(MaterialPageRoute(
+                Navigator.of(context).push(MaterialPageRoute(
                     builder: (context) => RidePickerPage(
-                            fromAddress == null ? "" : fromAddress.name,
+                            fromAddress == null ? "" : fromAddress.address,
                             (place, isFrom) {
                           widget.onSelected(place, isFrom);
                           fromAddress = place;
-                          setState(() {});
+                          setState(() {
+                            final_address = fromAddress.address;
+                          });
                         }, true)));
               },
               child: SizedBox(
@@ -52,7 +55,10 @@ class _RidePickerState extends State<RidePicker> {
                       width: 40,
                       height: 50,
                       child: Center(
-                        child: Icon(Icons.location_on,color: Colors.redAccent,),
+                        child: Icon(
+                          Icons.location_on,
+                          color: Colors.redAccent,
+                        ),
                       ),
                     ),
                     Positioned(
@@ -60,15 +66,14 @@ class _RidePickerState extends State<RidePicker> {
                       top: 0,
                       width: 40,
                       height: 50,
-                      child: Center(
-                        child: Icon(Icons.close)
-                      ),
+                      child: Center(child: Icon(Icons.close)),
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: 40, right: 50),
                       child: Text(
-                        fromAddress == null ? "Enter your address" : fromAddress.name,
-                       
+                        fromAddress == null
+                            ? "Enter your address"
+                            : fromAddress.address,
                         overflow: TextOverflow.ellipsis,
                         style:
                             TextStyle(fontSize: 16, color: Color(0xff323643)),
@@ -79,7 +84,6 @@ class _RidePickerState extends State<RidePicker> {
               ),
             ),
           ),
-         
         ],
       ),
     );

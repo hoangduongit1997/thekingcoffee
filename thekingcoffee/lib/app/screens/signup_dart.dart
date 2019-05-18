@@ -5,6 +5,7 @@ import 'package:thekingcoffee/app/bloc/signup_bloc.dart';
 import 'package:thekingcoffee/app/data/repository/login_repository.dart';
 import 'package:thekingcoffee/app/data/repository/signup_reposotory.dart';
 import 'package:thekingcoffee/app/screens/dashboard.dart';
+import 'package:thekingcoffee/app/screens/login.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/app/validation/validation.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog.dart';
@@ -214,7 +215,7 @@ class MyAppState extends State<SignUp> {
           true) {
         LoadingDialog.hideLoadingDialog(context);
         Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => DashBoard()));
+            MaterialPageRoute(builder: (context) => LoginWithPass()));
       }
     }
     if ((await Validation.isConnectedNetwork()) == true &&

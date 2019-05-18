@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
+
 import 'package:thekingcoffee/app/data/model/get_place_item.dart';
+import 'package:thekingcoffee/app/screens/shopping_list.dart';
 import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
 import 'package:thekingcoffee/core/components/widgets/address_picker.dart';
+import 'package:thekingcoffee/core/utils/utils.dart';
+
 
 class MapPage extends StatefulWidget {
   @override
@@ -11,7 +16,6 @@ class MapPage extends StatefulWidget {
 
 class _HomePageState extends State<MapPage> {
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
-  var _tripDistance = 0;
   final Map<String, Marker> _markers = <String, Marker>{};
 
   GoogleMapController _mapController;
@@ -34,6 +38,9 @@ class _HomePageState extends State<MapPage> {
               scrollGesturesEnabled: true,
               rotateGesturesEnabled: true,
               tiltGesturesEnabled: true,
+              minMaxZoomPreference: MinMaxZoomPreference.unbounded,
+              myLocationButtonEnabled: true,
+              myLocationEnabled: true,
               zoomGesturesEnabled: true,
               trackCameraPosition: true,
               initialCameraPosition: CameraPosition(
@@ -81,6 +88,23 @@ class _HomePageState extends State<MapPage> {
               child: Icon(Icons.map),
             ),
           ),
+          Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                  height: Dimension.getHeight(0.128),
+                  width: Dimension.getWidth(0.128),
+                  decoration:
+                      BoxDecoration(shape: BoxShape.circle, color: Colors.blue),
+                  child: IconButton(
+                    icon: Icon(Icons.send),
+                    color: Colors.redAccent,
+                    onPressed: () {
+                      Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => Shopping_List()));
+                    },
+                  ))),
         ],
       ),
     );
@@ -150,6 +174,4 @@ class _HomePageState extends State<MapPage> {
           _markers.values.elementAt(0).options.position));
     }
   }
-
-  void mylocation() {}
 }

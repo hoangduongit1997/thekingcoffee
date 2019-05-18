@@ -9,8 +9,6 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^0.1.2
-  google_maps_flutter:
-    path: ../google_maps_flutter
   flutter_svg: ^0.12.4
   image_picker: ^0.5.3
   intro_slider: ^1.2.0
@@ -24,6 +22,9 @@ dependencies:
   grouped_buttons: ^1.0.4
   shared_preferences: ^0.5.2
   datetime_picker_formfield: ^0.1.8
+  flutter_slidable: ^0.4.7
+  google_maps_flutter:
+    git: https://github.com/hoangduongit1997/google_map_flugin.git
   flutter_localizations:
     sdk: flutter
 

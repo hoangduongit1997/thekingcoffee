@@ -29,6 +29,8 @@ class _HomeState extends State<DashBoard> {
           resizeToAvoidBottomInset: false,
           body: _children[_currentIndex],
           bottomNavigationBar: BottomNavigationBar(
+            
+            key: Key(_children[_currentIndex].toString()),
             type: BottomNavigationBarType.fixed,
             onTap: onTabTapped,
             currentIndex: _currentIndex,
@@ -42,7 +44,7 @@ class _HomeState extends State<DashBoard> {
                 title: Text('Favorites'),
               ),
               BottomNavigationBarItem(
-                  icon: Icon(Icons.today), title: Text('Shopping List')),
+                  icon: Icon(Icons.shopping_cart), title: Text('Shopping List')),
               BottomNavigationBarItem(
                   icon: Icon(Icons.settings), title: Text('Setting')),
             ],

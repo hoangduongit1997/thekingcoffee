@@ -4,8 +4,9 @@ import 'package:flutter/widgets.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/data/model/size.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
-import 'package:thekingcoffee/core/components/ui/home_cart/home_cart.dart';
+import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
 import 'package:grouped_buttons/grouped_buttons.dart';
+import 'package:thekingcoffee/core/components/widgets/drawline.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 
 class Order_Dialog extends StatefulWidget {
@@ -17,6 +18,7 @@ class Order_Dialog extends StatefulWidget {
   final String size;
   Order_Dialog(
       this.img, this.name, this.desc, this.price, this.size, this.topping);
+
   Order_DialogState createState() => Order_DialogState();
 }
 
@@ -25,6 +27,7 @@ class Order_DialogState extends State<Order_Dialog> {
   int money = 0;
   int t = 0;
   var _mySelection;
+  var danhsach = sanpham;
   var selectedsize;
   var selecttopping = false;
   var size_product = [];
@@ -62,7 +65,7 @@ class Order_DialogState extends State<Order_Dialog> {
       // )
       widgets.add(Expanded(
         child: RadioListTile(
-          value: true,
+          value: user,
           groupValue: selectedsize,
           title: Text(
             user['Name'],
@@ -70,6 +73,7 @@ class Order_DialogState extends State<Order_Dialog> {
           ),
           onChanged: (currentUser) {
             money -= t;
+
             money += int.tryParse(user['PlusMonney'].toString());
             t = int.tryParse(user['PlusMonney'].toString());
 
@@ -88,10 +92,7 @@ class Order_DialogState extends State<Order_Dialog> {
     for (var topping in list_topping) {
       widgets.add(Expanded(
           child: CheckboxListTile(
-        title: Text(
-          topping['Name'].toString(),
-          style: StylesText.style13Black,
-        ),
+        controlAffinity: ListTileControlAffinity.leading,
         value: lstSelectedTopping.firstWhere((t) => t == topping['Id'],
                 orElse: () => -1) >
             0,
@@ -99,8 +100,8 @@ class Order_DialogState extends State<Order_Dialog> {
           var element = lstSelectedTopping.firstWhere((t) => t == topping['Id'],
               orElse: () => -1);
           var temp = lstSelectedTopping;
-          int tempMoney=money;
-         if (element  > 0) {
+          int tempMoney = money;
+          if (element > 0) {
             temp.remove(element);
             tempMoney -= int.tryParse(topping['Price'].toString());
           } else {
@@ -113,6 +114,10 @@ class Order_DialogState extends State<Order_Dialog> {
             lstSelectedTopping = temp;
           });
         },
+        title: Text(
+          topping['Name'].toString(),
+          style: StylesText.style13Black,
+        ),
         selected: selecttopping == topping,
         activeColor: Colors.redAccent,
       )));
@@ -124,7 +129,7 @@ class Order_DialogState extends State<Order_Dialog> {
   void initState() {
     super.initState();
     list_topping = topping;
-
+    print(danhsach.toString());
     size_product = size;
 
     print(list_topping.toString());
@@ -161,7 +166,7 @@ class Order_DialogState extends State<Order_Dialog> {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
                       Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.end,
                         children: <Widget>[
                           Padding(
                               padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
@@ -195,7 +200,7 @@ class Order_DialogState extends State<Order_Dialog> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(2, 10, 0, 0),
+                            padding: const EdgeInsets.fromLTRB(2, 0, 0, 30),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: <Widget>[
@@ -240,13 +245,20 @@ class Order_DialogState extends State<Order_Dialog> {
                     ],
                   ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                      child: Container(
+                        child: CustomPaint(
+                            painter: Drawhorizontalline(
+                                false, 180.0, 500.0, Colors.blueGrey, 0.9)),
+                      )),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 15, 0, 0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
                         Expanded(
-                          child: Text(widget.desc,
-                              style: StylesText.style13Blugray),
+                          child:
+                              Text(widget.desc, style: StylesText.style15Black),
                         )
                       ],
                     ),
