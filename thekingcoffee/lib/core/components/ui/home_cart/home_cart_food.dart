@@ -6,6 +6,7 @@ import 'package:thekingcoffee/app/data/repository/get_coffee_products.dart';
 import 'package:thekingcoffee/app/data/repository/get_data_all_product.dart';
 import 'package:thekingcoffee/app/data/repository/get_food_products.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
+import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog_order.dart';
 import 'package:thekingcoffee/core/components/widgets/drawline.dart';
 import 'package:thekingcoffee/core/components/widgets/favorite.dart';
@@ -293,12 +294,14 @@ class _Home_Card_Food_State extends State<Home_Card_Food> {
                                         topping = data[index]['Toppings'],
                                         LoadingDialog_Order.showLoadingDialog(
                                           context,
-                                          data[index]['Name'].toString(),
-                                          data[index]['File_Path'].toString(),
-                                          data[index]['Description'].toString(),
-                                          data[index]['Price'].toString(),
-                                          data[index]['Toppings'].toString(),
-                                          data[index]['Size'].toString(),
+                                          data[index]['Id'],
+                                          data[index]['Name'],
+                                          data[index]['File_Path'],
+                                          data[index]['Description'],
+                                          data[index]['Price'],
+                                          data[index]['Toppings'],
+                                          data[index]['Size'],
+                                          ListOrderProducts
                                         ),
                                       });
                             }

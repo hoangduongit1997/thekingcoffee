@@ -1,8 +1,8 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
-import 'package:thekingcoffee/core/components/ui/home_cart/home_cart.dart';
-import 'package:thekingcoffee/core/components/ui/home_cart/home_cart.dart'
+import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
+import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart'
     as prefix0;
 import 'package:thekingcoffee/core/components/ui/show_dialog/order_dialog.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
@@ -22,7 +22,7 @@ class LoadingDialog_Order {
         context: context,
         barrierDismissible: false,
         builder: (context) => AlertDialog(
-          contentPadding:EdgeInsets.all(10.0),
+              contentPadding: EdgeInsets.all(10.0),
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(Radius.circular(15.0))),
               content: Container(
@@ -39,12 +39,22 @@ class LoadingDialog_Order {
                         t['Size'] == selectedProduct['Size']).toList();
                     bool isAlready = false;
                     int position = -1;
+                    if (selectedProduct['Toppings'] == null &&
+                        ListOrderProducts.length > 0 &&
+                        lst_index.length > 0) {
+                      ListOrderProducts[
+                              ListOrderProducts.indexOf(lst_index.first)]
+                          ['Quantity']++;
+                      selectedProduct = {}; //reset sản phẩm chọn
+                      Navigator.of(context).pop();
+                      return;
+                    }
                     if (lst_index != null && lst_index.length > 0) {
                       for (int index = 0; index < lst_index.length; index++) {
                         //tim vi tri trung
-                        // if (index > -1) {
-                        var temp = ListOrderProducts[index]['Toppings']
-                            as List<dynamic>;
+
+                        var temp =
+                            lst_index[index]['Toppings'] as List<dynamic>;
                         if (temp.length ==
                             (selectedProduct['Toppings'] as List<dynamic>)
                                 .length) {
@@ -54,7 +64,9 @@ class LoadingDialog_Order {
                                 orElse: () => null);
                             if (element != null) {
                               isAlready = true;
-                              position = index;
+                              position =
+                                  ListOrderProducts.indexOf(lst_index[index]);
+                              //position = index;
                             } else {
                               // isAlready = false;
                               break;

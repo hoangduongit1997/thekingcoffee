@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/data/model/topping.dart';
-import 'package:thekingcoffee/app/data/repository/get_coffee_products.dart';
 import 'package:thekingcoffee/app/data/repository/get_data_all_product.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog_order.dart';
@@ -12,20 +11,21 @@ import 'package:thekingcoffee/core/components/widgets/rating.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
-class Home_Card_Coffee extends StatefulWidget {
-  Home_Card_Coffee({Key key}) : super(key: key);
+class Home_Card_State extends StatefulWidget {
+  Home_Card_State({Key key}) : super(key: key);
 
-  _Home_Card_Coffee_State createState() => _Home_Card_Coffee_State();
+  _Home_CardState createState() => _Home_CardState();
 }
 
 var data = [];
 var data_checked = [];
 int lenght = 0;
-var selectedProduct={};
-var ListOrderProducts=[];
+var selectedProduct = {};
+var ListOrderProducts = [];
+
 class _Home_CardState extends State<Home_Card_State> {
   intDataHomeScreen() async {
-    final result = await Get_Coffee_Product();
+    final result = await Get_Data_All_Product();
     setState(() {
       data = result;
       lenght = data.length;
@@ -128,7 +128,7 @@ class _Home_CardState extends State<Home_Card_State> {
                                                     ),
                                                   ),
                                                   Favorite(
-                                                    color: Colors.red,
+                                                    color: Colors.grey,
                                                   ),
                                                 ],
                                               ),
@@ -173,25 +173,6 @@ class _Home_CardState extends State<Home_Card_State> {
                                                         .style13BrownNormal)
                                               ],
                                             ),
-                                          ),
-                                          Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                5, 10, 50, 0),
-                                            child: Container(
-                                                child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              children: <Widget>[
-                                                CustomPaint(
-                                                  painter: Drawhorizontalline(
-                                                      false,
-                                                      0.0,
-                                                      200.0,
-                                                      Colors.blueGrey,
-                                                      0.2),
-                                                )
-                                              ],
-                                            )),
                                           ),
                                           Padding(
                                             padding: const EdgeInsets.fromLTRB(
@@ -287,16 +268,15 @@ class _Home_CardState extends State<Home_Card_State> {
                                       )),
                                   onTap: () => {
                                         LoadingDialog_Order.showLoadingDialog(
-                                          context,
-                                          data[index]['Id'],
-                                          data[index]['Name'],
-                                          data[index]['File_Path'],
-                                          data[index]['Description'],
-                                          data[index]['Price'],
-                                          data[index]['Toppings'],
-                                          data[index]['Size'],
-                                          ListOrderProducts
-                                        ),
+                                            context,
+                                            data[index]['Id'],
+                                            data[index]['Name'],
+                                            data[index]['File_Path'],
+                                            data[index]['Description'],
+                                            data[index]['Price'],
+                                            data[index]['Toppings'],
+                                            data[index]['Size'],
+                                            ListOrderProducts),
                                       });
                             }
                           }),
