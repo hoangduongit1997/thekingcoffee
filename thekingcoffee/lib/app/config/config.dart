@@ -1,4 +1,5 @@
 class Config {
+  static int current_botton_tab=0;
   static String ip = "http://207.148.71.41/";
   static String login_Api = ip + "api/Customer/Login";
   static String signup_API = ip + "api/Customer/SignUp";

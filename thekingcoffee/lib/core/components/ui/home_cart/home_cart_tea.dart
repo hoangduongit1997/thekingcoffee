@@ -130,7 +130,7 @@ class _Home_Card_Tea_State extends State<Home_Card_Tea> {
                                                     ),
                                                   ),
                                                   Favorite(
-                                                    color: Colors.grey,
+                                                    color: Colors.red,
                                                   ),
                                                 ],
                                               ),

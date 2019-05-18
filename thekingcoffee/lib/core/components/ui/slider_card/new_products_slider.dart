@@ -8,6 +8,7 @@ import 'package:thekingcoffee/app/screens/helper/dashboard_helper/placeholder_ho
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog_order.dart';
 import 'package:thekingcoffee/core/components/widgets/drawline.dart';
+import 'package:thekingcoffee/core/components/widgets/favorite.dart';
 import 'package:thekingcoffee/core/components/widgets/rating.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 
@@ -80,26 +81,42 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
                   children: <Widget>[
                     Padding(
                         padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                        child: Container(
-                            height: Dimension.getHeight(0.23),
-                            width: Dimension.getWidth(0.45),
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(8.0),
-                              child: CachedNetworkImage(
-                                  imageUrl: Config.ip +
-                                      list_new_products[index]['File_Path'],
-                                  fit: BoxFit.cover,
-                                  height: Dimension.getHeight(0.3),
-                                  width: Dimension.getWidth(0.5),
-                                  placeholder: (context, url) => new SizedBox(
-                                        child: Center(
-                                            child: CircularProgressIndicator(
-                                          valueColor:
-                                              new AlwaysStoppedAnimation<Color>(
-                                                  Colors.redAccent),
-                                        )),
-                                      )),
-                            )))
+                        child: Row(
+                          children: <Widget>[
+                            Container(
+                                height: Dimension.getHeight(0.23),
+                                width: Dimension.getWidth(0.45),
+                                child: Stack(
+                                  alignment: AlignmentDirectional.topEnd,
+                                  children: <Widget>[
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      child: CachedNetworkImage(
+                                          imageUrl: Config.ip +
+                                              list_new_products[index]
+                                                  ['File_Path'],
+                                          fit: BoxFit.cover,
+                                          height: Dimension.getHeight(0.3),
+                                          width: Dimension.getWidth(0.5),
+                                          placeholder: (context, url) =>
+                                              new SizedBox(
+                                                child: Center(
+                                                    child:
+                                                        CircularProgressIndicator(
+                                                  valueColor:
+                                                      new AlwaysStoppedAnimation<
+                                                              Color>(
+                                                          Colors.redAccent),
+                                                )),
+                                              )),
+                                    ),
+                                    Favorite(
+                                      color: Colors.red,
+                                    ),
+                                  ],
+                                )),
+                          ],
+                        ))
                   ],
                 ),
                 Column(

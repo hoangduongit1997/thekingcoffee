@@ -65,200 +65,199 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                     color: Colors.brown,
                     splashColor: Colors.brown,
                     onPressed: onsearchbutton,
-                                      )
-                                    ],
-                                  ),
-                                  resizeToAvoidBottomInset: false,
-                                  body: Container(
-                                      color: Colors.white,
-                                      padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-                                      constraints: BoxConstraints.expand(),
-                                      child: SingleChildScrollView(
-                                        child: Column(
-                                          mainAxisAlignment: MainAxisAlignment.start,
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: <Widget>[
-                                            Padding(
-                                              padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                                              child: Text("All Catalogues",
-                                                  style: StylesText.style20BrownNomorlRaleway),
-                                            ),
-                                            Padding(
-                                                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                                                child: Container(
-                                                  height: Dimension.getHeight(0.03),
-                                                  width: double.infinity,
-                                                  padding:
-                                                      const EdgeInsets.only(left: 5.0, right: 20.0),
-                                                  decoration: BoxDecoration(
-                                                      border: Border(
-                                                          left: BorderSide(
-                                                    color: Colors.redAccent,
-                                                    width: Dimension.getWidth(0.005),
-                                                  ))),
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.spaceBetween,
-                                                    children: <Widget>[
-                                                      Text("New product",
-                                                          style:
-                                                              StylesText.style17BrownBoldlRaleway),
-                                                    ],
-                                                  ),
-                                                )),
-                                            Padding(
-                                                padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                                                child: Center(
-                                                  child: Container(
-                                                      width: double.infinity,
-                                                      height: Dimension.getHeight(0.32),
-                                                      child: Center(
-                                                        child: CarouselDemo(),
-                                                      )),
-                                                )),
-                                            Padding(
-                                                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                                                child: Container(
-                                                  height: Dimension.getHeight(0.03),
-                                                  padding:
-                                                      const EdgeInsets.only(left: 5.0, right: 20.0),
-                                                  decoration: BoxDecoration(
-                                                      border: Border(
-                                                          left: BorderSide(
-                                                    color: Colors.redAccent,
-                                                    width: 2.0,
-                                                  ))),
-                                                  width: double.infinity,
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.spaceBetween,
-                                                    children: <Widget>[
-                                                      Text("Coffee",
-                                                          style:
-                                                              StylesText.style17BrownBoldlRaleway),
-                                                      Text("See all",
-                                                          style: StylesText.style15RedAccentBold)
-                                                    ],
-                                                  ),
-                                                )),
-                                            Padding(
-                                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                              child: Container(
-                                                  height: Dimension.getHeight(0.45),
-                                                  width: double.infinity,
-                                                  child: Home_Card_Coffee()),
-                                            ),
-                                            Padding(
-                                                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                                                child: Container(
-                                                  height: Dimension.getHeight(0.03),
-                                                  padding:
-                                                      const EdgeInsets.only(left: 5.0, right: 20.0),
-                                                  decoration: BoxDecoration(
-                                                      border: Border(
-                                                          left: BorderSide(
-                                                    color: Colors.redAccent,
-                                                    width: 2.0,
-                                                  ))),
-                                                  width: double.infinity,
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.spaceBetween,
-                                                    children: <Widget>[
-                                                      Text("Tea",
-                                                          style:
-                                                              StylesText.style17BrownBoldlRaleway),
-                                                      Text("See all",
-                                                          style: StylesText.style15RedAccentBold)
-                                                    ],
-                                                  ),
-                                                )),
-                                            Padding(
-                                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                              child: Container(
-                                                  height: Dimension.getHeight(0.45),
-                                                  width: double.infinity,
-                                                  child: Home_Card_Tea()),
-                                            ),
-                                            Padding(
-                                                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                                                child: Container(
-                                                  height: Dimension.getHeight(0.03),
-                                                  padding:
-                                                      const EdgeInsets.only(left: 5.0, right: 20.0),
-                                                  decoration: BoxDecoration(
-                                                      border: Border(
-                                                          left: BorderSide(
-                                                    color: Colors.redAccent,
-                                                    width: 2.0,
-                                                  ))),
-                                                  width: double.infinity,
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.spaceBetween,
-                                                    children: <Widget>[
-                                                      Text("Drinking",
-                                                          style:
-                                                              StylesText.style17BrownBoldlRaleway),
-                                                      Text(
-                                                        "See all",
-                                                        style: StylesText.style15RedAccentBold,
-                                                      )
-                                                    ],
-                                                  ),
-                                                )),
-                                            Padding(
-                                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                              child: Container(
-                                                  height: Dimension.getHeight(0.45),
-                                                  width: double.infinity,
-                                                  child: Home_Card_Drinking()),
-                                            ),
-                                            Padding(
-                                                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                                                child: Container(
-                                                  height: Dimension.getHeight(0.03),
-                                                  padding:
-                                                      const EdgeInsets.only(left: 5.0, right: 20.0),
-                                                  decoration: BoxDecoration(
-                                                      border: Border(
-                                                          left: BorderSide(
-                                                    color: Colors.redAccent,
-                                                    width: 2.0,
-                                                  ))),
-                                                  width: double.infinity,
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.spaceBetween,
-                                                    children: <Widget>[
-                                                      Text("Food",
-                                                          style:
-                                                              StylesText.style17BrownBoldlRaleway),
-                                                      Text(
-                                                        "See all",
-                                                        style: StylesText.style15RedAccentBold,
-                                                      )
-                                                    ],
-                                                  ),
-                                                )),
-                                            Padding(
-                                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-                                              child: Container(
-                                                height: Dimension.getHeight(0.45),
-                                                width: double.infinity,
-                                                child: Home_Card_Food(),
-                                              ),
-                                            )
-                                          ],
-                                        ),
-                                      )),
-                                  drawer: Drawer(
-                                    child: HomeMenu(),
-                                  ),
-                                ),
-                              );
-                      }
-                      void onsearchbutton() {
-
+                  )
+                ],
+              ),
+              resizeToAvoidBottomInset: false,
+              body: Container(
+                  color: Colors.white,
+                  padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                  constraints: BoxConstraints.expand(),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: <Widget>[
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                          child: Text("All Catalogues",
+                              style: StylesText.style20BrownNomorlRaleway),
+                        ),
+                        Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                            child: Container(
+                              height: Dimension.getHeight(0.03),
+                              width: double.infinity,
+                              padding:
+                                  const EdgeInsets.only(left: 5.0, right: 20.0),
+                              decoration: BoxDecoration(
+                                  border: Border(
+                                      left: BorderSide(
+                                color: Colors.redAccent,
+                                width: Dimension.getWidth(0.005),
+                              ))),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Text("New product",
+                                      style:
+                                          StylesText.style17BrownBoldlRaleway),
+                                ],
+                              ),
+                            )),
+                        Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                            child: Center(
+                              child: Container(
+                                  width: double.infinity,
+                                  height: Dimension.getHeight(0.32),
+                                  child: Center(
+                                    child: CarouselDemo(),
+                                  )),
+                            )),
+                        Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                            child: Container(
+                              height: Dimension.getHeight(0.03),
+                              padding:
+                                  const EdgeInsets.only(left: 5.0, right: 20.0),
+                              decoration: BoxDecoration(
+                                  border: Border(
+                                      left: BorderSide(
+                                color: Colors.redAccent,
+                                width: 2.0,
+                              ))),
+                              width: double.infinity,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Text("Coffee",
+                                      style:
+                                          StylesText.style17BrownBoldlRaleway),
+                                  Text("See all",
+                                      style: StylesText.style15RedAccentBold)
+                                ],
+                              ),
+                            )),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                          child: Container(
+                              height: Dimension.getHeight(0.45),
+                              width: double.infinity,
+                              child: Home_Card_Coffee()),
+                        ),
+                        Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                            child: Container(
+                              height: Dimension.getHeight(0.03),
+                              padding:
+                                  const EdgeInsets.only(left: 5.0, right: 20.0),
+                              decoration: BoxDecoration(
+                                  border: Border(
+                                      left: BorderSide(
+                                color: Colors.redAccent,
+                                width: 2.0,
+                              ))),
+                              width: double.infinity,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Text("Tea",
+                                      style:
+                                          StylesText.style17BrownBoldlRaleway),
+                                  Text("See all",
+                                      style: StylesText.style15RedAccentBold)
+                                ],
+                              ),
+                            )),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                          child: Container(
+                              height: Dimension.getHeight(0.45),
+                              width: double.infinity,
+                              child: Home_Card_Tea()),
+                        ),
+                        Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                            child: Container(
+                              height: Dimension.getHeight(0.03),
+                              padding:
+                                  const EdgeInsets.only(left: 5.0, right: 20.0),
+                              decoration: BoxDecoration(
+                                  border: Border(
+                                      left: BorderSide(
+                                color: Colors.redAccent,
+                                width: 2.0,
+                              ))),
+                              width: double.infinity,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Text("Drinking",
+                                      style:
+                                          StylesText.style17BrownBoldlRaleway),
+                                  Text(
+                                    "See all",
+                                    style: StylesText.style15RedAccentBold,
+                                  )
+                                ],
+                              ),
+                            )),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                          child: Container(
+                              height: Dimension.getHeight(0.45),
+                              width: double.infinity,
+                              child: Home_Card_Drinking()),
+                        ),
+                        Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                            child: Container(
+                              height: Dimension.getHeight(0.03),
+                              padding:
+                                  const EdgeInsets.only(left: 5.0, right: 20.0),
+                              decoration: BoxDecoration(
+                                  border: Border(
+                                      left: BorderSide(
+                                color: Colors.redAccent,
+                                width: 2.0,
+                              ))),
+                              width: double.infinity,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  Text("Food",
+                                      style:
+                                          StylesText.style17BrownBoldlRaleway),
+                                  Text(
+                                    "See all",
+                                    style: StylesText.style15RedAccentBold,
+                                  )
+                                ],
+                              ),
+                            )),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 5, 0, 10),
+                          child: Container(
+                            height: Dimension.getHeight(0.45),
+                            width: double.infinity,
+                            child: Home_Card_Food(),
+                          ),
+                        )
+                      ],
+                    ),
+                  )),
+              drawer: Drawer(
+                child: HomeMenu(),
+              ),
+            ),
+          );
   }
+
+  void onsearchbutton() {}
 }

@@ -130,7 +130,7 @@ class _Home_Card_Drinking_State extends State<Home_Card_Drinking> {
                                                     ),
                                                   ),
                                                   Favorite(
-                                                    color: Colors.grey,
+                                                    color: Colors.red,
                                                   ),
                                                 ],
                                               ),

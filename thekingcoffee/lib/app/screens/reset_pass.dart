@@ -91,7 +91,7 @@ class _ResetPassState extends State<ResetPass> {
                           shape: RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(8))),
-                          onPressed: onSigninClick,
+                          onPressed: onSubmitClick,
                         ),
                       ),
                     ),
@@ -103,7 +103,7 @@ class _ResetPassState extends State<ResetPass> {
     );
   }
 
-  void onSigninClick() async {
+  void onSubmitClick() async {
     LoadingDialog.showLoadingDialog(context, "Loading...");
     final prefs = await SharedPreferences.getInstance()
         .timeout(const Duration(seconds: 4));

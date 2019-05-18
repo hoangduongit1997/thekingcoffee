@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/screens/dashboard.dart';
+import 'package:thekingcoffee/app/screens/favorite_page.dart';
 import 'package:thekingcoffee/app/screens/helper/dashboard_helper/placeholder_home.dart';
 import 'package:thekingcoffee/app/screens/login.dart';
 import 'package:thekingcoffee/app/screens/shopping_list.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:thekingcoffee/core/components/widgets/favorite.dart';
 
 class HomeMenu extends StatefulWidget {
   @override
@@ -43,7 +45,6 @@ class _HomeMenuState extends State<HomeMenu> {
           decoration: new BoxDecoration(color: Colors.redAccent),
         ),
         InkWell(
-          onTap: () {},
           child: ListTile(
             title: Text(
               'Home',
@@ -51,8 +52,9 @@ class _HomeMenuState extends State<HomeMenu> {
             ),
             leading: Icon(Icons.home, color: Colors.redAccent),
             onTap: () {
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => PlaceholderMainWidget()));
+              Config.current_botton_tab = 0;
+              Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) => PlaceholderMainWidget()));
             },
           ),
         ),
@@ -70,7 +72,11 @@ class _HomeMenuState extends State<HomeMenu> {
           ),
         ),
         InkWell(
-          onTap: () {},
+          onTap: () {
+            Config.current_botton_tab = 1;
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => Favorite_Page()));
+          },
           child: ListTile(
             title: Text(
               'Favourites',
@@ -80,17 +86,17 @@ class _HomeMenuState extends State<HomeMenu> {
           ),
         ),
         InkWell(
-          onTap: () {},
+          onTap: () {
+            Config.current_botton_tab = 2;
+            Navigator.of(context).pushReplacement(
+                MaterialPageRoute(builder: (context) => Shopping_List()));
+          },
           child: ListTile(
             title: Text(
               'Shopping List',
               style: StylesText.style13BlackBold,
             ),
             leading: Icon(Icons.shopping_cart, color: Colors.redAccent),
-            onTap: () {
-              Navigator.of(context).pushReplacement(
-                  MaterialPageRoute(builder: (context) => Shopping_List()));
-            },
           ),
         ),
         InkWell(
@@ -104,7 +110,6 @@ class _HomeMenuState extends State<HomeMenu> {
           ),
         ),
         InkWell(
-          onTap: () {},
           child: ListTile(
             title: Text(
               'Log out',
@@ -117,7 +122,8 @@ class _HomeMenuState extends State<HomeMenu> {
                   builder: (BuildContext context) {
                     return AlertDialog(
                       shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(15.0))),
+                          borderRadius:
+                              BorderRadius.all(Radius.circular(15.0))),
                       title: new Text("Confirm",
                           style: StylesText.style18RedaccentBold),
                       content: new Text(

@@ -1,6 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/screens/dashboard.dart';
+import 'package:thekingcoffee/app/screens/helper/dashboard_helper/placeholder_home.dart';
 import 'package:thekingcoffee/app/screens/map.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
@@ -63,8 +65,9 @@ class Shopping_ListState extends State<Shopping_List> {
         appBar: AppBar(
           leading: FlatButton(
               onPressed: () {
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => DashBoard()));
+                Config.current_botton_tab = 0;
+                Navigator.of(context).pushReplacement(MaterialPageRoute(
+                    builder: (context) => DashBoard()));
               },
               child: Icon(
                 Icons.arrow_back,

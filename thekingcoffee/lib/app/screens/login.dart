@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:thekingcoffee/app/bloc/login_bloc.dart';
+import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/data/repository/login_repository.dart';
 import 'package:thekingcoffee/app/screens/dashboard.dart';
 import 'package:thekingcoffee/app/screens/gmail.auth.dart';
@@ -166,6 +167,7 @@ class MyAppState extends State<LoginWithPass> {
   }
 
   void onSigninClick() async {
+    Config.current_botton_tab=0;
     LoadingDialog.showLoadingDialog(context, "Loading...");
     if ((await Validation.isConnectedNetwork()) == true &&
         loginBloc.isValidInfo(_user.text.trim(), _pass.text.trim()) == true) {
