@@ -61,13 +61,6 @@ class LoadingDialog_Order {
                             }
                           }
                         }
-                        // }
-                        // if (isAlready) {
-                        //   ListOrderProducts[index]['Quantity']++;
-                        // } else {
-                        //   ListOrderProducts.add(selectedProduct);
-                        // }
-
                       }
                     }
                     if (isAlready && position > -1) {
