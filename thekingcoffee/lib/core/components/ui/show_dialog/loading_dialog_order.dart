@@ -8,6 +8,7 @@ import 'package:thekingcoffee/core/components/ui/show_dialog/order_dialog.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 
 class LoadingDialog_Order {
+  bool isEdit=false;
   static void showLoadingDialog(
       BuildContext context,
       int id,
@@ -17,10 +18,11 @@ class LoadingDialog_Order {
       int price,
       List<dynamic> topping,
       List<dynamic> size,
-      List<Object> orders) {
+      List<Object> orders,
+      ) {
     showDialog(
         context: context,
-        barrierDismissible: false,
+        barrierDismissible: true,
         builder: (context) => AlertDialog(
               contentPadding: EdgeInsets.all(10.0),
               shape: RoundedRectangleBorder(
@@ -34,9 +36,18 @@ class LoadingDialog_Order {
                 FlatButton(
                   child: Text("OK"),
                   onPressed: () {
-                    var lst_index = ListOrderProducts.where((t) =>
-                        t['Id'] == selectedProduct['Id'] &&
-                        t['Size'] == selectedProduct['Size']).toList();
+                    
+                    var lst_index;
+                    if (selectedProduct['Size'] == null) {
+                      lst_index = ListOrderProducts.where(
+                          (t) => t['Id'] == selectedProduct['Id']).toList();
+                    } else {
+                      lst_index = ListOrderProducts.where((t) =>
+                              t['Id'] == selectedProduct['Id'] &&
+                              t['Size']['Id'] == selectedProduct['Size']['Id'])
+                          .toList();
+                    }
+
                     bool isAlready = false;
                     int position = -1;
                     if (selectedProduct['Toppings'] == null &&
@@ -44,7 +55,7 @@ class LoadingDialog_Order {
                         lst_index.length > 0) {
                       ListOrderProducts[
                               ListOrderProducts.indexOf(lst_index.first)]
-                          ['Quantity']++;
+                          ['Quantity'] += selectedProduct['Quantity'];
                       selectedProduct = {}; //reset sản phẩm chọn
                       Navigator.of(context).pop();
                       return;
@@ -55,9 +66,10 @@ class LoadingDialog_Order {
 
                         var temp =
                             lst_index[index]['Toppings'] as List<dynamic>;
-                        if (temp.length ==
-                            (selectedProduct['Toppings'] as List<dynamic>)
-                                .length) {
+                        if (temp != null &&
+                            temp.length ==
+                                (selectedProduct['Toppings'] as List<dynamic>)
+                                    .length) {
                           for (var item in selectedProduct['Toppings']) {
                             var element = temp.firstWhere(
                                 (t) => t['Id'] == item['Id'],
@@ -76,10 +88,12 @@ class LoadingDialog_Order {
                       }
                     }
                     if (isAlready && position > -1) {
-                      ListOrderProducts[position]['Quantity']++;
+                      ListOrderProducts[position]['Quantity'] +=
+                          selectedProduct['Quantity'];
                     } else {
                       ListOrderProducts.add(selectedProduct);
                     }
+                    print(ListOrderProducts.toString());
                     selectedProduct = {}; //reset sản phẩm chọn
                     Navigator.of(context).pop();
                   },

@@ -30,6 +30,7 @@ class _Home_Card_Drinking_State extends State<Home_Card_Drinking> {
   intDataHomeScreen() async {
     final result = await Get_Drinking_Products();
     setState(() {
+      //cho nay bi loi
       data = result;
       lenght = data.length;
     });
@@ -191,7 +192,7 @@ class _Home_Card_Drinking_State extends State<Home_Card_Drinking> {
                                                       0.0,
                                                       200.0,
                                                       Colors.blueGrey,
-                                                      0.2),
+                                                      0.5),
                                                 )
                                               ],
                                             )),
@@ -293,16 +294,15 @@ class _Home_Card_Drinking_State extends State<Home_Card_Drinking> {
                                         size = data[index]['Size'],
                                         topping = data[index]['Toppings'],
                                         LoadingDialog_Order.showLoadingDialog(
-                                          context,
-                                          data[index]['Id'],
-                                          data[index]['Name'],
-                                          data[index]['File_Path'],
-                                          data[index]['Description'],
-                                          data[index]['Price'],
-                                          data[index]['Toppings'],
-                                          data[index]['Size'],
-                                          ListOrderProducts
-                                        ),
+                                            context,
+                                            data[index]['Id'],
+                                            data[index]['Name'],
+                                            data[index]['File_Path'],
+                                            data[index]['Description'],
+                                            data[index]['Price'],
+                                            data[index]['Toppings'],
+                                            data[index]['Size'],
+                                            ListOrderProducts),
                                       });
                             }
                           }),

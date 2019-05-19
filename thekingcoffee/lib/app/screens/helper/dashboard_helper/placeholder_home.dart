@@ -141,13 +141,13 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                                 ],
                               ),
                             )),
-                        // Padding(
-                        //   padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                        //   child: Container(
-                        //       height: Dimension.getHeight(0.45),
-                        //       width: double.infinity,
-                        //       child: Home_Card()),
-                        // ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                          child: Container(
+                              height: Dimension.getHeight(0.45),
+                              width: double.infinity,
+                              child: Home_Card_Coffee()),
+                        ),
                         Padding(
                             padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                             child: Container(

@@ -11,19 +11,18 @@ import 'package:thekingcoffee/core/components/widgets/rating.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
-class Home_Card_State extends StatefulWidget {
-  Home_Card_State({Key key}) : super(key: key);
+class Home_Card_Coffee extends StatefulWidget {
+  Home_Card_Coffee({Key key}) : super(key: key);
 
-  _Home_CardState createState() => _Home_CardState();
+  _Home_Card_Coffee_State createState() => _Home_Card_Coffee_State();
 }
 
 var data = [];
-var data_checked = [];
 int lenght = 0;
 var selectedProduct = {};
 var ListOrderProducts = [];
 
-class _Home_CardState extends State<Home_Card_State> {
+class _Home_Card_Coffee_State extends State<Home_Card_Coffee> {
   intDataHomeScreen() async {
     final result = await Get_Data_All_Product();
     setState(() {
@@ -128,7 +127,7 @@ class _Home_CardState extends State<Home_Card_State> {
                                                     ),
                                                   ),
                                                   Favorite(
-                                                    color: Colors.grey,
+                                                    color: Colors.red,
                                                   ),
                                                 ],
                                               ),
@@ -174,6 +173,19 @@ class _Home_CardState extends State<Home_Card_State> {
                                               ],
                                             ),
                                           ),
+                                          Padding(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      0, 5, 0, 0),
+                                              child: Container(
+                                                child: CustomPaint(
+                                                    painter: Drawhorizontalline(
+                                                        false,
+                                                        0.0,
+                                                        210.0,
+                                                        Colors.blueGrey,
+                                                        0.5)),
+                                              )),
                                           Padding(
                                             padding: const EdgeInsets.fromLTRB(
                                                 0, 10, 0, 0),

@@ -178,6 +178,19 @@ class _Home_Card_Tea_State extends State<Home_Card_Tea> {
                                             ),
                                           ),
                                           Padding(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      0, 5, 0, 0),
+                                              child: Container(
+                                                child: CustomPaint(
+                                                    painter: Drawhorizontalline(
+                                                        false,
+                                                        0.0,
+                                                        210.0,
+                                                        Colors.blueGrey,
+                                                        0.5)),
+                                              )),
+                                          Padding(
                                             padding: const EdgeInsets.fromLTRB(
                                                 5, 10, 50, 0),
                                             child: Container(
@@ -292,17 +305,16 @@ class _Home_Card_Tea_State extends State<Home_Card_Tea> {
                                         sanpham = data[index],
                                         size = data[index]['Size'],
                                         topping = data[index]['Toppings'],
-                                         LoadingDialog_Order.showLoadingDialog(
-                                          context,
-                                          data[index]['Id'],
-                                          data[index]['Name'],
-                                          data[index]['File_Path'],
-                                          data[index]['Description'],
-                                          data[index]['Price'],
-                                          data[index]['Toppings'],
-                                          data[index]['Size'],
-                                          ListOrderProducts
-                                        ),
+                                        LoadingDialog_Order.showLoadingDialog(
+                                            context,
+                                            data[index]['Id'],
+                                            data[index]['Name'],
+                                            data[index]['File_Path'],
+                                            data[index]['Description'],
+                                            data[index]['Price'],
+                                            data[index]['Toppings'],
+                                            data[index]['Size'],
+                                            ListOrderProducts),
                                       });
                             }
                           }),

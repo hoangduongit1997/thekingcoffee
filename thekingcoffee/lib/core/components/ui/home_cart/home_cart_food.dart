@@ -191,7 +191,7 @@ class _Home_Card_Food_State extends State<Home_Card_Food> {
                                                       0.0,
                                                       200.0,
                                                       Colors.blueGrey,
-                                                      0.2),
+                                                      0.5),
                                                 )
                                               ],
                                             )),

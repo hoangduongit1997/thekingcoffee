@@ -21,4 +21,5 @@ class Config {
       "https://maps.googleapis.com/maps/api/place/textsearch/json?key=" +
           app_key +
           "&language=vi&region=VN&query=";
+          static String order_API=ip+"api/Order/OrderOnline";
 }

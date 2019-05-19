@@ -8,20 +8,35 @@ import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart
 import 'package:grouped_buttons/grouped_buttons.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 
-class Order_Dialog extends StatefulWidget {
+class Edit_Order_Dialog extends StatefulWidget {
   final int id;
   final String img;
   final String name;
   final String desc;
   final int price;
   final List<dynamic> toppings;
+  final List<dynamic> selectedTopping;
   final List<dynamic> size;
-  Order_Dialog(this.id, this.img, this.name, this.desc, this.price, this.size,
-      this.toppings);
+  final dynamic selectedSize;
+  final int estimatePrice;
+  final int quantity;
+
+  Edit_Order_Dialog(
+      this.id,
+      this.img,
+      this.name,
+      this.desc,
+      this.price,
+      this.toppings,
+      this.selectedTopping,
+      this.size,
+      this.selectedSize,
+      this.estimatePrice,
+      this.quantity);
   Order_DialogState createState() => Order_DialogState();
 }
 
-class Order_DialogState extends State<Order_Dialog> {
+class Order_DialogState extends State<Edit_Order_Dialog> {
   var product = selectedProduct;
   int number = 1;
   int money;
@@ -108,22 +123,20 @@ class Order_DialogState extends State<Order_Dialog> {
   @override
   void initState() {
     super.initState();
-    money = widget.price;
-    if (widget.size.length > 0) {
-      money += widget.size[0]['PlusMonney'];
-    }
+    money = widget.estimatePrice;
     if (widget.size != null && widget.size.length > 0) {
-      selectedsize = widget.size[0];
+      selectedsize = widget.selectedSize;
     }
-    selectedProduct['Price'] = money;
-    selectedProduct['Id'] = widget.id;
-    selectedProduct['Img'] = widget.img;
-    selectedProduct['Name'] = widget.name;
-    selectedProduct['Size'] = selectedsize;
-    selectedProduct['Quantity'] = number;
-    //lay de list cart
-    selectedProduct['ListSize'] = widget.size;
-    selectedProduct['ListTopping'] = widget.toppings;
+    if (widget.selectedTopping != null && widget.selectedTopping.length > 0) {
+      lstSelectedTopping = widget.selectedTopping;
+    }
+    // selectedProduct['Price'] = money;
+    // selectedProduct['Id'] = widget.id;
+    // selectedProduct['Img'] = widget.img;
+    // selectedProduct['Name'] = widget.name;
+    // selectedProduct['Size'] = selectedsize;
+    // selectedProduct['Quantity'] = number;
+    number = widget.quantity;
   }
 
   @override

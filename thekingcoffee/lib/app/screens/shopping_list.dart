@@ -6,6 +6,9 @@ import 'package:thekingcoffee/app/screens/helper/dashboard_helper/placeholder_ho
 import 'package:thekingcoffee/app/screens/map.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
+import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
+import 'package:thekingcoffee/core/components/ui/show_dialog/edit_loading_dialog.dart';
+import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog_order.dart';
 import 'package:thekingcoffee/core/components/widgets/address_picker.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -17,36 +20,8 @@ class Shopping_List extends StatefulWidget {
 }
 
 class Shopping_ListState extends State<Shopping_List> {
-  static var Product_Shopping_List = [
-    {
-      "img": "http://207.148.71.41/storage/images/kingcoffee/coffee3.jpg",
-      "name": "Tra dao",
-      "price": 100,
-      "quantity": 2,
-    },
-    {
-      "img": "http://207.148.71.41/storage/images/kingcoffee/coffee3.jpg",
-      "name": "Tra",
-      "price": 100,
-      "quantity": 2,
-    },
-    {
-      "img": "http://207.148.71.41/storage/images/kingcoffee/coffee3.jpg",
-      "name": "Tra dao",
-      "price": 100,
-      "quantity": 2,
-    },
-    {
-      "img": "http://207.148.71.41/storage/images/kingcoffee/coffee3.jpg",
-      "name": "Tra dao",
-      "price": 100,
-      "quantity": 2,
-    }
-  ];
-  var fake_list = [];
   @override
   void initState() {
-    fake_list = Product_Shopping_List;
     super.initState();
   }
 
@@ -66,8 +41,8 @@ class Shopping_ListState extends State<Shopping_List> {
           leading: FlatButton(
               onPressed: () {
                 Config.current_botton_tab = 0;
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => DashBoard()));
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => DashBoard()));
               },
               child: Icon(
                 Icons.arrow_back,
@@ -79,50 +54,52 @@ class Shopping_ListState extends State<Shopping_List> {
             style: StylesText.style20BrownBold,
           ),
           actions: <Widget>[
-            FlatButton(
-                onPressed: () {
-                  showDialog(
-                      context: context,
-                      barrierDismissible: false,
-                      builder: (BuildContext context) {
-                        return AlertDialog(
-                          shape: RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15.0))),
-                          title: new Text("Confirm",
-                              style: StylesText.style18RedaccentBold),
-                          content: new Text(
-                            "Do you want to delete all shopping list ?",
-                            style: StylesText.style15Black,
-                          ),
-                          actions: <Widget>[
-                            FlatButton(
-                              child: Text("No"),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                            FlatButton(
-                              child: Text("Yes"),
-                              onPressed: () {
-                                setState(() {
-                                  fake_list.clear();
-                                });
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        );
-                      });
-                },
-                child: Icon(
-                  Icons.delete_forever,
-                  color: Colors.redAccent,
-                ))
+            ListOrderProducts.isEmpty
+                ? Container()
+                : FlatButton(
+                    onPressed: () {
+                      showDialog(
+                          context: context,
+                          barrierDismissible: false,
+                          builder: (BuildContext context) {
+                            return AlertDialog(
+                              shape: RoundedRectangleBorder(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(15.0))),
+                              title: new Text("Confirm",
+                                  style: StylesText.style18RedaccentBold),
+                              content: new Text(
+                                "Do you want to delete all shopping list ?",
+                                style: StylesText.style15Black,
+                              ),
+                              actions: <Widget>[
+                                FlatButton(
+                                  child: Text("No"),
+                                  onPressed: () {
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                                FlatButton(
+                                  child: Text("Yes"),
+                                  onPressed: () {
+                                    setState(() {
+                                      ListOrderProducts.clear();
+                                    });
+                                    Navigator.of(context).pop();
+                                  },
+                                ),
+                              ],
+                            );
+                          });
+                    },
+                    child: Icon(
+                      Icons.delete_forever,
+                      color: Colors.redAccent,
+                    ))
           ],
         ),
         resizeToAvoidBottomInset: false,
-        body: Product_Shopping_List.isEmpty
+        body: ListOrderProducts.isEmpty
             ? Container(
                 child: Center(
                     child:
@@ -169,200 +146,253 @@ class Shopping_ListState extends State<Shopping_List> {
                       Padding(
                           padding: const EdgeInsets.fromLTRB(0, 2, 0, 0),
                           child: Container(
-                            height: Dimension.getHeight(0.5),
+                            height: Dimension.getHeight(0.45),
                             width: double.infinity,
                             child: ListView.builder(
                               shrinkWrap: true,
                               scrollDirection: Axis.vertical,
-                              itemCount: fake_list.length,
+                              itemCount: ListOrderProducts.length,
                               itemBuilder: (context, index) {
                                 return Slidable(
                                   delegate: new SlidableDrawerDelegate(),
                                   actionExtentRatio: 0.25,
-                                  child: Container(
-                                      padding: const EdgeInsets.all(2.0),
-                                      child: Container(
-                                          height: Dimension.getHeight(0.135),
-                                          decoration: BoxDecoration(
-                                              color: Colors.white,
-                                              border: Border.all(
-                                                  color: Colors.grey[300]),
-                                              borderRadius: BorderRadius.all(
-                                                  Radius.circular(8.0))),
-                                          child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.start,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: <Widget>[
-                                                Row(
-                                                  children: <Widget>[
-                                                    Stack(
-                                                      alignment:
-                                                          AlignmentDirectional
-                                                              .topEnd,
-                                                      children: <Widget>[
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .fromLTRB(
-                                                                  0, 0, 0, 0),
-                                                          child: Container(
-                                                            height: Dimension
-                                                                .getHeight(
-                                                                    0.13),
-                                                            width: Dimension
-                                                                .getWidth(0.25),
-                                                            decoration:
-                                                                new BoxDecoration(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8.0),
-                                                              border: new Border
-                                                                      .all(
-                                                                  color: Colors
-                                                                      .grey),
-                                                            ),
-                                                            child: ClipRRect(
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          8.0),
-                                                              child:
-                                                                  CachedNetworkImage(
-                                                                imageUrl:
-                                                                    fake_list[
-                                                                            index]
-                                                                        ['img'],
-                                                                fit:
-                                                                    BoxFit.fill,
-                                                                placeholder: (context,
-                                                                        url) =>
-                                                                    new SizedBox(
-                                                                      child:
-                                                                          Center(
-                                                                        child:
-                                                                            CircularProgressIndicator(
-                                                                          valueColor:
-                                                                              new AlwaysStoppedAnimation(Colors.redAccent),
-                                                                        ),
-                                                                      ),
-                                                                    ),
+                                  child: GestureDetector(
+                                    onTap: () {
+                                      Edit_LoadingDialog_Order.showLoadingDialog(
+                                          context,
+                                          ListOrderProducts[index]['Id'],
+                                          ListOrderProducts[index]['Name'],
+                                          ListOrderProducts[index]['Img'],
+                                          '',
+                                          ListOrderProducts[index]['Price'],
+                                          ListOrderProducts[index]['ListTopping'],
+                                          ListOrderProducts[index]['Toppings'],
+                                          ListOrderProducts[index]['ListSize'],
+                                          ListOrderProducts[index]['Size'],
+                                          ListOrderProducts[index]['Price'],
+                                          ListOrderProducts[index]['Quantity'],
+                                          ListOrderProducts,
+                                          ); //show edit
+                                    },
+                                    child: Container(
+                                        padding: const EdgeInsets.all(2.0),
+                                        child: Container(
+                                            height: Dimension.getHeight(0.135),
+                                            decoration: BoxDecoration(
+                                                color: Colors.white,
+                                                border: Border.all(
+                                                    color: Colors.grey[300]),
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(8.0))),
+                                            child: Column(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: <Widget>[
+                                                  Row(
+                                                    children: <Widget>[
+                                                      Stack(
+                                                        alignment:
+                                                            AlignmentDirectional
+                                                                .topEnd,
+                                                        children: <Widget>[
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .fromLTRB(
+                                                                    0, 0, 0, 0),
+                                                            child: Container(
+                                                              height: Dimension
+                                                                  .getHeight(
+                                                                      0.13),
+                                                              width: Dimension
+                                                                  .getWidth(
+                                                                      0.25),
+                                                              decoration:
+                                                                  new BoxDecoration(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8.0),
+                                                                border: new Border
+                                                                        .all(
+                                                                    color: Colors
+                                                                        .grey),
                                                               ),
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ],
-                                                    ),
-                                                    Column(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment
-                                                              .start,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: <Widget>[
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .fromLTRB(
-                                                                  5, 0, 0, 0),
-                                                          child: Container(
-                                                              alignment:
-                                                                  Alignment
-                                                                      .topLeft,
-                                                              child: Row(
-                                                                children: <
-                                                                    Widget>[
-                                                                  Padding(
-                                                                    padding:
-                                                                        const EdgeInsets.fromLTRB(
-                                                                            5,
-                                                                            0,
-                                                                            0,
-                                                                            0),
-                                                                    child: Text(
-                                                                        fake_list[index]
-                                                                            [
-                                                                            'name']),
-                                                                  ),
-                                                                ],
-                                                              )),
-                                                        ),
-                                                        Row(
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment
-                                                                  .spaceBetween,
-                                                          children: <Widget>[
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .fromLTRB(
-                                                                      10,
-                                                                      10,
-                                                                      0,
-                                                                      10),
-                                                              child: Text("Size " +
-                                                                  fake_list[index]
+                                                              child: ClipRRect(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
+                                                                            8.0),
+                                                                child:
+                                                                    CachedNetworkImage(
+                                                                  imageUrl: Config
+                                                                          .ip +
+                                                                      ListOrderProducts[
+                                                                              index]
                                                                           [
-                                                                          'price']
-                                                                      .toString()),
-                                                            ),
-                                                            Padding(
-                                                              padding:
-                                                                  const EdgeInsets
-                                                                          .fromLTRB(
-                                                                      50,
-                                                                      0,
-                                                                      0,
-                                                                      0),
-                                                              child: Text("Topping " +
-                                                                  fake_list[index]
-                                                                          [
-                                                                          'price']
-                                                                      .toString()),
-                                                            ),
-                                                          ],
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              const EdgeInsets
-                                                                      .fromLTRB(
-                                                                  10, 0, 0, 0),
-                                                          child: Row(
-                                                            children: <Widget>[
-                                                              Text("Quanlity " +
-                                                                  fake_list[index]
-                                                                          [
-                                                                          'quantity']
-                                                                      .toString()),
-                                                              Padding(
-                                                                padding:
-                                                                    const EdgeInsets
-                                                                            .fromLTRB(
-                                                                        170,
-                                                                        0,
-                                                                        0,
-                                                                        0),
-                                                                child: Text(
-                                                                  fake_list[index]
-                                                                          [
-                                                                          'price']
-                                                                      .toString(),
-                                                                  style: TextStyle(
-                                                                      color: Colors
-                                                                          .red),
+                                                                          'Img'],
+                                                                  fit: BoxFit
+                                                                      .fill,
+                                                                  placeholder:
+                                                                      (context,
+                                                                              url) =>
+                                                                          new SizedBox(
+                                                                            child:
+                                                                                Center(
+                                                                              child: CircularProgressIndicator(
+                                                                                valueColor: new AlwaysStoppedAnimation(Colors.redAccent),
+                                                                              ),
+                                                                            ),
+                                                                          ),
                                                                 ),
                                                               ),
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                      Column(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: <Widget>[
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .fromLTRB(
+                                                                    5, 0, 0, 0),
+                                                            child: Container(
+                                                                alignment:
+                                                                    Alignment
+                                                                        .topLeft,
+                                                                child: Row(
+                                                                  children: <
+                                                                      Widget>[
+                                                                    Padding(
+                                                                      padding:
+                                                                          const EdgeInsets.fromLTRB(
+                                                                              5,
+                                                                              0,
+                                                                              0,
+                                                                              0),
+                                                                      child:
+                                                                          Text(
+                                                                        ListOrderProducts[index]
+                                                                            [
+                                                                            'Name'],
+                                                                        style: StylesText
+                                                                            .style15Black,
+                                                                      ),
+                                                                    ),
+                                                                  ],
+                                                                )),
+                                                          ),
+                                                          Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .spaceBetween,
+                                                            children: <Widget>[
+                                                              ListOrderProducts[
+                                                                              index]
+                                                                          [
+                                                                          'Size'] ==
+                                                                      null
+                                                                  ? IgnorePointer(
+                                                                      ignoring:
+                                                                          true,
+                                                                      child: Opacity(
+                                                                          opacity: 0.0,
+                                                                          child: Padding(
+                                                                            padding: const EdgeInsets.fromLTRB(
+                                                                                10,
+                                                                                10,
+                                                                                0,
+                                                                                10),
+                                                                            child:
+                                                                                Text("Size: " + "M"),
+                                                                          )),
+                                                                    )
+                                                                  : Padding(
+                                                                      padding: const EdgeInsets
+                                                                              .fromLTRB(
+                                                                          10,
+                                                                          10,
+                                                                          0,
+                                                                          10),
+                                                                      child: Text(
+                                                                          "Size: " +
+                                                                              ListOrderProducts[index]['Size']['Name'].toString()),
+                                                                    ),
+                                                              ListOrderProducts[
+                                                                              index][
+                                                                          'Toppings'] ==
+                                                                      null
+                                                                  ? Container()
+                                                                  : Padding(
+                                                                      padding: const EdgeInsets
+                                                                              .only(
+                                                                          left:
+                                                                              50,
+                                                                          top:
+                                                                              0,
+                                                                          right:
+                                                                              0,
+                                                                          bottom:
+                                                                              0),
+                                                                      child:
+                                                                          Text(
+                                                                        "Topping: " +
+                                                                            ListOrderProducts[index]['Toppings'][0]['Name'],
+                                                                      ))
                                                             ],
                                                           ),
-                                                        ),
-                                                      ],
-                                                    )
-                                                  ],
-                                                ),
-                                              ]))),
+                                                          Padding(
+                                                            padding:
+                                                                const EdgeInsets
+                                                                        .fromLTRB(
+                                                                    10,
+                                                                    0,
+                                                                    0,
+                                                                    0),
+                                                            child: Row(
+                                                              children: <
+                                                                  Widget>[
+                                                                Text("Quanlity: " +
+                                                                    ListOrderProducts[index]
+                                                                            [
+                                                                            'Quantity']
+                                                                        .toString()),
+                                                                Padding(
+                                                                  padding:
+                                                                      const EdgeInsets
+                                                                              .fromLTRB(
+                                                                          170,
+                                                                          0,
+                                                                          0,
+                                                                          0),
+                                                                  child: Text(
+                                                                    ListOrderProducts[index]
+                                                                            [
+                                                                            'Price']
+                                                                        .toString(),
+                                                                    style: TextStyle(
+                                                                        color: Colors
+                                                                            .red),
+                                                                  ),
+                                                                ),
+                                                              ],
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      )
+                                                    ],
+                                                  ),
+                                                ]))),
+                                  ),
                                   secondaryActions: <Widget>[
                                     new IconSlideAction(
                                         caption: 'Delete',
@@ -384,8 +414,9 @@ class Shopping_ListState extends State<Shopping_List> {
                                                           .style18RedaccentBold),
                                                   content: new Text(
                                                     "Do you want to delete " +
-                                                        fake_list[index]
-                                                            ['name'] +
+                                                        ListOrderProducts[index]
+                                                                ['Name']
+                                                            .toString() +
                                                         "?",
                                                     style:
                                                         StylesText.style15Black,
@@ -402,7 +433,7 @@ class Shopping_ListState extends State<Shopping_List> {
                                                       child: Text("Yes"),
                                                       onPressed: () {
                                                         setState(() {
-                                                          fake_list
+                                                          ListOrderProducts
                                                               .removeAt(index);
                                                         });
                                                         Navigator.of(context)
@@ -441,7 +472,7 @@ class Shopping_ListState extends State<Shopping_List> {
         drawer: Drawer(
           child: HomeMenu(),
         ),
-        bottomNavigationBar: fake_list.isEmpty
+        bottomNavigationBar: ListOrderProducts.isEmpty
             ? Container(
                 child: Center(
                     child:
@@ -455,8 +486,9 @@ class Shopping_ListState extends State<Shopping_List> {
                     Expanded(
                         child: MaterialButton(
                       onPressed: () {
+                        Config.current_botton_tab = 0;
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => DashBoard()));
+                            builder: (context) => PlaceholderMainWidget()));
                       },
                       child: Text(
                         "Continue shopping",
