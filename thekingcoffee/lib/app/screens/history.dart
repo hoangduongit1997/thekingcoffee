@@ -13,10 +13,13 @@ class History extends StatefulWidget {
 
 class _HistoryState extends State<History> {
   var data_history = [];
+  int length=0;
+  
   intData() async {
     final result = await Get_History();
     setState(() {
       data_history = result;
+      length=data_history.length;
     });
   }
   @override
@@ -51,7 +54,7 @@ class _HistoryState extends State<History> {
             ),
           ),
           resizeToAvoidBottomInset: false,
-          body: data_history.isEmpty
+          body: data_history.length==0||data_history.isEmpty==true
               ? Container(
                   child: Center(child: Text("No information")),
                 )
@@ -61,7 +64,7 @@ class _HistoryState extends State<History> {
                   width: double.infinity,
                   height: MediaQuery.of(context).size.height,
                   child: ListView.builder(
-                    itemCount: data_history.length,
+                    itemCount:length,
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
                     itemBuilder: (context, index) {
