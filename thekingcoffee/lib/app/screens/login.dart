@@ -167,7 +167,7 @@ class MyAppState extends State<LoginWithPass> {
   }
 
   void onSigninClick() async {
-    Config.current_botton_tab=0;
+   
     LoadingDialog.showLoadingDialog(context, "Loading...");
     if ((await Validation.isConnectedNetwork()) == true &&
         loginBloc.isValidInfo(_user.text.trim(), _pass.text.trim()) == true) {

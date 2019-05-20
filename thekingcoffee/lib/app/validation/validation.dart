@@ -41,6 +41,10 @@ class Validation {
     return gmail.length > 0 && gmail.contains("@");
   }
 
+  static bool isValidAddress(String address) {
+    return address.trim().length > 0&&address.isNotEmpty;
+  }
+
   static Future<bool> isConnectedNetwork() async {
     bool status = false;
     try {

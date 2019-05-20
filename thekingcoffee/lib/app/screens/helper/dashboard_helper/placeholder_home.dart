@@ -34,6 +34,7 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
 
   @override
   void initState() {
+    Config.current_botton_tab=0;
     this.intDataHomeSlider();
     super.initState();
   }

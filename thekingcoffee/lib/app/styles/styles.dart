@@ -167,6 +167,11 @@ class StylesText {
     color: Colors.black,
     fontWeight: FontWeight.normal,
   );
+   static TextStyle style15Red = TextStyle(
+    fontSize: SizeText.size15,
+    color: Colors.red,
+    fontWeight: FontWeight.normal,
+  );
   static TextStyle style20BrownBold = TextStyle(
     fontSize: SizeText.size20,
     color: Colors.brown,

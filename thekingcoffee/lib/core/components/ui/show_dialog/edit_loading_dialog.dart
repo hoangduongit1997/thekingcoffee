@@ -35,14 +35,82 @@ class Edit_LoadingDialog_Order {
               content: Container(
                   height: Dimension.getHeight(0.5),
                   width: Dimension.getWidth(1.5),
-                  child: Edit_Order_Dialog(id,img,name,descript,price,topping,selectedTopping,size,selectedSize,estimatePrice,quantity)),
+                  child: Edit_Order_Dialog(
+                      id,
+                      img,
+                      name,
+                      descript,
+                      price,
+                      topping,
+                      selectedTopping,
+                      size,
+                      selectedSize,
+                      estimatePrice,
+                      quantity)),
               actions: <Widget>[
                 FlatButton(
                   child: Text("OK"),
                   onPressed: () {
+                    var lst_index;
+                    if (selectedProduct['Size'] == null) {
+                      lst_index = ListOrderProducts.where(
+                          (t) => t['Id'] == selectedProduct['Id']).toList();
+                    } else {
+                      lst_index = ListOrderProducts.where((t) =>
+                              t['Id'] == selectedProduct['Id'] &&
+                              t['Size']['Id'] == selectedProduct['Size']['Id'])
+                          .toList();
+                    }
+
+                    bool isAlready = false;
+                    int position = -1;
+                    if (selectedProduct['Toppings'] == null &&
+                        ListOrderProducts.length > 0 &&
+                        lst_index.length > 0) {
+                      ListOrderProducts[
+                              ListOrderProducts.indexOf(lst_index.first)]
+                          ['Quantity'] += selectedProduct['Quantity'];
+                      selectedProduct = {}; //reset sản phẩm chọn
+                      Navigator.of(context).pop();
+                      return;
+                    }
+                    if (lst_index != null && lst_index.length > 0) {
+                      for (int index = 0; index < lst_index.length; index++) {
+                        //tim vi tri trung
+
+                        var temp =
+                            lst_index[index]['Toppings'] as List<dynamic>;
+                        if (temp != null &&
+                            temp.length ==
+                                (selectedProduct['Toppings'] as List<dynamic>)
+                                    .length) {
+                          for (var item in selectedProduct['Toppings']) {
+                            var element = temp.firstWhere(
+                                (t) => t['Id'] == item['Id'],
+                                orElse: () => null);
+                            if (element != null) {
+                              isAlready = true;
+                              position =
+                                  ListOrderProducts.indexOf(lst_index[index]);
+                              //position = index;
+                            } else {
+                              // isAlready = false;
+                              break;
+                            }
+                          }
+                        }
+                      }
+                    }
+                    if (isAlready && position > -1) {
+                      ListOrderProducts[position]['Quantity'] +=
+                          selectedProduct['Quantity'];
+                    } else {
+                      ListOrderProducts.add(selectedProduct);
+                    }
                     print(ListOrderProducts.toString());
                     selectedProduct = {}; //reset sản phẩm chọn
                     Navigator.of(context).pop();
+                    
                   },
                 ),
               ],

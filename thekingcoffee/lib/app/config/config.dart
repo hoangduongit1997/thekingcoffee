@@ -1,5 +1,6 @@
 class Config {
-  static int current_botton_tab=0;
+  static int current_botton_tab = 0;
+  static bool isHideNavigation = false;
   static String ip = "http://207.148.71.41/";
   static String login_Api = ip + "api/Customer/Login";
   static String signup_API = ip + "api/Customer/SignUp";
@@ -8,6 +9,7 @@ class Config {
   static String get_data_home_cart_API = ip + "api/Product/GetAll";
   static String get_new_products_API =
       ip + "api/Product/GetAll?IsDesc=true&Rows=5";
+  static String get_history_API = ip + "api/Order/FindOrderHistory?IdCustomer=";
   static String get_coffee_products_API =
       ip + "api/Product/GetAll?IsDesc=true&Rows=10&IdCatalogue=2";
   static String get_tea_products_API =
@@ -21,5 +23,5 @@ class Config {
       "https://maps.googleapis.com/maps/api/place/textsearch/json?key=" +
           app_key +
           "&language=vi&region=VN&query=";
-          static String order_API=ip+"api/Order/OrderOnline";
+  static String order_API = ip + "api/Order/OrderOnline";
 }

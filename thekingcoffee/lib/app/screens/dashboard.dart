@@ -19,7 +19,13 @@ class _HomeState extends State<DashBoard> {
     Shopping_List(),
     PlaceholderWidget(Colors.black),
   ];
-
+  @override
+  void initState() {
+    Config.isHideNavigation=false;
+    Config.current_botton_tab=0;
+  
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -28,7 +34,7 @@ class _HomeState extends State<DashBoard> {
         home: Scaffold(
           resizeToAvoidBottomInset: false,
           body: _children[Config.current_botton_tab],
-          bottomNavigationBar: BottomNavigationBar(
+          bottomNavigationBar:Config.isHideNavigation==true?null: BottomNavigationBar(
             type: BottomNavigationBarType.fixed,
             onTap: onTabTapped,
             currentIndex: Config.current_botton_tab,

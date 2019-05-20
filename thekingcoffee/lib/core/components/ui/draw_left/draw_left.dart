@@ -2,9 +2,11 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:thekingcoffee/app/config/config.dart';
+import 'package:thekingcoffee/app/screens/account_detail.dart';
 import 'package:thekingcoffee/app/screens/dashboard.dart';
 import 'package:thekingcoffee/app/screens/favorite_page.dart';
 import 'package:thekingcoffee/app/screens/helper/dashboard_helper/placeholder_home.dart';
+import 'package:thekingcoffee/app/screens/history.dart';
 import 'package:thekingcoffee/app/screens/login.dart';
 import 'package:thekingcoffee/app/screens/shopping_list.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
@@ -17,6 +19,12 @@ class HomeMenu extends StatefulWidget {
 }
 
 class _HomeMenuState extends State<HomeMenu> {
+  @override
+  void initState() {
+    Config.isHideNavigation = false;
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ListView(
@@ -52,14 +60,16 @@ class _HomeMenuState extends State<HomeMenu> {
             ),
             leading: Icon(Icons.home, color: Colors.redAccent),
             onTap: () {
-              Config.current_botton_tab = 0;
               Navigator.of(context).pushReplacement(MaterialPageRoute(
                   builder: (context) => PlaceholderMainWidget()));
             },
           ),
         ),
         InkWell(
-          onTap: () {},
+          onTap: () {
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => Account()));
+          },
           child: ListTile(
             title: Text(
               'My account',
@@ -73,7 +83,6 @@ class _HomeMenuState extends State<HomeMenu> {
         ),
         InkWell(
           onTap: () {
-            Config.current_botton_tab = 1;
             Navigator.of(context).pushReplacement(
                 MaterialPageRoute(builder: (context) => Favorite_Page()));
           },
@@ -88,7 +97,7 @@ class _HomeMenuState extends State<HomeMenu> {
         InkWell(
           onTap: () {
             Config.current_botton_tab = 2;
-            Navigator.of(context).pushReplacement(
+            Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => Shopping_List()));
           },
           child: ListTile(
@@ -100,7 +109,10 @@ class _HomeMenuState extends State<HomeMenu> {
           ),
         ),
         InkWell(
-          onTap: () {},
+          onTap: () {
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => History()));
+          },
           child: ListTile(
             title: Text(
               'History',

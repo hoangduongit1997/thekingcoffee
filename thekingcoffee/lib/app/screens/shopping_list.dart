@@ -1,13 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:thekingcoffee/app/bloc/order_bloc.dart';
 import 'package:thekingcoffee/app/config/config.dart';
+import 'package:thekingcoffee/app/data/repository/order_repository.dart';
 import 'package:thekingcoffee/app/screens/dashboard.dart';
 import 'package:thekingcoffee/app/screens/helper/dashboard_helper/placeholder_home.dart';
 import 'package:thekingcoffee/app/screens/map.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
+import 'package:thekingcoffee/app/validation/validation.dart';
 import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/edit_loading_dialog.dart';
+import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog_order.dart';
 import 'package:thekingcoffee/core/components/widgets/address_picker.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
@@ -22,10 +26,12 @@ class Shopping_List extends StatefulWidget {
 class Shopping_ListState extends State<Shopping_List> {
   @override
   void initState() {
+    Config.current_botton_tab = 2;
     super.initState();
   }
 
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
+  OrderBloc orderBloc = new OrderBloc();
   TextEditingController name = new TextEditingController(text: "Hoàng Dương");
   TextEditingController phone = new TextEditingController(text: "0798353751");
   TextEditingController address = new TextEditingController(
@@ -114,35 +120,57 @@ class Shopping_ListState extends State<Shopping_List> {
                     children: <Widget>[
                       Padding(
                           padding: const EdgeInsets.all(5.0),
-                          child: TextField(
-                            decoration: InputDecoration(
-                                icon: Icon(Icons.account_circle)),
-                            controller: name,
-                            style: StylesText.style16Brown,
-                          )),
+                          child: StreamBuilder<Object>(
+                              stream: orderBloc.nameStream,
+                              builder: (context, snapshot) {
+                                return TextField(
+                                  decoration: InputDecoration(
+                                      errorText: snapshot.hasError
+                                          ? snapshot.error
+                                          : null,
+                                      icon: Icon(Icons.account_circle)),
+                                  controller: name,
+                                  style: StylesText.style16Brown,
+                                );
+                              })),
                       Padding(
                           padding: const EdgeInsets.all(5.0),
-                          child: TextField(
-                            decoration:
-                                InputDecoration(icon: Icon(Icons.phone)),
-                            controller: phone,
-                            style: StylesText.style16Brown,
-                          )),
+                          child: StreamBuilder<Object>(
+                              stream: orderBloc.phoneStream,
+                              builder: (context, snapshot) {
+                                return TextField(
+                                  keyboardType: TextInputType.phone,
+                                  decoration: InputDecoration(
+                                      icon: Icon(Icons.phone),
+                                      errorText: snapshot.hasError
+                                          ? snapshot.error
+                                          : null),
+                                  controller: phone,
+                                  style: StylesText.style16Brown,
+                                );
+                              })),
                       Padding(
                           padding: const EdgeInsets.all(5.0),
-                          child: TextField(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) => MapPage()));
-                            },
-                            decoration: InputDecoration(
-                                icon: Icon(Icons.map),
-                                hintText: "Enter your address..."),
-                            controller: address,
-                            style: StylesText.style16Brown,
-                          )),
+                          child: StreamBuilder<Object>(
+                              stream: orderBloc.addressStream,
+                              builder: (context, snapshot) {
+                                return TextField(
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => MapPage()));
+                                  },
+                                  decoration: InputDecoration(
+                                      errorText: snapshot.hasError
+                                          ? snapshot.error
+                                          : null,
+                                      icon: Icon(Icons.map),
+                                      hintText: "Enter your address..."),
+                                  controller: address,
+                                  style: StylesText.style16Brown,
+                                );
+                              })),
                       Padding(
                           padding: const EdgeInsets.fromLTRB(0, 2, 0, 0),
                           child: Container(
@@ -158,21 +186,22 @@ class Shopping_ListState extends State<Shopping_List> {
                                   actionExtentRatio: 0.25,
                                   child: GestureDetector(
                                     onTap: () {
-                                      Edit_LoadingDialog_Order.showLoadingDialog(
-                                          context,
-                                          ListOrderProducts[index]['Id'],
-                                          ListOrderProducts[index]['Name'],
-                                          ListOrderProducts[index]['Img'],
-                                          '',
-                                          ListOrderProducts[index]['Price'],
-                                          ListOrderProducts[index]['ListTopping'],
-                                          ListOrderProducts[index]['Toppings'],
-                                          ListOrderProducts[index]['ListSize'],
-                                          ListOrderProducts[index]['Size'],
-                                          ListOrderProducts[index]['Price'],
-                                          ListOrderProducts[index]['Quantity'],
-                                          ListOrderProducts,
-                                          ); //show edit
+                                      Edit_LoadingDialog_Order
+                                          .showLoadingDialog(
+                                        context,
+                                        ListOrderProducts[index]['Id'],
+                                        ListOrderProducts[index]['Name'],
+                                        ListOrderProducts[index]['Img'],
+                                        '',
+                                        ListOrderProducts[index]['Price'],
+                                        ListOrderProducts[index]['ListTopping'],
+                                        ListOrderProducts[index]['Toppings'],
+                                        ListOrderProducts[index]['ListSize'],
+                                        ListOrderProducts[index]['Size'],
+                                        ListOrderProducts[index]['Price'],
+                                        ListOrderProducts[index]['Quantity'],
+                                        ListOrderProducts,
+                                      ); //show edit
                                     },
                                     child: Container(
                                         padding: const EdgeInsets.all(2.0),
@@ -488,7 +517,7 @@ class Shopping_ListState extends State<Shopping_List> {
                       onPressed: () {
                         Config.current_botton_tab = 0;
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => PlaceholderMainWidget()));
+                            builder: (context) => DashBoard()));
                       },
                       child: Text(
                         "Continue shopping",
@@ -498,7 +527,18 @@ class Shopping_ListState extends State<Shopping_List> {
                     )),
                     Expanded(
                       child: MaterialButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            if (orderBloc.isValidInfo(
+                                        name.text.trim().toString(), phone.text.trim().toString(),address.text.trim().toString()) ==
+                                    true) {
+                                      if ( PostOrder(
+              phone.text.trim().toString(), address.text.trim().toString()) ==
+          true) {
+        print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+      }
+                             
+                            }
+                          },
                           child: Text(
                             "Purchase",
                             style: StylesText.style14While,
