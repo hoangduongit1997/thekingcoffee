@@ -1,0 +1,22 @@
+{
+  "title": {
+    "name": "Chào mừng đến\n       Cacook!",
+    "second": "Đăng nhập để tiếp tục"
+  },
+  "lable": {
+    "email": "Email",
+    "password": "Mật khẩu",
+    "error_email": "Email không hợp lệ",
+    "error_password": "Mật khẩu không hợp lệ",
+    "forget_pass": "Quên mật khẩu?",
+    "login_button": "Đăng nhập",
+    "new_account": "Tạo tài khoản?",
+    "sign_up": "Đăng ký",
+    "vietnamese": "Tiếng Việt",
+    "english": "English"
+  },
+  "action": {
+    "enable": "Ẩn",
+    "disable": "Hiện"
+  }
+}
