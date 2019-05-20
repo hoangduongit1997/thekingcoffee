@@ -34,7 +34,7 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
 
   @override
   void initState() {
-    Config.current_botton_tab=0;
+    Config.current_botton_tab = 0;
     this.intDataHomeSlider();
     super.initState();
   }
@@ -108,7 +108,7 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                               ),
                             )),
                         Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                            padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
                             child: Center(
                               child: Container(
                                   width: double.infinity,
@@ -145,9 +145,12 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
                           child: Container(
-                              height: Dimension.getHeight(0.45),
+                              color: Colors.white,
+                              height: Dimension.getHeight(0.355),
                               width: double.infinity,
-                              child: Home_Card_Coffee()),
+                              child: Center(
+                                child: Home_Card_Coffee(),
+                              )),
                         ),
                         Padding(
                             padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
@@ -177,7 +180,7 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
                           child: Container(
-                              height: Dimension.getHeight(0.45),
+                              height: Dimension.getHeight(0.355),
                               width: double.infinity,
                               child: Home_Card_Tea()),
                         ),
@@ -211,7 +214,7 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
                           child: Container(
-                              height: Dimension.getHeight(0.45),
+                              height: Dimension.getHeight(0.355),
                               width: double.infinity,
                               child: Home_Card_Drinking()),
                         ),
@@ -245,7 +248,7 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(0, 5, 0, 10),
                           child: Container(
-                            height: Dimension.getHeight(0.45),
+                            height: Dimension.getHeight(0.355),
                             width: double.infinity,
                             child: Home_Card_Food(),
                           ),

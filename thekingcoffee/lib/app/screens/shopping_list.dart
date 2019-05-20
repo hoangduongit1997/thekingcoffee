@@ -534,7 +534,7 @@ class Shopping_ListState extends State<Shopping_List> {
                                       if ( PostOrder(
               phone.text.trim().toString(), address.text.trim().toString()) ==
           true) {
-        print("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    
       }
                              
                             }
