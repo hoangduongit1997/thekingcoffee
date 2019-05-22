@@ -49,14 +49,6 @@ class _See_All_ProductState extends State<See_All_Product> {
         resizeToAvoidBottomPadding: false,
         key: _scaffoldKey,
         appBar: AppBar(
-          actions: <Widget>[
-            FlatButton(
-                onPressed: () {},
-                child: Icon(
-                  Icons.search,
-                  color: Colors.brown,
-                )),
-          ],
           leading: FlatButton(
               onPressed: () {
                 Config.current_botton_tab = 0;
@@ -98,7 +90,6 @@ class _See_All_ProductState extends State<See_All_Product> {
                               data[index]['Description'],
                               data[index]['Price'],
                               data[index]['IsHot'],
-                              
                               data[index]['Toppings'],
                               data[index]['Size'],
                               data[index]['Promotion'],

@@ -5,7 +5,6 @@ import 'package:thekingcoffee/app/config/config.dart';
 
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
-import 'package:grouped_buttons/grouped_buttons.dart';
 import 'package:thekingcoffee/core/components/widgets/drawline.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 
@@ -327,7 +326,7 @@ class Order_DialogState extends State<Order_Dialog> {
                           )),
                   widget.ishot == 1
                       ? Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                           child: Container(
                             child: CustomPaint(
                                 painter: Drawhorizontalline(

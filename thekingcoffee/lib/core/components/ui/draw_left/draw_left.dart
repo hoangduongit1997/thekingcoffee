@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/screens/account_detail.dart';
 import 'package:thekingcoffee/app/screens/dashboard.dart';
+import 'package:thekingcoffee/app/screens/earn_point.dart';
 import 'package:thekingcoffee/app/screens/favorite_page.dart';
 import 'package:thekingcoffee/app/screens/helper/dashboard_helper/placeholder_home.dart';
 import 'package:thekingcoffee/app/screens/history.dart';
@@ -53,19 +54,6 @@ class _HomeMenuState extends State<HomeMenu> {
           decoration: new BoxDecoration(color: Colors.redAccent),
         ),
         InkWell(
-          child: ListTile(
-            title: Text(
-              'Home',
-              style: StylesText.style13BlackBold,
-            ),
-            leading: Icon(Icons.home, color: Colors.redAccent),
-            onTap: () {
-              Navigator.of(context).pushReplacement(MaterialPageRoute(
-                  builder: (context) => PlaceholderMainWidget()));
-            },
-          ),
-        ),
-        InkWell(
           onTap: () {
             Navigator.push(
                 context, MaterialPageRoute(builder: (context) => Account()));
@@ -76,36 +64,25 @@ class _HomeMenuState extends State<HomeMenu> {
               style: StylesText.style13BlackBold,
             ),
             leading: Icon(
-              Icons.person,
+              Icons.person_outline,
               color: Colors.redAccent,
             ),
           ),
         ),
         InkWell(
           onTap: () {
-            Navigator.of(context).pushReplacement(
-                MaterialPageRoute(builder: (context) => Favorite_Page()));
+            Navigator.push(
+                context, MaterialPageRoute(builder: (context) => EarnPoint()));
           },
           child: ListTile(
             title: Text(
-              'Favourites',
+              'Earn points',
               style: StylesText.style13BlackBold,
             ),
-            leading: Icon(Icons.favorite, color: Colors.redAccent),
-          ),
-        ),
-        InkWell(
-          onTap: () {
-            Config.current_botton_tab = 2;
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => Shopping_List()));
-          },
-          child: ListTile(
-            title: Text(
-              'Shopping List',
-              style: StylesText.style13BlackBold,
+            leading: Icon(
+              Icons.control_point,
+              color: Colors.redAccent,
             ),
-            leading: Icon(Icons.shopping_cart, color: Colors.redAccent),
           ),
         ),
         InkWell(

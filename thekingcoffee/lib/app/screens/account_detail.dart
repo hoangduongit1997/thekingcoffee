@@ -13,6 +13,8 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
+ enum WhyFarther { harde}
+
   @override
   void initState() {
     Config.isHideNavigation = true;
@@ -46,32 +48,33 @@ class _AccountState extends State<Account> {
             ),
           ),
           body: Container(
-            padding: const EdgeInsets.all(5.0),
-            width: double.infinity,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                  child: Container(
-                      width: double.infinity,
-                      height: Dimension.getHeight(0.35),
-                      color: Colors.blue[300],
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: <Widget>[
-                          FlatButton(
-                            child:
-                                Icon(Icons.more_horiz, color: Colors.redAccent),
-                            onPressed: () {},
-                          )
-                        ],
-                      )),
-                ),
-              ],
-            ),
-          ),
+              color: Colors.grey[300],
+              padding: const EdgeInsets.all(5.0),
+              width: double.infinity,
+              height: Dimension.getHeight(0.4),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: <Widget>[
+                 
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                    child: Container(
+                      height: Dimension.getHeight(0.3),
+                      width: Dimension.getWidth(0.5),
+                      decoration: BoxDecoration(
+                          shape: BoxShape.circle,
+                          border:
+                              Border.all(color: Colors.redAccent, width: 2.0),
+                          image: DecorationImage(
+                              fit: BoxFit.fill,
+                              image: NetworkImage(
+                                Config.ip +
+                                    "/storage/images/kingcoffee/congan.png",
+                              ))),
+                    ),
+                  )
+                ],
+              )),
           drawer: Drawer(
             child: HomeMenu(),
           ),

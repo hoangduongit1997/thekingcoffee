@@ -58,7 +58,7 @@ class _HistoryState extends State<History> {
             ),
           ),
           resizeToAvoidBottomInset: false,
-          body: data_history.length == 0 || data_history.isEmpty == true
+          body: data_history==null|| data_history.length == 0
               ? Container(
                   child: Center(child: Text("No information")),
                 )
