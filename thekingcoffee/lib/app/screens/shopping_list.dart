@@ -27,6 +27,7 @@ class Shopping_ListState extends State<Shopping_List> {
   @override
   void initState() {
     Config.current_botton_tab = 2;
+    Config.isHideNavigation = false;
     super.initState();
   }
 
@@ -156,8 +157,8 @@ class Shopping_ListState extends State<Shopping_List> {
                               builder: (context, snapshot) {
                                 return TextField(
                                   onTap: () {
-                                    Navigator.push(
-                                        context,
+                                    Config.isHideNavigation = true;
+                                    Navigator.of(context).push(
                                         MaterialPageRoute(
                                             builder: (context) => MapPage()));
                                   },
@@ -529,14 +530,13 @@ class Shopping_ListState extends State<Shopping_List> {
                       child: MaterialButton(
                           onPressed: () {
                             if (orderBloc.isValidInfo(
-                                        name.text.trim().toString(), phone.text.trim().toString(),address.text.trim().toString()) ==
-                                    true) {
-                                      if ( PostOrder(
-              phone.text.trim().toString(), address.text.trim().toString()) ==
-          true) {
-    
-      }
-                             
+                                    name.text.trim().toString(),
+                                    phone.text.trim().toString(),
+                                    address.text.trim().toString()) ==
+                                true) {
+                              if (PostOrder(phone.text.trim().toString(),
+                                      address.text.trim().toString()) ==
+                                  true) {}
                             }
                           },
                           child: Text(

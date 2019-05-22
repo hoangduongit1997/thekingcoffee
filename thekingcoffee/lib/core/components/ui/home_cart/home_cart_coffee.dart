@@ -22,6 +22,8 @@ var data = [];
 int lenght = 0;
 var selectedProduct = {};
 var ListOrderProducts = [];
+var promotion_list_coffee = [];
+int promotion_coffee = 0;
 
 class _Home_Card_Coffee_State extends State<Home_Card_Coffee> {
   intDataHomeScreen() async {
@@ -56,6 +58,10 @@ class _Home_Card_Coffee_State extends State<Home_Card_Coffee> {
                       physics: const ClampingScrollPhysics(),
                       itemCount: lenght,
                       itemBuilder: (BuildContext context, int index) {
+                        promotion_list_coffee =
+                            data[index]['Promotion'] as List<dynamic>;
+                        promotion_coffee = promotion_list_coffee.length;
+
                         if (data == null) {
                           return Center(
                             child: CircularProgressIndicator(),
@@ -138,10 +144,14 @@ class _Home_Card_Coffee_State extends State<Home_Card_Coffee> {
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
                                               children: <Widget>[
-                                                Text(
-                                                  data[index]['Name'],
-                                                  style: StylesText
-                                                      .style17BrownBold,
+                                                Container(
+                                                  width:
+                                                      Dimension.getWidth(0.51),
+                                                  child: Text(
+                                                    data[index]['Name'],
+                                                    style: StylesText
+                                                        .style17BrownBold,
+                                                  ),
                                                 ),
                                               ],
                                             ),
@@ -206,26 +216,65 @@ class _Home_Card_Coffee_State extends State<Home_Card_Coffee> {
                                                       )
                                                     ],
                                                   ),
-                                                  Container(
-                                                    width: Dimension.getWidth(
-                                                        0.51),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment.end,
-                                                      children: <Widget>[
-                                                        Icon(
-                                                          Icons.fastfood,
-                                                          color:
-                                                              Colors.redAccent,
-                                                        ),
-                                                        Text(
-                                                          "4 servings",
-                                                          style: StylesText
-                                                              .style13BrownBold,
+                                                  promotion_list_coffee ==
+                                                              null ||
+                                                          promotion_list_coffee
+                                                                  .length ==
+                                                              0
+                                                      ? IgnorePointer(
+                                                          ignoring: true,
+                                                          child: Opacity(
+                                                              opacity: 0.0,
+                                                              child: Container(
+                                                                width: Dimension
+                                                                    .getWidth(
+                                                                        0.51),
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .end,
+                                                                  children: <
+                                                                      Widget>[
+                                                                    Icon(
+                                                                      Icons
+                                                                          .fastfood,
+                                                                      color: Colors
+                                                                          .redAccent,
+                                                                    ),
+                                                                    Text(
+                                                                      promotion_coffee
+                                                                              .toString() +
+                                                                          " discount",
+                                                                      style: StylesText
+                                                                          .style13BrownBold,
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              )),
                                                         )
-                                                      ],
-                                                    ),
-                                                  )
+                                                      : Container(
+                                                          width: Dimension
+                                                              .getWidth(0.51),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .end,
+                                                            children: <Widget>[
+                                                              Icon(
+                                                                Icons.fastfood,
+                                                                color: Colors
+                                                                    .redAccent,
+                                                              ),
+                                                              Text(
+                                                                promotion_coffee
+                                                                        .toString() +
+                                                                    " discount",
+                                                                style: StylesText
+                                                                    .style13BrownBold,
+                                                              )
+                                                            ],
+                                                          ),
+                                                        )
                                                 ],
                                               )
                                             ],
@@ -242,8 +291,10 @@ class _Home_Card_Coffee_State extends State<Home_Card_Coffee> {
                                         data[index]['File_Path'],
                                         data[index]['Description'],
                                         data[index]['Price'],
+                                        data[index]['IsHot'],
                                         data[index]['Toppings'],
                                         data[index]['Size'],
+                                        data[index]['Promotion'],
                                         ListOrderProducts),
                                   });
                         }

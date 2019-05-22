@@ -6,6 +6,7 @@ import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
 import 'package:grouped_buttons/grouped_buttons.dart';
+import 'package:thekingcoffee/core/components/widgets/drawline.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 
 class Order_Dialog extends StatefulWidget {
@@ -14,10 +15,12 @@ class Order_Dialog extends StatefulWidget {
   final String name;
   final String desc;
   final int price;
+  final int ishot;
   final List<dynamic> toppings;
   final List<dynamic> size;
-  Order_Dialog(this.id, this.img, this.name, this.desc, this.price, this.size,
-      this.toppings);
+  final List<dynamic> promotion;
+  Order_Dialog(this.id, this.img, this.name, this.desc, this.price, this.ishot,
+      this.size, this.toppings, this.promotion);
   Order_DialogState createState() => Order_DialogState();
 }
 
@@ -25,7 +28,7 @@ class Order_DialogState extends State<Order_Dialog> {
   var product = selectedProduct;
   int number = 1;
   int money;
-
+  bool checked_hot = false;
   var selectedsize;
   var selecttopping = false;
   var lstSelectedTopping = [];
@@ -40,6 +43,7 @@ class Order_DialogState extends State<Order_Dialog> {
     for (var item in widget.size) {
       widgets.add(Expanded(
         child: RadioListTile(
+          dense: true,
           value: item,
           groupValue: selectedsize,
           title: Text(
@@ -66,12 +70,12 @@ class Order_DialogState extends State<Order_Dialog> {
   List<Widget> createCheckedBoxTopping() {
     List<Widget> widgets = [];
     for (var topping in widget.toppings) {
-      widgets.add(Expanded(
+      widgets.add(Container(
           child: CheckboxListTile(
         controlAffinity: ListTileControlAffinity.leading,
         title: Text(
           topping['Name'].toString(),
-          style: StylesText.style13Black,
+          style: StylesText.style13BrownBold,
         ),
         value: lstSelectedTopping.firstWhere((t) => t['Id'] == topping['Id'],
                 orElse: () => null) !=
@@ -101,6 +105,35 @@ class Order_DialogState extends State<Order_Dialog> {
         selected: selecttopping == topping,
         activeColor: Colors.redAccent,
       )));
+    }
+    return widgets;
+  }
+
+  List<Widget> createRadioListPromotion() {
+    List<Widget> widgets = [];
+    for (var promotion in widget.promotion) {
+      widgets.add(Container(
+        child: RadioListTile(
+          dense: true,
+          value: promotion,
+          groupValue: selectedsize,
+          title: Text(
+            promotion['Sale']['Description'],
+            style: StylesText.style13BrownBold,
+          ),
+          onChanged: (value) {
+            money -= selectedsize['PlusMonney'];
+            setState(() {
+              money += value['PlusMonney'];
+            });
+            selectedProduct['Price'] = money;
+            selectedsize = value;
+            selectedProduct['Size'] = selectedsize;
+          },
+          selected: selectedsize == promotion,
+          activeColor: Colors.redAccent,
+        ),
+      ));
     }
     return widgets;
   }
@@ -173,24 +206,22 @@ class Order_DialogState extends State<Order_Dialog> {
                                   )))
                         ],
                       ),
-                      Expanded(
-                          child: Column(
+                      Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(2, 0, 0, 30),
+                            padding: const EdgeInsets.fromLTRB(2, 0, 0, 15),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: <Widget>[
                                 Container(
-                                  margin: const EdgeInsets.all(2.0),
+                                  width: Dimension.getWidth(0.45),
                                   child: Text(
                                     widget.name,
                                     style: StylesText.style20BrownBold,
-                                    softWrap: true,
                                   ),
-                                )
+                                ),
                               ],
                             ),
                           ),
@@ -220,21 +251,67 @@ class Order_DialogState extends State<Order_Dialog> {
                             ),
                           )
                         ],
-                      ))
+                      )
                     ],
                   ),
+                  Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                      child: Container(
+                        child: CustomPaint(
+                            painter: Drawhorizontalline(
+                                false, 180.0, 220.0, Colors.blueGrey, 0.5)),
+                      )),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
                         Expanded(
-                          child: Text(widget.desc,
-                              style: StylesText.style13Blugray),
+                          child:
+                              Text(widget.desc, style: StylesText.style13Black),
                         )
                       ],
                     ),
                   ),
+                  Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                      child: Container(
+                        child: CustomPaint(
+                            painter: Drawhorizontalline(
+                                false, 180.0, 220.0, Colors.blueGrey, 0.5)),
+                      )),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          "Note",
+                          style: StylesText.style16Brown,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                          child: Container(
+                            width: Dimension.getWidth(0.62),
+                            child: TextField(
+                              keyboardType: TextInputType.multiline,
+                              maxLines: null,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  widget.size == null || widget.size.length == 0
+                      ? Container()
+                      : Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                          child: Container(
+                            child: CustomPaint(
+                                painter: Drawhorizontalline(
+                                    false, 180.0, 220.0, Colors.blueGrey, 0.5)),
+                          )),
                   widget.size == null || widget.size.length == 0
                       ? Container()
                       : Padding(
@@ -248,10 +325,59 @@ class Order_DialogState extends State<Order_Dialog> {
                               )
                             ],
                           )),
+                  widget.ishot == 1
+                      ? Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                          child: Container(
+                            child: CustomPaint(
+                                painter: Drawhorizontalline(
+                                    false, 180.0, 220.0, Colors.blueGrey, 0.5)),
+                          ))
+                      : Container(),
+                  widget.ishot == 1
+                      ? Container(
+                          width: Dimension.getWidth(1.0),
+                          child: Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  Text("Kind", style: StylesText.style16Brown),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                                    child: Container(
+                                      width: Dimension.getWidth(0.5),
+                                      child: CheckboxListTile(
+                                        controlAffinity:
+                                            ListTileControlAffinity.leading,
+                                        title: Text("Hot"),
+                                        value: checked_hot,
+                                        onChanged: (bool value) {
+                                          setState(() {
+                                            checked_hot = value;
+                                          });
+                                        },
+                                        activeColor: Colors.red,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )))
+                      : Container(),
                   widget.toppings == null || widget.toppings.length == 0
                       ? Container()
                       : Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                          padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                          child: Container(
+                            child: CustomPaint(
+                                painter: Drawhorizontalline(
+                                    false, 180.0, 220.0, Colors.blueGrey, 0.5)),
+                          )),
+                  widget.toppings == null || widget.toppings.length == 0
+                      ? Container()
+                      : Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                           child: Column(
                             children: <Widget>[
                               Row(
@@ -263,16 +389,65 @@ class Order_DialogState extends State<Order_Dialog> {
                                 ],
                               ),
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: createCheckedBoxTopping()),
+                                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                child: Container(
+                                  width: Dimension.getWidth(1.0),
+                                  child: Center(
+                                    child: Column(
+                                      children: createCheckedBoxTopping(),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                  widget.promotion == null || widget.promotion.length == 0
+                      ? Container()
+                      : Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                          child: Container(
+                            child: CustomPaint(
+                                painter: Drawhorizontalline(
+                                    false, 180.0, 220.0, Colors.blueGrey, 0.5)),
+                          )),
+                  widget.promotion == null || widget.promotion.length == 0
+                      ? Container()
+                      : Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                          child: Column(
+                            children: <Widget>[
+                              Row(
+                                children: <Widget>[
+                                  Text(
+                                    "Discount",
+                                    style: StylesText.style16Brown,
+                                  )
+                                ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                child: Container(
+                                  width: Dimension.getWidth(1.0),
+                                  child: Center(
+                                    child: Column(
+                                      children: createRadioListPromotion(),
+                                    ),
+                                  ),
+                                ),
                               ),
                             ],
                           ),
                         ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                      child: Container(
+                        child: CustomPaint(
+                            painter: Drawhorizontalline(
+                                false, 180.0, 220.0, Colors.blueGrey, 0.5)),
+                      )),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
@@ -318,6 +493,9 @@ class Order_DialogState extends State<Order_Dialog> {
                                           color: Colors.brown),
                                       onPressed: () {
                                         setState(() {
+                                          if (number == 1) {
+                                            return;
+                                          }
                                           number--;
                                           money -= widget.price;
                                         });

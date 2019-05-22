@@ -106,7 +106,10 @@ class _RidePickerPageState extends State<RidePickerPage> {
                           print(snapshot.data.toString());
                           if (snapshot.data == "Search") {
                             return Center(
-                              child: CircularProgressIndicator(),
+                              child: CircularProgressIndicator(valueColor:
+                                                      new AlwaysStoppedAnimation<
+                                                              Color>(
+                                                          Colors.redAccent),),
                             );
                           }
 

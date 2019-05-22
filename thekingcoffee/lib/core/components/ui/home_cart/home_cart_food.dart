@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:thekingcoffee/app/config/config.dart';
 
-
 import 'package:thekingcoffee/app/data/repository/get_food_products.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
@@ -24,17 +23,16 @@ var data = [];
 var topping = [];
 var sanpham;
 int lenght = 0;
-
+int promotion_food = 0;
+var promotion_list_food = [];
 
 class _Home_Card_Food_State extends State<Home_Card_Food> {
   intDataHomeScreen() async {
     final result = await Get_Food_Products();
-    
+
     setState(() {
       data = result;
       lenght = data.length;
-      
-     
     });
   }
 
@@ -62,6 +60,10 @@ class _Home_Card_Food_State extends State<Home_Card_Food> {
                       physics: const ClampingScrollPhysics(),
                       itemCount: lenght,
                       itemBuilder: (BuildContext context, int index) {
+                        promotion_list_food =
+                            data[index]['Promotion'] as List<dynamic>;
+                        promotion_food = promotion_list_food.length;
+
                         if (data == null) {
                           return Center(
                             child: CircularProgressIndicator(),
@@ -144,10 +146,14 @@ class _Home_Card_Food_State extends State<Home_Card_Food> {
                                               mainAxisAlignment:
                                                   MainAxisAlignment.center,
                                               children: <Widget>[
-                                                Text(
-                                                  data[index]['Name'],
-                                                  style: StylesText
-                                                      .style17BrownBold,
+                                                Container(
+                                                  width:
+                                                      Dimension.getWidth(0.51),
+                                                  child: Text(
+                                                    data[index]['Name'],
+                                                    style: StylesText
+                                                        .style17BrownBold,
+                                                  ),
                                                 ),
                                               ],
                                             ),
@@ -212,26 +218,64 @@ class _Home_Card_Food_State extends State<Home_Card_Food> {
                                                       )
                                                     ],
                                                   ),
-                                                  Container(
-                                                    width: Dimension.getWidth(
-                                                        0.51),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment.end,
-                                                      children: <Widget>[
-                                                        Icon(
-                                                          Icons.fastfood,
-                                                          color:
-                                                              Colors.redAccent,
-                                                        ),
-                                                        Text(
-                                                          "4 servings",
-                                                          style: StylesText
-                                                              .style13BrownBold,
+                                                  promotion_list_food == null ||
+                                                          promotion_list_food
+                                                                  .length ==
+                                                              0
+                                                      ? IgnorePointer(
+                                                          ignoring: true,
+                                                          child: Opacity(
+                                                              opacity: 0.0,
+                                                              child: Container(
+                                                                width: Dimension
+                                                                    .getWidth(
+                                                                        0.51),
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .end,
+                                                                  children: <
+                                                                      Widget>[
+                                                                    Icon(
+                                                                      Icons
+                                                                          .fastfood,
+                                                                      color: Colors
+                                                                          .redAccent,
+                                                                    ),
+                                                                    Text(
+                                                                      promotion_food
+                                                                              .toString() +
+                                                                          " discount",
+                                                                      style: StylesText
+                                                                          .style13BrownBold,
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              )),
                                                         )
-                                                      ],
-                                                    ),
-                                                  )
+                                                      : Container(
+                                                          width: Dimension
+                                                              .getWidth(0.51),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .end,
+                                                            children: <Widget>[
+                                                              Icon(
+                                                                Icons.fastfood,
+                                                                color: Colors
+                                                                    .redAccent,
+                                                              ),
+                                                              Text(
+                                                                promotion_food
+                                                                        .toString() +
+                                                                    " discount",
+                                                                style: StylesText
+                                                                    .style13BrownBold,
+                                                              )
+                                                            ],
+                                                          ),
+                                                        )
                                                 ],
                                               )
                                             ],
@@ -247,9 +291,12 @@ class _Home_Card_Food_State extends State<Home_Card_Food> {
                                         data[index]['Name'],
                                         data[index]['File_Path'],
                                         data[index]['Description'],
-                                        data[index]['Price'],
+                                         data[index]['Price'],
+                                        data[index]['IsHot'],
+                                       
                                         data[index]['Toppings'],
                                         data[index]['Size'],
+                                        data[index]['Promotion'],
                                         ListOrderProducts),
                                   });
                         }
