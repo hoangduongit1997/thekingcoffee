@@ -109,10 +109,11 @@ class Order_DialogState extends State<Order_Dialog> {
     return widgets;
   }
 
+  var list_promotion_product = [];
   List<Widget> createRadioListPromotion() {
-    List<Widget> widgets = [];
+    List<Widget> widgets_promotion = [];
     for (var promotion in widget.promotion) {
-      widgets.add(Container(
+      widgets_promotion.add(Container(
         child: RadioListTile(
           dense: true,
           value: promotion,
@@ -123,10 +124,14 @@ class Order_DialogState extends State<Order_Dialog> {
           ),
           onChanged: (value) {
             // money -= selectedsize['PlusMonney'];
+            list_promotion_product = [];
+            list_promotion_product = promotion['SaleForProducts'];
 
             setState(() {
               // money += value['PlusMonney'];
               selectedPromotion = value;
+
+              //Gen promotion product
             });
             // selectedProduct['Price'] = money;
             selectedsize = value;
@@ -139,7 +144,63 @@ class Order_DialogState extends State<Order_Dialog> {
         ),
       ));
     }
-    return widgets;
+    return widgets_promotion;
+  }
+
+  bool check_promotion_product = false;
+  List<Widget> createRadioListPromotionProDuct() {
+    List<Widget> widgets_promotion_product = [];
+    for (var promotion_product in list_promotion_product) {
+      widgets_promotion_product.add(Container(
+          child: CheckboxListTile(
+        controlAffinity: ListTileControlAffinity.leading,
+        title: Padding(
+          padding: const EdgeInsets.fromLTRB(2, 0, 0, 0),
+          child: Container(
+            width: Dimension.getWidth(1.0),
+            height: Dimension.getHeight(0.1),
+            child: Row(
+              children: <Widget>[
+                ClipRRect(
+                  borderRadius: BorderRadius.circular(8.0),
+                  child: CachedNetworkImage(
+                      imageUrl: Config.ip +
+                          promotion_product['DetailedSaleForProduct']
+                              ['File_Path'],
+                      fit: BoxFit.cover,
+                      height: Dimension.getHeight(0.1),
+                      width: Dimension.getWidth(0.18),
+                      placeholder: (context, url) => new SizedBox(
+                            child: Center(
+                                child: CircularProgressIndicator(
+                              valueColor: new AlwaysStoppedAnimation<Color>(
+                                  Colors.redAccent),
+                            )),
+                          )),
+                ),
+                Container(
+                  width: Dimension.getWidth(0.35),
+                  child: Padding(
+                    padding: const EdgeInsets.fromLTRB(2, 0, 0, 0),
+                    child: Text(
+                        promotion_product['DetailedSaleForProduct']['Name'],
+                        style: StylesText.style13BrownBold),
+                  ),
+                )
+              ],
+            ),
+          ),
+        ),
+        value: check_promotion_product,
+        onChanged: (bool value) {
+          setState(() {
+            check_promotion_product = value;
+          });
+        },
+        activeColor: Colors.redAccent,
+      )));
+    }
+    return widgets_promotion_product;
   }
 
   @override
@@ -422,11 +483,12 @@ class Order_DialogState extends State<Order_Dialog> {
                           child: Column(
                             children: <Widget>[
                               Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
                                 children: <Widget>[
                                   Text(
                                     "Discount",
                                     style: StylesText.style16Brown,
-                                  )
+                                  ),
                                 ],
                               ),
                               Padding(
@@ -443,15 +505,49 @@ class Order_DialogState extends State<Order_Dialog> {
                             ],
                           ),
                         ),
+                  list_promotion_product == null ||
+                          list_promotion_product.length == 0
+                      ? Container()
+                      : Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                          child: Column(
+                            children: <Widget>[
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    "Promotion Products",
+                                    style: StylesText.style16Brown,
+                                  ),
+                                ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                child: Container(
+                                 
+                                  width: Dimension.getWidth(1.0),
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children:
+                                          createRadioListPromotionProDuct(),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
                   Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                       child: Container(
                         child: CustomPaint(
                             painter: Drawhorizontalline(
                                 false, 180.0, 220.0, Colors.blueGrey, 0.5)),
                       )),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
