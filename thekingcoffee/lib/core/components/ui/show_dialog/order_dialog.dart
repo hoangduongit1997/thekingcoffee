@@ -32,6 +32,7 @@ class Order_DialogState extends State<Order_Dialog> {
   var selecttopping = false;
   var lstSelectedTopping = [];
   int selectedRadioTile;
+  var selectedPromotion;
 
   List<Widget> createRadioListSize() {
     List<Widget> widgets = [];
@@ -115,21 +116,25 @@ class Order_DialogState extends State<Order_Dialog> {
         child: RadioListTile(
           dense: true,
           value: promotion,
-          groupValue: selectedsize,
+          groupValue: selectedPromotion,
           title: Text(
             promotion['Sale']['Description'],
             style: StylesText.style13BrownBold,
           ),
           onChanged: (value) {
-            money -= selectedsize['PlusMonney'];
+            // money -= selectedsize['PlusMonney'];
+
             setState(() {
-              money += value['PlusMonney'];
+              // money += value['PlusMonney'];
+              selectedPromotion = value;
             });
-            selectedProduct['Price'] = money;
+            // selectedProduct['Price'] = money;
             selectedsize = value;
-            selectedProduct['Size'] = selectedsize;
+            // selectedProduct['Size'] = selectedsize;
+
+            // selectedPromotion = value;
           },
-          selected: selectedsize == promotion,
+          selected: selectedPromotion == promotion,
           activeColor: Colors.redAccent,
         ),
       ));

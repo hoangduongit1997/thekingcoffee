@@ -13,8 +13,6 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
- enum WhyFarther { harde}
-
   @override
   void initState() {
     Config.isHideNavigation = true;
@@ -55,7 +53,6 @@ class _AccountState extends State<Account> {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                 
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                     child: Container(
