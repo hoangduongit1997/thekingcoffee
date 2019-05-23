@@ -8,6 +8,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
+  barcode_generator:
+    dependency: "direct main"
+    description:
+      name: barcode_generator
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.2.7"
   bloc:
     dependency: "direct main"
     description:
@@ -137,13 +144,6 @@ packages:
       url: "https://github.com/hoangduongit1997/google_map_flugin.git"
     source: git
     version: "0.2.0+5"
-  grouped_buttons:
-    dependency: "direct main"
-    description:
-      name: grouped_buttons
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "1.0.4"
   http:
     dependency: "direct main"
     description:
@@ -193,13 +193,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.1.6"
-  multi_image_picker:
-    dependency: "direct main"
-    description:
-      name: multi_image_picker
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "4.3.0"
   path:
     dependency: transitive
     description:

@@ -5,7 +5,7 @@ import 'package:thekingcoffee/app/config/config.dart';
 
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
-import 'package:grouped_buttons/grouped_buttons.dart';
+import 'package:thekingcoffee/core/components/widgets/drawline.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 
 class Order_Dialog extends StatefulWidget {
@@ -14,10 +14,12 @@ class Order_Dialog extends StatefulWidget {
   final String name;
   final String desc;
   final int price;
+  final int ishot;
   final List<dynamic> toppings;
   final List<dynamic> size;
-  Order_Dialog(this.id, this.img, this.name, this.desc, this.price, this.size,
-      this.toppings);
+  final List<dynamic> promotion;
+  Order_Dialog(this.id, this.img, this.name, this.desc, this.price, this.ishot,
+      this.size, this.toppings, this.promotion);
   Order_DialogState createState() => Order_DialogState();
 }
 
@@ -25,11 +27,15 @@ class Order_DialogState extends State<Order_Dialog> {
   var product = selectedProduct;
   int number = 1;
   int money;
-
+  bool checked_hot = false;
   var selectedsize;
   var selecttopping = false;
   var lstSelectedTopping = [];
   int selectedRadioTile;
+  var selectedPromotion;
+  var list_promotion_product = [];
+  // bool check_promotion_product = false;
+  var check_promotion_product = [];
 
   List<Widget> createRadioListSize() {
     List<Widget> widgets = [];
@@ -40,6 +46,7 @@ class Order_DialogState extends State<Order_Dialog> {
     for (var item in widget.size) {
       widgets.add(Expanded(
         child: RadioListTile(
+          dense: true,
           value: item,
           groupValue: selectedsize,
           title: Text(
@@ -66,12 +73,12 @@ class Order_DialogState extends State<Order_Dialog> {
   List<Widget> createCheckedBoxTopping() {
     List<Widget> widgets = [];
     for (var topping in widget.toppings) {
-      widgets.add(Expanded(
+      widgets.add(Container(
           child: CheckboxListTile(
         controlAffinity: ListTileControlAffinity.leading,
         title: Text(
           topping['Name'].toString(),
-          style: StylesText.style13Black,
+          style: StylesText.style13BrownBold,
         ),
         value: lstSelectedTopping.firstWhere((t) => t['Id'] == topping['Id'],
                 orElse: () => null) !=
@@ -103,6 +110,160 @@ class Order_DialogState extends State<Order_Dialog> {
       )));
     }
     return widgets;
+  }
+
+  List<Widget> createRadioListPromotion() {
+    List<Widget> widgets_promotion = [];
+    for (var promotion in widget.promotion) {
+      widgets_promotion.add(Container(
+        child: RadioListTile(
+          dense: true,
+          value: promotion,
+          groupValue: selectedPromotion,
+          title: Text(
+            promotion['Sale']['Description'],
+            style: StylesText.style13BrownBold,
+          ),
+          onChanged: (value) {
+            // money -= selectedsize['PlusMonney'];
+            list_promotion_product = [];
+            list_promotion_product = promotion['SaleForProducts'];
+            int changedMoney;
+            if (selectedPromotion != null) {
+              // tempMoney -= widget.price *
+              //     ((100 - selectedPromotion['PercentDiscount'])) /
+              //     100;
+              changedMoney = (widget.price *
+                      ((100 - selectedPromotion['PercentDiscount'])) /
+                      100)
+                  .toInt();
+            }
+            changedMoney -=
+                (widget.price * (value['PercentDiscount'] / 100)).toInt();
+            setState(() {
+              // money += value['PlusMonney'];
+              selectedPromotion = value;
+              money = money - changedMoney;
+
+              //Gen promotion product
+            });
+            // selectedProduct['Price'] = money;
+            selectedsize = value;
+            // selectedProduct['Size'] = selectedsize;
+
+            // selectedPromotion = value;
+          },
+          selected: selectedPromotion == promotion,
+          activeColor: Colors.redAccent,
+        ),
+      ));
+    }
+    return widgets_promotion;
+  }
+
+  List<Widget> createRadioListPromotionProDuct() {
+    List<Widget> widgets_promotion_product = [];
+    for (var promotion_product in list_promotion_product) {
+      widgets_promotion_product.add(Container(
+          child: CheckboxListTile(
+        controlAffinity: ListTileControlAffinity.leading,
+        title: Padding(
+          padding: const EdgeInsets.fromLTRB(2, 0, 0, 0),
+          child: Container(
+            width: Dimension.getWidth(1.0),
+            height: Dimension.getHeight(0.1),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Column(
+                  children: <Widget>[
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8.0),
+                      child: CachedNetworkImage(
+                          imageUrl: Config.ip +
+                              promotion_product['DetailedSaleForProduct']
+                                  ['File_Path'],
+                          fit: BoxFit.cover,
+                          height: Dimension.getHeight(0.1),
+                          width: Dimension.getWidth(0.18),
+                          placeholder: (context, url) => new SizedBox(
+                                child: Center(
+                                    child: CircularProgressIndicator(
+                                  valueColor: new AlwaysStoppedAnimation<Color>(
+                                      Colors.redAccent),
+                                )),
+                              )),
+                    ),
+                  ],
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.all(0.0),
+                      child: Container(
+                        width: Dimension.getWidth(0.35),
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(2, 0, 0, 0),
+                          child: Text(
+                              promotion_product['DetailedSaleForProduct']
+                                  ['Name'],
+                              style: StylesText.style13BrownBold),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(2, 0, 0, 0),
+                      child: Container(
+                        width: Dimension.getWidth(0.35),
+                        child: promotion_product['DetailedSaleForProduct']
+                                    ['Price'] ==
+                                null
+                            ? Container()
+                            : Text(
+                                promotion_product['DetailedSaleForProduct']
+                                        ['Price']
+                                    .toString(),
+                                style: StylesText.style13BrownNormalUnderline,
+                              ),
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
+          ),
+        ),
+        value: check_promotion_product.firstWhere((t) => t == promotion_product,
+                orElse: () => null) !=
+            null,
+        onChanged: (value) {
+          var lstVal = [];
+          int tempMoney = money;
+          int factMoneyProduct = promotion_product['DetailedSaleForProduct']
+                  ['Price'] -
+              promotion_product['MoneyDiscount'] -
+              promotion_product['PriceDiscount'];
+          if (value) {
+            lstVal.add(promotion_product);
+            //tang tien
+            tempMoney += factMoneyProduct;
+          } else {
+            var temp = check_promotion_product
+                .firstWhere((t) => t == promotion_product, orElse: () => null);
+            lstVal.remove(temp);
+            //tru bot tien
+            tempMoney -= factMoneyProduct;
+          }
+          setState(() {
+            check_promotion_product = lstVal;
+            money = tempMoney;
+          });
+        },
+        activeColor: Colors.redAccent,
+      )));
+    }
+    return widgets_promotion_product;
   }
 
   @override
@@ -173,24 +334,22 @@ class Order_DialogState extends State<Order_Dialog> {
                                   )))
                         ],
                       ),
-                      Expanded(
-                          child: Column(
+                      Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
                           Padding(
-                            padding: const EdgeInsets.fromLTRB(2, 0, 0, 30),
+                            padding: const EdgeInsets.fromLTRB(2, 0, 0, 15),
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: <Widget>[
                                 Container(
-                                  margin: const EdgeInsets.all(2.0),
+                                  width: Dimension.getWidth(0.45),
                                   child: Text(
                                     widget.name,
                                     style: StylesText.style20BrownBold,
-                                    softWrap: true,
                                   ),
-                                )
+                                ),
                               ],
                             ),
                           ),
@@ -220,21 +379,67 @@ class Order_DialogState extends State<Order_Dialog> {
                             ),
                           )
                         ],
-                      ))
+                      )
                     ],
                   ),
+                  Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                      child: Container(
+                        child: CustomPaint(
+                            painter: Drawhorizontalline(
+                                false, 180.0, 220.0, Colors.blueGrey, 0.5)),
+                      )),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
                         Expanded(
-                          child: Text(widget.desc,
-                              style: StylesText.style13Blugray),
+                          child:
+                              Text(widget.desc, style: StylesText.style13Black),
                         )
                       ],
                     ),
                   ),
+                  Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                      child: Container(
+                        child: CustomPaint(
+                            painter: Drawhorizontalline(
+                                false, 180.0, 220.0, Colors.blueGrey, 0.5)),
+                      )),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: <Widget>[
+                        Text(
+                          "Note",
+                          style: StylesText.style16Brown,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                          child: Container(
+                            width: Dimension.getWidth(0.62),
+                            child: TextField(
+                              keyboardType: TextInputType.multiline,
+                              maxLines: null,
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  widget.size == null || widget.size.length == 0
+                      ? Container()
+                      : Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                          child: Container(
+                            child: CustomPaint(
+                                painter: Drawhorizontalline(
+                                    false, 180.0, 220.0, Colors.blueGrey, 0.5)),
+                          )),
                   widget.size == null || widget.size.length == 0
                       ? Container()
                       : Padding(
@@ -248,10 +453,59 @@ class Order_DialogState extends State<Order_Dialog> {
                               )
                             ],
                           )),
+                  widget.ishot == 1
+                      ? Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                          child: Container(
+                            child: CustomPaint(
+                                painter: Drawhorizontalline(
+                                    false, 180.0, 220.0, Colors.blueGrey, 0.5)),
+                          ))
+                      : Container(),
+                  widget.ishot == 1
+                      ? Container(
+                          width: Dimension.getWidth(1.0),
+                          child: Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  Text("Kind", style: StylesText.style16Brown),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(20, 0, 0, 0),
+                                    child: Container(
+                                      width: Dimension.getWidth(0.5),
+                                      child: CheckboxListTile(
+                                        controlAffinity:
+                                            ListTileControlAffinity.leading,
+                                        title: Text("Hot"),
+                                        value: checked_hot,
+                                        onChanged: (bool value) {
+                                          setState(() {
+                                            checked_hot = value;
+                                          });
+                                        },
+                                        activeColor: Colors.red,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              )))
+                      : Container(),
                   widget.toppings == null || widget.toppings.length == 0
                       ? Container()
                       : Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                          padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                          child: Container(
+                            child: CustomPaint(
+                                painter: Drawhorizontalline(
+                                    false, 180.0, 220.0, Colors.blueGrey, 0.5)),
+                          )),
+                  widget.toppings == null || widget.toppings.length == 0
+                      ? Container()
+                      : Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                           child: Column(
                             children: <Widget>[
                               Row(
@@ -263,16 +517,99 @@ class Order_DialogState extends State<Order_Dialog> {
                                 ],
                               ),
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: createCheckedBoxTopping()),
+                                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                child: Container(
+                                  width: Dimension.getWidth(1.0),
+                                  child: Center(
+                                    child: Column(
+                                      children: createCheckedBoxTopping(),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                  widget.promotion == null || widget.promotion.length == 0
+                      ? Container()
+                      : Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                          child: Container(
+                            child: CustomPaint(
+                                painter: Drawhorizontalline(
+                                    false, 180.0, 220.0, Colors.blueGrey, 0.5)),
+                          )),
+                  widget.promotion == null || widget.promotion.length == 0
+                      ? Container()
+                      : Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                          child: Column(
+                            children: <Widget>[
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    "Discount",
+                                    style: StylesText.style16Brown,
+                                  ),
+                                ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                child: Container(
+                                  width: Dimension.getWidth(1.0),
+                                  child: Center(
+                                    child: Column(
+                                      children: createRadioListPromotion(),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                  list_promotion_product == null ||
+                          list_promotion_product.length == 0
+                      ? Container()
+                      : Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                          child: Column(
+                            children: <Widget>[
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  Text(
+                                    "Promotion Products",
+                                    style: StylesText.style16Brown,
+                                  ),
+                                ],
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                child: Container(
+                                  width: Dimension.getWidth(1.0),
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children:
+                                          createRadioListPromotionProDuct(),
+                                    ),
+                                  ),
+                                ),
                               ),
                             ],
                           ),
                         ),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                      child: Container(
+                        child: CustomPaint(
+                            painter: Drawhorizontalline(
+                                false, 180.0, 220.0, Colors.blueGrey, 0.5)),
+                      )),
+                  Padding(
+                    padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: <Widget>[
@@ -318,6 +655,9 @@ class Order_DialogState extends State<Order_Dialog> {
                                           color: Colors.brown),
                                       onPressed: () {
                                         setState(() {
+                                          if (number == 1) {
+                                            return;
+                                          }
                                           number--;
                                           money -= widget.price;
                                         });

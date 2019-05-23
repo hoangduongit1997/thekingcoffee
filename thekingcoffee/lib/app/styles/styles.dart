@@ -131,6 +131,12 @@ class StylesText {
     color: Colors.brown,
     fontWeight: FontWeight.normal,
   );
+   static TextStyle style13BrownNormalUnderline = TextStyle(
+    fontSize: SizeText.size13,
+    color: Colors.brown,
+    fontWeight: FontWeight.normal,
+    decoration: TextDecoration.lineThrough
+  );
   static TextStyle style14BrownBold = TextStyle(
     fontSize: SizeText.size14,
     color: Colors.brown,
@@ -164,6 +170,11 @@ class StylesText {
   );
   static TextStyle style15Black = TextStyle(
     fontSize: SizeText.size15,
+    color: Colors.black,
+    fontWeight: FontWeight.normal,
+  );
+   static TextStyle style14Black = TextStyle(
+    fontSize: SizeText.size14,
     color: Colors.black,
     fontWeight: FontWeight.normal,
   );

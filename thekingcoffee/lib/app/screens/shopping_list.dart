@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:thekingcoffee/app/bloc/order_bloc.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/data/repository/order_repository.dart';
@@ -26,7 +27,8 @@ class Shopping_List extends StatefulWidget {
 class Shopping_ListState extends State<Shopping_List> {
   @override
   void initState() {
-    Config.current_botton_tab = 2;
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+    Config.isHideNavigation = false;
     super.initState();
   }
 
@@ -156,6 +158,7 @@ class Shopping_ListState extends State<Shopping_List> {
                               builder: (context, snapshot) {
                                 return TextField(
                                   onTap: () {
+                                    Config.isHideNavigation = true;
                                     Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -480,7 +483,7 @@ class Shopping_ListState extends State<Shopping_List> {
                             ),
                           )),
                       Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 10, 5, 10),
+                          padding: const EdgeInsets.fromLTRB(0, 10, 5, 15),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: <Widget>[
@@ -529,14 +532,13 @@ class Shopping_ListState extends State<Shopping_List> {
                       child: MaterialButton(
                           onPressed: () {
                             if (orderBloc.isValidInfo(
-                                        name.text.trim().toString(), phone.text.trim().toString(),address.text.trim().toString()) ==
-                                    true) {
-                                      if ( PostOrder(
-              phone.text.trim().toString(), address.text.trim().toString()) ==
-          true) {
-    
-      }
-                             
+                                    name.text.trim().toString(),
+                                    phone.text.trim().toString(),
+                                    address.text.trim().toString()) ==
+                                true) {
+                              if (PostOrder(phone.text.trim().toString(),
+                                      address.text.trim().toString()) ==
+                                  true) {}
                             }
                           },
                           child: Text(

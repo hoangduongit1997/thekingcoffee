@@ -13,3 +13,13 @@ Get_Drinking_Products() async {
     return null;
   }
 }
+Is_Have_Drinking_Products() async {
+  try {
+    final response = await http.get(Config.is_have_drinking_products_API);
+    final res = json.decode(response.body)['Value'];
+    return res;
+  } catch (e) {
+    print(e.toString());
+    return null;
+  }
+}

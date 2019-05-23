@@ -2,10 +2,12 @@ import 'dart:convert';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:http/http.dart' as http;
 import 'package:thekingcoffee/app/screens/helper/dashboard_helper/placeholder_home.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
+import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog_order.dart';
 import 'package:thekingcoffee/core/components/widgets/drawline.dart';
 import 'package:thekingcoffee/core/components/widgets/favorite.dart';
@@ -17,12 +19,17 @@ class CarouselWithIndicator extends StatefulWidget {
   _CarouselWithIndicatorState createState() => _CarouselWithIndicatorState();
 }
 
+int promotion_new_product = 0;
+var promotion_list_new_product = [];
+BuildContext context_order;
+
 class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
   int _current = 0;
   static int starCount = 5;
-  BuildContext context;
+
   @override
   Widget build(context) {
+    context_order = context;
     return Container(
       decoration: BoxDecoration(
           border: Border.all(color: Colors.grey[300]),
@@ -65,10 +72,24 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
   final List child = Map_Object.map_home_cart<Widget>(
     list_new_products,
     (index, i) {
+      promotion_list_new_product =
+          list_new_products[index]['Promotion'] as List<dynamic>;
+      promotion_new_product = promotion_list_new_product.length;
       return Container(
           child: GestureDetector(
         onTap: () {
-          print("Bạn tap vào san pham " + index.toString());
+          LoadingDialog_Order.showLoadingDialog(
+              context_order,
+              list_new_products[index]['Id'],
+              list_new_products[index]['Name'],
+              list_new_products[index]['File_Path'],
+              list_new_products[index]['Description'],
+              list_new_products[index]['Price'],
+              list_new_products[index]['IsHot'],
+              list_new_products[index]['Toppings'],
+              list_new_products[index]['Size'],
+              list_new_products[index]['Promotion'],
+              ListOrderProducts);
         },
         child: ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(8.0)),
@@ -124,10 +145,13 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: <Widget>[
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(5, 10, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
                       child: Center(
-                        child: Text(list_new_products[index]['Name'],
-                            style: StylesText.style20BrownBold),
+                        child: Container(
+                          width: Dimension.getWidth(0.48),
+                          child: Text(list_new_products[index]['Name'],
+                              style: StylesText.style20BrownBold),
+                        ),
                       ),
                     ),
                     Padding(
@@ -147,8 +171,41 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
                         ],
                       ),
                     ),
+                    promotion_list_new_product == null ||
+                            promotion_list_new_product.length == 0
+                        ? IgnorePointer(
+                            ignoring: true,
+                            child: Opacity(
+                              opacity: 0.0,
+                              child: Padding(
+                                padding: const EdgeInsets.fromLTRB(5, 10, 0, 0),
+                                child: Row(
+                                  children: <Widget>[
+                                    Icon(Icons.fastfood,
+                                        color: Colors.redAccent),
+                                    Text(
+                                        promotion_new_product.toString() +
+                                            " discount",
+                                        style: StylesText.style13BrownNormal)
+                                  ],
+                                ),
+                              ),
+                            ),
+                          )
+                        : Padding(
+                            padding: const EdgeInsets.fromLTRB(5, 10, 0, 0),
+                            child: Row(
+                              children: <Widget>[
+                                Icon(Icons.fastfood, color: Colors.redAccent),
+                                Text(
+                                    promotion_new_product.toString() +
+                                        " discount",
+                                    style: StylesText.style13BrownNormal)
+                              ],
+                            ),
+                          ),
                     Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 30, 0, 0),
+                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                         child: Container(
                           child: CustomPaint(
                               painter: Drawhorizontalline(
@@ -158,23 +215,52 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
                       padding: const EdgeInsets.fromLTRB(5, 30, 0, 0),
                       child: Row(
                         children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.all(0.0),
-                            child: CircleAvatar(
-                              backgroundColor: Colors.white,
-                              foregroundColor: Colors.redAccent,
-                              radius: 12.0,
-                              child: Icon(
-                                Icons.monetization_on,
-                                color: Colors.redAccent,
+                          Stack(
+                            alignment: AlignmentDirectional.centerStart,
+                            children: <Widget>[
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.all(0.0),
+                                    child: CircleAvatar(
+                                      backgroundColor: Colors.white,
+                                      foregroundColor: Colors.redAccent,
+                                      radius: 12.0,
+                                      child: Icon(
+                                        Icons.monetization_on,
+                                        color: Colors.redAccent,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                                    child: Text(
+                                        list_new_products[index]['Price']
+                                            .toString(),
+                                        style: StylesText.style16BrownBold),
+                                  )
+                                ],
                               ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
-                            child: Text(
-                                list_new_products[index]['Price'].toString(),
-                                style: StylesText.style16BrownBold),
+                              list_new_products[index]['IsHot'] == 1
+                                  ? Container(
+                                      width: Dimension.getWidth(0.45),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: <Widget>[
+                                          SvgPicture.asset(
+                                            'assets/icons/hot_tea.svg',
+                                            height: Dimension.getHeight(0.035),
+                                            width: Dimension.getHeight(0.1),
+                                            color: Colors.redAccent,
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  : Container()
+                            ],
                           )
                         ],
                       ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/screens/favorite_page.dart';
 import 'package:thekingcoffee/app/screens/helper/dashboard_helper/placeholder.dart';
@@ -21,11 +22,11 @@ class _HomeState extends State<DashBoard> {
   ];
   @override
   void initState() {
-    Config.isHideNavigation=false;
-    Config.current_botton_tab=0;
-  
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+    Config.isHideNavigation = false;
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -34,26 +35,28 @@ class _HomeState extends State<DashBoard> {
         home: Scaffold(
           resizeToAvoidBottomInset: false,
           body: _children[Config.current_botton_tab],
-          bottomNavigationBar:Config.isHideNavigation==true?null: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            onTap: onTabTapped,
-            currentIndex: Config.current_botton_tab,
-            items: [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                title: Text('Home'),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.favorite_border),
-                title: Text('Favorites'),
-              ),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.shopping_cart),
-                  title: Text('Shopping List')),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.settings), title: Text('Setting')),
-            ],
-          ),
+          bottomNavigationBar: Config.isHideNavigation == true
+              ? null
+              : BottomNavigationBar(
+                  type: BottomNavigationBarType.fixed,
+                  onTap: onTabTapped,
+                  currentIndex: Config.current_botton_tab,
+                  items: [
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.home),
+                      title: Text('Home'),
+                    ),
+                    BottomNavigationBarItem(
+                      icon: Icon(Icons.favorite_border),
+                      title: Text('Favorites'),
+                    ),
+                    BottomNavigationBarItem(
+                        icon: Icon(Icons.shopping_cart),
+                        title: Text('Shopping List')),
+                    BottomNavigationBarItem(
+                        icon: Icon(Icons.settings), title: Text('Setting')),
+                  ],
+                ),
         ));
   }
 

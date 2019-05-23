@@ -1,26 +1,400 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:thekingcoffee/app/config/config.dart';
+import 'package:thekingcoffee/app/data/repository/get_data_all_product.dart';
+import 'package:thekingcoffee/app/screens/dashboard.dart';
+import 'package:thekingcoffee/app/styles/styles.dart';
+import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
+import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
+import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog_order.dart';
+import 'package:thekingcoffee/core/components/widgets/drawline.dart';
+import 'package:thekingcoffee/core/components/widgets/favorite.dart';
+import 'package:thekingcoffee/core/components/widgets/rating.dart';
+import 'package:thekingcoffee/core/utils/utils.dart';
 
 class See_All_Product extends StatefulWidget {
-  See_All_Product({Key key}) : super(key: key);
-
+  String title = "";
+  int catagory = 0;
+  See_All_Product(this.title, this.catagory);
   _See_All_ProductState createState() => _See_All_ProductState();
 }
 
 class _See_All_ProductState extends State<See_All_Product> {
+  int lenght = 0;
+  var data = [];
+  static int starCount = 5;
+  int promotion_product = 0;
+  var promotion_list_product = [];
+  intDataScreen() async {
+    final result = await Get_Data_All_Product(widget.catagory);
+    setState(() {
+      data = result;
+      lenght = data.length;
+    });
+  }
+
+  @override
+  void initState() {
+    Config.isHideNavigation = true;
+    intDataScreen();
+    super.initState();
+  }
+
+  var _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
+        resizeToAvoidBottomPadding: false,
+        key: _scaffoldKey,
+        appBar: AppBar(
+          leading: FlatButton(
+              onPressed: () {
+                Config.current_botton_tab = 0;
+                Navigator.of(context).pushReplacement(
+                    MaterialPageRoute(builder: (context) => DashBoard()));
+              },
+              child: Icon(
+                Icons.arrow_back,
+                color: Colors.brown,
+              )),
+          backgroundColor: Colors.white,
+          title: Text(widget.title, style: StylesText.style20BrownBold),
+        ),
         resizeToAvoidBottomInset: false,
-        body: Container(
-            // child: ListView.builder(
-            //   scrollDirection: Axis.vertical,
-            //   shrinkWrap: true,
-            //   physics: const ClampingScrollPhysics(),
-            //   itemCount:
-            // ),
-            child: Text("a")),
+        body: data.length == 0 || data.isEmpty == true
+            ? Container(
+                child: Center(child: Text("No information")),
+              )
+            : Container(
+                padding: const EdgeInsets.all(5.0),
+                color: Colors.grey[300],
+                width: double.infinity,
+                height: MediaQuery.of(context).size.height,
+                child: ListView.builder(
+                    itemCount: lenght,
+                    shrinkWrap: true,
+                    scrollDirection: Axis.vertical,
+                    itemBuilder: (context, index) {
+                      promotion_list_product =
+                          data[index]['Promotion'] as List<dynamic>;
+                      promotion_product = promotion_list_product.length;
+                      return GestureDetector(
+                        onTap: () {
+                          LoadingDialog_Order.showLoadingDialog(
+                              context,
+                              data[index]['Id'],
+                              data[index]['Name'],
+                              data[index]['File_Path'],
+                              data[index]['Description'],
+                              data[index]['Price'],
+                              data[index]['IsHot'],
+                              data[index]['Toppings'],
+                              data[index]['Size'],
+                              data[index]['Promotion'],
+                              ListOrderProducts);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(2.0),
+                          child: Container(
+                              height: Dimension.getHeight(0.173),
+                              padding: const EdgeInsets.all(5.0),
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  border: Border.all(color: Colors.grey[300]),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(8.0))),
+                              child: Center(
+                                child: ClipRRect(
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(8.0)),
+                                  child: Stack(children: <Widget>[
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: <Widget>[
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          children: <Widget>[
+                                            Padding(
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        0, 0, 0, 0),
+                                                child: Row(
+                                                  children: <Widget>[
+                                                    Container(
+                                                        height:
+                                                            Dimension.getHeight(
+                                                                0.15),
+                                                        width:
+                                                            Dimension.getWidth(
+                                                                0.3),
+                                                        child: Stack(
+                                                          alignment:
+                                                              AlignmentDirectional
+                                                                  .topEnd,
+                                                          children: <Widget>[
+                                                            ClipRRect(
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .circular(
+                                                                          8.0),
+                                                              child:
+                                                                  CachedNetworkImage(
+                                                                      imageUrl: Config
+                                                                              .ip +
+                                                                          data[index]
+                                                                              [
+                                                                              'File_Path'],
+                                                                      fit: BoxFit
+                                                                          .cover,
+                                                                      height: Dimension
+                                                                          .getHeight(
+                                                                              0.3),
+                                                                      width: Dimension
+                                                                          .getWidth(
+                                                                              0.5),
+                                                                      placeholder: (context,
+                                                                              url) =>
+                                                                          new SizedBox(
+                                                                            child: Center(
+                                                                                child: CircularProgressIndicator(
+                                                                              valueColor: new AlwaysStoppedAnimation<Color>(Colors.redAccent),
+                                                                            )),
+                                                                          )),
+                                                            ),
+                                                            Favorite(
+                                                              color: Colors.red,
+                                                            ),
+                                                          ],
+                                                        )),
+                                                  ],
+                                                ))
+                                          ],
+                                        ),
+                                        Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          children: <Widget>[
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      5, 0, 0, 0),
+                                              child: Center(
+                                                child: Container(
+                                                  width:
+                                                      Dimension.getWidth(0.62),
+                                                  child: Text(
+                                                      data[index]['Name'],
+                                                      style: StylesText
+                                                          .style20BrownBold),
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      0, 10, 0, 5),
+                                              child: Container(
+                                                width: Dimension.getWidth(0.62),
+                                                child: Row(
+                                                  children: <Widget>[
+                                                    Stack(
+                                                      alignment:
+                                                          AlignmentDirectional
+                                                              .centerStart,
+                                                      children: <Widget>[
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .start,
+                                                          children: <Widget>[
+                                                            StarRating(
+                                                              size: 13.0,
+                                                              rating: double
+                                                                  .tryParse(data[
+                                                                              index]
+                                                                          [
+                                                                          'Start']
+                                                                      .toString()),
+                                                              color:
+                                                                  Colors.orange,
+                                                              borderColor:
+                                                                  Colors.grey,
+                                                              starCount: 5,
+                                                            ),
+                                                            Text(
+                                                                data[index][
+                                                                        'Start']
+                                                                    .toString(),
+                                                                style: StylesText
+                                                                    .style13BrownNormal)
+                                                          ],
+                                                        ),
+                                                        data[index]['IsHot'] ==
+                                                                1
+                                                            ? Container(
+                                                                width: Dimension
+                                                                    .getWidth(
+                                                                        0.62),
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .end,
+                                                                  children: <
+                                                                      Widget>[
+                                                                    SvgPicture
+                                                                        .asset(
+                                                                      'assets/icons/hot_tea.svg',
+                                                                      height: Dimension
+                                                                          .getHeight(
+                                                                              0.035),
+                                                                      width: Dimension
+                                                                          .getHeight(
+                                                                              0.1),
+                                                                      color: Colors
+                                                                          .redAccent,
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              )
+                                                            : Container()
+                                                      ],
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        0, 5, 0, 0),
+                                                child: Container(
+                                                  child: CustomPaint(
+                                                      painter:
+                                                          Drawhorizontalline(
+                                                              false,
+                                                              0.0,
+                                                              300.0,
+                                                              Colors.blueGrey,
+                                                              0.5)),
+                                                )),
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      0, 15, 0, 0),
+                                              child: Container(
+                                                width: Dimension.getWidth(0.63),
+                                                child: Row(
+                                                  children: <Widget>[
+                                                    Stack(
+                                                      alignment:
+                                                          AlignmentDirectional
+                                                              .centerStart,
+                                                      children: <Widget>[
+                                                        Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .start,
+                                                          children: <Widget>[
+                                                            Icon(
+                                                              Icons
+                                                                  .monetization_on,
+                                                              color: Colors
+                                                                  .redAccent,
+                                                            ),
+                                                            Text(
+                                                              data[index]
+                                                                      ['Price']
+                                                                  .toString(),
+                                                              style: StylesText
+                                                                  .style13BrownBold,
+                                                            )
+                                                          ],
+                                                        ),
+                                                        Container(
+                                                          width: Dimension
+                                                              .getWidth(0.63),
+                                                          child: promotion_list_product ==
+                                                                      null ||
+                                                                  promotion_list_product
+                                                                          .length ==
+                                                                      0
+                                                              ? IgnorePointer(
+                                                                  ignoring:
+                                                                      true,
+                                                                  child: Opacity(
+                                                                      opacity: 0.0,
+                                                                      child: Container(
+                                                                        child:
+                                                                            Row(
+                                                                          mainAxisAlignment:
+                                                                              MainAxisAlignment.end,
+                                                                          children: <
+                                                                              Widget>[
+                                                                            Icon(
+                                                                              Icons.fastfood,
+                                                                              color: Colors.redAccent,
+                                                                            ),
+                                                                            Text(
+                                                                              promotion_product.toString() + " discount",
+                                                                              style: StylesText.style13BrownBold,
+                                                                            )
+                                                                          ],
+                                                                        ),
+                                                                      )),
+                                                                )
+                                                              : Container(
+                                                                  width: Dimension
+                                                                      .getWidth(
+                                                                          0.51),
+                                                                  child: Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .end,
+                                                                    children: <
+                                                                        Widget>[
+                                                                      Icon(
+                                                                        Icons
+                                                                            .fastfood,
+                                                                        color: Colors
+                                                                            .redAccent,
+                                                                      ),
+                                                                      Text(
+                                                                        promotion_product.toString() +
+                                                                            " discount",
+                                                                        style: StylesText
+                                                                            .style13BrownBold,
+                                                                      )
+                                                                    ],
+                                                                  ),
+                                                                ),
+                                                        )
+                                                      ],
+                                                    )
+                                                  ],
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ]),
+                                ),
+                              )),
+                        ),
+                      );
+                    }),
+              ),
+        drawer: Drawer(
+          child: HomeMenu(),
+        ),
       ),
     );
   }
