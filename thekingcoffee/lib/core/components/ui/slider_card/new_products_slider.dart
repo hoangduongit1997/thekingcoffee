@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:http/http.dart' as http;
 import 'package:thekingcoffee/app/screens/helper/dashboard_helper/placeholder_home.dart';
@@ -83,8 +84,8 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
               list_new_products[index]['Name'],
               list_new_products[index]['File_Path'],
               list_new_products[index]['Description'],
-              list_new_products[index]['IsHot'],
               list_new_products[index]['Price'],
+              list_new_products[index]['IsHot'],
               list_new_products[index]['Toppings'],
               list_new_products[index]['Size'],
               list_new_products[index]['Promotion'],
@@ -214,23 +215,52 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
                       padding: const EdgeInsets.fromLTRB(5, 30, 0, 0),
                       child: Row(
                         children: <Widget>[
-                          Padding(
-                            padding: const EdgeInsets.all(0.0),
-                            child: CircleAvatar(
-                              backgroundColor: Colors.white,
-                              foregroundColor: Colors.redAccent,
-                              radius: 12.0,
-                              child: Icon(
-                                Icons.monetization_on,
-                                color: Colors.redAccent,
+                          Stack(
+                            alignment: AlignmentDirectional.centerStart,
+                            children: <Widget>[
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  Padding(
+                                    padding: const EdgeInsets.all(0.0),
+                                    child: CircleAvatar(
+                                      backgroundColor: Colors.white,
+                                      foregroundColor: Colors.redAccent,
+                                      radius: 12.0,
+                                      child: Icon(
+                                        Icons.monetization_on,
+                                        color: Colors.redAccent,
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                                    child: Text(
+                                        list_new_products[index]['Price']
+                                            .toString(),
+                                        style: StylesText.style16BrownBold),
+                                  )
+                                ],
                               ),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
-                            child: Text(
-                                list_new_products[index]['Price'].toString(),
-                                style: StylesText.style16BrownBold),
+                              list_new_products[index]['IsHot'] == 1
+                                  ? Container(
+                                      width: Dimension.getWidth(0.45),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.end,
+                                        children: <Widget>[
+                                          SvgPicture.asset(
+                                            'assets/icons/hot_tea.svg',
+                                            height: Dimension.getHeight(0.035),
+                                            width: Dimension.getHeight(0.1),
+                                            color: Colors.redAccent,
+                                          )
+                                        ],
+                                      ),
+                                    )
+                                  : Container()
+                            ],
                           )
                         ],
                       ),

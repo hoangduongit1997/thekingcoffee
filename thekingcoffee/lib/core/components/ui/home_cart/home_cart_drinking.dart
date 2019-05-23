@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:http/http.dart' as http;
 import 'package:thekingcoffee/app/config/config.dart';
 
@@ -23,8 +24,8 @@ var data = [];
 var topping = [];
 var sanpham;
 int lenght = 0;
-int promotion_drinking=0;
-var promotion_list_drinking=[];
+int promotion_drinking = 0;
+var promotion_list_drinking = [];
 
 class _Home_Card_Drinking_State extends State<Home_Card_Drinking> {
   intDataHomeScreen() async {
@@ -47,7 +48,7 @@ class _Home_Card_Drinking_State extends State<Home_Card_Drinking> {
     return Container(
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home:Scaffold(
+        home: Scaffold(
           resizeToAvoidBottomInset: false,
           body: Container(
             child: Column(
@@ -60,11 +61,10 @@ class _Home_Card_Drinking_State extends State<Home_Card_Drinking> {
                       physics: const ClampingScrollPhysics(),
                       itemCount: lenght,
                       itemBuilder: (BuildContext context, int index) {
-                        
-                          promotion_list_drinking=data[index]['Promotion'] as List<dynamic>;
-                        promotion_drinking=promotion_list_drinking.length;
-                       
-                         
+                        promotion_list_drinking =
+                            data[index]['Promotion'] as List<dynamic>;
+                        promotion_drinking = promotion_list_drinking.length;
+
                         if (data == null) {
                           return Center(
                             child: CircularProgressIndicator(),
@@ -148,7 +148,8 @@ class _Home_Card_Drinking_State extends State<Home_Card_Drinking> {
                                                   MainAxisAlignment.center,
                                               children: <Widget>[
                                                 Container(
-                                                   width: Dimension.getWidth(0.51),
+                                                  width:
+                                                      Dimension.getWidth(0.51),
                                                   child: Text(
                                                     data[index]['Name'],
                                                     style: StylesText
@@ -161,22 +162,63 @@ class _Home_Card_Drinking_State extends State<Home_Card_Drinking> {
                                       Padding(
                                         padding: const EdgeInsets.fromLTRB(
                                             0, 10, 0, 5),
-                                        child: Row(
-                                          children: <Widget>[
-                                            StarRating(
-                                              size: 13.0,
-                                              rating: double.tryParse(
-                                                  data[index]['Start']
-                                                      .toString()),
-                                              color: Colors.orange,
-                                              borderColor: Colors.grey,
-                                              starCount: 5,
-                                            ),
-                                            Text(
-                                                data[index]['Start'].toString(),
-                                                style: StylesText
-                                                    .style13BrownNormal)
-                                          ],
+                                        child: Container(
+                                          width: Dimension.getWidth(0.51),
+                                          child: Row(
+                                            children: <Widget>[
+                                              Stack(
+                                                alignment: AlignmentDirectional
+                                                    .centerStart,
+                                                children: <Widget>[
+                                                  Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment.start,
+                                                    children: <Widget>[
+                                                      StarRating(
+                                                        size: 13.0,
+                                                        rating: double.tryParse(
+                                                            data[index]['Start']
+                                                                .toString()),
+                                                        color: Colors.orange,
+                                                        borderColor:
+                                                            Colors.grey,
+                                                        starCount: 5,
+                                                      ),
+                                                      Text(
+                                                          data[index]['Start']
+                                                              .toString(),
+                                                          style: StylesText
+                                                              .style13BrownNormal)
+                                                    ],
+                                                  ),
+                                                  data[index]['IsHot'] == 1
+                                                      ? Container(
+                                                          width: Dimension
+                                                              .getWidth(0.51),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .end,
+                                                            children: <Widget>[
+                                                              SvgPicture.asset(
+                                                                'assets/icons/hot_tea.svg',
+                                                                height: Dimension
+                                                                    .getHeight(
+                                                                        0.035),
+                                                                width: Dimension
+                                                                    .getHeight(
+                                                                        0.1),
+                                                                color: Colors
+                                                                    .redAccent,
+                                                              )
+                                                            ],
+                                                          ),
+                                                        )
+                                                      : Container()
+                                                ],
+                                              )
+                                            ],
+                                          ),
                                         ),
                                       ),
                                       Padding(
@@ -218,51 +260,65 @@ class _Home_Card_Drinking_State extends State<Home_Card_Drinking> {
                                                       )
                                                     ],
                                                   ),
-                                                  promotion_list_drinking==null||promotion_list_drinking.length==0?IgnorePointer(
-                                                   ignoring: true,
-                                                   child: Opacity(
-                                                     opacity: 0.0,
-                                                     child: Container(
-                                                    width: Dimension.getWidth(
-                                                        0.51),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment.end,
-                                                      children: <Widget>[
-                                                        Icon(
-                                                          Icons.fastfood,
-                                                          color:
-                                                              Colors.redAccent,
-                                                        ),
-                                                        Text(
-                                                          promotion_drinking.toString()+" discount",
-                                                          style: StylesText
-                                                              .style13BrownBold,
+                                                  promotion_list_drinking ==
+                                                              null ||
+                                                          promotion_list_drinking
+                                                                  .length ==
+                                                              0
+                                                      ? IgnorePointer(
+                                                          ignoring: true,
+                                                          child: Opacity(
+                                                              opacity: 0.0,
+                                                              child: Container(
+                                                                width: Dimension
+                                                                    .getWidth(
+                                                                        0.51),
+                                                                child: Row(
+                                                                  mainAxisAlignment:
+                                                                      MainAxisAlignment
+                                                                          .end,
+                                                                  children: <
+                                                                      Widget>[
+                                                                    Icon(
+                                                                      Icons
+                                                                          .fastfood,
+                                                                      color: Colors
+                                                                          .redAccent,
+                                                                    ),
+                                                                    Text(
+                                                                      promotion_drinking
+                                                                              .toString() +
+                                                                          " discount",
+                                                                      style: StylesText
+                                                                          .style13BrownBold,
+                                                                    )
+                                                                  ],
+                                                                ),
+                                                              )),
                                                         )
-                                                      ],
-                                                    ),
-                                                  )
-                                                   ),
-                                                 ) :Container(
-                                                    width: Dimension.getWidth(
-                                                        0.51),
-                                                    child: Row(
-                                                      mainAxisAlignment:
-                                                          MainAxisAlignment.end,
-                                                      children: <Widget>[
-                                                        Icon(
-                                                          Icons.fastfood,
-                                                          color:
-                                                              Colors.redAccent,
-                                                        ),
-                                                        Text(
-                                                          promotion_drinking.toString()+" discount",
-                                                          style: StylesText
-                                                              .style13BrownBold,
+                                                      : Container(
+                                                          width: Dimension
+                                                              .getWidth(0.51),
+                                                          child: Row(
+                                                            mainAxisAlignment:
+                                                                MainAxisAlignment
+                                                                    .end,
+                                                            children: <Widget>[
+                                                              Icon(
+                                                                Icons.fastfood,
+                                                                color: Colors
+                                                                    .redAccent,
+                                                              ),
+                                                              Text(
+                                                                promotion_drinking
+                                                                        .toString() +
+                                                                    " discount",
+                                                                style: StylesText
+                                                                    .style13BrownBold,
+                                                              )
+                                                            ],
+                                                          ),
                                                         )
-                                                      ],
-                                                    ),
-                                                  )
                                                 ],
                                               )
                                             ],
@@ -280,10 +336,9 @@ class _Home_Card_Drinking_State extends State<Home_Card_Drinking> {
                                         data[index]['Description'],
                                         data[index]['Price'],
                                         data[index]['IsHot'],
-                                        
                                         data[index]['Toppings'],
                                         data[index]['Size'],
-                                         data[index]['Promotion'],
+                                        data[index]['Promotion'],
                                         ListOrderProducts),
                                   });
                         }

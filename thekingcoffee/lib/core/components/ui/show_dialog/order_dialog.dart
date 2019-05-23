@@ -160,8 +160,11 @@ class Order_DialogState extends State<Order_Dialog> {
             width: Dimension.getWidth(1.0),
             height: Dimension.getHeight(0.1),
             child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
-                ClipRRect(
+                Column(
+                  children: <Widget>[
+                      ClipRRect(
                   borderRadius: BorderRadius.circular(8.0),
                   child: CachedNetworkImage(
                       imageUrl: Config.ip +
@@ -178,7 +181,12 @@ class Order_DialogState extends State<Order_Dialog> {
                             )),
                           )),
                 ),
-                Container(
+                  ],
+                ),
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                      Container(
                   width: Dimension.getWidth(0.35),
                   child: Padding(
                     padding: const EdgeInsets.fromLTRB(2, 0, 0, 0),
@@ -187,6 +195,9 @@ class Order_DialogState extends State<Order_Dialog> {
                         style: StylesText.style13BrownBold),
                   ),
                 )
+                  ],
+                )
+                
               ],
             ),
           ),
@@ -524,7 +535,6 @@ class Order_DialogState extends State<Order_Dialog> {
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                                 child: Container(
-                                 
                                   width: Dimension.getWidth(1.0),
                                   child: Center(
                                     child: Column(
