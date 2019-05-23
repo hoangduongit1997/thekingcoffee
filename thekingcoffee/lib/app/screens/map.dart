@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 
@@ -14,14 +15,15 @@ class MapPage extends StatefulWidget {
 }
 
 class _HomePageState extends State<MapPage> {
-  var _scaffoldKey = new GlobalKey<ScaffoldState>();
-  final Map<String, Marker> _markers = <String, Marker>{};
   @override
   void initState() {
+    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
     Config.isHideNavigation = true;
     super.initState();
-    
   }
+
+  var _scaffoldKey = new GlobalKey<ScaffoldState>();
+  final Map<String, Marker> _markers = <String, Marker>{};
 
   GoogleMapController _mapController;
 
@@ -107,7 +109,7 @@ class _HomePageState extends State<MapPage> {
                         icon: Icon(Icons.send),
                         color: Colors.redAccent,
                         onPressed: () {
-                          Config.isHideNavigation=false;
+                          
                           Navigator.push(
                               context,
                               MaterialPageRoute(
@@ -116,7 +118,6 @@ class _HomePageState extends State<MapPage> {
                       ))),
             ],
           ),
-          bottomNavigationBar: null,
         ));
   }
 

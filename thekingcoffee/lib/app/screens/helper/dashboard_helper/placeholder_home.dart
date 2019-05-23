@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/data/repository/get_coffee_products.dart';
 import 'package:thekingcoffee/app/data/repository/get_data_all_product.dart';
@@ -31,15 +32,16 @@ var list_coffee = [];
 var list_tea = [];
 var list_food = [];
 var list_drinking = [];
+var list_all_product = [];
 
 class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
   intDataHomeSlider() async {
     final result = await Get_New_Products();
-    final coffee = await Get_Coffee_Product();
-    final tea = await Get_Tea_Products();
-    final food = await Get_Food_Products();
-    final drinking = await Get_Drinking_Products();
+    final coffee = await Is_Has_Coffee_Product();
+    final tea = await Is_Have_Tea_Products();
+    final food = await Is_Have_Food_Products();
+    final drinking = await Is_Have_Drinking_Products();
     setState(() {
       list_new_products = result;
       list_coffee = coffee;
@@ -70,13 +72,15 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
               },
               child: Icon(Icons.menu, color: Colors.brown)),
           backgroundColor: Colors.white,
-          elevation: 0.8,
+          elevation: 0.5,
           actions: <Widget>[
             IconButton(
               icon: Icon(Icons.search),
               color: Colors.brown,
               splashColor: Colors.brown,
-              onPressed: onsearchbutton,
+              onPressed: () {
+                showSearch(context: context, delegate: DataSearch());
+              },
             )
           ],
         ),
@@ -329,6 +333,81 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
       ),
     );
   }
+}
 
-  void onsearchbutton() {}
+class DataSearch extends SearchDelegate<String> {
+  final cities = [
+    "Hà Nội",
+    "Thành phố Hồ Chí Minh",
+    "Quảng Ngãi",
+    "Ninh Bình",
+    "Quảng Trị",
+    "Bình Phước",
+    "tochuot"
+  ];
+  final recentCities = ["Quảng Nam", "Hà Tỉnh"];
+  @override
+  List<Widget> buildActions(BuildContext context) {
+    return [
+      IconButton(
+          icon: Icon(
+            Icons.clear,
+            color: Colors.brown,
+          ),
+          onPressed: () {
+            query = "";
+          })
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) {
+    return IconButton(
+      icon: AnimatedIcon(
+        icon: AnimatedIcons.menu_arrow,
+        color: Colors.brown,
+        progress: transitionAnimation,
+      ),
+      onPressed: () {
+        close(context, null);
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) {
+    return Card(
+      child: Center(
+        child: Text("A"),
+      ),
+    );
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) {
+    final suggest = query.isEmpty
+        ? recentCities
+        : cities.where((p) => p.startsWith(query)).toList();
+    return ListView.builder(
+      itemBuilder: (context, index) => ListTile(
+            onTap: () {
+              recentCities.add(query);
+              showResults(context);
+            },
+            leading: Icon(Icons.location_city),
+            title: RichText(
+              text: TextSpan(
+                  text: suggest[index].substring(0, query.length),
+                  style: TextStyle(
+                      color: Colors.black, fontWeight: FontWeight.bold),
+                  children: [
+                    TextSpan(
+                        text: suggest[index].substring(query.length),
+                        style: TextStyle(color: Colors.grey))
+                  ]),
+            ),
+          ),
+      itemCount: suggest.length,
+    );
+  }
 }

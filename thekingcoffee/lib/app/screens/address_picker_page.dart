@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:thekingcoffee/app/bloc/place_bloc.dart';
 import 'package:thekingcoffee/app/data/model/get_place_item.dart';
+import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 
 class RidePickerPage extends StatefulWidget {
@@ -34,8 +36,20 @@ class _RidePickerPageState extends State<RidePickerPage> {
     return Scaffold(
         resizeToAvoidBottomInset: true,
         appBar: AppBar(
+          leading: FlatButton(
+            child: Icon(
+              Icons.arrow_back,
+              color: Colors.brown,
+            ),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          ),
           backgroundColor: Colors.white,
-          title: Text("Enter your address"),
+          title: Text(
+            "Enter your address",
+            style: StylesText.style20BrownBold,
+          ),
         ),
         body: Container(
           color: Color(0xfff8f8f8),
@@ -106,10 +120,10 @@ class _RidePickerPageState extends State<RidePickerPage> {
                           print(snapshot.data.toString());
                           if (snapshot.data == "Search") {
                             return Center(
-                              child: CircularProgressIndicator(valueColor:
-                                                      new AlwaysStoppedAnimation<
-                                                              Color>(
-                                                          Colors.redAccent),),
+                              child: CircularProgressIndicator(
+                                valueColor: new AlwaysStoppedAnimation<Color>(
+                                    Colors.redAccent),
+                              ),
                             );
                           }
 

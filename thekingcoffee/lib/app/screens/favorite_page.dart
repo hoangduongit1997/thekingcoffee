@@ -13,11 +13,7 @@ class Favorite_Page extends StatefulWidget {
 }
 
 class Shopping_ListState extends State<Favorite_Page> {
-  @override
-  void initState() {
-    Config.current_botton_tab = 1;
-    super.initState();
-  }
+
 
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
   TextEditingController name = new TextEditingController(text: "Hoàng Dương");

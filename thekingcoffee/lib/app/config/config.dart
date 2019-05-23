@@ -12,19 +12,28 @@ class Config {
   static String get_history_API = ip + "api/Order/FindOrderHistory?IdCustomer=";
   static String get_coffee_products_API =
       ip + "api/Product/GetAll?IsDesc=true&Rows=10&IdCatalogue=2";
+  static String is_have_coffee_products_API =
+      ip + "api/Product/GetAll?IsDesc=true&Rows=1&IdCatalogue=2";
   static String get_all_coffee_products_API =
       ip + "api/Product/GetAll?IsDesc=true&IdCatalogue=2";
 
   static String get_tea_products_API =
       ip + "api/Product/GetAll?IsDesc=true&Rows=10&IdCatalogue=4";
+
+  static String is_have_tea_products_API =
+      ip + "api/Product/GetAll?IsDesc=true&Rows=1&IdCatalogue=4";
   static String get_all_tea_products_API =
       ip + "api/Product/GetAll?IsDesc=true&IdCatalogue=4";
   static String get_drinking_products_API =
       ip + "api/Product/GetAll?IsDesc=true&Rows=10&IdCatalogue=1";
+  static String is_have_drinking_products_API =
+      ip + "api/Product/GetAll?IsDesc=true&Rows=1&IdCatalogue=1";
   static String get_all_drinking_products_API =
       ip + "api/Product/GetAll?IsDesc=true&IdCatalogue=1";
   static String get_food_products_API =
       ip + "api/Product/GetAll?IsDesc=true&Rows=10&IdCatalogue=3";
+  static String is_have_food_products_API =
+      ip + "api/Product/GetAll?IsDesc=true&Rows=1&IdCatalogue=3";
   static String get_all_food_products_API =
       ip + "api/Product/GetAll?IsDesc=true&IdCatalogue=3";
   static String app_key = "AIzaSyDTWbrlyubWnDBeA8xsfemXjDm4XzHGyb0";

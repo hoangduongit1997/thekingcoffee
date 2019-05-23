@@ -13,3 +13,13 @@ Get_Food_Products() async {
     return null;
   }
 }
+Is_Have_Food_Products() async {
+  try {
+    final response = await http.get(Config.is_have_food_products_API);
+    final res = json.decode(response.body)['Value'];
+    return res;
+  } catch (e) {
+    print(e.toString());
+    return null;
+  }
+}

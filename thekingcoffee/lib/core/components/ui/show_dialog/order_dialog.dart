@@ -33,6 +33,9 @@ class Order_DialogState extends State<Order_Dialog> {
   var lstSelectedTopping = [];
   int selectedRadioTile;
   var selectedPromotion;
+  var list_promotion_product = [];
+  // bool check_promotion_product = false;
+  var check_promotion_product = [];
 
   List<Widget> createRadioListSize() {
     List<Widget> widgets = [];
@@ -109,7 +112,6 @@ class Order_DialogState extends State<Order_Dialog> {
     return widgets;
   }
 
-  var list_promotion_product = [];
   List<Widget> createRadioListPromotion() {
     List<Widget> widgets_promotion = [];
     for (var promotion in widget.promotion) {
@@ -126,10 +128,22 @@ class Order_DialogState extends State<Order_Dialog> {
             // money -= selectedsize['PlusMonney'];
             list_promotion_product = [];
             list_promotion_product = promotion['SaleForProducts'];
-
+            int changedMoney;
+            if (selectedPromotion != null) {
+              // tempMoney -= widget.price *
+              //     ((100 - selectedPromotion['PercentDiscount'])) /
+              //     100;
+              changedMoney = (widget.price *
+                      ((100 - selectedPromotion['PercentDiscount'])) /
+                      100)
+                  .toInt();
+            }
+            changedMoney -=
+                (widget.price * (value['PercentDiscount'] / 100)).toInt();
             setState(() {
               // money += value['PlusMonney'];
               selectedPromotion = value;
+              money = money - changedMoney;
 
               //Gen promotion product
             });
@@ -147,7 +161,6 @@ class Order_DialogState extends State<Order_Dialog> {
     return widgets_promotion;
   }
 
-  bool check_promotion_product = false;
   List<Widget> createRadioListPromotionProDuct() {
     List<Widget> widgets_promotion_product = [];
     for (var promotion_product in list_promotion_product) {
@@ -164,48 +177,87 @@ class Order_DialogState extends State<Order_Dialog> {
               children: <Widget>[
                 Column(
                   children: <Widget>[
-                      ClipRRect(
-                  borderRadius: BorderRadius.circular(8.0),
-                  child: CachedNetworkImage(
-                      imageUrl: Config.ip +
-                          promotion_product['DetailedSaleForProduct']
-                              ['File_Path'],
-                      fit: BoxFit.cover,
-                      height: Dimension.getHeight(0.1),
-                      width: Dimension.getWidth(0.18),
-                      placeholder: (context, url) => new SizedBox(
-                            child: Center(
-                                child: CircularProgressIndicator(
-                              valueColor: new AlwaysStoppedAnimation<Color>(
-                                  Colors.redAccent),
-                            )),
-                          )),
-                ),
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8.0),
+                      child: CachedNetworkImage(
+                          imageUrl: Config.ip +
+                              promotion_product['DetailedSaleForProduct']
+                                  ['File_Path'],
+                          fit: BoxFit.cover,
+                          height: Dimension.getHeight(0.1),
+                          width: Dimension.getWidth(0.18),
+                          placeholder: (context, url) => new SizedBox(
+                                child: Center(
+                                    child: CircularProgressIndicator(
+                                  valueColor: new AlwaysStoppedAnimation<Color>(
+                                      Colors.redAccent),
+                                )),
+                              )),
+                    ),
                   ],
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
-                      Container(
-                  width: Dimension.getWidth(0.35),
-                  child: Padding(
-                    padding: const EdgeInsets.fromLTRB(2, 0, 0, 0),
-                    child: Text(
-                        promotion_product['DetailedSaleForProduct']['Name'],
-                        style: StylesText.style13BrownBold),
-                  ),
-                )
+                    Padding(
+                      padding: const EdgeInsets.all(0.0),
+                      child: Container(
+                        width: Dimension.getWidth(0.35),
+                        child: Padding(
+                          padding: const EdgeInsets.fromLTRB(2, 0, 0, 0),
+                          child: Text(
+                              promotion_product['DetailedSaleForProduct']
+                                  ['Name'],
+                              style: StylesText.style13BrownBold),
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(2, 0, 0, 0),
+                      child: Container(
+                        width: Dimension.getWidth(0.35),
+                        child: promotion_product['DetailedSaleForProduct']
+                                    ['Price'] ==
+                                null
+                            ? Container()
+                            : Text(
+                                promotion_product['DetailedSaleForProduct']
+                                        ['Price']
+                                    .toString(),
+                                style: StylesText.style13BrownNormalUnderline,
+                              ),
+                      ),
+                    )
                   ],
                 )
-                
               ],
             ),
           ),
         ),
-        value: check_promotion_product,
-        onChanged: (bool value) {
+        value: check_promotion_product.firstWhere((t) => t == promotion_product,
+                orElse: () => null) !=
+            null,
+        onChanged: (value) {
+          var lstVal = [];
+          int tempMoney = money;
+          int factMoneyProduct = promotion_product['DetailedSaleForProduct']
+                  ['Price'] -
+              promotion_product['MoneyDiscount'] -
+              promotion_product['PriceDiscount'];
+          if (value) {
+            lstVal.add(promotion_product);
+            //tang tien
+            tempMoney += factMoneyProduct;
+          } else {
+            var temp = check_promotion_product
+                .firstWhere((t) => t == promotion_product, orElse: () => null);
+            lstVal.remove(temp);
+            //tru bot tien
+            tempMoney -= factMoneyProduct;
+          }
           setState(() {
-            check_promotion_product = value;
+            check_promotion_product = lstVal;
+            money = tempMoney;
           });
         },
         activeColor: Colors.redAccent,

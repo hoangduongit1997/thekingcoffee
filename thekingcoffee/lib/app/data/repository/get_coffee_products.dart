@@ -13,3 +13,14 @@ Get_Coffee_Product() async {
     return null;
   }
 }
+
+Is_Has_Coffee_Product() async {
+  try {
+    final response = await http.get(Config.is_have_coffee_products_API);
+    final res = json.decode(response.body)['Value'];
+    return res;
+  } catch (e) {
+    print(e.toString());
+    return null;
+  }
+}
