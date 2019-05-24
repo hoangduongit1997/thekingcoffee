@@ -76,8 +76,12 @@ class _HistoryState extends State<History> {
                         onTap: () {
                           Navigator.of(context).push(MaterialPageRoute(
                               builder: (context) => History_Order_Detail(
-                                  data_history[index]['DetailedOrder'],
-                                  data_history[index]['Id'])));
+                                    data_history[index]['DetailedOrder'],
+                                    data_history[index]['Id'],
+                                    data_history[index]['Address'],
+                                    data_history[index]['Phone'],
+                                    data_history[index]['Total'],
+                                  )));
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(2.0),

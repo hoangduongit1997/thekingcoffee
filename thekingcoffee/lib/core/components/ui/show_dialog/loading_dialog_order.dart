@@ -9,7 +9,7 @@ import 'package:thekingcoffee/core/components/ui/show_dialog/order_dialog.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 
 class LoadingDialog_Order {
-  bool isEdit = false;
+  
   static void showLoadingDialog(
     BuildContext context,
     int id,

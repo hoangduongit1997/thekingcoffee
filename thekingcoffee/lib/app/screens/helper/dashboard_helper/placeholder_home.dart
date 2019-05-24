@@ -391,7 +391,6 @@ class DataSearch extends SearchDelegate<String> {
     return ListView.builder(
       itemBuilder: (context, index) => ListTile(
             onTap: () {
-              recentCities.add(query);
               showResults(context);
             },
             leading: Icon(Icons.location_city),

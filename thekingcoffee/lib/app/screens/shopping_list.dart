@@ -25,11 +25,34 @@ class Shopping_List extends StatefulWidget {
 }
 
 class Shopping_ListState extends State<Shopping_List> {
+  List _cities = [
+    "Thành phố Hồ Chí Minh",
+    "Hà Nội",
+    "Đà Nẵng",
+  ];
+
+  List<DropdownMenuItem<String>> _dropDownMenuItems;
+  String _currentCity;
   @override
   void initState() {
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+    _dropDownMenuItems = getDropDownMenuItems();
+    _currentCity = _dropDownMenuItems[0].value;
     Config.isHideNavigation = false;
     super.initState();
+  }
+
+  List<DropdownMenuItem<String>> getDropDownMenuItems() {
+    List<DropdownMenuItem<String>> items = new List();
+    for (String city in _cities) {
+      items.add(new DropdownMenuItem(
+          value: city,
+          child: new Text(
+            city,
+            style: StylesText.style13Black,
+          )));
+    }
+    return items;
   }
 
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -115,11 +138,19 @@ class Shopping_ListState extends State<Shopping_List> {
               )
             : SingleChildScrollView(
                 child: Container(
+                  padding: const EdgeInsets.all(2.0),
                   color: Colors.white,
                   child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.all(5.0),
+                        child: Text(
+                          "Delivery information",
+                          style: StylesText.style13BlackBold,
+                        ),
+                      ),
                       Padding(
                           padding: const EdgeInsets.all(5.0),
                           child: StreamBuilder<Object>(
@@ -132,7 +163,7 @@ class Shopping_ListState extends State<Shopping_List> {
                                           : null,
                                       icon: Icon(Icons.account_circle)),
                                   controller: name,
-                                  style: StylesText.style16Brown,
+                                  style: StylesText.style15Black,
                                 );
                               })),
                       Padding(
@@ -148,7 +179,7 @@ class Shopping_ListState extends State<Shopping_List> {
                                           ? snapshot.error
                                           : null),
                                   controller: phone,
-                                  style: StylesText.style16Brown,
+                                  style: StylesText.style15Black,
                                 );
                               })),
                       Padding(
@@ -171,9 +202,46 @@ class Shopping_ListState extends State<Shopping_List> {
                                       icon: Icon(Icons.map),
                                       hintText: "Enter your address..."),
                                   controller: address,
-                                  style: StylesText.style16Brown,
+                                  style: StylesText.style15Black,
                                 );
                               })),
+                      Padding(
+                          padding: const EdgeInsets.all(5.0),
+                          child: Text(
+                            "Choose store",
+                            style: StylesText.style13BlackBold,
+                          )),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(2, 2, 0, 0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Text(
+                                "Thành phố",
+                                style: StylesText.style14Black,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(5.0),
+                              child: Container(
+                                  width: Dimension.getHeight(0.45),
+                                  decoration: BoxDecoration(
+                                      border: Border.all(color: Colors.grey)),
+                                  child: Center(
+                                    child: DropdownButton(
+                                      iconEnabledColor: Colors.brown,
+                                      iconDisabledColor: Colors.black,
+                                      value: _currentCity,
+                                      items: _dropDownMenuItems,
+                                      onChanged: changedDropDownItem,
+                                    ),
+                                  )),
+                            ),
+                          ],
+                        ),
+                      ),
                       Padding(
                           padding: const EdgeInsets.fromLTRB(0, 2, 0, 0),
                           child: Container(
@@ -189,22 +257,23 @@ class Shopping_ListState extends State<Shopping_List> {
                                   actionExtentRatio: 0.25,
                                   child: GestureDetector(
                                     onTap: () {
-                                      Edit_LoadingDialog_Order
-                                          .showLoadingDialog(
-                                        context,
-                                        ListOrderProducts[index]['Id'],
-                                        ListOrderProducts[index]['Name'],
-                                        ListOrderProducts[index]['Img'],
-                                        '',
-                                        ListOrderProducts[index]['Price'],
-                                        ListOrderProducts[index]['ListTopping'],
-                                        ListOrderProducts[index]['Toppings'],
-                                        ListOrderProducts[index]['ListSize'],
-                                        ListOrderProducts[index]['Size'],
-                                        ListOrderProducts[index]['Price'],
-                                        ListOrderProducts[index]['Quantity'],
-                                        ListOrderProducts,
-                                      ); //show edit
+                                      // Edit_LoadingDialog_Order
+                                      //     .showLoadingDialog(
+                                      //   context,
+                                      //   ListOrderProducts[index]['Id'],
+                                      //   ListOrderProducts[index]['Name'],
+                                      //   ListOrderProducts[index]['Img'],
+                                      //   '',
+                                      //   ListOrderProducts[index]['Price'],
+                                      //   ListOrderProducts[index]['ListTopping'],
+                                      //   ListOrderProducts[index]['Toppings'],
+                                      //   ListOrderProducts[index]['ListSize'],
+                                      //   ListOrderProducts[index]['Size'],
+                                      //   ListOrderProducts[index]['Price'],
+                                      //   ListOrderProducts[index]['Quantity'],
+
+                                      //   ListOrderProducts,
+                                      // ); //show edit
                                     },
                                     child: Container(
                                         padding: const EdgeInsets.all(2.0),
@@ -493,7 +562,7 @@ class Shopping_ListState extends State<Shopping_List> {
                               ),
                               Text(
                                 "12000",
-                                style: StylesText.style18Black,
+                                style: StylesText.style15RedAccentBold,
                               )
                             ],
                           ))
@@ -552,5 +621,11 @@ class Shopping_ListState extends State<Shopping_List> {
               ),
       ),
     );
+  }
+
+  void changedDropDownItem(String selectedcity) {
+    setState(() {
+      _currentCity = selectedcity;
+    });
   }
 }
