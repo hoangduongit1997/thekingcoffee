@@ -9,15 +9,9 @@ import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart
 import 'package:thekingcoffee/core/utils/utils.dart';
 
 class History_Order_Detail extends StatefulWidget {
-  final String ordercode;
-  final String img;
-  int quantity = 0;
-  int prices = 0;
-  int total_money = 0;
-
-  History_Order_Detail(
-      this.ordercode, this.img, this.quantity, this.prices, this.total_money);
-
+  int order_code;
+  var list_detailed_product = [];
+  History_Order_Detail(this.list_detailed_product, this.order_code);
   _HistoryState createState() => _HistoryState();
 }
 
@@ -37,7 +31,7 @@ class _HistoryState extends State<History_Order_Detail> {
             backgroundColor: Colors.white,
             elevation: 0.5,
             title: Text(
-              "Order " + widget.ordercode.toString(),
+              "Order " + widget.order_code.toString(),
               style: StylesText.style20BrownBold,
             ),
             leading: FlatButton(
@@ -59,7 +53,7 @@ class _HistoryState extends State<History_Order_Detail> {
             width: double.infinity,
             height: MediaQuery.of(context).size.height,
             child: ListView.builder(
-              itemCount: 10,
+              itemCount: widget.list_detailed_product.length,
               scrollDirection: Axis.vertical,
               shrinkWrap: true,
               itemBuilder: (context, index) {
@@ -100,7 +94,11 @@ class _HistoryState extends State<History_Order_Detail> {
                                             BorderRadius.circular(8.0),
                                         child: CachedNetworkImage(
                                           imageUrl: Config.ip +
-                                              "/storage/images/kingcoffee/coffee3.jpg",
+                                              widget
+                                                  .list_detailed_product[index]
+                                                          ['DetailedProduct']
+                                                      ['File_Path']
+                                                  .toString(),
                                           fit: BoxFit.fill,
                                           placeholder: (context, url) =>
                                               new SizedBox(
@@ -135,7 +133,9 @@ class _HistoryState extends State<History_Order_Detail> {
                                                   const EdgeInsets.fromLTRB(
                                                       5, 0, 0, 0),
                                               child: Text(
-                                                "s",
+                                                widget.list_detailed_product[
+                                                        index]
+                                                    ['DetailedProduct']['Name'],
                                                 style: StylesText.style15Black,
                                               ),
                                             ),

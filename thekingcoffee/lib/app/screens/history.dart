@@ -58,7 +58,7 @@ class _HistoryState extends State<History> {
             ),
           ),
           resizeToAvoidBottomInset: false,
-          body: data_history==null|| data_history.length == 0
+          body: data_history == null || data_history.length == 0
               ? Container(
                   child: Center(child: Text("No information")),
                 )
@@ -74,7 +74,10 @@ class _HistoryState extends State<History> {
                     itemBuilder: (context, index) {
                       return GestureDetector(
                         onTap: () {
-                        //  Navigator.of(context).push(MaterialPageRoute(builder: (context)=>History_Order_Detail()));
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => History_Order_Detail(
+                                  data_history[index]['DetailedOrder'],
+                                  data_history[index]['Id'])));
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(2.0),

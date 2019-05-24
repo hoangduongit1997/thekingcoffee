@@ -34,7 +34,7 @@ class Order_DialogState extends State<Order_Dialog> {
   int selectedRadioTile;
   var selectedPromotion;
   var list_promotion_product = [];
-  // bool check_promotion_product = false;
+
   var check_promotion_product = [];
 
   List<Widget> createRadioListSize() {
@@ -128,22 +128,27 @@ class Order_DialogState extends State<Order_Dialog> {
             // money -= selectedsize['PlusMonney'];
             list_promotion_product = [];
             list_promotion_product = promotion['SaleForProducts'];
-            int changedMoney;
+            int oldMoney = 0, newMoney = 0;
             if (selectedPromotion != null) {
               // tempMoney -= widget.price *
               //     ((100 - selectedPromotion['PercentDiscount'])) /
               //     100;
-              changedMoney = (widget.price *
-                      ((100 - selectedPromotion['PercentDiscount'])) /
-                      100)
+              oldMoney = ((widget.price -
+                      (widget.price *
+                          (selectedPromotion['PercentDiscount']) /
+                          100) -
+                      selectedPromotion['MoneyDiscount']))
                   .toInt();
             }
-            changedMoney -=
-                (widget.price * (value['PercentDiscount'] / 100)).toInt();
+
+            newMoney = ((widget.price -
+                    (widget.price * (value['PercentDiscount']) / 100) -
+                    value['MoneyDiscount']))
+                .toInt();
             setState(() {
               // money += value['PlusMonney'];
               selectedPromotion = value;
-              money = money - changedMoney;
+              money = money + oldMoney - newMoney;
 
               //Gen promotion product
             });
