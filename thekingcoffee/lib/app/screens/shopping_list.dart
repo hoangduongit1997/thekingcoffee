@@ -25,6 +25,7 @@ class Shopping_List extends StatefulWidget {
 }
 
 class Shopping_ListState extends State<Shopping_List> {
+ 
   List _cities = [
     "Thành phố Hồ Chí Minh",
     "Hà Nội",

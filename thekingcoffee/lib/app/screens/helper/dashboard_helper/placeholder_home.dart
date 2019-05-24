@@ -53,6 +53,7 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
 
   @override
   void initState() {
+   
     Config.current_botton_tab = 0;
     this.intDataHomeSlider();
     super.initState();
@@ -336,6 +337,7 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
 }
 
 class DataSearch extends SearchDelegate<String> {
+  Config a = new Config();
   final cities = [
     "Hà Nội",
     "Thành phố Hồ Chí Minh",

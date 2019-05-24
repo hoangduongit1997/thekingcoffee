@@ -13,6 +13,7 @@ class EarnPoint extends StatefulWidget {
 }
 
 class _EarnPointState extends State<EarnPoint> {
+ 
   String id_user;
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
   get_Id_User() async {

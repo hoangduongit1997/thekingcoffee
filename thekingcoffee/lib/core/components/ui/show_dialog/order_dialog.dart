@@ -34,6 +34,7 @@ class Order_DialogState extends State<Order_Dialog> {
   int selectedRadioTile;
   var selectedPromotion;
   var list_promotion_product = [];
+  int final_price_promotion_product = 0;
 
   var check_promotion_product = [];
 
@@ -166,9 +167,13 @@ class Order_DialogState extends State<Order_Dialog> {
     return widgets_promotion;
   }
 
-  List<Widget> createRadioListPromotionProDuct() {
+  List<Widget> createCheckBoxListPromotionProDuct() {
     List<Widget> widgets_promotion_product = [];
     for (var promotion_product in list_promotion_product) {
+      final_price_promotion_product =
+          promotion_product['DetailedSaleForProduct']['Price'] -
+              promotion_product['MoneyDiscount'] -
+              promotion_product['PriceDiscount'];
       widgets_promotion_product.add(Container(
           child: CheckboxListTile(
         controlAffinity: ListTileControlAffinity.leading,
@@ -218,20 +223,69 @@ class Order_DialogState extends State<Order_Dialog> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(2, 0, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(2, 10, 0, 0),
                       child: Container(
-                        width: Dimension.getWidth(0.35),
-                        child: promotion_product['DetailedSaleForProduct']
-                                    ['Price'] ==
-                                null
-                            ? Container()
-                            : Text(
-                                promotion_product['DetailedSaleForProduct']
-                                        ['Price']
-                                    .toString(),
-                                style: StylesText.style13BrownNormalUnderline,
-                              ),
-                      ),
+                          width: Dimension.getWidth(0.35),
+                          child: promotion_product['DetailedSaleForProduct']
+                                      ['Price'] ==
+                                  null
+                              ? Container()
+                              : Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.fromLTRB(2, 0, 0, 0),
+                                      child: Text(
+                                        "Price",
+                                        style: StylesText.style13BrownNormal,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                                      child: Text(
+                                        promotion_product[
+                                                    'DetailedSaleForProduct']
+                                                ['Price']
+                                            .toString(),
+                                        style: StylesText
+                                            .style13BrownNormalUnderline,
+                                      ),
+                                    ),
+                                  ],
+                                )),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(2, 10, 0, 0),
+                      child: Container(
+                          width: Dimension.getWidth(0.35),
+                          child: promotion_product['DetailedSaleForProduct']
+                                      ['Price'] ==
+                                  null
+                              ? Container()
+                              : Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.fromLTRB(2, 0, 0, 0),
+                                      child: Text(
+                                        "Sell",
+                                        style: StylesText.style13BrownBold,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                                      child: Text(
+                                        final_price_promotion_product
+                                            .toString(),
+                                        style: StylesText.style13BrownBold,
+                                      ),
+                                    ),
+                                  ],
+                                )),
                     )
                   ],
                 )
@@ -245,20 +299,17 @@ class Order_DialogState extends State<Order_Dialog> {
         onChanged: (value) {
           var lstVal = [];
           int tempMoney = money;
-          int factMoneyProduct = promotion_product['DetailedSaleForProduct']
-                  ['Price'] -
-              promotion_product['MoneyDiscount'] -
-              promotion_product['PriceDiscount'];
+
           if (value) {
             lstVal.add(promotion_product);
             //tang tien
-            tempMoney += factMoneyProduct;
+            tempMoney += final_price_promotion_product;
           } else {
             var temp = check_promotion_product
                 .firstWhere((t) => t == promotion_product, orElse: () => null);
             lstVal.remove(temp);
             //tru bot tien
-            tempMoney -= factMoneyProduct;
+            tempMoney -= final_price_promotion_product;
           }
           setState(() {
             check_promotion_product = lstVal;
@@ -598,7 +649,7 @@ class Order_DialogState extends State<Order_Dialog> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       children:
-                                          createRadioListPromotionProDuct(),
+                                          createCheckBoxListPromotionProDuct(),
                                     ),
                                   ),
                                 ),

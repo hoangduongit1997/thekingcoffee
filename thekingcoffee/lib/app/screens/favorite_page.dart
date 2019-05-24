@@ -13,8 +13,6 @@ class Favorite_Page extends StatefulWidget {
 }
 
 class Shopping_ListState extends State<Favorite_Page> {
-
-
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
   TextEditingController name = new TextEditingController(text: "Hoàng Dương");
   TextEditingController phone = new TextEditingController(text: "0798353751");
@@ -30,6 +28,7 @@ class Shopping_ListState extends State<Favorite_Page> {
         appBar: AppBar(
           leading: FlatButton(
               onPressed: () {
+                Config.current_botton_tab = 0;
                 Navigator.of(context).pushReplacement(
                     MaterialPageRoute(builder: (context) => DashBoard()));
               },

@@ -13,8 +13,10 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
+  
   @override
   void initState() {
+   
     Config.isHideNavigation = true;
     super.initState();
   }
