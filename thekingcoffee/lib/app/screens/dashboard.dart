@@ -22,6 +22,7 @@ class _HomeState extends State<DashBoard> {
   ];
   @override
   void initState() {
+    Config.current_botton_tab = 0;
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
     Config.isHideNavigation = false;
     super.initState();

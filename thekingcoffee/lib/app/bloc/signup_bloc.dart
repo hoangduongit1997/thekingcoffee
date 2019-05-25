@@ -3,29 +3,38 @@ import 'package:thekingcoffee/app/validation/validation.dart';
 
 class SignupBloc {
   StreamController _accpetcontroller = new StreamController();
-  StreamController _namecontroller = new StreamController();
+  StreamController _usernamecontroller = new StreamController();
   StreamController _phonecontroller = new StreamController();
   StreamController _passcontroller = new StreamController();
   StreamController _confirmpasscontroller = new StreamController();
   StreamController _datecontroller = new StreamController();
-  Stream get nameStream => _namecontroller.stream;
+  StreamController _fullnamecontroler = new StreamController();
+  Stream get usernameStream => _usernamecontroller.stream;
   Stream get phoneStream => _phonecontroller.stream;
   Stream get passStream => _passcontroller.stream;
   Stream get confirmStream => _confirmpasscontroller.stream;
   Stream get dateStream => _datecontroller.stream;
   Stream get acceptStream => _accpetcontroller.stream;
+  Stream get fullnameStream => _fullnamecontroler.stream;
   bool isValidInfo(String name, String phone, String pass, String confirm,
-      String date, bool checked) {
+      String date, bool checked, String fullname) {
     bool status = true;
     if (!Validation.isValidUser(name)) {
       status = false;
-      _namecontroller.sink.addError("Name invalid");
+      _usernamecontroller.sink.addError("Name invalid");
     }
     if (Validation.isValidUser(name)) {
       status = true;
-      _namecontroller.sink.add("OK");
+      _usernamecontroller.sink.add("OK");
     }
-
+    if (Validation.isValidUser(fullname)) {
+      status = true;
+      _fullnamecontroler.sink.add("OK");
+    }
+    if (!Validation.isValidUser(fullname)) {
+      status = false;
+      _fullnamecontroler.sink.addError("Fullname invalid");
+    }
     if (!Validation.isValidPhoneNumber(phone)) {
       status = false;
       _phonecontroller.sink.addError("Phone number invalid");
@@ -76,7 +85,7 @@ class SignupBloc {
   void dispose() {
     _confirmpasscontroller.close();
     _datecontroller.close();
-    _namecontroller.close();
+    _usernamecontroller.close();
     _passcontroller.close();
     _phonecontroller.close();
     _accpetcontroller.close();

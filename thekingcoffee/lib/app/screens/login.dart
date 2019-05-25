@@ -10,6 +10,7 @@ import 'package:thekingcoffee/app/validation/validation.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/show_message_dialog.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginWithPass extends StatefulWidget {
   @override
@@ -102,6 +103,7 @@ class MyAppState extends State<LoginWithPass> {
                   ),
                   Row(
                     textDirection: TextDirection.rtl,
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: <Widget>[
                       Padding(
                           padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
@@ -113,6 +115,23 @@ class MyAppState extends State<LoginWithPass> {
                                           builder: (context) => GmailAuth()))
                                 },
                             child: Text("Forget password?",
+                                style: StylesText.style16Red300Bold),
+                          )),
+                      Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                          child: GestureDetector(
+                            onTap: () async {
+                              Config.islogin = 0;
+                              final prefs =
+                                  await SharedPreferences.getInstance();
+                              prefs.clear();
+
+                              Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                      builder: (context) => DashBoard()));
+                            },
+                            child: Text("Skip",
                                 style: StylesText.style16Red300Bold),
                           )),
                     ],
@@ -167,7 +186,6 @@ class MyAppState extends State<LoginWithPass> {
   }
 
   void onSigninClick() async {
-   
     LoadingDialog.showLoadingDialog(context, "Loading...");
     if ((await Validation.isConnectedNetwork()) == true &&
         loginBloc.isValidInfo(_user.text.trim(), _pass.text.trim()) == true) {
@@ -175,6 +193,7 @@ class MyAppState extends State<LoginWithPass> {
       if (await PostLogin(
               _user.text.trim().toString(), _pass.text.trim().toString()) ==
           true) {
+        Config.islogin = 1;
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => DashBoard()));
       }

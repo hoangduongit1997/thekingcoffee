@@ -14,7 +14,6 @@ class History extends StatefulWidget {
 }
 
 class _HistoryState extends State<History> {
- 
   var data_history = [];
   int length = 0;
   var _scaffoldKey = new GlobalKey<ScaffoldState>();

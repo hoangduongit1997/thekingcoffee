@@ -6,13 +6,13 @@ import 'package:thekingcoffee/app/config/config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<bool> PostSignUp(
-    String name, String pass, String phone, String date) async {
+    String name, String pass, String phone, String date,String fullname) async {
   bool status = false;
   final SignUpJson = {
     "Username": name,
     "Password": pass,
     "Phone": phone,
-    "Name": name,
+    "Name": fullname,
     "Repassword": pass,
     "Age": date
   };

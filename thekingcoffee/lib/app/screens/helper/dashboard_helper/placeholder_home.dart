@@ -2,12 +2,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:thekingcoffee/app/config/config.dart';
+import 'package:thekingcoffee/app/data/repository/find_food.dart';
 import 'package:thekingcoffee/app/data/repository/get_coffee_products.dart';
 import 'package:thekingcoffee/app/data/repository/get_data_all_product.dart';
 import 'package:thekingcoffee/app/data/repository/get_drinking_products.dart';
 import 'package:thekingcoffee/app/data/repository/get_food_products.dart';
 import 'package:thekingcoffee/app/data/repository/get_new_products.dart';
 import 'package:thekingcoffee/app/data/repository/get_tea_products.dart';
+import 'package:thekingcoffee/app/screens/find_food.dart';
 import 'package:thekingcoffee/app/screens/see_all_product.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
@@ -53,7 +55,6 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
 
   @override
   void initState() {
-   
     Config.current_botton_tab = 0;
     this.intDataHomeSlider();
     super.initState();
@@ -80,7 +81,8 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
               color: Colors.brown,
               splashColor: Colors.brown,
               onPressed: () {
-                showSearch(context: context, delegate: DataSearch());
+                Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => FindFood()));
               },
             )
           ],
@@ -336,79 +338,70 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
   }
 }
 
-class DataSearch extends SearchDelegate<String> {
-  Config a = new Config();
-  final cities = [
-    "Hà Nội",
-    "Thành phố Hồ Chí Minh",
-    "Quảng Ngãi",
-    "Ninh Bình",
-    "Quảng Trị",
-    "Bình Phước",
-    "tochuot"
-  ];
-  final recentCities = ["Quảng Nam", "Hà Tỉnh"];
-  @override
-  List<Widget> buildActions(BuildContext context) {
-    return [
-      IconButton(
-          icon: Icon(
-            Icons.clear,
-            color: Colors.brown,
-          ),
-          onPressed: () {
-            query = "";
-          })
-    ];
-  }
+// class DataSearch extends SearchDelegate<String> {
 
-  @override
-  Widget buildLeading(BuildContext context) {
-    return IconButton(
-      icon: AnimatedIcon(
-        icon: AnimatedIcons.menu_arrow,
-        color: Colors.brown,
-        progress: transitionAnimation,
-      ),
-      onPressed: () {
-        close(context, null);
-      },
-    );
-  }
+//   final recentCities =[];
+//   @override
+//   List<Widget> buildActions(BuildContext context) {
+//     return [
+//       IconButton(
+//           icon: Icon(
+//             Icons.clear,
+//             color: Colors.brown,
+//           ),
+//           onPressed: () {
+//             query = "";
+//           })
+//     ];
+//   }
 
-  @override
-  Widget buildResults(BuildContext context) {
-    return Card(
-      child: Center(
-        child: Text("A"),
-      ),
-    );
-  }
+//   @override
+//   Widget buildLeading(BuildContext context) {
+//     return IconButton(
+//       icon: AnimatedIcon(
+//         icon: AnimatedIcons.menu_arrow,
+//         color: Colors.brown,
+//         progress: transitionAnimation,
+//       ),
+//       onPressed: () {
+//         close(context, null);
+//       },
+//     );
+//   }
 
-  @override
-  Widget buildSuggestions(BuildContext context) {
-    final suggest = query.isEmpty
-        ? recentCities
-        : cities.where((p) => p.startsWith(query)).toList();
-    return ListView.builder(
-      itemBuilder: (context, index) => ListTile(
-            onTap: () {
-              showResults(context);
-            },
-            leading: Icon(Icons.location_city),
-            title: RichText(
-              text: TextSpan(
-                  text: suggest[index].substring(0, query.length),
-                  style: TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.bold),
-                  children: [
-                    TextSpan(
-                        text: suggest[index].substring(query.length),
-                        style: TextStyle(color: Colors.grey))
-                  ]),
-            ),
-          ),
-      itemCount: suggest.length,
-    );
-  }
-}
+//   @override
+//   Widget buildResults(BuildContext context) {
+//     return Card(
+//       child: Center(
+//         child: Text("A"),
+//       ),
+//     );
+//   }
+
+//   @override
+//   Widget buildSuggestions(BuildContext context) {
+//     final suggest = query.isEmpty
+//         ? recentCities
+//         : food.where((p) => p.startsWith(query)).toList();
+//     return ListView.builder(
+//       itemBuilder: (context, index) => ListTile(
+//             onTap: () {
+//               showResults(context);
+//             },
+//             leading: Icon(Icons.location_city),
+//             title: RichText(
+//               text: TextSpan(
+//                   text: suggest[index].substring(0, query.length),
+//                   style: TextStyle(
+//                       color: Colors.black, fontWeight: FontWeight.bold),
+//                   children: [
+//                     TextSpan(
+//                         text: suggest[index].substring(query.length),
+//                         style: TextStyle(color: Colors.grey))
+//                   ]),
+//             ),
+//           ),
+//       itemCount: suggest.length,
+//     );
+//   }
+// }
