@@ -32,10 +32,12 @@ var promotion_list_tea = [];
 class _Home_Card_Tea_State extends State<Home_Card_Tea> {
   intDataHomeScreen() async {
     final result = await Get_Tea_Products();
-    setState(() {
-      data = result;
-      lenght = data.length;
-    });
+    if (this.mounted) {
+      setState(() {
+        data = result;
+        lenght = data.length;
+      });
+    }
   }
 
   @override
@@ -160,7 +162,7 @@ class _Home_Card_Tea_State extends State<Home_Card_Tea> {
                                               ],
                                             ),
                                           )),
-                                     Padding(
+                                      Padding(
                                         padding: const EdgeInsets.fromLTRB(
                                             0, 10, 0, 5),
                                         child: Container(
@@ -336,10 +338,10 @@ class _Home_Card_Tea_State extends State<Home_Card_Tea> {
                                         data[index]['Description'],
                                         data[index]['Price'],
                                         data[index]['IsHot'],
-                                        
+                                         data[index]['IsHot'],
                                         data[index]['Toppings'],
                                         data[index]['Size'],
-                                         data[index]['Promotion'],
+                                        data[index]['Promotion'],
                                         ListOrderProducts),
                                   });
                         }

@@ -19,6 +19,7 @@ class LoadingDialog_Order {
     String descript,
     int price,
     int ishot,
+    int hashot,
     List<dynamic> topping,
     List<dynamic> size,
     List<dynamic> promotion,
@@ -35,7 +36,7 @@ class LoadingDialog_Order {
                   height: Dimension.getHeight(0.55),
                   width: Dimension.getWidth(1.5),
                   child: Order_Dialog(id, img, name, descript, price, ishot,
-                      size, topping, promotion)),
+                      hashot, size, topping, promotion)),
               actions: <Widget>[
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -129,9 +130,12 @@ class LoadingDialog_Order {
                             if (selectedProduct['Toppings'] == null &&
                                 ListOrderProducts.length > 0 &&
                                 lst_index.length > 0) {
-                              ListOrderProducts[ListOrderProducts.indexOf(
-                                      lst_index.first)]['Quantity'] +=
+                              int index =
+                                  ListOrderProducts.indexOf(lst_index.first);
+                              ListOrderProducts[index]['Quantity'] +=
                                   selectedProduct['Quantity'];
+                              ListOrderProducts[index]['Price'] +=
+                                  selectedProduct['Price'];
                               selectedProduct = {}; //reset sản phẩm chọn
                               Navigator.of(context).pop();
                               return;
@@ -170,6 +174,8 @@ class LoadingDialog_Order {
                             if (isAlready && position > -1) {
                               ListOrderProducts[position]['Quantity'] +=
                                   selectedProduct['Quantity'];
+                              ListOrderProducts[position]['Price'] +=
+                                  selectedProduct['Price'];
                             } else {
                               ListOrderProducts.add(selectedProduct);
                             }

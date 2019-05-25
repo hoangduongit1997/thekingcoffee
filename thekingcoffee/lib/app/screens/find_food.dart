@@ -140,6 +140,8 @@ class _FindFoodState extends State<FindFood> {
                                                           ['Price'],
                                                       search_result[index]
                                                           ['IsHot'],
+                                                           search_result[index]
+                                                          ['IsHot'],
                                                       search_result[index]
                                                           ['Toppings'],
                                                       search_result[index]

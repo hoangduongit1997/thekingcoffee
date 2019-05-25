@@ -44,13 +44,15 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
     final tea = await Is_Have_Tea_Products();
     final food = await Is_Have_Food_Products();
     final drinking = await Is_Have_Drinking_Products();
-    setState(() {
-      list_new_products = result;
-      list_coffee = coffee;
-      list_tea = tea;
-      list_food = food;
-      list_drinking = drinking;
-    });
+    if (this.mounted) {
+      setState(() {
+        list_new_products = result;
+        list_coffee = coffee;
+        list_tea = tea;
+        list_food = food;
+        list_drinking = drinking;
+      });
+    }
   }
 
   @override

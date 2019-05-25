@@ -30,10 +30,12 @@ int promotion_coffee = 0;
 class _Home_Card_Coffee_State extends State<Home_Card_Coffee> {
   intDataHomeScreen() async {
     final result = await Get_Coffee_Product();
-    setState(() {
-      data = result;
-      lenght = data.length;
-    });
+    if (this.mounted) {
+      setState(() {
+        data = result;
+        lenght = data.length;
+      });
+    }
   }
 
   @override
@@ -334,6 +336,7 @@ class _Home_Card_Coffee_State extends State<Home_Card_Coffee> {
                                         data[index]['File_Path'],
                                         data[index]['Description'],
                                         data[index]['Price'],
+                                        data[index]['IsHot'],
                                         data[index]['IsHot'],
                                         data[index]['Toppings'],
                                         data[index]['Size'],

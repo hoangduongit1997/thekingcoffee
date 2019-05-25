@@ -86,6 +86,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
               list_new_products[index]['Description'],
               list_new_products[index]['Price'],
               list_new_products[index]['IsHot'],
+              list_new_products[index]['IsHot'],
               list_new_products[index]['Toppings'],
               list_new_products[index]['Size'],
               list_new_products[index]['Promotion'],

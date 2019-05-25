@@ -25,35 +25,36 @@ class Shopping_List extends StatefulWidget {
 }
 
 class Shopping_ListState extends State<Shopping_List> {
-  List _cities = [
-    "Thành phố Hồ Chí Minh",
-    "Hà Nội",
-    "Đà Nẵng",
-  ];
+  int multy_topping = 0;
+  // List _cities = [
+  //   "Thành phố Hồ Chí Minh",
+  //   "Hà Nội",
+  //   "Đà Nẵng",
+  // ];
 
-  List<DropdownMenuItem<String>> _dropDownMenuItems;
-  String _currentCity;
-  @override
-  void initState() {
-    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
-    _dropDownMenuItems = getDropDownMenuItems();
-    _currentCity = _dropDownMenuItems[0].value;
-    Config.isHideNavigation = false;
-    super.initState();
-  }
+  // List<DropdownMenuItem<String>> _dropDownMenuItems;
+  // String _currentCity;
+  // @override
+  // void initState() {
+  //   SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+  //   _dropDownMenuItems = getDropDownMenuItems();
+  //   _currentCity = _dropDownMenuItems[0].value;
+  //   Config.isHideNavigation = false;
+  //   super.initState();
+  // }
 
-  List<DropdownMenuItem<String>> getDropDownMenuItems() {
-    List<DropdownMenuItem<String>> items = new List();
-    for (String city in _cities) {
-      items.add(new DropdownMenuItem(
-          value: city,
-          child: new Text(
-            city,
-            style: StylesText.style13Black,
-          )));
-    }
-    return items;
-  }
+  // List<DropdownMenuItem<String>> getDropDownMenuItems() {
+  //   List<DropdownMenuItem<String>> items = new List();
+  //   for (String city in _cities) {
+  //     items.add(new DropdownMenuItem(
+  //         value: city,
+  //         child: new Text(
+  //           city,
+  //           style: StylesText.style13Black,
+  //         )));
+  //   }
+  //   return items;
+  // }
 
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
   OrderBloc orderBloc = new OrderBloc();
@@ -211,70 +212,74 @@ class Shopping_ListState extends State<Shopping_List> {
                             "Choose store",
                             style: StylesText.style13BlackBold,
                           )),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(2, 2, 0, 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: Text(
-                                "Thành phố",
-                                style: StylesText.style14Black,
-                              ),
-                            ),
-                            Padding(
-                              padding: const EdgeInsets.all(5.0),
-                              child: Container(
-                                  width: Dimension.getHeight(0.45),
-                                  decoration: BoxDecoration(
-                                      border: Border.all(color: Colors.grey)),
-                                  child: Center(
-                                    child: DropdownButton(
-                                      iconEnabledColor: Colors.brown,
-                                      iconDisabledColor: Colors.black,
-                                      value: _currentCity,
-                                      items: _dropDownMenuItems,
-                                      onChanged: changedDropDownItem,
-                                    ),
-                                  )),
-                            ),
-                          ],
-                        ),
-                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.fromLTRB(2, 2, 0, 0),
+                      //   child: Row(
+                      //     mainAxisAlignment: MainAxisAlignment.start,
+                      //     children: <Widget>[
+                      //       Padding(
+                      //         padding: const EdgeInsets.all(5.0),
+                      //         child: Text(
+                      //           "Thành phố",
+                      //           style: StylesText.style14Black,
+                      //         ),
+                      //       ),
+                      //       Padding(
+                      //         padding: const EdgeInsets.all(5.0),
+                      //         child: Container(
+                      //             width: Dimension.getHeight(0.45),
+                      //             decoration: BoxDecoration(
+                      //                 border: Border.all(color: Colors.grey)),
+                      //             child: Center(
+                      //               child: DropdownButton(
+                      //                 iconEnabledColor: Colors.brown,
+                      //                 iconDisabledColor: Colors.black,
+                      //                 value: _currentCity,
+                      //                 items: _dropDownMenuItems,
+                      //                 onChanged: changedDropDownItem,
+                      //               ),
+                      //             )),
+                      //       ),
+                      //     ],
+                      //   ),
+                      // ),
                       Padding(
                           padding: const EdgeInsets.fromLTRB(0, 2, 0, 0),
                           child: Container(
-                            height: Dimension.getHeight(0.45),
+                            height: Dimension.getHeight(0.35),
                             width: double.infinity,
                             child: ListView.builder(
                               shrinkWrap: true,
                               scrollDirection: Axis.vertical,
                               itemCount: ListOrderProducts.length,
                               itemBuilder: (context, index) {
+                                var list_multy_topping =
+                                    ListOrderProducts[index]['Toppings']
+                                        as List<dynamic>;
+                                if (list_multy_topping != null) {
+                                  multy_topping = list_multy_topping.length;
+                                }
+
                                 return Slidable(
                                   delegate: new SlidableDrawerDelegate(),
                                   actionExtentRatio: 0.25,
                                   child: GestureDetector(
                                     onTap: () {
-                                      // Edit_LoadingDialog_Order
-                                      //     .showLoadingDialog(
-                                      //   context,
-                                      //   ListOrderProducts[index]['Id'],
-                                      //   ListOrderProducts[index]['Name'],
-                                      //   ListOrderProducts[index]['Img'],
-                                      //   '',
-                                      //   ListOrderProducts[index]['Price'],
-
-                                      //   ListOrderProducts[index]['ListTopping'],
-                                      //   ListOrderProducts[index]['Toppings'],
-                                      //   ListOrderProducts[index]['ListSize'],
-                                      //   ListOrderProducts[index]['Size'],
-                                      //   ListOrderProducts[index]['Price'],
-                                      //   ListOrderProducts[index]['Quantity'],
-
-                                      //   ListOrderProducts,
-                                      // ); //show edit
+                                      Edit_Loading_Order_Dialog.showEditDialog(
+                                        context,
+                                        ListOrderProducts[index]['Id'],
+                                        ListOrderProducts[index]['Img'],
+                                        ListOrderProducts[index]['Name'],
+                                        ListOrderProducts[index]['Price'],
+                                        ListOrderProducts[index]
+                                            ['Original_Price'],
+                                        ListOrderProducts[index]['IsHot'],
+                                        ListOrderProducts[index]['HasHot'],
+                                        ListOrderProducts[index]['Note'],
+                                        ListOrderProducts[index]['ListSize'],
+                                        ListOrderProducts[index]['ListTopping'],
+                                        ListOrderProducts[index]['Promotion'],
+                                      );
                                     },
                                     child: Container(
                                         padding: const EdgeInsets.all(2.0),
@@ -445,11 +450,14 @@ class Shopping_ListState extends State<Shopping_List> {
                                                                               0,
                                                                           bottom:
                                                                               0),
-                                                                      child:
-                                                                          Text(
-                                                                        "Topping: " +
-                                                                            ListOrderProducts[index]['Toppings'][0]['Name'],
-                                                                      ))
+                                                                      child: multy_topping >
+                                                                              1
+                                                                          ? Text(
+                                                                              "Topping: " + ListOrderProducts[index]['Toppings'][0]['Name'] + "...",
+                                                                            )
+                                                                          : Text(
+                                                                              "Topping: " + ListOrderProducts[index]['Toppings'][0]['Name'],
+                                                                            ))
                                                             ],
                                                           ),
                                                           Padding(
@@ -552,21 +560,6 @@ class Shopping_ListState extends State<Shopping_List> {
                               },
                             ),
                           )),
-                      Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 10, 5, 15),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.end,
-                            children: <Widget>[
-                              Text(
-                                "Total: ",
-                                style: StylesText.style18BrownBold,
-                              ),
-                              Text(
-                                "12000",
-                                style: StylesText.style15RedAccentBold,
-                              )
-                            ],
-                          ))
                     ],
                   ),
                 ),
@@ -612,7 +605,7 @@ class Shopping_ListState extends State<Shopping_List> {
                             }
                           },
                           child: Text(
-                            "Purchase",
+                            "Purchase ",
                             style: StylesText.style14While,
                           ),
                           color: Colors.redAccent),
@@ -624,9 +617,9 @@ class Shopping_ListState extends State<Shopping_List> {
     );
   }
 
-  void changedDropDownItem(String selectedcity) {
-    setState(() {
-      _currentCity = selectedcity;
-    });
-  }
+  // void changedDropDownItem(String selectedcity) {
+  //   setState(() {
+  //     _currentCity = selectedcity;
+  //   });
+  // }
 }

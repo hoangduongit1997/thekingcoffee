@@ -30,11 +30,13 @@ var promotion_list_drinking = [];
 class _Home_Card_Drinking_State extends State<Home_Card_Drinking> {
   intDataHomeScreen() async {
     final result = await Get_Drinking_Products();
-    setState(() {
-      //cho nay bi loi
-      data = result;
-      lenght = data.length;
-    });
+    if (this.mounted) {
+      setState(() {
+        //cho nay bi loi
+        data = result;
+        lenght = data.length;
+      });
+    }
   }
 
   @override
@@ -336,6 +338,7 @@ class _Home_Card_Drinking_State extends State<Home_Card_Drinking> {
                                         data[index]['Description'],
                                         data[index]['Price'],
                                         data[index]['IsHot'],
+                                         data[index]['IsHot'],
                                         data[index]['Toppings'],
                                         data[index]['Size'],
                                         data[index]['Promotion'],

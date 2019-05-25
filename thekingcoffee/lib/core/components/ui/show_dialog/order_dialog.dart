@@ -5,6 +5,10 @@ import 'package:thekingcoffee/app/config/config.dart';
 
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
+import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart'
+    as prefix0;
+import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog.dart';
+import 'package:thekingcoffee/core/components/ui/show_dialog/show_message_dialog.dart';
 import 'package:thekingcoffee/core/components/widgets/drawline.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 
@@ -15,15 +19,17 @@ class Order_Dialog extends StatefulWidget {
   final String desc;
   final int price;
   final int ishot;
+  final int hashot;
   final List<dynamic> toppings;
   final List<dynamic> size;
   final List<dynamic> promotion;
   Order_Dialog(this.id, this.img, this.name, this.desc, this.price, this.ishot,
-      this.size, this.toppings, this.promotion);
+      this.hashot, this.size, this.toppings, this.promotion);
   Order_DialogState createState() => Order_DialogState();
 }
 
 class Order_DialogState extends State<Order_Dialog> {
+  TextEditingController note = new TextEditingController();
   var product = selectedProduct;
   int number = 1;
   int money;
@@ -34,6 +40,7 @@ class Order_DialogState extends State<Order_Dialog> {
   int selectedRadioTile;
   var selectedPromotion;
   var list_promotion_product = [];
+
   int final_price_promotion_product = 0;
 
   var check_promotion_product = [];
@@ -91,13 +98,11 @@ class Order_DialogState extends State<Order_Dialog> {
           int tempMoney = money;
           if (element != null) {
             temp.remove(element);
-            //tempMoney -= widget.price;
+
             tempMoney -= topping['Price'];
           } else {
             temp.add(topping);
             tempMoney += topping['Price'];
-            //tempMoney += widget.price;
-            //cong them tien
           }
           setState(() {
             money = tempMoney;
@@ -126,14 +131,10 @@ class Order_DialogState extends State<Order_Dialog> {
             style: StylesText.style13BrownBold,
           ),
           onChanged: (value) {
-            // money -= selectedsize['PlusMonney'];
             list_promotion_product = [];
             list_promotion_product = promotion['SaleForProducts'];
             int oldMoney = 0, newMoney = 0;
             if (selectedPromotion != null) {
-              // tempMoney -= widget.price *
-              //     ((100 - selectedPromotion['PercentDiscount'])) /
-              //     100;
               oldMoney = ((widget.price -
                       (widget.price *
                           (selectedPromotion['PercentDiscount']) /
@@ -147,17 +148,13 @@ class Order_DialogState extends State<Order_Dialog> {
                     value['MoneyDiscount']))
                 .toInt();
             setState(() {
-              // money += value['PlusMonney'];
               selectedPromotion = value;
               money = money + oldMoney - newMoney;
-
-              //Gen promotion product
             });
-            // selectedProduct['Price'] = money;
-            selectedsize = value;
-            // selectedProduct['Size'] = selectedsize;
 
-            // selectedPromotion = value;
+            selectedsize = value;
+
+            selectedProduct['Price'] = money;
           },
           selected: selectedPromotion == promotion,
           activeColor: Colors.redAccent,
@@ -315,6 +312,7 @@ class Order_DialogState extends State<Order_Dialog> {
             check_promotion_product = lstVal;
             money = tempMoney;
           });
+          selectedProduct['Price'] = money;
         },
         activeColor: Colors.redAccent,
       )));
@@ -341,6 +339,11 @@ class Order_DialogState extends State<Order_Dialog> {
     //lay de list cart
     selectedProduct['ListSize'] = widget.size;
     selectedProduct['ListTopping'] = widget.toppings;
+    selectedProduct['IsHot'] = false;
+    selectedProduct['HasHot'] = widget.hashot;
+    selectedProduct['Original_Price'] = widget.price;
+    selectedProduct['Note'] = "";
+    selectedProduct['Promotion']=widget.promotion;
   }
 
   @override
@@ -479,6 +482,36 @@ class Order_DialogState extends State<Order_Dialog> {
                           child: Container(
                             width: Dimension.getWidth(0.62),
                             child: TextField(
+                              textInputAction: TextInputAction.done,
+                              controller: note,
+                              onEditingComplete: () {
+                                selectedProduct['Note'] = note.text;
+                                showDialog(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(15.0))),
+                                        title: new Text("Information",
+                                            style: StylesText
+                                                .style18RedaccentBold),
+                                        content: new Text(
+                                          "Add note successfull!",
+                                          style: StylesText.style15Black,
+                                        ),
+                                        actions: <Widget>[
+                                          FlatButton(
+                                            child: Text("Yes"),
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    });
+                              },
                               keyboardType: TextInputType.multiline,
                               maxLines: null,
                             ),
@@ -540,6 +573,8 @@ class Order_DialogState extends State<Order_Dialog> {
                                         onChanged: (bool value) {
                                           setState(() {
                                             checked_hot = value;
+                                            selectedProduct['IsHot'] =
+                                                checked_hot;
                                           });
                                         },
                                         activeColor: Colors.red,
@@ -718,6 +753,7 @@ class Order_DialogState extends State<Order_Dialog> {
                                           money -= widget.price;
                                         });
                                         selectedProduct['Quantity'] = number;
+                                        selectedProduct['Price'] = money;
                                       },
                                     ),
                                   ),
@@ -738,6 +774,7 @@ class Order_DialogState extends State<Order_Dialog> {
                                           money += widget.price;
                                         });
                                         selectedProduct['Quantity'] = number;
+                                        selectedProduct['Price'] = money;
                                       },
                                     ),
                                   ),

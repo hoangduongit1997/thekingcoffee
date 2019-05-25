@@ -30,11 +30,13 @@ var promotion_list_food = [];
 class _Home_Card_Food_State extends State<Home_Card_Food> {
   intDataHomeScreen() async {
     final result = await Get_Food_Products();
-
-    setState(() {
-      data = result;
-      lenght = data.length;
-    });
+//lôi leake memory ở day
+    if (this.mounted) {
+      setState(() {
+        data = result;
+        lenght = data.length;
+      });
+    }
   }
 
   @override
@@ -335,6 +337,7 @@ class _Home_Card_Food_State extends State<Home_Card_Food> {
                                         data[index]['Description'],
                                         data[index]['Price'],
                                         data[index]['IsHot'],
+                                         data[index]['IsHot'],
                                         data[index]['Toppings'],
                                         data[index]['Size'],
                                         data[index]['Promotion'],

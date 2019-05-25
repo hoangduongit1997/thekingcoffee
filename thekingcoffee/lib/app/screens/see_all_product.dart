@@ -92,6 +92,7 @@ class _See_All_ProductState extends State<See_All_Product> {
                               data[index]['Description'],
                               data[index]['Price'],
                               data[index]['IsHot'],
+                               data[index]['IsHot'],
                               data[index]['Toppings'],
                               data[index]['Size'],
                               data[index]['Promotion'],
