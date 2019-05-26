@@ -17,12 +17,12 @@ class SplashScreen extends StatefulWidget {
 class SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
+    SystemChrome.setEnabledSystemUIOverlays([]);
     super.initState();
     loadSplash();
   }
 
   Future<Timer> loadSplash() async {
-
     return Timer(Duration(seconds: 3), onDoneLoading);
   }
 

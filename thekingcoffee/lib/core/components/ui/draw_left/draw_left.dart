@@ -108,14 +108,26 @@ class _HomeMenuState extends State<HomeMenu> {
           ),
         ),
         Config.islogin == 0
-            ? Container()
+            ? InkWell(
+                child: ListTile(
+                  title: Text(
+                    'Log in',
+                    style: StylesText.style13BlackBold,
+                  ),
+                  leading: Icon(Icons.open_in_browser, color: Colors.redAccent),
+                  onTap: () {
+                    Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (context) => LoginWithPass()));
+                  },
+                ),
+              )
             : InkWell(
                 child: ListTile(
                   title: Text(
                     'Log out',
                     style: StylesText.style13BlackBold,
                   ),
-                  leading: Icon(Icons.error, color: Colors.redAccent),
+                  leading: Icon(Icons.error_outline, color: Colors.redAccent),
                   onTap: () {
                     showDialog(
                         context: context,

@@ -36,7 +36,7 @@ class Shopping_ListState extends State<Shopping_List> {
   // String _currentCity;
   @override
   void initState() {
-    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+      SystemChrome.setEnabledSystemUIOverlays([]);
     // _dropDownMenuItems = getDropDownMenuItems();
     // _currentCity = _dropDownMenuItems[0].value;
     Config.isHideNavigation = false;

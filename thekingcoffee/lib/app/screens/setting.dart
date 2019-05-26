@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/screens/dashboard.dart';
+import 'package:thekingcoffee/app/screens/language.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
 
@@ -40,13 +41,38 @@ class _SettingState extends State<Setting> {
         child: ListView(
           children: <Widget>[
             Card(
-      child: ListTile(
-        
-        leading: FlutterLogo(),
-        title: Text('One-line with both widgets'),
-        trailing: Icon(Icons.more_vert),
-      ),
-    ),
+              child: ListTile(
+                onTap: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => Language()));
+                },
+                title: Text(
+                  'Display language',
+                  style: StylesText.style16Brown,
+                ),
+                trailing: Text("English", style: StylesText.style14Redaccent),
+              ),
+            ),
+            Card(
+              child: ListTile(
+                title: Text(
+                  'Terms of service',
+                  style: StylesText.style16Brown,
+                ),
+                trailing:
+                    Icon(Icons.arrow_forward_ios, color: Colors.grey[300]),
+              ),
+            ),
+            Card(
+              child: ListTile(
+                title: Text(
+                  'Version 1.0',
+                  style: StylesText.style16Brown,
+                ),
+                trailing:
+                    Icon(Icons.arrow_forward_ios, color: Colors.grey[300]),
+              ),
+            ),
           ],
         ),
       ),

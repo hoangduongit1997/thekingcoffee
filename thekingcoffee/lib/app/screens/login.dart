@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:thekingcoffee/app/bloc/login_bloc.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/data/repository/login_repository.dart';
@@ -20,6 +21,13 @@ class LoginWithPass extends StatefulWidget {
 }
 
 class MyAppState extends State<LoginWithPass> {
+  @override
+  void initState() {
+    SystemChrome.setEnabledSystemUIOverlays([]);
+    Config.isHideNavigation = true;
+    super.initState();
+  }
+
   LoginBloc loginBloc = new LoginBloc();
   bool _showpass = false;
   TextEditingController _user = new TextEditingController();

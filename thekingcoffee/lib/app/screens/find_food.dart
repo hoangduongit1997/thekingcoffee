@@ -4,6 +4,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/data/repository/find_food.dart';
+import 'package:thekingcoffee/app/screens/dashboard.dart';
+import 'package:thekingcoffee/app/screens/helper/dashboard_helper/placeholder_home.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog.dart';
@@ -28,6 +30,7 @@ class _FindFoodState extends State<FindFood> {
   @override
   void initState() {
     SystemChrome.setEnabledSystemUIOverlays([]);
+    Config.isHideNavigation=true;
     super.initState();
   }
 
@@ -45,7 +48,7 @@ class _FindFoodState extends State<FindFood> {
                 color: Colors.brown,
               ),
               onPressed: () {
-                Navigator.of(context).pop();
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>DashBoard()));
               },
             ),
             backgroundColor: Colors.white,

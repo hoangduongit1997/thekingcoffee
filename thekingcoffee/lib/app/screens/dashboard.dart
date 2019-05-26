@@ -23,9 +23,15 @@ class _HomeState extends State<DashBoard> {
   ];
   @override
   void initState() {
-    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+    SystemChrome.setEnabledSystemUIOverlays([]);
     Config.isHideNavigation = false;
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    this.dispose();
+    super.dispose();
   }
 
   @override
