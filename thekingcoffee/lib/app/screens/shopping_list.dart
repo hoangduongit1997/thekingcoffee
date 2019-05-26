@@ -34,14 +34,14 @@ class Shopping_ListState extends State<Shopping_List> {
 
   // List<DropdownMenuItem<String>> _dropDownMenuItems;
   // String _currentCity;
-  // @override
-  // void initState() {
-  //   SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
-  //   _dropDownMenuItems = getDropDownMenuItems();
-  //   _currentCity = _dropDownMenuItems[0].value;
-  //   Config.isHideNavigation = false;
-  //   super.initState();
-  // }
+  @override
+  void initState() {
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+    // _dropDownMenuItems = getDropDownMenuItems();
+    // _currentCity = _dropDownMenuItems[0].value;
+    Config.isHideNavigation = false;
+    super.initState();
+  }
 
   // List<DropdownMenuItem<String>> getDropDownMenuItems() {
   //   List<DropdownMenuItem<String>> items = new List();

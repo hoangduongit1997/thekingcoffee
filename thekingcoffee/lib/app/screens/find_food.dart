@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/data/repository/find_food.dart';
@@ -24,6 +25,11 @@ class _FindFoodState extends State<FindFood> {
   TextEditingController food = new TextEditingController();
   var search_result = [];
   int length = 0;
+  @override
+  void initState() {
+    SystemChrome.setEnabledSystemUIOverlays([]);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {

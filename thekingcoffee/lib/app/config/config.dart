@@ -1,6 +1,6 @@
 class Config {
   static int islogin;
-  static int current_botton_tab;
+  static int current_botton_tab=0;
   static String find_food_API=ip+"api/Product/FindProduct?Name=";
   static bool isHideNavigation = false;
   static String ip = "http://207.148.71.41/";

@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/data/repository/find_food.dart';
@@ -58,7 +59,7 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
   @override
   void initState() {
     Config.current_botton_tab = 0;
-    this.intDataHomeSlider();
+    intDataHomeSlider();
     super.initState();
   }
 

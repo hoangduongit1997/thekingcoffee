@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:thekingcoffee/app/screens/dashboard.dart';
 import 'package:thekingcoffee/app/screens/tutorial.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
@@ -17,12 +18,11 @@ class SplashScreenState extends State<SplashScreen> {
   @override
   void initState() {
     super.initState();
-
     loadSplash();
   }
 
   Future<Timer> loadSplash() async {
-    // Validation.initpref();
+
     return Timer(Duration(seconds: 3), onDoneLoading);
   }
 

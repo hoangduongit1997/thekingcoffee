@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/screens/favorite_page.dart';
-import 'package:thekingcoffee/app/screens/helper/dashboard_helper/placeholder.dart';
+
 import 'package:thekingcoffee/app/screens/helper/dashboard_helper/placeholder_home.dart';
+import 'package:thekingcoffee/app/screens/setting.dart';
 import 'package:thekingcoffee/app/screens/shopping_list.dart';
 
 class DashBoard extends StatefulWidget {
@@ -18,11 +19,10 @@ class _HomeState extends State<DashBoard> {
     PlaceholderMainWidget(),
     Favorite_Page(),
     Shopping_List(),
-    PlaceholderWidget(Colors.black),
+    Setting(),
   ];
   @override
   void initState() {
-    Config.current_botton_tab = 0;
     SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
     Config.isHideNavigation = false;
     super.initState();
