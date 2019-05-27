@@ -26,35 +26,35 @@ class Shopping_List extends StatefulWidget {
 
 class Shopping_ListState extends State<Shopping_List> {
   int multy_topping = 0;
-  // List _cities = [
-  //   "Thành phố Hồ Chí Minh",
-  //   "Hà Nội",
-  //   "Đà Nẵng",
-  // ];
+  List _cities = [
+    "TP. Hồ Chí Minh",
+    "Hà Nội",
+    "Đà Nẵng",
+  ];
 
-  // List<DropdownMenuItem<String>> _dropDownMenuItems;
-  // String _currentCity;
+  List<DropdownMenuItem<String>> _dropDownMenuItems;
+  String _currentCity;
   @override
   void initState() {
-      SystemChrome.setEnabledSystemUIOverlays([]);
-    // _dropDownMenuItems = getDropDownMenuItems();
-    // _currentCity = _dropDownMenuItems[0].value;
+    SystemChrome.setEnabledSystemUIOverlays([]);
+    _dropDownMenuItems = getDropDownMenuItems();
+    _currentCity = _dropDownMenuItems[0].value;
     Config.isHideNavigation = false;
     super.initState();
   }
 
-  // List<DropdownMenuItem<String>> getDropDownMenuItems() {
-  //   List<DropdownMenuItem<String>> items = new List();
-  //   for (String city in _cities) {
-  //     items.add(new DropdownMenuItem(
-  //         value: city,
-  //         child: new Text(
-  //           city,
-  //           style: StylesText.style13Black,
-  //         )));
-  //   }
-  //   return items;
-  // }
+  List<DropdownMenuItem<String>> getDropDownMenuItems() {
+    List<DropdownMenuItem<String>> items = new List();
+    for (String city in _cities) {
+      items.add(new DropdownMenuItem(
+          value: city,
+          child: new Text(
+            city,
+            style: StylesText.style13Black,
+          )));
+    }
+    return items;
+  }
 
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
   OrderBloc orderBloc = new OrderBloc();
@@ -153,7 +153,7 @@ class Shopping_ListState extends State<Shopping_List> {
                         ),
                       ),
                       Padding(
-                          padding: const EdgeInsets.all(5.0),
+                          padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
                           child: StreamBuilder<Object>(
                               stream: orderBloc.nameStream,
                               builder: (context, snapshot) {
@@ -168,7 +168,7 @@ class Shopping_ListState extends State<Shopping_List> {
                                 );
                               })),
                       Padding(
-                          padding: const EdgeInsets.all(5.0),
+                          padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
                           child: StreamBuilder<Object>(
                               stream: orderBloc.phoneStream,
                               builder: (context, snapshot) {
@@ -184,7 +184,7 @@ class Shopping_ListState extends State<Shopping_List> {
                                 );
                               })),
                       Padding(
-                          padding: const EdgeInsets.all(5.0),
+                          padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
                           child: StreamBuilder<Object>(
                               stream: orderBloc.addressStream,
                               builder: (context, snapshot) {
@@ -207,47 +207,129 @@ class Shopping_ListState extends State<Shopping_List> {
                                 );
                               })),
                       Padding(
-                          padding: const EdgeInsets.all(5.0),
-                          child: Text(
-                            "Choose store",
-                            style: StylesText.style13BlackBold,
+                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(2, 2, 0, 0),
+                                child: Text(
+                                  "Choose store",
+                                  style: StylesText.style13BlackBold,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(2, 2, 0, 0),
+                                child: Row(
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          10, 0, 0, 0),
+                                      child: Container(
+                                        child: DropdownButton(
+                                          iconEnabledColor: Colors.brown,
+                                          iconDisabledColor: Colors.black,
+                                          value: _currentCity,
+                                          items: _dropDownMenuItems,
+                                          onChanged: changedDropDownItem,
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          10, 0, 0, 0),
+                                      child: Container(
+                                          child: Text(
+                                        "District",
+                                        style: StylesText.style13BlackBold,
+                                      )),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          10, 0, 0, 0),
+                                      child: Container(
+                                        child: DropdownButton(
+                                          iconEnabledColor: Colors.brown,
+                                          iconDisabledColor: Colors.black,
+                                          value: _currentCity,
+                                          items: _dropDownMenuItems,
+                                          onChanged: changedDropDownItem,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
                           )),
-                      // Padding(
-                      //   padding: const EdgeInsets.fromLTRB(2, 2, 0, 0),
-                      //   child: Row(
-                      //     mainAxisAlignment: MainAxisAlignment.start,
-                      //     children: <Widget>[
-                      //       Padding(
-                      //         padding: const EdgeInsets.all(5.0),
-                      //         child: Text(
-                      //           "Thành phố",
-                      //           style: StylesText.style14Black,
-                      //         ),
-                      //       ),
-                      //       Padding(
-                      //         padding: const EdgeInsets.all(5.0),
-                      //         child: Container(
-                      //             width: Dimension.getHeight(0.45),
-                      //             decoration: BoxDecoration(
-                      //                 border: Border.all(color: Colors.grey)),
-                      //             child: Center(
-                      //               child: DropdownButton(
-                      //                 iconEnabledColor: Colors.brown,
-                      //                 iconDisabledColor: Colors.black,
-                      //                 value: _currentCity,
-                      //                 items: _dropDownMenuItems,
-                      //                 onChanged: changedDropDownItem,
-                      //               ),
-                      //             )),
-                      //       ),
-                      //     ],
-                      //   ),
-                      // ),
+                      Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                child: Row(
+                                  children: <Widget>[
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.fromLTRB(2, 0, 0, 0),
+                                      child: Container(
+                                          child: Text(
+                                        "Ward",
+                                        style: StylesText.style13BlackBold,
+                                      )),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          10, 0, 0, 0),
+                                      child: Container(
+                                        child: DropdownButton(
+                                          iconEnabledColor: Colors.brown,
+                                          iconDisabledColor: Colors.black,
+                                          value: _currentCity,
+                                          items: _dropDownMenuItems,
+                                          onChanged: changedDropDownItem,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                child: Row(
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          10, 0, 0, 0),
+                                      child: Container(
+                                          child: Text(
+                                        "Store",
+                                        style: StylesText.style13BlackBold,
+                                      )),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          10, 0, 0, 0),
+                                      child: Container(
+                                        child: DropdownButton(
+                                          iconEnabledColor: Colors.brown,
+                                          iconDisabledColor: Colors.black,
+                                          value: _currentCity,
+                                          items: _dropDownMenuItems,
+                                          onChanged: changedDropDownItem,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          )),
                       Padding(
                           padding: const EdgeInsets.fromLTRB(0, 2, 0, 0),
                           child: Container(
-                            height: Dimension.getHeight(0.35),
-                            width: double.infinity,
                             child: ListView.builder(
                               shrinkWrap: true,
                               scrollDirection: Axis.vertical,
@@ -617,9 +699,9 @@ class Shopping_ListState extends State<Shopping_List> {
     );
   }
 
-  // void changedDropDownItem(String selectedcity) {
-  //   setState(() {
-  //     _currentCity = selectedcity;
-  //   });
-  // }
+  void changedDropDownItem(String selectedcity) {
+    setState(() {
+      _currentCity = selectedcity;
+    });
+  }
 }

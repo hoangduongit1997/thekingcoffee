@@ -134,7 +134,7 @@ class MyAppState extends State<LoginWithPass> {
                                   await SharedPreferences.getInstance();
                               prefs.clear();
 
-                              Navigator.push(
+                              Navigator.pushReplacement(
                                   context,
                                   MaterialPageRoute(
                                       builder: (context) => DashBoard()));
