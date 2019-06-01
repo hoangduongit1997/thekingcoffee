@@ -4,15 +4,17 @@ import 'package:flutter/widgets.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 
 import 'package:thekingcoffee/app/styles/styles.dart';
-import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
-import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart'
-    as prefix0;
+// import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
+// import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart'
+//     as prefix0;
 import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/show_message_dialog.dart';
 import 'package:thekingcoffee/core/components/widgets/drawline.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 
-class Order_Dialog extends StatefulWidget {
+class Order_Dialog2019 extends StatefulWidget {
+  Function(String, Object) callback;
+
   final int id;
   final String img;
   final String name;
@@ -23,14 +25,32 @@ class Order_Dialog extends StatefulWidget {
   final List<dynamic> toppings;
   final List<dynamic> size;
   final List<dynamic> promotion;
-  Order_Dialog(this.id, this.img, this.name, this.desc, this.price, this.ishot,
-      this.hashot, this.size, this.toppings, this.promotion);
+  final Map<String, dynamic> selectedSize;
+  final List<dynamic> selectedToppings;
+  final Map<String, dynamic> selectedPromotion;
+  final List<dynamic> check_promotion_product;
+  Order_Dialog2019(
+      this.callback,
+      this.id,
+      this.img,
+      this.name,
+      this.desc,
+      this.price,
+      this.ishot,
+      this.hashot,
+      this.size,
+      this.toppings,
+      this.promotion,
+      this.selectedSize,
+      this.selectedToppings,
+      this.selectedPromotion,
+      this.check_promotion_product);
   Order_DialogState createState() => Order_DialogState();
 }
 
-class Order_DialogState extends State<Order_Dialog> {
+class Order_DialogState extends State<Order_Dialog2019> {
   TextEditingController note = new TextEditingController();
-  var product = selectedProduct;
+  //var product = selectedProduct;
   int number = 1;
   int money;
   bool checked_hot = false;
@@ -66,9 +86,11 @@ class Order_DialogState extends State<Order_Dialog> {
             setState(() {
               money += value['PlusMonney'];
             });
-            selectedProduct['Price'] = money;
+            // selectedProduct['Price'] = money;
+            widget.callback('Price', money);
             selectedsize = value;
-            selectedProduct['Size'] = selectedsize;
+            // selectedProduct['Size'] = selectedsize;
+            widget.callback('Size', selectedsize);
           },
           selected: selectedsize == item,
           activeColor: Colors.redAccent,
@@ -108,8 +130,10 @@ class Order_DialogState extends State<Order_Dialog> {
             money = tempMoney;
             lstSelectedTopping = temp;
           });
-          selectedProduct['Toppings'] = lstSelectedTopping;
-          selectedProduct['Price'] = money;
+          // selectedProduct['Toppings'] = lstSelectedTopping;
+          // selectedProduct['Price'] = money;
+          widget.callback('Toppings', lstSelectedTopping);
+          widget.callback('Price', money);
         },
         selected: selecttopping == topping,
         activeColor: Colors.redAccent,
@@ -154,8 +178,10 @@ class Order_DialogState extends State<Order_Dialog> {
 
             selectedsize = value;
 
-            selectedProduct['Price'] = money;
-            selectedProduct['SelectedPromotion']=selectedPromotion;
+            // selectedProduct['Price'] = money;
+            // selectedProduct['SelectedPromotion'] = selectedPromotion;
+            widget.callback('Price', money);
+            widget.callback('SelectedPromotion', selectedPromotion);
           },
           selected: selectedPromotion == promotion,
           activeColor: Colors.redAccent,
@@ -313,9 +339,15 @@ class Order_DialogState extends State<Order_Dialog> {
             check_promotion_product = lstVal;
             money = tempMoney;
           });
-          selectedProduct['check_promotion_product']=check_promotion_product;
-          selectedProduct['Price'] = money;
-          selectedProduct['selectedDetailedSaleForProduct']=check_promotion_product;
+          // selectedProduct['check_promotion_product'] = check_promotion_product;
+          // selectedProduct['Price'] = money;
+          // selectedProduct['selectedDetailedSaleForProduct'] =
+          //     check_promotion_product;
+
+          widget.callback('check_promotion_product', check_promotion_product);
+          widget.callback('Price', money);
+          widget.callback(
+              'selectedDetailedSaleForProduct', check_promotion_product);
         },
         activeColor: Colors.redAccent,
       )));
@@ -330,23 +362,71 @@ class Order_DialogState extends State<Order_Dialog> {
     if (widget.size.length > 0) {
       money += widget.size[0]['PlusMonney'];
     }
-    if (widget.size != null && widget.size.length > 0) {
-      selectedsize = widget.size[0];
+
+    // if (widget.size != null && widget.size.length > 0) {
+    //   selectedsize = widget.size[0];
+    // }
+    if (widget.selectedSize != null) {
+      selectedsize = widget.selectedSize;
     }
-    selectedProduct['Price'] = money;
-    selectedProduct['Id'] = widget.id;
-    selectedProduct['Img'] = widget.img;
-    selectedProduct['Name'] = widget.name;
-    selectedProduct['Size'] = selectedsize;
-    selectedProduct['Quantity'] = number;
-    //lay de list cart
-    selectedProduct['ListSize'] = widget.size;
-    selectedProduct['ListTopping'] = widget.toppings;
-    selectedProduct['IsHot'] = false;
-    selectedProduct['HasHot'] = widget.hashot;
-    selectedProduct['Original_Price'] = widget.price;
-    selectedProduct['Note'] = "";
-    selectedProduct['Promotion']=widget.promotion;
+    if (widget.selectedToppings != null) {
+      lstSelectedTopping = widget.selectedToppings;
+    }
+    if (widget.selectedPromotion != null) {
+      selectedPromotion = widget.selectedPromotion;
+      list_promotion_product = selectedPromotion['SaleForProducts'];
+    }
+    if (widget.check_promotion_product != null) {
+      check_promotion_product = widget.check_promotion_product;
+    }
+    // selectedProduct['Price'] = money;
+    // selectedProduct['Id'] = widget.id;
+    // selectedProduct['Img'] = widget.img;
+    // selectedProduct['Name'] = widget.name;
+    // selectedProduct['Size'] = selectedsize;
+    // selectedProduct['Quantity'] = number;
+    // //lay de list cart
+    // selectedProduct['ListSize'] = widget.size;
+    // selectedProduct['ListTopping'] = widget.toppings;
+    // selectedProduct['IsHot'] = false;
+    // selectedProduct['HasHot'] = widget.hashot;
+    // selectedProduct['Original_Price'] = widget.price;
+    // selectedProduct['Note'] = "";
+    // selectedProduct['Promotion']=widget.promotion;
+
+    // selectedProduct['Price'] = money;
+    widget.callback('Price', money);
+    // selectedProduct['Id'] = widget.id;
+    widget.callback('Id', widget.id);
+    // selectedProduct['Img'] = widget.img;
+    widget.callback('Img', widget.img);
+    // selectedProduct['Name'] = widget.name;
+    widget.callback('Name', widget.name);
+    // selectedProduct['Size'] = selectedsize;
+    widget.callback('Size', selectedsize);
+    // selectedProduct['Quantity'] = number;
+    widget.callback('Quantity', number);
+
+    // //lay de list cart
+    // selectedProduct['ListSize'] = widget.size;
+    widget.callback('ListSize', widget.size);
+
+    // selectedProduct['ListTopping'] = widget.toppings;
+    widget.callback('ListTopping', widget.toppings);
+
+    // selectedProduct['IsHot'] = false;
+    widget.callback('IsHot', false);
+
+    // selectedProduct['HasHot'] = widget.hashot;
+    widget.callback('HasHot', widget.hashot);
+
+    // selectedProduct['Original_Price'] = widget.price;
+    widget.callback('Original_Price', widget.price);
+
+    // selectedProduct['Note'] = "";
+    widget.callback('Note', "");
+    // selectedProduct['Promotion']=widget.promotion;
+    widget.callback('Promotion', widget.promotion);
   }
 
   @override
@@ -488,7 +568,8 @@ class Order_DialogState extends State<Order_Dialog> {
                               textInputAction: TextInputAction.done,
                               controller: note,
                               onEditingComplete: () {
-                                selectedProduct['Note'] = note.text;
+                                // selectedProduct['Note'] = note.text;
+                                widget.callback('Note', note.text);
                                 showDialog(
                                     context: context,
                                     barrierDismissible: false,
@@ -576,8 +657,10 @@ class Order_DialogState extends State<Order_Dialog> {
                                         onChanged: (bool value) {
                                           setState(() {
                                             checked_hot = value;
-                                            selectedProduct['IsHot'] =
-                                                checked_hot;
+                                            // selectedProduct['IsHot'] =
+                                            //     checked_hot;
+                                            widget.callback(
+                                                'IsHot', checked_hot);
                                           });
                                         },
                                         activeColor: Colors.red,
@@ -755,8 +838,10 @@ class Order_DialogState extends State<Order_Dialog> {
                                           number--;
                                           money -= widget.price;
                                         });
-                                        selectedProduct['Quantity'] = number;
-                                        selectedProduct['Price'] = money;
+                                        // selectedProduct['Quantity'] = number;
+                                        // selectedProduct['Price'] = money;
+                                        widget.callback('Quantity', number);
+                                        widget.callback('Price', money);
                                       },
                                     ),
                                   ),
@@ -776,8 +861,10 @@ class Order_DialogState extends State<Order_Dialog> {
                                           number++;
                                           money += widget.price;
                                         });
-                                        selectedProduct['Quantity'] = number;
-                                        selectedProduct['Price'] = money;
+                                        // selectedProduct['Quantity'] = number;
+                                        // selectedProduct['Price'] = money;
+                                        widget.callback('Quantity', number);
+                                        widget.callback('Price', money);
                                       },
                                     ),
                                   ),

@@ -14,9 +14,10 @@ import 'package:thekingcoffee/app/validation/validation.dart';
 import 'package:thekingcoffee/core/components/lib/change_language/localizations.dart';
 import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
-import 'package:thekingcoffee/core/components/ui/show_dialog/edit_loading_dialog.dart';
-import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog.dart';
-import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog_order.dart';
+
+import 'package:thekingcoffee/core/components/ui/show_dialog/edit_loading_dialog2019.dart';
+// import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog.dart';
+// import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog_order.dart';
 import 'package:thekingcoffee/core/components/widgets/address_picker.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -350,21 +351,30 @@ class Shopping_ListState extends State<Shopping_List> {
                                   actionExtentRatio: 0.25,
                                   child: GestureDetector(
                                     onTap: () {
-                                      Edit_Loading_Order_Dialog.showEditDialog(
-                                        context,
-                                        ListOrderProducts[index]['Id'],
-                                        ListOrderProducts[index]['Img'],
-                                        ListOrderProducts[index]['Name'],
-                                        ListOrderProducts[index]['Price'],
-                                        ListOrderProducts[index]
-                                            ['Original_Price'],
-                                        ListOrderProducts[index]['IsHot'],
-                                        ListOrderProducts[index]['HasHot'],
-                                        ListOrderProducts[index]['Note'],
-                                        ListOrderProducts[index]['ListSize'],
-                                        ListOrderProducts[index]['ListTopping'],
-                                        ListOrderProducts[index]['Promotion'],
-                                      );
+                                      var product = ListOrderProducts[index];
+                                      new LoadingDialog_Order()
+                                          .showLoadingDialog(
+                                              index,
+                                              context,
+                                              product['Id'],
+                                              product['Name'],
+                                              product['Img'],
+                                              "a",
+                                              product['Price'],
+                                              1,
+                                              1,
+                                              product['ListTopping'],
+                                              product['ListSize'],
+                                              product['Promotion'],
+                                              [],
+                                              product['Size'],
+                                              product['Toppings'],
+                                              product['SelectedPromotion'],
+                                              product[
+                                                  'check_promotion_product']);
+                                      //LoadingDialog_Order.showLoadingDialog(context, id, name, img, descript, price, ishot, hashot, topping, size, promotion, orders, selectedSize, selectedToppings, selectedPromotions)
+                                      //LoadingDialog_Order.showLoadingDialog(context, id, name, img, descript, price, ishot, hashot, topping, size, promotion, orders)
+                                      //LoadingDialog_Order.showLoadingDialog(context, id, name, img, descript, price, ishot, hashot, topping, size, promotion, orders, selectedSize, selectedToppings, selectedPromotions)
                                     },
                                     child: Container(
                                         padding: const EdgeInsets.all(2.0),
