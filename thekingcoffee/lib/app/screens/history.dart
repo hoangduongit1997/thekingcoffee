@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/data/repository/get_history.dart';
+import 'package:thekingcoffee/app/screens/dashboard.dart';
 import 'package:thekingcoffee/app/screens/helper/dashboard_helper/placeholder_home.dart';
 import 'package:thekingcoffee/app/screens/history_order_detail.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
@@ -28,7 +29,6 @@ class _HistoryState extends State<History> {
   @override
   void initState() {
     intData();
-    Config.isHideNavigation = true;
     super.initState();
   }
 
@@ -47,9 +47,9 @@ class _HistoryState extends State<History> {
             ),
             leading: FlatButton(
               onPressed: () {
-                Config.isHideNavigation = false;
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => PlaceholderMainWidget()));
+                // Navigator.of(context, rootNavigator: true).pushReplacement(
+                //     MaterialPageRoute(builder: (context) => DashBoard()));
+                Navigator.of(context).pop();
               },
               child: Icon(
                 Icons.arrow_back,

@@ -30,7 +30,6 @@ class _FindFoodState extends State<FindFood> {
   @override
   void initState() {
     SystemChrome.setEnabledSystemUIOverlays([]);
-    Config.isHideNavigation=true;
     super.initState();
   }
 
@@ -48,7 +47,7 @@ class _FindFoodState extends State<FindFood> {
                 color: Colors.brown,
               ),
               onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>DashBoard()));
+                Navigator.of(context,rootNavigator: true).push(MaterialPageRoute(builder: (context)=>DashBoard()));
               },
             ),
             backgroundColor: Colors.white,

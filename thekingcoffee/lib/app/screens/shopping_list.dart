@@ -6,9 +6,12 @@ import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/data/repository/order_repository.dart';
 import 'package:thekingcoffee/app/screens/dashboard.dart';
 import 'package:thekingcoffee/app/screens/helper/dashboard_helper/placeholder_home.dart';
+import 'package:thekingcoffee/app/screens/login.dart';
 import 'package:thekingcoffee/app/screens/map.dart';
+import 'package:thekingcoffee/app/screens/splash_screen.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/app/validation/validation.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/localizations.dart';
 import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/edit_loading_dialog.dart';
@@ -39,7 +42,7 @@ class Shopping_ListState extends State<Shopping_List> {
     SystemChrome.setEnabledSystemUIOverlays([]);
     _dropDownMenuItems = getDropDownMenuItems();
     _currentCity = _dropDownMenuItems[0].value;
-    Config.isHideNavigation = false;
+
     super.initState();
   }
 
@@ -70,19 +73,21 @@ class Shopping_ListState extends State<Shopping_List> {
       home: Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
-          leading: FlatButton(
-              onPressed: () {
-                Config.current_botton_tab = 0;
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => DashBoard()));
-              },
-              child: Icon(
-                Icons.arrow_back,
-                color: Colors.brown,
-              )),
+          centerTitle: true,
+          elevation: 0.8,
+          // leading: FlatButton(
+          //     onPressed: () {
+          //       Config.current_botton_tab = 0;
+          //       Navigator.of(context).pushReplacement(
+          //           MaterialPageRoute(builder: (context) => DashBoard()));
+          //     },
+          //     child: Icon(
+          //       Icons.arrow_back,
+          //       color: Colors.brown,
+          //     )),
           backgroundColor: Colors.white,
           title: Text(
-            "Shopping list",
+            "Shopping List",
             style: StylesText.style20BrownBold,
           ),
           actions: <Widget>[
@@ -190,10 +195,8 @@ class Shopping_ListState extends State<Shopping_List> {
                               builder: (context, snapshot) {
                                 return TextField(
                                   onTap: () {
-                                    Config.isHideNavigation = true;
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
+                                    Navigator.of(context, rootNavigator: true)
+                                        .push(MaterialPageRoute(
                                             builder: (context) => MapPage()));
                                   },
                                   decoration: InputDecoration(

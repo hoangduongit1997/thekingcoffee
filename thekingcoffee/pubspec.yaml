@@ -40,7 +40,6 @@ flutter:
   
   assets:
    - assets/images/
-   - assets/i18n/
    - assets/icons/
 
   fonts:

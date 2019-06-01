@@ -37,9 +37,9 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
       child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         CarouselSlider(
           items: child,
-          autoPlay: false,
+          autoPlay: true,
           viewportFraction: 1.0,
-          autoPlayInterval: Duration(seconds: 7),
+          autoPlayInterval: Duration(seconds: 5),
           enlargeCenterPage: false,
           aspectRatio: 2.0,
           onPageChanged: (index) {

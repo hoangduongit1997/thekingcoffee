@@ -2,7 +2,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:thekingcoffee/app/config/config.dart';
+import 'package:thekingcoffee/app/data/model/radiomodel.dart';
 import 'package:thekingcoffee/app/data/repository/find_food.dart';
 import 'package:thekingcoffee/app/data/repository/get_coffee_products.dart';
 import 'package:thekingcoffee/app/data/repository/get_data_all_product.dart';
@@ -11,8 +14,11 @@ import 'package:thekingcoffee/app/data/repository/get_food_products.dart';
 import 'package:thekingcoffee/app/data/repository/get_new_products.dart';
 import 'package:thekingcoffee/app/data/repository/get_tea_products.dart';
 import 'package:thekingcoffee/app/screens/find_food.dart';
+import 'package:thekingcoffee/app/screens/login.dart';
 import 'package:thekingcoffee/app/screens/see_all_product.dart';
+import 'package:thekingcoffee/app/screens/splash_screen.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/localizations.dart';
 import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_drinking.dart';
@@ -39,6 +45,15 @@ var list_all_product = [];
 
 class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
+  String categories = "";
+  String see_all = "";
+  String new_product = "";
+  String coffee = "";
+  String tea = "";
+  String drinking = "";
+  String food = "";
+  List<RadioModel> _langList = new List<RadioModel>();
+  int _index = 0;
   intDataHomeSlider() async {
     final result = await Get_New_Products();
     final coffee = await Is_Has_Coffee_Product();
@@ -60,220 +75,144 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
   void initState() {
     Config.current_botton_tab = 0;
     intDataHomeSlider();
+    // categories = AppLocalizations.of(context).title_placeholder_home;
+    // new_product = AppLocalizations.of(context).title_new_product;
+    // tea = AppLocalizations.of(context).title_tea;
+    // coffee = AppLocalizations.of(context).title_coffee;
+    // drinking = AppLocalizations.of(context).title_drinking;
+    // food = AppLocalizations.of(context).title_food;
+    // see_all = AppLocalizations.of(context).title_see_all;
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(primaryColor: Colors.orangeAccent),
-      home: Scaffold(
-        key: _scaffoldKey,
-        appBar: AppBar(
-          leading: FlatButton(
-              onPressed: () {
-                _scaffoldKey.currentState.openDrawer();
-              },
-              child: Icon(Icons.menu, color: Colors.brown)),
-          backgroundColor: Colors.white,
-          elevation: 0.5,
-          actions: <Widget>[
-            IconButton(
-              icon: Icon(Icons.search),
-              color: Colors.brown,
-              splashColor: Colors.brown,
-              onPressed: () {
-                Navigator.of(context)
-                    .push(MaterialPageRoute(builder: (context) => FindFood()));
-              },
-            )
-          ],
-        ),
-        resizeToAvoidBottomInset: false,
-        body: Container(
-            color: Colors.white,
-            padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
-            constraints: BoxConstraints.expand(),
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                    child: Text("All Catalogues",
-                        style: StylesText.style20BrownNomorlRaleway),
-                  ),
-                  Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                      child: Container(
-                        height: Dimension.getHeight(0.03),
-                        width: double.infinity,
-                        padding: const EdgeInsets.only(left: 5.0, right: 20.0),
-                        decoration: BoxDecoration(
-                            border: Border(
-                                left: BorderSide(
-                          color: Colors.redAccent,
-                          width: Dimension.getWidth(0.005),
-                        ))),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text("New product",
-                                style: StylesText.style17BrownBoldlRaleway),
-                          ],
-                        ),
-                      )),
-                  Padding(
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(primaryColor: Colors.redAccent),
+        home: Scaffold(
+          resizeToAvoidBottomPadding: false,
+          key: _scaffoldKey,
+          appBar: AppBar(
+            centerTitle: true,
+            title: Text("Home", style: StylesText.style20BrownBold),
+            leading: FlatButton(
+                onPressed: () {
+                  _scaffoldKey.currentState.openDrawer();
+                },
+                child: Icon(Icons.menu, color: Colors.brown)),
+            backgroundColor: Colors.white,
+            elevation: 0.8,
+            actions: <Widget>[
+              IconButton(
+                icon: Icon(Icons.search),
+                color: Colors.brown,
+                splashColor: Colors.brown,
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (context) => FindFood()));
+                },
+              )
+            ],
+          ),
+          resizeToAvoidBottomInset: false,
+          body: Container(
+              color: Colors.white,
+              padding: const EdgeInsets.fromLTRB(20, 0, 0, 0),
+              constraints: BoxConstraints.expand(),
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: <Widget>[
+                    Padding(
                       padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                      child: Center(
+                      child: Text("All Catalogues",
+                          style: StylesText.style20BrownNomorlRaleway),
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                         child: Container(
-                            width: double.infinity,
-                            height: Dimension.getHeight(0.32),
-                            child: Center(
-                              child: list_new_products == null ||
-                                      list_new_products.length == 0
-                                  ? Container(
-                                      child: Center(
-                                        child: CircularProgressIndicator(
-                                          valueColor:
-                                              new AlwaysStoppedAnimation<Color>(
-                                                  Colors.redAccent),
-                                        ),
-                                      ),
-                                    )
-                                  : CarouselDemo(),
-                            )),
-                      )),
-                  Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                      child: Container(
-                        height: Dimension.getHeight(0.03),
-                        padding: const EdgeInsets.only(left: 5.0, right: 20.0),
-                        decoration: BoxDecoration(
-                            border: Border(
-                                left: BorderSide(
-                          color: Colors.redAccent,
-                          width: 2.0,
-                        ))),
-                        width: double.infinity,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text("Coffee",
-                                style: StylesText.style17BrownBoldlRaleway),
-                            GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          See_All_Product("All Coffee", 2)));
-                                },
-                                child: Text("See all",
-                                    style: StylesText.style15RedAccentBold))
-                          ],
-                        ),
-                      )),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                    child: Container(
-                        color: Colors.white,
-                        height: Dimension.getHeight(0.355),
-                        width: double.infinity,
-                        child: Center(
-                          child: list_coffee == null || list_coffee.length == 0
-                              ? Container(
-                                  child: Center(
-                                    child: CircularProgressIndicator(
-                                      valueColor:
-                                          new AlwaysStoppedAnimation<Color>(
-                                              Colors.redAccent),
-                                    ),
-                                  ),
-                                )
-                              : Home_Card_Coffee(),
+                          height: Dimension.getHeight(0.03),
+                          width: double.infinity,
+                          padding:
+                              const EdgeInsets.only(left: 5.0, right: 20.0),
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  left: BorderSide(
+                            color: Colors.redAccent,
+                            width: Dimension.getWidth(0.005),
+                          ))),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text("New product",
+                                  style: StylesText.style17BrownBoldlRaleway),
+                            ],
+                          ),
                         )),
-                  ),
-                  Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                    Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                        child: Center(
+                          child: Container(
+                              width: double.infinity,
+                              height: Dimension.getHeight(0.32),
+                              child: Center(
+                                child: list_new_products == null ||
+                                        list_new_products.length == 0
+                                    ? Container(
+                                        child: Center(
+                                          child: CircularProgressIndicator(
+                                            valueColor:
+                                                new AlwaysStoppedAnimation<
+                                                    Color>(Colors.redAccent),
+                                          ),
+                                        ),
+                                      )
+                                    : CarouselDemo(),
+                              )),
+                        )),
+                    Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                        child: Container(
+                          height: Dimension.getHeight(0.03),
+                          padding:
+                              const EdgeInsets.only(left: 5.0, right: 20.0),
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  left: BorderSide(
+                            color: Colors.redAccent,
+                            width: 2.0,
+                          ))),
+                          width: double.infinity,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text("Coffee",
+                                  style: StylesText.style17BrownBoldlRaleway),
+                              GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                See_All_Product(
+                                                    "All Coffee", 2)));
+                                  },
+                                  child: Text("See all",
+                                      style: StylesText.style15RedAccentBold))
+                            ],
+                          ),
+                        )),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
                       child: Container(
-                        height: Dimension.getHeight(0.03),
-                        padding: const EdgeInsets.only(left: 5.0, right: 20.0),
-                        decoration: BoxDecoration(
-                            border: Border(
-                                left: BorderSide(
-                          color: Colors.redAccent,
-                          width: 2.0,
-                        ))),
-                        width: double.infinity,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text("Tea",
-                                style: StylesText.style17BrownBoldlRaleway),
-                            GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          See_All_Product("All Tea", 4)));
-                                },
-                                child: Text("See all",
-                                    style: StylesText.style15RedAccentBold))
-                          ],
-                        ),
-                      )),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                    child: Container(
-                        height: Dimension.getHeight(0.355),
-                        width: double.infinity,
-                        child: list_tea == null || list_tea.length == 0
-                            ? Container(
-                                child: Center(
-                                  child: CircularProgressIndicator(
-                                    valueColor:
-                                        new AlwaysStoppedAnimation<Color>(
-                                            Colors.redAccent),
-                                  ),
-                                ),
-                              )
-                            : Home_Card_Tea()),
-                  ),
-                  Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                      child: Container(
-                        height: Dimension.getHeight(0.03),
-                        padding: const EdgeInsets.only(left: 5.0, right: 20.0),
-                        decoration: BoxDecoration(
-                            border: Border(
-                                left: BorderSide(
-                          color: Colors.redAccent,
-                          width: 2.0,
-                        ))),
-                        width: double.infinity,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text("Drinking",
-                                style: StylesText.style17BrownBoldlRaleway),
-                            GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          See_All_Product("All Drinking", 1)));
-                                },
-                                child: Text("See all",
-                                    style: StylesText.style15RedAccentBold))
-                          ],
-                        ),
-                      )),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                    child: Container(
-                        height: Dimension.getHeight(0.355),
-                        width: double.infinity,
-                        child:
-                            list_drinking == null || list_drinking.length == 0
+                          color: Colors.white,
+                          height: Dimension.getHeight(0.355),
+                          width: double.infinity,
+                          child: Center(
+                            child: list_coffee == null ||
+                                    list_coffee.length == 0
                                 ? Container(
                                     child: Center(
                                       child: CircularProgressIndicator(
@@ -283,128 +222,160 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                                       ),
                                     ),
                                   )
-                                : Home_Card_Drinking()),
-                  ),
-                  Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                      child: Container(
-                        height: Dimension.getHeight(0.03),
-                        padding: const EdgeInsets.only(left: 5.0, right: 20.0),
-                        decoration: BoxDecoration(
-                            border: Border(
-                                left: BorderSide(
-                          color: Colors.redAccent,
-                          width: 2.0,
-                        ))),
-                        width: double.infinity,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: <Widget>[
-                            Text("Food",
-                                style: StylesText.style17BrownBoldlRaleway),
-                            GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) =>
-                                          See_All_Product("All Food", 3)));
-                                },
-                                child: Text("See all",
-                                    style: StylesText.style15RedAccentBold))
-                          ],
-                        ),
-                      )),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 5, 0, 10),
-                    child: Container(
-                      height: Dimension.getHeight(0.355),
-                      width: double.infinity,
-                      child: list_food == null || list_food.length == 0
-                          ? Container(
-                              child: Center(
-                                child: CircularProgressIndicator(
-                                  valueColor: new AlwaysStoppedAnimation<Color>(
-                                      Colors.redAccent),
-                                ),
-                              ),
-                            )
-                          : Home_Card_Food(),
+                                : Home_Card_Coffee(),
+                          )),
                     ),
-                  )
-                ],
-              ),
-            )),
-        drawer: Drawer(
-          child: HomeMenu(),
-        ),
-      ),
-    );
+                    Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                        child: Container(
+                          height: Dimension.getHeight(0.03),
+                          padding:
+                              const EdgeInsets.only(left: 5.0, right: 20.0),
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  left: BorderSide(
+                            color: Colors.redAccent,
+                            width: 2.0,
+                          ))),
+                          width: double.infinity,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text("Tea",
+                                  style: StylesText.style17BrownBoldlRaleway),
+                              GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                See_All_Product("All Tea", 4)));
+                                  },
+                                  child: Text("See all",
+                                      style: StylesText.style15RedAccentBold))
+                            ],
+                          ),
+                        )),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                      child: Container(
+                          height: Dimension.getHeight(0.355),
+                          width: double.infinity,
+                          child: list_tea == null || list_tea.length == 0
+                              ? Container(
+                                  child: Center(
+                                    child: CircularProgressIndicator(
+                                      valueColor:
+                                          new AlwaysStoppedAnimation<Color>(
+                                              Colors.redAccent),
+                                    ),
+                                  ),
+                                )
+                              : Home_Card_Tea()),
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                        child: Container(
+                          height: Dimension.getHeight(0.03),
+                          padding:
+                              const EdgeInsets.only(left: 5.0, right: 20.0),
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  left: BorderSide(
+                            color: Colors.redAccent,
+                            width: 2.0,
+                          ))),
+                          width: double.infinity,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text("Drinking",
+                                  style: StylesText.style17BrownBoldlRaleway),
+                              GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                See_All_Product(
+                                                    "All Drinking", 1)));
+                                  },
+                                  child: Text("See all",
+                                      style: StylesText.style15RedAccentBold))
+                            ],
+                          ),
+                        )),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                      child: Container(
+                          height: Dimension.getHeight(0.355),
+                          width: double.infinity,
+                          child:
+                              list_drinking == null || list_drinking.length == 0
+                                  ? Container(
+                                      child: Center(
+                                        child: CircularProgressIndicator(
+                                          valueColor:
+                                              new AlwaysStoppedAnimation<Color>(
+                                                  Colors.redAccent),
+                                        ),
+                                      ),
+                                    )
+                                  : Home_Card_Drinking()),
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                        child: Container(
+                          height: Dimension.getHeight(0.03),
+                          padding:
+                              const EdgeInsets.only(left: 5.0, right: 20.0),
+                          decoration: BoxDecoration(
+                              border: Border(
+                                  left: BorderSide(
+                            color: Colors.redAccent,
+                            width: 2.0,
+                          ))),
+                          width: double.infinity,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: <Widget>[
+                              Text("Food",
+                                  style: StylesText.style17BrownBoldlRaleway),
+                              GestureDetector(
+                                  onTap: () {
+                                    Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                See_All_Product(
+                                                    "All Food", 3)));
+                                  },
+                                  child: Text("See all",
+                                      style: StylesText.style15RedAccentBold))
+                            ],
+                          ),
+                        )),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 5, 0, 10),
+                      child: Container(
+                        height: Dimension.getHeight(0.355),
+                        width: double.infinity,
+                        child: list_food == null || list_food.length == 0
+                            ? Container(
+                                child: Center(
+                                  child: CircularProgressIndicator(
+                                    valueColor:
+                                        new AlwaysStoppedAnimation<Color>(
+                                            Colors.redAccent),
+                                  ),
+                                ),
+                              )
+                            : Home_Card_Food(),
+                      ),
+                    )
+                  ],
+                ),
+              )),
+          drawer: Drawer(
+            child: HomeMenu(),
+          ),
+        ));
   }
 }
-
-// class DataSearch extends SearchDelegate<String> {
-
-//   final recentCities =[];
-//   @override
-//   List<Widget> buildActions(BuildContext context) {
-//     return [
-//       IconButton(
-//           icon: Icon(
-//             Icons.clear,
-//             color: Colors.brown,
-//           ),
-//           onPressed: () {
-//             query = "";
-//           })
-//     ];
-//   }
-
-//   @override
-//   Widget buildLeading(BuildContext context) {
-//     return IconButton(
-//       icon: AnimatedIcon(
-//         icon: AnimatedIcons.menu_arrow,
-//         color: Colors.brown,
-//         progress: transitionAnimation,
-//       ),
-//       onPressed: () {
-//         close(context, null);
-//       },
-//     );
-//   }
-
-//   @override
-//   Widget buildResults(BuildContext context) {
-//     return Card(
-//       child: Center(
-//         child: Text("A"),
-//       ),
-//     );
-//   }
-
-//   @override
-//   Widget buildSuggestions(BuildContext context) {
-//     final suggest = query.isEmpty
-//         ? recentCities
-//         : food.where((p) => p.startsWith(query)).toList();
-//     return ListView.builder(
-//       itemBuilder: (context, index) => ListTile(
-//             onTap: () {
-//               showResults(context);
-//             },
-//             leading: Icon(Icons.location_city),
-//             title: RichText(
-//               text: TextSpan(
-//                   text: suggest[index].substring(0, query.length),
-//                   style: TextStyle(
-//                       color: Colors.black, fontWeight: FontWeight.bold),
-//                   children: [
-//                     TextSpan(
-//                         text: suggest[index].substring(query.length),
-//                         style: TextStyle(color: Colors.grey))
-//                   ]),
-//             ),
-//           ),
-//       itemCount: suggest.length,
-//     );
-//   }
-// }

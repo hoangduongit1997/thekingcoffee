@@ -338,7 +338,7 @@ class _Home_Card_Tea_State extends State<Home_Card_Tea> {
                                         data[index]['Description'],
                                         data[index]['Price'],
                                         data[index]['IsHot'],
-                                         data[index]['IsHot'],
+                                        data[index]['IsHot'],
                                         data[index]['Toppings'],
                                         data[index]['Size'],
                                         data[index]['Promotion'],

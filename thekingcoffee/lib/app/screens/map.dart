@@ -18,7 +18,7 @@ class _HomePageState extends State<MapPage> {
   @override
   void initState() {
     SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.bottom]);
-    Config.isHideNavigation = true;
+
     super.initState();
   }
 

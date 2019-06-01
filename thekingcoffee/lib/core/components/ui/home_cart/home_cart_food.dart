@@ -337,7 +337,7 @@ class _Home_Card_Food_State extends State<Home_Card_Food> {
                                         data[index]['Description'],
                                         data[index]['Price'],
                                         data[index]['IsHot'],
-                                         data[index]['IsHot'],
+                                        data[index]['IsHot'],
                                         data[index]['Toppings'],
                                         data[index]['Size'],
                                         data[index]['Promotion'],

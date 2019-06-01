@@ -20,11 +20,7 @@ class History_Order_Detail extends StatefulWidget {
 }
 
 class _HistoryState extends State<History_Order_Detail> {
-  @override
-  void initState() {
-    Config.isHideNavigation = true;
-    super.initState();
-  }
+ 
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +36,7 @@ class _HistoryState extends State<History_Order_Detail> {
               ),
               leading: FlatButton(
                 onPressed: () {
-                  Config.isHideNavigation = false;
+                 
                   Navigator.of(context).pushReplacement(
                       MaterialPageRoute(builder: (context) => History()));
                 },

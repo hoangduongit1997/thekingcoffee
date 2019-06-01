@@ -1,8 +1,10 @@
+import 'package:flutter/material.dart';
+
 class Config {
   static int islogin;
-  static int current_botton_tab=0;
-  static String find_food_API=ip+"api/Product/FindProduct?Name=";
-  static bool isHideNavigation = false;
+  static BuildContext context_app;
+  static int current_botton_tab = 0;
+  static String find_food_API = ip + "api/Product/FindProduct?Name=";
   static String ip = "http://207.148.71.41/";
   static String login_Api = ip + "api/Customer/Login";
   static String signup_API = ip + "api/Customer/SignUp";

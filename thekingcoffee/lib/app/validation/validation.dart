@@ -42,13 +42,13 @@ class Validation {
   }
 
   static bool isValidAddress(String address) {
-    return address.trim().length > 0&&address.isNotEmpty;
+    return address.trim().length > 0 && address.isNotEmpty;
   }
 
   static Future<bool> isConnectedNetwork() async {
     bool status = false;
     try {
-      final result = await InternetAddress.lookup('google.com');
+      final result = await InternetAddress.lookup('google.com.vn');
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         status = true;
       }

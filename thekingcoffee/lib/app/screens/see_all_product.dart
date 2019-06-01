@@ -37,7 +37,7 @@ class _See_All_ProductState extends State<See_All_Product> {
 
   @override
   void initState() {
-    Config.isHideNavigation = true;
+   
     intDataScreen();
     super.initState();
   }

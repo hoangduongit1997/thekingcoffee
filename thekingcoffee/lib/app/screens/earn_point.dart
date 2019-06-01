@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:barcode_generator/barcode_generator.dart';
 import 'package:thekingcoffee/app/config/config.dart';
+import 'package:thekingcoffee/app/screens/dashboard.dart';
 import 'package:thekingcoffee/app/screens/helper/dashboard_helper/placeholder_home.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
@@ -13,7 +14,6 @@ class EarnPoint extends StatefulWidget {
 }
 
 class _EarnPointState extends State<EarnPoint> {
- 
   String id_user;
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
   get_Id_User() async {
@@ -23,7 +23,6 @@ class _EarnPointState extends State<EarnPoint> {
 
   @override
   Future initState() {
-    Config.isHideNavigation = true;
     get_Id_User();
     super.initState();
   }
@@ -40,9 +39,9 @@ class _EarnPointState extends State<EarnPoint> {
           backgroundColor: Colors.white,
           leading: FlatButton(
               onPressed: () {
-                Config.isHideNavigation = false;
-                Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => PlaceholderMainWidget()));
+                // Navigator.of(context, rootNavigator: true)
+                //     .push(MaterialPageRoute(builder: (context) => DashBoard()));
+                Navigator.of(context).pop();
               },
               child: Icon(
                 Icons.arrow_back,

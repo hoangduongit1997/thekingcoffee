@@ -162,7 +162,7 @@ class _Home_Card_Coffee_State extends State<Home_Card_Coffee> {
                                           )),
                                       Padding(
                                         padding: const EdgeInsets.fromLTRB(
-                                            0, 10, 0, 5),
+                                            0, 10, 0, 0),
                                         child: Container(
                                           width: Dimension.getWidth(0.51),
                                           child: Row(
@@ -208,7 +208,7 @@ class _Home_Card_Coffee_State extends State<Home_Card_Coffee> {
                                                                         0.035),
                                                                 width: Dimension
                                                                     .getHeight(
-                                                                        0.1),
+                                                                        0.05),
                                                                 color: Colors
                                                                     .redAccent,
                                                               )

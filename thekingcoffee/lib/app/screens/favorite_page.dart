@@ -26,17 +26,19 @@ class Shopping_ListState extends State<Favorite_Page> {
       home: Scaffold(
         key: _scaffoldKey,
         appBar: AppBar(
-          leading: FlatButton(
-              onPressed: () {
-                Config.current_botton_tab = 0;
-                Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => DashBoard()));
-              },
-              child: Icon(
-                Icons.arrow_back,
-                color: Colors.brown,
-              )),
+          // leading: FlatButton(
+          //     onPressed: () {
+          //       Config.current_botton_tab = 0;
+          //       Navigator.of(context, rootNavigator: true).pushReplacement(
+          //           MaterialPageRoute(builder: (context) => DashBoard()));
+          //     },
+          //     child: Icon(
+          //       Icons.arrow_back,
+          //       color: Colors.brown,
+          //     )),
           backgroundColor: Colors.white,
+          centerTitle: true,
+          elevation: 0.8,
           title: Text(
             "Favorites",
             style: StylesText.style20BrownBold,

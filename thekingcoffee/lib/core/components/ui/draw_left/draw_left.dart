@@ -31,7 +31,7 @@ class _HomeMenuState extends State<HomeMenu> {
   @override
   Future initState() {
     CheckLogin();
-    Config.isHideNavigation = false;
+
     super.initState();
   }
 
@@ -62,51 +62,57 @@ class _HomeMenuState extends State<HomeMenu> {
           )),
           decoration: new BoxDecoration(color: Colors.redAccent),
         ),
-        InkWell(
-          onTap: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => Account()));
-          },
-          child: ListTile(
-            title: Text(
-              'My account',
-              style: StylesText.style13BlackBold,
-            ),
-            leading: Icon(
-              Icons.person_outline,
-              color: Colors.redAccent,
-            ),
-          ),
-        ),
-        InkWell(
-          onTap: () {
-            Navigator.push(
-                context, MaterialPageRoute(builder: (context) => EarnPoint()));
-          },
-          child: ListTile(
-            title: Text(
-              'Earn points',
-              style: StylesText.style13BlackBold,
-            ),
-            leading: Icon(
-              Icons.control_point,
-              color: Colors.redAccent,
-            ),
-          ),
-        ),
-        InkWell(
-          onTap: () {
-            Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => History()));
-          },
-          child: ListTile(
-            title: Text(
-              'History',
-              style: StylesText.style13BlackBold,
-            ),
-            leading: Icon(Icons.history, color: Colors.redAccent),
-          ),
-        ),
+        Config.islogin == 0
+            ? Container()
+            : InkWell(
+                onTap: () {
+                  Navigator.of(context, rootNavigator: true)
+                      .push(MaterialPageRoute(builder: (context) => Account()));
+                },
+                child: ListTile(
+                  title: Text(
+                    'My account',
+                    style: StylesText.style13BlackBold,
+                  ),
+                  leading: Icon(
+                    Icons.person_outline,
+                    color: Colors.redAccent,
+                  ),
+                ),
+              ),
+        Config.islogin == 0
+            ? Container()
+            : InkWell(
+                onTap: () {
+                  Navigator.of(context, rootNavigator: true).push(
+                      MaterialPageRoute(builder: (context) => EarnPoint()));
+                },
+                child: ListTile(
+                  title: Text(
+                    'Earn points',
+                    style: StylesText.style13BlackBold,
+                  ),
+                  leading: Icon(
+                    Icons.control_point,
+                    color: Colors.redAccent,
+                  ),
+                ),
+              ),
+        Config.islogin == 0
+            ? Container()
+            : InkWell(
+                onTap: () {
+                  Navigator.of(context, rootNavigator: true)
+                      .push(MaterialPageRoute(builder: (context) => History()));
+                },
+                child: ListTile(
+                  title: Text(
+                    'History',
+                    style: StylesText.style13BlackBold,
+                  ),
+                  leading: Icon(Icons.history, color: Colors.redAccent),
+                ),
+              ),
         Config.islogin == 0
             ? InkWell(
                 child: ListTile(
@@ -116,8 +122,9 @@ class _HomeMenuState extends State<HomeMenu> {
                   ),
                   leading: Icon(Icons.open_in_browser, color: Colors.redAccent),
                   onTap: () {
-                    Navigator.of(context).pushReplacement(MaterialPageRoute(
-                        builder: (context) => LoginWithPass()));
+                    Navigator.of(context, rootNavigator: true).pushReplacement(
+                        MaterialPageRoute(
+                            builder: (context) => LoginWithPass()));
                   },
                 ),
               )
@@ -157,8 +164,8 @@ class _HomeMenuState extends State<HomeMenu> {
                                       await SharedPreferences.getInstance();
                                   preferences.clear();
                                   print(preferences);
-                                  Navigator.of(context).pushReplacement(
-                                      MaterialPageRoute(
+                                  Navigator.of(context, rootNavigator: true)
+                                      .pushReplacement(MaterialPageRoute(
                                           builder: (context) =>
                                               LoginWithPass()));
                                 },
@@ -171,8 +178,8 @@ class _HomeMenuState extends State<HomeMenu> {
               ),
         InkWell(
           onTap: () {
-            Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => History()));
+            Navigator.of(context, rootNavigator: true).pushReplacement(
+                MaterialPageRoute(builder: (context) => History()));
           },
           child: ListTile(
             onTap: () {
