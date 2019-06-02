@@ -155,7 +155,7 @@ class Order_DialogState extends State<Order_Dialog> {
             selectedsize = value;
 
             selectedProduct['Price'] = money;
-            selectedProduct['SelectedPromotion']=selectedPromotion;
+            selectedProduct['SelectedPromotion'] = selectedPromotion;
           },
           selected: selectedPromotion == promotion,
           activeColor: Colors.redAccent,
@@ -179,7 +179,7 @@ class Order_DialogState extends State<Order_Dialog> {
           padding: const EdgeInsets.fromLTRB(2, 0, 0, 0),
           child: Container(
             width: Dimension.getWidth(1.0),
-            height: Dimension.getHeight(0.1),
+            height: Dimension.getHeight(0.115),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
@@ -313,9 +313,10 @@ class Order_DialogState extends State<Order_Dialog> {
             check_promotion_product = lstVal;
             money = tempMoney;
           });
-          selectedProduct['check_promotion_product']=check_promotion_product;
+          selectedProduct['check_promotion_product'] = check_promotion_product;
           selectedProduct['Price'] = money;
-          selectedProduct['selectedDetailedSaleForProduct']=check_promotion_product;
+          selectedProduct['selectedDetailedSaleForProduct'] =
+              check_promotion_product;
         },
         activeColor: Colors.redAccent,
       )));
@@ -346,7 +347,7 @@ class Order_DialogState extends State<Order_Dialog> {
     selectedProduct['HasHot'] = widget.hashot;
     selectedProduct['Original_Price'] = widget.price;
     selectedProduct['Note'] = "";
-    selectedProduct['Promotion']=widget.promotion;
+    selectedProduct['Promotion'] = widget.promotion;
   }
 
   @override

@@ -1,0 +1,23 @@
+{
+  "title":{
+    "name": "Welcome to\n   Cacook!",
+    "second": "Sign in to continute"
+  },
+  "lable":{
+    "email": "Email",
+    "password": "Password",
+    "error_email": "Email invalid",
+    "error_password": "Password invalid",
+    "forget_pass": "Forget password?",
+    "login_button": "Login",
+    "new_account": "New to Cocook?",
+    "sign_up": "Sign up",
+    "vietnamese": "Vietnamese",
+    "english": "English"
+  },
+  "action": {
+    "enable": "Hide",
+    "disable": "Show"
+  }
+
+}

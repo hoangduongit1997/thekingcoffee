@@ -2,25 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:thekingcoffee/app/bloc/login_bloc.dart';
 import 'package:thekingcoffee/app/config/config.dart';
-import 'package:thekingcoffee/app/data/model/radiomodel.dart';
 
 import 'package:thekingcoffee/app/data/repository/login_repository.dart';
 import 'package:thekingcoffee/app/screens/dashboard.dart';
 import 'package:thekingcoffee/app/screens/gmail.auth.dart';
 import 'package:thekingcoffee/app/screens/signup_dart.dart';
-import 'package:thekingcoffee/app/screens/splash_screen.dart';
+
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/app/validation/validation.dart';
-import 'package:thekingcoffee/core/components/lib/change_language/localizations.dart';
 
 import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/show_message_dialog.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:thekingcoffee/main.dart';
 
 class LoginWithPass extends StatefulWidget {
   @override
@@ -32,17 +27,17 @@ class LoginWithPass extends StatefulWidget {
 class MyAppState extends State<LoginWithPass> {
   int tap_en = 0;
   int tap_vn = 0;
+
   int _index = 0;
   bool istap_en = false;
   bool istap_vn = true;
 
-  List<RadioModel> _langList = new List<RadioModel>();
+  // List<RadioModel> _langList = new List<RadioModel>();
 
   @override
   void initState() {
     super.initState();
     SystemChrome.setEnabledSystemUIOverlays([]);
-    // _initLanguage();
   }
 
   LoginBloc loginBloc = new LoginBloc();
@@ -51,7 +46,7 @@ class MyAppState extends State<LoginWithPass> {
   TextEditingController _pass = new TextEditingController();
   @override
   Widget build(BuildContext context) {
-    Config.context_app = context;
+    SystemChrome.setEnabledSystemUIOverlays([]);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -70,8 +65,7 @@ class MyAppState extends State<LoginWithPass> {
                 children: <Widget>[
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
-                    child: Text(AppLocalizations.of(context).title_welcome,
-                        style: StylesText.style20Brown),
+                    child: Text("Welcome to", style: StylesText.style20Brown),
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
@@ -80,8 +74,7 @@ class MyAppState extends State<LoginWithPass> {
                   ),
                   Padding(
                     padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-                    child: Text(
-                        AppLocalizations.of(context).title_signincontinute,
+                    child: Text("Sign in to continue",
                         style: StylesText.style16Brown),
                   ),
                   Padding(
@@ -142,8 +135,7 @@ class MyAppState extends State<LoginWithPass> {
                                       MaterialPageRoute(
                                           builder: (context) => GmailAuth()))
                                 },
-                            child: Text(
-                                AppLocalizations.of(context).forget_pass,
+                            child: Text("Forget password?",
                                 style: StylesText.style16Red300Bold),
                           )),
                       Padding(
@@ -156,7 +148,7 @@ class MyAppState extends State<LoginWithPass> {
                                   .pushReplacement(MaterialPageRoute(
                                       builder: (context) => DashBoard()));
                             },
-                            child: Text(AppLocalizations.of(context).lable_skip,
+                            child: Text("Skip",
                                 style: StylesText.style16Red300Bold),
                           )),
                     ],
@@ -168,8 +160,7 @@ class MyAppState extends State<LoginWithPass> {
                       height: Dimension.getHeight(0.063),
                       child: RaisedButton(
                         color: Colors.red[300],
-                        child: Text(AppLocalizations.of(context).btn_login,
-                            style: StylesText.style16While),
+                        child: Text("Log in", style: StylesText.style16While),
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.all(Radius.circular(8))),
                         onPressed: onSigninClick,
@@ -186,7 +177,7 @@ class MyAppState extends State<LoginWithPass> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
                           Text(
-                            AppLocalizations.of(context).lable_newaccount,
+                            "New account?",
                             style: StylesText.style16Brown,
                           ),
                           GestureDetector(
@@ -197,7 +188,7 @@ class MyAppState extends State<LoginWithPass> {
                                             builder: (context) => SignUp()))
                                   },
                               child: Text(
-                                AppLocalizations.of(context).lable_signup,
+                                "Sign up",
                                 style: StylesText.style16Red300Bold,
                               ))
                         ],
@@ -219,7 +210,7 @@ class MyAppState extends State<LoginWithPass> {
                   //               onTap: () {
                   //                 tap_vn = 0;
                   //                 if (tap_en == 0) {
-                  //                   _updateLocale('vi', '');
+                  //                   changeLanguage();
                   //                   setState(() {
                   //                     istap_vn = true;
                   //                     istap_en = false;
@@ -247,7 +238,7 @@ class MyAppState extends State<LoginWithPass> {
                   //                 onTap: () async {
                   //                   tap_en = 0;
                   //                   if (tap_vn == 0) {
-                  //                     _updateLocale('en', '');
+                  //                     changeLanguage();
                   //                     setState(() {
                   //                       istap_en = true;
                   //                       istap_vn = false;
@@ -284,7 +275,11 @@ class MyAppState extends State<LoginWithPass> {
 
   void onSigninClick() async {
     LoadingDialog.showLoadingDialog(context, "Loading...");
-
+    if ((await Validation.isConnectedNetwork()) == false) {
+      Navigator.pop(context);
+      MsgDialog.showMsgDialog(
+          context, "No network!", "No network connection found");
+    }
     if ((await Validation.isConnectedNetwork()) == true &&
         loginBloc.isValidInfo(_user.text.trim(), _pass.text.trim()) == true) {
       LoadingDialog.hideLoadingDialog(context);
@@ -299,60 +294,55 @@ class MyAppState extends State<LoginWithPass> {
         loginBloc.isValidInfo(_user.text.trim(), _pass.text.trim()) == false) {
       LoadingDialog.hideLoadingDialog(context);
     }
-    if ((await Validation.isConnectedNetwork()) == false) {
-      Navigator.pop(context);
-      MsgDialog.showMsgDialog(
-          context, "No network!", "No network connection found");
-    }
   }
 
-  Future<String> _getLanguageCode() async {
-    var prefs = await SharedPreferences.getInstance();
-    if (prefs.getString('languageCode') == null) {
-      return null;
-    }
-    print('_fetchLocale():' + prefs.getString('languageCode'));
-    return prefs.getString('languageCode');
-  }
+  // Future<String> _getLanguageCode() async {
+  //   var prefs = await SharedPreferences.getInstance();
+  //   if (prefs.getString('languageCode') == null) {
+  //     return null;
+  //   }
+  //   print('_fetchLocale():' + prefs.getString('languageCode'));
+  //   return prefs.getString('languageCode');
+  // }
 
-  void _initLanguage() async {
-    Future<String> status = _getLanguageCode();
-    status.then((result) {
-      if (result != null && result.compareTo('en') == 0) {
-        setState(() {
-          _index = 0;
-        });
-      }
-      if (result != null && result.compareTo('vi') == 0) {
-        setState(() {
-          _index = 1;
-        });
-      } else {
-        setState(() {
-          _index = 0;
-        });
-      }
+  // void _initLanguage() async {
+  //   Future<String> status = _getLanguageCode();
+  //   status.then((result) {
+  //     if (result != null && result.compareTo('en') == 0) {
+  //       setState(() {
+  //         _index = 0;
+  //       });
+  //     }
+  //     if (result != null && result.compareTo('vi') == 0) {
+  //       setState(() {
+  //         _index = 1;
+  //       });
+  //     } else {
+  //       setState(() {
+  //         _index = 0;
+  //       });
+  //     }
 
-      _setupLangList();
-    });
-  }
+  //     _setupLangList();
+  //   });
+  // }
 
-  void _setupLangList() {
-    setState(() {
-      _langList.add(new RadioModel(_index == 0 ? true : false, 'English'));
-      _langList.add(new RadioModel(_index == 0 ? false : true, 'VN'));
-    });
-  }
+  // void _setupLangList() {
+  //   setState(() {
+  //     _langList.add(new RadioModel(_index == 0 ? true : false, 'English'));
+  //     _langList.add(new RadioModel(_index == 0 ? false : true, 'VN'));
+  //   });
+  // }
 
-  void _updateLocale(String lang, String country) async {
-    print(lang + ':' + country);
+  // void _updateLocale(String lang, String country) async {
+  //   print(lang + ':' + country);
 
-    var prefs = await SharedPreferences.getInstance();
-    prefs.setString('languageCode', lang);
-    prefs.setString('countryCode', country);
+  //   var prefs = await SharedPreferences.getInstance();
+  //   prefs.setString('languageCode', lang);
+  //   prefs.setString('countryCode', country);
 
-    MyApp.setLocale(context, Locale(lang, country));
-  }
+  //   MyApp.setLocale(context, Locale(lang, country));
+  // }
 
   void ShowPass() {
     setState(() {

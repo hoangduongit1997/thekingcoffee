@@ -25,7 +25,7 @@ class _SettingState extends State<Setting> {
             elevation: 0.8,
             backgroundColor: Colors.white,
             title: Text(
-              "Setting",
+              "Settings",
               style: StylesText.style20BrownBold,
             ),
             // leading: FlatButton(

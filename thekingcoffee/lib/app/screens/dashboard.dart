@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:thekingcoffee/app/config/config.dart';
-import 'package:thekingcoffee/app/config/config.dart';
-import 'package:thekingcoffee/app/data/model/radiomodel.dart';
+
+import 'package:thekingcoffee/app/bloc/bottom_navigation_bloc.dart';
+
 import 'package:thekingcoffee/app/screens/favorite_page.dart';
 
 import 'package:thekingcoffee/app/screens/helper/dashboard_helper/placeholder_home.dart';
 import 'package:thekingcoffee/app/screens/setting.dart';
 import 'package:thekingcoffee/app/screens/shopping_list.dart';
-import 'package:thekingcoffee/core/components/lib/change_language/localizations.dart';
+import 'package:thekingcoffee/app/styles/styles.dart';
 
 class DashBoard extends StatefulWidget {
   @override
@@ -19,93 +18,124 @@ class DashBoard extends StatefulWidget {
 }
 
 class _HomeState extends State<DashBoard> {
-  List<RadioModel> _langList = new List<RadioModel>();
-  int _index = 0;
-  final List<Widget> _children = [
-    PlaceholderMainWidget(),
-    Favorite_Page(),
-    Shopping_List(),
-    Setting(),
-  ];
+  // List<RadioModel> _langList = new List<RadioModel>();
+  // int _index = 0;
+  // final List<Widget> _children = [
+  //   PlaceholderMainWidget(),
+  //   Favorite_Page(),
+  //   Shopping_List(),
+  //   Setting(),
+  // ];
+  BottomNavBarBloc _bottomNavBarBloc;
   @override
   void initState() {
     SystemChrome.setEnabledSystemUIOverlays([]);
-    // _initLanguage();
+
+    _bottomNavBarBloc = new BottomNavBarBloc();
     super.initState();
   }
 
   @override
+  void dispose() {
+    _bottomNavBarBloc.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    SystemChrome.setEnabledSystemUIOverlays([]);
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(primaryColor: Colors.redAccent),
-        home: Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: _children[Config.current_botton_tab],
-          bottomNavigationBar: BottomNavigationBar(
-            type: BottomNavigationBarType.fixed,
-            onTap: onTabTapped,
-            currentIndex: Config.current_botton_tab,
-            items: [
-              BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                title: Text("Home"),
-              ),
-              BottomNavigationBarItem(
-                icon: Icon(Icons.favorite_border),
-                title: Text("Favorite"),
-              ),
-              BottomNavigationBarItem(
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(primaryColor: Colors.redAccent),
+      home: Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: StreamBuilder<NavBarItem>(
+          stream: _bottomNavBarBloc.itemStream,
+          initialData: _bottomNavBarBloc.defaultItem,
+          builder: (BuildContext context, AsyncSnapshot<NavBarItem> snapshot) {
+            switch (snapshot.data) {
+              case NavBarItem.HOME:
+                return PlaceholderMainWidget();
+              case NavBarItem.FAVORITE:
+                return Favorite_Page();
+              case NavBarItem.SHOPPING_LIST:
+                return Shopping_List();
+              case NavBarItem.SETTING:
+                return Setting();
+            }
+          },
+        ),
+        bottomNavigationBar: StreamBuilder(
+          stream: _bottomNavBarBloc.itemStream,
+          initialData: _bottomNavBarBloc.defaultItem,
+          builder: (BuildContext context, AsyncSnapshot<NavBarItem> snapshot) {
+            return BottomNavigationBar(
+              type: BottomNavigationBarType.fixed,
+              fixedColor: Colors.redAccent,
+              currentIndex: snapshot.data.index,
+              onTap: _bottomNavBarBloc.pickItem,
+              items: [
+                BottomNavigationBarItem(
+                  title: Text(
+                    "Home",
+                  ),
+                  icon: Icon(Icons.home),
+                ),
+                BottomNavigationBarItem(
+                  title: Text('Favorite'),
+                  icon: Icon(Icons.favorite_border),
+                ),
+                BottomNavigationBarItem(
+                  title: Text('Shopping List'),
                   icon: Icon(Icons.shopping_cart),
-                  title: Text("Shopping List")),
-              BottomNavigationBarItem(
-                  icon: Icon(Icons.settings), title: Text("Setting")),
-            ],
-          ),
-        ));
+                ),
+                BottomNavigationBarItem(
+                  title: Text('Settings'),
+                  icon: Icon(Icons.settings),
+                ),
+              ],
+            );
+          },
+        ),
+      ),
+    );
   }
 
-  void onTabTapped(int index) {
-    setState(() {
-      Config.current_botton_tab = index;
-    });
-  }
+  // Future<String> _getLanguageCode() async {
+  //   var prefs = await SharedPreferences.getInstance();
+  //   if (prefs.getString('languageCode') == null) {
+  //     return null;
+  //   }
+  //   print('_fetchLocale():' + prefs.getString('languageCode'));
+  //   return prefs.getString('languageCode');
+  // }
 
-  Future<String> _getLanguageCode() async {
-    var prefs = await SharedPreferences.getInstance();
-    if (prefs.getString('languageCode') == null) {
-      return null;
-    }
-    print('_fetchLocale():' + prefs.getString('languageCode'));
-    return prefs.getString('languageCode');
-  }
+  // void _initLanguage() async {
+  //   Future<String> status = _getLanguageCode();
+  //   status.then((result) {
+  //     if (result != null && result.compareTo('en') == 0) {
+  //       setState(() {
+  //         _index = 0;
+  //       });
+  //     }
+  //     if (result != null && result.compareTo('vi') == 0) {
+  //       setState(() {
+  //         _index = 1;
+  //       });
+  //     } else {
+  //       setState(() {
+  //         _index = 0;
+  //       });
+  //     }
 
-  void _initLanguage() async {
-    Future<String> status = _getLanguageCode();
-    status.then((result) {
-      if (result != null && result.compareTo('en') == 0) {
-        setState(() {
-          _index = 0;
-        });
-      }
-      if (result != null && result.compareTo('vi') == 0) {
-        setState(() {
-          _index = 1;
-        });
-      } else {
-        setState(() {
-          _index = 0;
-        });
-      }
+  //     _setupLangList();
+  //   });
+  // }
 
-      _setupLangList();
-    });
-  }
-
-  void _setupLangList() {
-    setState(() {
-      _langList.add(new RadioModel(_index == 0 ? true : false, 'English'));
-      _langList.add(new RadioModel(_index == 0 ? false : true, 'VN'));
-    });
-  }
+  // void _setupLangList() {
+  //   setState(() {
+  //     _langList.add(new RadioModel(_index == 0 ? true : false, 'English'));
+  //     _langList.add(new RadioModel(_index == 0 ? false : true, 'VN'));
+  //   });
+  // }
 }

@@ -6,7 +6,6 @@ import 'package:thekingcoffee/app/config/config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<bool> PostLogin(String username, String password) async {
-
   bool status = false;
   final LoginJson = {"Username": username, "Password": password};
   Response response = await post(Config.login_Api, body: LoginJson);
@@ -20,8 +19,7 @@ Future<bool> PostLogin(String username, String password) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString('token', token);
     prefs.setInt('id_user', id_user);
-    String a = prefs.getString('token');
-    print("Shared " + a);
+    Config.id_user = id_user;
     prefs.commit();
     Fluttertoast.showToast(
         msg: rest,

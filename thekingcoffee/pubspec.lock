@@ -8,13 +8,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.1.0"
-  barcode_generator:
+  barcode_flutter:
     dependency: "direct main"
     description:
-      name: barcode_generator
+      name: barcode_flutter
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "0.2.7"
+    version: "1.0.1"
   bloc:
     dependency: "direct main"
     description:
@@ -138,12 +138,10 @@ packages:
   google_maps_flutter:
     dependency: "direct main"
     description:
-      path: "."
-      ref: HEAD
-      resolved-ref: "767fe50ef3fe801414162c569e33ce15dd86873f"
-      url: "https://github.com/hoangduongit1997/google_map_flugin.git"
-    source: git
-    version: "0.2.0+5"
+      name: google_maps_flutter
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.5.15"
   http:
     dependency: "direct main"
     description:

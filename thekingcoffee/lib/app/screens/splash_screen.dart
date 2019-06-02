@@ -21,13 +21,12 @@ class SplashScreen extends StatefulWidget {
 }
 
 class SplashScreenState extends State<SplashScreen> {
-  List<RadioModel> _langList = new List<RadioModel>();
-  int _index = 0;
+  // List<RadioModel> _langList = new List<RadioModel>();
+  // int _index = 0;
   @override
   void initState() {
-    SystemChrome.setEnabledSystemUIOverlays([]);
     super.initState();
-    _initLanguage();
+    // _initLanguage();
     loadSplash();
   }
 
@@ -46,7 +45,7 @@ class SplashScreenState extends State<SplashScreen> {
 
   @override
   Widget build(BuildContext context) {
-    Config.context_app = context;
+    SystemChrome.setEnabledSystemUIOverlays([]);
     Dimension.height = MediaQuery.of(context).size.height;
     Dimension.witdh = MediaQuery.of(context).size.width;
     SizeText.queryData = MediaQuery.of(context).textScaleFactor;
@@ -103,7 +102,7 @@ class SplashScreenState extends State<SplashScreen> {
                         padding: EdgeInsets.only(top: 20.0),
                       ),
                       Text(
-                        AppLocalizations.of(context).title_flash_screen,
+                        "Loading...",
                         softWrap: true,
                         textAlign: TextAlign.center,
                         style: StylesText.style16BrownBold,
@@ -119,51 +118,51 @@ class SplashScreenState extends State<SplashScreen> {
     );
   }
 
-  Future<String> _getLanguageCode() async {
-    var prefs = await SharedPreferences.getInstance();
-    if (prefs.getString('languageCode') == null) {
-      return null;
-    }
-    print('_fetchLocale():' + prefs.getString('languageCode'));
-    return prefs.getString('languageCode');
-  }
+  // Future<String> _getLanguageCode() async {
+  //   var prefs = await SharedPreferences.getInstance();
+  //   if (prefs.getString('languageCode') == null) {
+  //     return null;
+  //   }
+  //   print('_fetchLocale():' + prefs.getString('languageCode'));
+  //   return prefs.getString('languageCode');
+  // }
 
-  void _initLanguage() async {
-    Future<String> status = _getLanguageCode();
-    status.then((result) {
-      if (result != null && result.compareTo('en') == 0) {
-        setState(() {
-          _index = 0;
-        });
-      }
-      if (result != null && result.compareTo('vi') == 0) {
-        setState(() {
-          _index = 1;
-        });
-      } else {
-        setState(() {
-          _index = 0;
-        });
-      }
+  // void _initLanguage() async {
+  //   Future<String> status = _getLanguageCode();
+  //   status.then((result) {
+  //     if (result != null && result.compareTo('en') == 0) {
+  //       setState(() {
+  //         _index = 0;
+  //       });
+  //     }
+  //     if (result != null && result.compareTo('vi') == 0) {
+  //       setState(() {
+  //         _index = 1;
+  //       });
+  //     } else {
+  //       setState(() {
+  //         _index = 0;
+  //       });
+  //     }
 
-      _setupLangList();
-    });
-  }
+  //     _setupLangList();
+  //   });
+  // }
 
-  void _setupLangList() {
-    setState(() {
-      _langList.add(new RadioModel(_index == 0 ? true : false, 'English'));
-      _langList.add(new RadioModel(_index == 0 ? false : true, 'VN'));
-    });
-  }
+  // void _setupLangList() {
+  //   setState(() {
+  //     _langList.add(new RadioModel(_index == 0 ? true : false, 'English'));
+  //     _langList.add(new RadioModel(_index == 0 ? false : true, 'VN'));
+  //   });
+  // }
 
-  void _updateLocale(String lang, String country) async {
-    print(lang + ':' + country);
+  // void _updateLocale(String lang, String country) async {
+  //   print(lang + ':' + country);
 
-    var prefs = await SharedPreferences.getInstance();
-    prefs.setString('languageCode', lang);
-    prefs.setString('countryCode', country);
+  //   var prefs = await SharedPreferences.getInstance();
+  //   prefs.setString('languageCode', lang);
+  //   prefs.setString('countryCode', country);
 
-    MyApp.setLocale(context, Locale(lang, country));
-  }
+  //   MyApp.setLocale(context, Locale(lang, country));
+  // }
 }

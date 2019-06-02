@@ -28,11 +28,10 @@ int promotion_drinking = 0;
 var promotion_list_drinking = [];
 
 class _Home_Card_Drinking_State extends State<Home_Card_Drinking> {
-  intDataHomeScreen() async {
+  intDataDrinkingScreen() async {
     final result = await Get_Drinking_Products();
     if (this.mounted) {
       setState(() {
-        //cho nay bi loi
         data = result;
         lenght = data.length;
       });
@@ -41,7 +40,7 @@ class _Home_Card_Drinking_State extends State<Home_Card_Drinking> {
 
   @override
   void initState() {
-    this.intDataHomeScreen();
+    this.intDataDrinkingScreen();
     super.initState();
   }
 
@@ -56,7 +55,7 @@ class _Home_Card_Drinking_State extends State<Home_Card_Drinking> {
             child: Column(
               children: <Widget>[
                 Container(
-                  height: Dimension.getHeight(0.35),
+                  height: Dimension.getHeight(0.36),
                   child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,

@@ -53,7 +53,8 @@ class _FindFoodState extends State<FindFood> {
             backgroundColor: Colors.white,
             title: Container(
               width: double.infinity,
-              height: 60,
+             
+              height:Dimension.getHeight(0.1),
               child: Stack(
                 alignment: AlignmentDirectional.centerStart,
                 children: <Widget>[
@@ -164,9 +165,9 @@ class _FindFoodState extends State<FindFood> {
                                                       0, 0, 0, 0),
                                               child: Container(
                                                   height: Dimension.getHeight(
-                                                      0.173),
+                                                      0.2),
                                                   padding:
-                                                      const EdgeInsets.all(5.0),
+                                                      const EdgeInsets.fromLTRB(5,10,5,0),
                                                   decoration: BoxDecoration(
                                                       color: Colors.white,
                                                       border: Border.all(

@@ -30,7 +30,7 @@ int promotion_tea = 0;
 var promotion_list_tea = [];
 
 class _Home_Card_Tea_State extends State<Home_Card_Tea> {
-  intDataHomeScreen() async {
+  intDataTeaScreen() async {
     final result = await Get_Tea_Products();
     if (this.mounted) {
       setState(() {
@@ -42,7 +42,7 @@ class _Home_Card_Tea_State extends State<Home_Card_Tea> {
 
   @override
   void initState() {
-    this.intDataHomeScreen();
+    this.intDataTeaScreen();
     super.initState();
   }
 
@@ -57,7 +57,7 @@ class _Home_Card_Tea_State extends State<Home_Card_Tea> {
             child: Column(
               children: <Widget>[
                 Container(
-                  height: Dimension.getHeight(0.35),
+                  height: Dimension.getHeight(0.36),
                   child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,

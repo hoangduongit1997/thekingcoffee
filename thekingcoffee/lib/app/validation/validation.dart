@@ -49,6 +49,7 @@ class Validation {
     bool status = false;
     try {
       final result = await InternetAddress.lookup('google.com.vn');
+
       if (result.isNotEmpty && result[0].rawAddress.isNotEmpty) {
         status = true;
       }

@@ -16,6 +16,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class Home_Card_Coffee extends StatefulWidget {
   Home_Card_Coffee({Key key}) : super(key: key);
+ 
 
   _Home_Card_Coffee_State createState() => _Home_Card_Coffee_State();
 }
@@ -28,7 +29,7 @@ var promotion_list_coffee = [];
 int promotion_coffee = 0;
 
 class _Home_Card_Coffee_State extends State<Home_Card_Coffee> {
-  intDataHomeScreen() async {
+  intDataCoffeeScreen() async {
     final result = await Get_Coffee_Product();
     if (this.mounted) {
       setState(() {
@@ -40,7 +41,7 @@ class _Home_Card_Coffee_State extends State<Home_Card_Coffee> {
 
   @override
   void initState() {
-    this.intDataHomeScreen();
+    this.intDataCoffeeScreen();
     super.initState();
   }
 
@@ -55,7 +56,7 @@ class _Home_Card_Coffee_State extends State<Home_Card_Coffee> {
             child: Column(
               children: <Widget>[
                 Container(
-                  height: Dimension.getHeight(0.35),
+                  height: Dimension.getHeight(0.36),
                   child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,

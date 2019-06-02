@@ -213,7 +213,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
                                   false, 0.0, 200.0, Colors.blueGrey, 0.2)),
                         )),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(5, 30, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(5, 10, 0, 0),
                       child: Row(
                         children: <Widget>[
                           Stack(

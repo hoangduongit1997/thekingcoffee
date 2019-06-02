@@ -15,9 +15,8 @@ import 'package:thekingcoffee/core/components/lib/change_language/localizations.
 import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
 
-import 'package:thekingcoffee/core/components/ui/show_dialog/edit_loading_dialog2019.dart';
-// import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog.dart';
-// import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog_order.dart';
+import 'package:thekingcoffee/core/components/ui/show_dialog/edit_loading_dialog.dart';
+
 import 'package:thekingcoffee/core/components/widgets/address_picker.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -676,7 +675,6 @@ class Shopping_ListState extends State<Shopping_List> {
                     Expanded(
                         child: MaterialButton(
                       onPressed: () {
-                        Config.current_botton_tab = 0;
                         Navigator.of(context).pushReplacement(MaterialPageRoute(
                             builder: (context) => DashBoard()));
                       },

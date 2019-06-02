@@ -12,7 +12,7 @@ dependencies:
   flutter_svg: ^0.12.4
   image_picker: ^0.5.3
   intro_slider: ^1.2.0
-  barcode_generator: ^0.2.7
+  barcode_flutter: ^1.0.0
   carousel_slider: ^1.3.0
   cached_network_image: ^0.7.0
   fluttertoast: ^3.0.4
@@ -22,8 +22,8 @@ dependencies:
   shared_preferences: ^0.5.2
   datetime_picker_formfield: ^0.1.8
   flutter_slidable: ^0.4.7
-  google_maps_flutter:
-    git: https://github.com/hoangduongit1997/google_map_flugin.git
+  google_maps_flutter: ^0.5.15
+ 
   flutter_localizations:
     sdk: flutter
 
@@ -41,6 +41,7 @@ flutter:
   assets:
    - assets/images/
    - assets/icons/
+   - assets/i18n/
 
   fonts:
    - family: BalooBhai-Regular
