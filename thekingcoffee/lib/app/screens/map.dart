@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import 'package:thekingcoffee/app/data/model/get_place_item.dart';
+import 'package:thekingcoffee/app/screens/dashboard.dart';
 import 'package:thekingcoffee/app/screens/shopping_list.dart';
 import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
 import 'package:thekingcoffee/core/components/widgets/address_picker.dart';
@@ -12,6 +13,8 @@ class MapPage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
+
+String final_address = "";
 
 class _HomePageState extends State<MapPage> {
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
@@ -104,10 +107,7 @@ class _HomePageState extends State<MapPage> {
                           icon: Icon(Icons.send),
                           color: Colors.redAccent,
                           onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => Shopping_List()));
+                            Navigator.of(context).pop(final_address);
                           },
                         ))),
               ],

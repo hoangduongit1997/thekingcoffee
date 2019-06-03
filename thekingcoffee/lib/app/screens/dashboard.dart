@@ -18,14 +18,6 @@ class DashBoard extends StatefulWidget {
 }
 
 class _HomeState extends State<DashBoard> {
-  // List<RadioModel> _langList = new List<RadioModel>();
-  // int _index = 0;
-  // final List<Widget> _children = [
-  //   PlaceholderMainWidget(),
-  //   Favorite_Page(),
-  //   Shopping_List(),
-  //   Setting(),
-  // ];
   BottomNavBarBloc _bottomNavBarBloc;
   @override
   void initState() {

@@ -15,17 +15,15 @@ import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart
 
 import 'package:thekingcoffee/core/components/ui/show_dialog/edit_loading_dialog.dart';
 
-import 'package:thekingcoffee/core/components/widgets/address_picker.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 class Shopping_List extends StatefulWidget {
-  Shopping_List({Key key}) : super(key: key);
-
   Shopping_ListState createState() => Shopping_ListState();
 }
 
 class Shopping_ListState extends State<Shopping_List> {
+  TextEditingController address;
   int multy_topping = 0;
   List _cities = [
     "TP. Hồ Chí Minh",
@@ -40,7 +38,7 @@ class Shopping_ListState extends State<Shopping_List> {
     SystemChrome.setEnabledSystemUIOverlays([]);
     _dropDownMenuItems = getDropDownMenuItems();
     _currentCity = _dropDownMenuItems[0].value;
-
+    address = new TextEditingController();
     super.initState();
   }
 
@@ -61,8 +59,7 @@ class Shopping_ListState extends State<Shopping_List> {
   OrderBloc orderBloc = new OrderBloc();
   TextEditingController name = new TextEditingController(text: "Hoàng Dương");
   TextEditingController phone = new TextEditingController(text: "0798353751");
-  TextEditingController address = new TextEditingController(
-      text: final_address == "" ? null : final_address);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -73,16 +70,6 @@ class Shopping_ListState extends State<Shopping_List> {
         appBar: AppBar(
           centerTitle: true,
           elevation: 0.8,
-          // leading: FlatButton(
-          //     onPressed: () {
-          //       Config.current_botton_tab = 0;
-          //       Navigator.of(context).pushReplacement(
-          //           MaterialPageRoute(builder: (context) => DashBoard()));
-          //     },
-          //     child: Icon(
-          //       Icons.arrow_back,
-          //       color: Colors.brown,
-          //     )),
           backgroundColor: Colors.white,
           title: Text(
             "Shopping List",
@@ -193,9 +180,14 @@ class Shopping_ListState extends State<Shopping_List> {
                               builder: (context, snapshot) {
                                 return TextField(
                                   onTap: () {
-                                    Navigator.of(context, rootNavigator: true)
-                                        .push(MaterialPageRoute(
-                                            builder: (context) => MapPage()));
+                                    final result = Navigator.of(context,
+                                            rootNavigator: true)
+                                        .pushNamed('/map');
+                                    result.then((result) {
+                                      setState(() {
+                                        address.text = result as String;
+                                      });
+                                    });
                                   },
                                   decoration: InputDecoration(
                                       errorText: snapshot.hasError

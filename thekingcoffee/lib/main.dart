@@ -1,19 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:thekingcoffee/app/screens/map.dart';
 import 'package:thekingcoffee/app/screens/splash_screen.dart';
 
 void main() => runApp(MyApp());
+var routes = <String, WidgetBuilder>{
+  '/map': (BuildContext context) => new MapPage(),
+};
 
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(primaryColor: Colors.redAccent),
-      home: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: SplashScreen(),
-      ),
-    );
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(primaryColor: Colors.redAccent),
+        home: Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: SplashScreen(),
+        ),
+        routes: routes);
   }
 }
 

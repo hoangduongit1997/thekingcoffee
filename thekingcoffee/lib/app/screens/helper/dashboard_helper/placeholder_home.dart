@@ -10,6 +10,7 @@ import 'package:thekingcoffee/app/data/repository/get_drinking_products.dart';
 import 'package:thekingcoffee/app/data/repository/get_food_products.dart';
 import 'package:thekingcoffee/app/data/repository/get_new_products.dart';
 import 'package:thekingcoffee/app/data/repository/get_tea_products.dart';
+import 'package:thekingcoffee/app/screens/dashboard.dart';
 import 'package:thekingcoffee/app/screens/find_food.dart';
 
 import 'package:thekingcoffee/app/screens/see_all_product.dart';
@@ -368,9 +369,11 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
   }
 
   Future<void> refreshPage() async {
-    await Future.delayed(Duration(seconds: 3));
+    await Future.delayed(Duration(seconds: 2));
+
     setState(() {
-      initState();
+      Navigator.of(context, rootNavigator: true).pushReplacement(
+          MaterialPageRoute(builder: (context) => DashBoard()));
     });
   }
 }
