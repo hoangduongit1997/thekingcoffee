@@ -9,7 +9,7 @@ import 'package:thekingcoffee/app/screens/login.dart';
 import 'package:thekingcoffee/app/screens/tutorial.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/app/validation/validation.dart';
-import 'package:thekingcoffee/core/components/lib/change_language/localizations.dart';
+
 import 'package:thekingcoffee/core/utils/utils.dart';
 import 'package:thekingcoffee/main.dart';
 
