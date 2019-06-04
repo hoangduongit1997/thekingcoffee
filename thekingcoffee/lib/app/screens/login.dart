@@ -32,8 +32,6 @@ class MyAppState extends State<LoginWithPass> {
   bool istap_en = false;
   bool istap_vn = true;
 
-  // List<RadioModel> _langList = new List<RadioModel>();
-
   @override
   void initState() {
     super.initState();

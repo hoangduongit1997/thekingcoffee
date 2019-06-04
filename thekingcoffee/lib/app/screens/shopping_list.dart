@@ -6,8 +6,6 @@ import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/data/repository/order_repository.dart';
 import 'package:thekingcoffee/app/screens/dashboard.dart';
 
-import 'package:thekingcoffee/app/screens/map.dart';
-
 import 'package:thekingcoffee/app/styles/styles.dart';
 
 import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
@@ -23,7 +21,7 @@ class Shopping_List extends StatefulWidget {
 }
 
 class Shopping_ListState extends State<Shopping_List> {
-  TextEditingController address;
+  TextEditingController address = new TextEditingController();
   int multy_topping = 0;
   List _cities = [
     "TP. Hồ Chí Minh",
@@ -35,10 +33,9 @@ class Shopping_ListState extends State<Shopping_List> {
   String _currentCity;
   @override
   void initState() {
-    SystemChrome.setEnabledSystemUIOverlays([]);
     _dropDownMenuItems = getDropDownMenuItems();
     _currentCity = _dropDownMenuItems[0].value;
-    address = new TextEditingController();
+
     super.initState();
   }
 
@@ -62,647 +59,655 @@ class Shopping_ListState extends State<Shopping_List> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(primaryColor: Colors.redAccent),
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        key: _scaffoldKey,
-        appBar: AppBar(
-          centerTitle: true,
-          elevation: 0.8,
-          backgroundColor: Colors.white,
-          title: Text(
-            "Shopping List",
-            style: StylesText.style20BrownBold,
-          ),
-          actions: <Widget>[
-            ListOrderProducts.isEmpty
-                ? Container()
-                : FlatButton(
-                    onPressed: () {
-                      showDialog(
-                          context: context,
-                          barrierDismissible: false,
-                          builder: (BuildContext context) {
-                            return AlertDialog(
-                              shape: RoundedRectangleBorder(
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(15.0))),
-                              title: new Text("Confirm",
-                                  style: StylesText.style18RedaccentBold),
-                              content: new Text(
-                                "Do you want to delete all shopping list ?",
-                                style: StylesText.style15Black,
-                              ),
-                              actions: <Widget>[
-                                FlatButton(
-                                  child: Text("No"),
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                                FlatButton(
-                                  child: Text("Yes"),
-                                  onPressed: () {
-                                    setState(() {
-                                      ListOrderProducts.clear();
-                                    });
-                                    Navigator.of(context).pop();
-                                  },
-                                ),
-                              ],
-                            );
-                          });
-                    },
-                    child: Icon(
-                      Icons.delete_forever,
-                      color: Colors.redAccent,
-                    ))
-          ],
+    return Scaffold(
+      key: _scaffoldKey,
+      appBar: AppBar(
+        centerTitle: true,
+        elevation: 0.8,
+        backgroundColor: Colors.white,
+        title: Text(
+          "Shopping List",
+          style: StylesText.style20BrownBold,
         ),
-        resizeToAvoidBottomInset: false,
-        body: ListOrderProducts.isEmpty
-            ? Container(
-                child: Center(
-                    child:
-                        Text("No information", style: StylesText.style16Brown)),
-              )
-            : SingleChildScrollView(
-                child: Container(
-                  padding: const EdgeInsets.all(2.0),
-                  color: Colors.white,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: <Widget>[
-                      Padding(
-                        padding: const EdgeInsets.all(5.0),
-                        child: Text(
-                          "Delivery information",
-                          style: StylesText.style13BlackBold,
-                        ),
-                      ),
-                      Padding(
-                          padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-                          child: StreamBuilder<Object>(
-                              stream: orderBloc.nameStream,
-                              builder: (context, snapshot) {
-                                return TextField(
-                                  decoration: InputDecoration(
-                                      errorText: snapshot.hasError
-                                          ? snapshot.error
-                                          : null,
-                                      icon: Icon(Icons.account_circle)),
-                                  controller: name,
-                                  style: StylesText.style15Black,
-                                );
-                              })),
-                      Padding(
-                          padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-                          child: StreamBuilder<Object>(
-                              stream: orderBloc.phoneStream,
-                              builder: (context, snapshot) {
-                                return TextField(
-                                  keyboardType: TextInputType.phone,
-                                  decoration: InputDecoration(
-                                      icon: Icon(Icons.phone),
-                                      errorText: snapshot.hasError
-                                          ? snapshot.error
-                                          : null),
-                                  controller: phone,
-                                  style: StylesText.style15Black,
-                                );
-                              })),
-                      Padding(
-                          padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
-                          child: StreamBuilder<Object>(
-                              stream: orderBloc.addressStream,
-                              builder: (context, snapshot) {
-                                return TextField(
-                                  onTap: () {
-                                    final result = Navigator.of(context,
-                                            rootNavigator: true)
-                                        .pushNamed('/map');
-                                    result.then((result) {
-                                      setState(() {
-                                        address.text = result as String;
-                                      });
-                                    });
-                                  },
-                                  decoration: InputDecoration(
-                                      errorText: snapshot.hasError
-                                          ? snapshot.error
-                                          : null,
-                                      icon: Icon(Icons.map),
-                                      hintText: "Enter your address..."),
-                                  controller: address,
-                                  style: StylesText.style15Black,
-                                );
-                              })),
-                      Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(2, 2, 0, 0),
-                                child: Text(
-                                  "Choose store",
-                                  style: StylesText.style13BlackBold,
-                                ),
+        actions: <Widget>[
+          ListOrderProducts.isEmpty
+              ? Container()
+              : FlatButton(
+                  onPressed: () {
+                    showDialog(
+                        context: context,
+                        barrierDismissible: false,
+                        builder: (BuildContext context) {
+                          return AlertDialog(
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(15.0))),
+                            title: new Text("Confirm",
+                                style: StylesText.style18RedaccentBold),
+                            content: new Text(
+                              "Do you want to delete all shopping list ?",
+                              style: StylesText.style15Black,
+                            ),
+                            actions: <Widget>[
+                              FlatButton(
+                                child: Text("No"),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
                               ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(2, 2, 0, 0),
-                                child: Row(
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          10, 0, 0, 0),
-                                      child: Container(
-                                        child: DropdownButton(
-                                          iconEnabledColor: Colors.brown,
-                                          iconDisabledColor: Colors.black,
-                                          value: _currentCity,
-                                          items: _dropDownMenuItems,
-                                          onChanged: changedDropDownItem,
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          10, 0, 0, 0),
-                                      child: Container(
-                                          child: Text(
-                                        "District",
-                                        style: StylesText.style13BlackBold,
-                                      )),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          10, 0, 0, 0),
-                                      child: Container(
-                                        child: DropdownButton(
-                                          iconEnabledColor: Colors.brown,
-                                          iconDisabledColor: Colors.black,
-                                          value: _currentCity,
-                                          items: _dropDownMenuItems,
-                                          onChanged: changedDropDownItem,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                              FlatButton(
+                                child: Text("Yes"),
+                                onPressed: () {
+                                  setState(() {
+                                    ListOrderProducts.clear();
+                                  });
+                                  Navigator.of(context).pop();
+                                },
                               ),
                             ],
-                          )),
-                      Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                child: Row(
+                          );
+                        });
+                  },
+                  child: Icon(
+                    Icons.delete_forever,
+                    color: Colors.redAccent,
+                  ))
+        ],
+      ),
+      resizeToAvoidBottomInset: false,
+      body: ListOrderProducts.isEmpty
+          ? Container(
+              child: Center(
+                  child:
+                      Text("No information", style: StylesText.style16Brown)),
+            )
+          :  SingleChildScrollView(
+                              child: Container(
+                                padding: const EdgeInsets.all(2.0),
+                                color: Colors.white,
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
                                   children: <Widget>[
                                     Padding(
-                                      padding:
-                                          const EdgeInsets.fromLTRB(2, 0, 0, 0),
-                                      child: Container(
-                                          child: Text(
-                                        "Ward",
+                                      padding: const EdgeInsets.all(5.0),
+                                      child: Text(
+                                        "Delivery information",
                                         style: StylesText.style13BlackBold,
-                                      )),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          10, 0, 0, 0),
-                                      child: Container(
-                                        child: DropdownButton(
-                                          iconEnabledColor: Colors.brown,
-                                          iconDisabledColor: Colors.black,
-                                          value: _currentCity,
-                                          items: _dropDownMenuItems,
-                                          onChanged: changedDropDownItem,
-                                        ),
                                       ),
                                     ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                child: Row(
-                                  children: <Widget>[
                                     Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          10, 0, 0, 0),
-                                      child: Container(
-                                          child: Text(
-                                        "Store",
-                                        style: StylesText.style13BlackBold,
-                                      )),
-                                    ),
+                                        padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                        child: StreamBuilder<Object>(
+                                            stream: orderBloc.nameStream,
+                                            builder: (context, snapshot) {
+                                              return TextField(
+                                                decoration: InputDecoration(
+                                                    errorText: snapshot.hasError
+                                                        ? snapshot.error
+                                                        : null,
+                                                    icon: Icon(Icons.account_circle)),
+                                                controller: name,
+                                                style: StylesText.style15Black,
+                                              );
+                                            })),
                                     Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          10, 0, 0, 0),
-                                      child: Container(
-                                        child: DropdownButton(
-                                          iconEnabledColor: Colors.brown,
-                                          iconDisabledColor: Colors.black,
-                                          value: _currentCity,
-                                          items: _dropDownMenuItems,
-                                          onChanged: changedDropDownItem,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          )),
-                      Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 2, 0, 0),
-                          child: Container(
-                            child: ListView.builder(
-                              shrinkWrap: true,
-                              scrollDirection: Axis.vertical,
-                              itemCount: ListOrderProducts.length,
-                              itemBuilder: (context, index) {
-                                var list_multy_topping =
-                                    ListOrderProducts[index]['Toppings']
-                                        as List<dynamic>;
-                                if (list_multy_topping != null) {
-                                  multy_topping = list_multy_topping.length;
-                                }
-
-                                return Slidable(
-                                  delegate: new SlidableDrawerDelegate(),
-                                  actionExtentRatio: 0.25,
-                                  child: GestureDetector(
-                                    onTap: () {
-                                      var product = ListOrderProducts[index];
-                                      new LoadingDialog_Order()
-                                          .showLoadingDialog(
-                                              index,
-                                              context,
-                                              product['Id'],
-                                              product['Name'],
-                                              product['Img'],
-                                              "a",
-                                              product['Price'],
-                                              1,
-                                              1,
-                                              product['ListTopping'],
-                                              product['ListSize'],
-                                              product['Promotion'],
-                                              [],
-                                              product['Size'],
-                                              product['Toppings'],
-                                              product['SelectedPromotion'],
-                                              product[
-                                                  'check_promotion_product']);
-                                      //LoadingDialog_Order.showLoadingDialog(context, id, name, img, descript, price, ishot, hashot, topping, size, promotion, orders, selectedSize, selectedToppings, selectedPromotions)
-                                      //LoadingDialog_Order.showLoadingDialog(context, id, name, img, descript, price, ishot, hashot, topping, size, promotion, orders)
-                                      //LoadingDialog_Order.showLoadingDialog(context, id, name, img, descript, price, ishot, hashot, topping, size, promotion, orders, selectedSize, selectedToppings, selectedPromotions)
-                                    },
-                                    child: Container(
-                                        padding: const EdgeInsets.all(2.0),
-                                        child: Container(
-                                            height: Dimension.getHeight(0.135),
-                                            decoration: BoxDecoration(
-                                                color: Colors.white,
-                                                border: Border.all(
-                                                    color: Colors.grey[300]),
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(8.0))),
-                                            child: Column(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                        padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                        child: StreamBuilder<Object>(
+                                            stream: orderBloc.phoneStream,
+                                            builder: (context, snapshot) {
+                                              return TextField(
+                                                keyboardType: TextInputType.phone,
+                                                decoration: InputDecoration(
+                                                    icon: Icon(Icons.phone),
+                                                    errorText: snapshot.hasError
+                                                        ? snapshot.error
+                                                        : null),
+                                                controller: phone,
+                                                style: StylesText.style15Black,
+                                              );
+                                            })),
+                                    Padding(
+                                        padding: const EdgeInsets.fromLTRB(5, 0, 5, 0),
+                                        child: StreamBuilder<Object>(
+                                            stream: orderBloc.addressStream,
+                                            builder: (context, snapshot) {
+                                              return TextField(
+                                                onTap: () {
+                                                  final result = Navigator.of(context,
+                                                          rootNavigator: true)
+                                                      .pushNamed('/map');
+                                                  result.then((result) {
+                                                    setState(() {
+                                                      address.text = result as String;
+                                                    });
+                                                  });
+                                                },
+                                                decoration: InputDecoration(
+                                                    errorText: snapshot.hasError
+                                                        ? snapshot.error
+                                                        : null,
+                                                    icon: Icon(Icons.map),
+                                                    hintText: "Enter your address..."),
+                                                controller: address,
+                                                style: StylesText.style15Black,
+                                              );
+                                            })),
+                                    Padding(
+                                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: <Widget>[
+                                            Padding(
+                                              padding: const EdgeInsets.fromLTRB(2, 2, 0, 0),
+                                              child: Text(
+                                                "Choose store",
+                                                style: StylesText.style13BlackBold,
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.fromLTRB(2, 2, 0, 0),
+                                              child: Row(
                                                 children: <Widget>[
-                                                  Row(
-                                                    children: <Widget>[
-                                                      Stack(
-                                                        alignment:
-                                                            AlignmentDirectional
-                                                                .topEnd,
-                                                        children: <Widget>[
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                        .fromLTRB(
-                                                                    0, 0, 0, 0),
-                                                            child: Container(
-                                                              height: Dimension
-                                                                  .getHeight(
-                                                                      0.13),
-                                                              width: Dimension
-                                                                  .getWidth(
-                                                                      0.25),
-                                                              decoration:
-                                                                  new BoxDecoration(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            8.0),
-                                                                border: new Border
-                                                                        .all(
-                                                                    color: Colors
-                                                                        .grey),
-                                                              ),
-                                                              child: ClipRRect(
-                                                                borderRadius:
-                                                                    BorderRadius
-                                                                        .circular(
-                                                                            8.0),
-                                                                child:
-                                                                    CachedNetworkImage(
-                                                                  imageUrl: Config
-                                                                          .ip +
-                                                                      ListOrderProducts[
-                                                                              index]
-                                                                          [
-                                                                          'Img'],
-                                                                  fit: BoxFit
-                                                                      .fill,
-                                                                  placeholder:
-                                                                      (context,
-                                                                              url) =>
-                                                                          new SizedBox(
-                                                                            child:
-                                                                                Center(
-                                                                              child: CircularProgressIndicator(
-                                                                                valueColor: new AlwaysStoppedAnimation(Colors.redAccent),
+                                                  Padding(
+                                                    padding: const EdgeInsets.fromLTRB(
+                                                        10, 0, 0, 0),
+                                                    child: Container(
+                                                      child: DropdownButton(
+                                                        iconEnabledColor: Colors.brown,
+                                                        iconDisabledColor: Colors.black,
+                                                        value: _currentCity,
+                                                        items: _dropDownMenuItems,
+                                                        onChanged: changedDropDownItem,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding: const EdgeInsets.fromLTRB(
+                                                        10, 0, 0, 0),
+                                                    child: Container(
+                                                        child: Text(
+                                                      "District",
+                                                      style: StylesText.style13BlackBold,
+                                                    )),
+                                                  ),
+                                                  Padding(
+                                                    padding: const EdgeInsets.fromLTRB(
+                                                        10, 0, 0, 0),
+                                                    child: Container(
+                                                      child: DropdownButton(
+                                                        iconEnabledColor: Colors.brown,
+                                                        iconDisabledColor: Colors.black,
+                                                        value: _currentCity,
+                                                        items: _dropDownMenuItems,
+                                                        onChanged: changedDropDownItem,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        )),
+                                    Padding(
+                                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: <Widget>[
+                                            Padding(
+                                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                              child: Row(
+                                                children: <Widget>[
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.fromLTRB(2, 0, 0, 0),
+                                                    child: Container(
+                                                        child: Text(
+                                                      "Ward",
+                                                      style: StylesText.style13BlackBold,
+                                                    )),
+                                                  ),
+                                                  Padding(
+                                                    padding: const EdgeInsets.fromLTRB(
+                                                        10, 0, 0, 0),
+                                                    child: Container(
+                                                      child: DropdownButton(
+                                                        iconEnabledColor: Colors.brown,
+                                                        iconDisabledColor: Colors.black,
+                                                        value: _currentCity,
+                                                        items: _dropDownMenuItems,
+                                                        onChanged: changedDropDownItem,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                              child: Row(
+                                                children: <Widget>[
+                                                  Padding(
+                                                    padding: const EdgeInsets.fromLTRB(
+                                                        10, 0, 0, 0),
+                                                    child: Container(
+                                                        child: Text(
+                                                      "Store",
+                                                      style: StylesText.style13BlackBold,
+                                                    )),
+                                                  ),
+                                                  Padding(
+                                                    padding: const EdgeInsets.fromLTRB(
+                                                        10, 0, 0, 0),
+                                                    child: Container(
+                                                      child: DropdownButton(
+                                                        iconEnabledColor: Colors.brown,
+                                                        iconDisabledColor: Colors.black,
+                                                        value: _currentCity,
+                                                        items: _dropDownMenuItems,
+                                                        onChanged: changedDropDownItem,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ],
+                                        )),
+                                    Padding(
+                                        padding: const EdgeInsets.fromLTRB(0, 2, 0, 0),
+                                        child: Container(
+                                          child: RefreshIndicator(
+              backgroundColor: Colors.white,
+              color: Colors.redAccent,
+              onRefresh: refreshPage,
+                            child:
+                                          ListView.builder(
+                                            shrinkWrap: true,
+                                            scrollDirection: Axis.vertical,
+                                            itemCount: ListOrderProducts.length,
+                                            itemBuilder: (context, index) {
+                                              var list_multy_topping =
+                                                  ListOrderProducts[index]['Toppings']
+                                                      as List<dynamic>;
+                                              if (list_multy_topping != null) {
+                                                multy_topping = list_multy_topping.length;
+                                              }
+              
+                                              return Slidable(
+                                                delegate: new SlidableDrawerDelegate(),
+                                                actionExtentRatio: 0.25,
+                                                child: GestureDetector(
+                                                  onTap: () {
+                                                    var product = ListOrderProducts[index];
+                                                    LoadingDialog_Order()
+                                                        .showLoadingDialog(
+                                                            index,
+                                                            context,
+                                                            product['Id'],
+                                                            product['Name'],
+                                                            product['Img'],
+                                                            "a",
+                                                            product['Price'],
+                                                            1,
+                                                            1,
+                                                            product['ListTopping'],
+                                                            product['ListSize'],
+                                                            product['Promotion'],
+                                                            [],
+                                                            product['Size'],
+                                                            product['Toppings'],
+                                                            product['SelectedPromotion'],
+                                                            product[
+                                                                'check_promotion_product']);
+                                                    
+                                                  },
+                                                  child: Container(
+                                                      padding: const EdgeInsets.all(2.0),
+                                                      child: Container(
+                                                          height: Dimension.getHeight(0.135),
+                                                          decoration: BoxDecoration(
+                                                              color: Colors.white,
+                                                              border: Border.all(
+                                                                  color: Colors.grey[300]),
+                                                              borderRadius: BorderRadius.all(
+                                                                  Radius.circular(8.0))),
+                                                          child: Column(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment.start,
+                                                              crossAxisAlignment:
+                                                                  CrossAxisAlignment.start,
+                                                              children: <Widget>[
+                                                                Row(
+                                                                  children: <Widget>[
+                                                                    Stack(
+                                                                      alignment:
+                                                                          AlignmentDirectional
+                                                                              .topEnd,
+                                                                      children: <Widget>[
+                                                                        Padding(
+                                                                          padding:
+                                                                              const EdgeInsets
+                                                                                      .fromLTRB(
+                                                                                  0, 0, 0, 0),
+                                                                          child: Container(
+                                                                            height: Dimension
+                                                                                .getHeight(
+                                                                                    0.13),
+                                                                            width: Dimension
+                                                                                .getWidth(
+                                                                                    0.25),
+                                                                            decoration:
+                                                                                new BoxDecoration(
+                                                                              borderRadius:
+                                                                                  BorderRadius
+                                                                                      .circular(
+                                                                                          8.0),
+                                                                              border: new Border
+                                                                                      .all(
+                                                                                  color: Colors
+                                                                                      .grey),
+                                                                            ),
+                                                                            child: ClipRRect(
+                                                                              borderRadius:
+                                                                                  BorderRadius
+                                                                                      .circular(
+                                                                                          8.0),
+                                                                              child:
+                                                                                  CachedNetworkImage(
+                                                                                imageUrl: Config
+                                                                                        .ip +
+                                                                                    ListOrderProducts[
+                                                                                            index]
+                                                                                        [
+                                                                                        'Img'],
+                                                                                fit: BoxFit
+                                                                                    .fill,
+                                                                                placeholder:
+                                                                                    (context,
+                                                                                            url) =>
+                                                                                        new SizedBox(
+                                                                                          child:
+                                                                                              Center(
+                                                                                            child: CircularProgressIndicator(
+                                                                                              valueColor: new AlwaysStoppedAnimation(Colors.redAccent),
+                                                                                            ),
+                                                                                          ),
+                                                                                        ),
                                                                               ),
                                                                             ),
                                                                           ),
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      Column(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .start,
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: <Widget>[
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                        .fromLTRB(
-                                                                    5, 0, 0, 0),
-                                                            child: Container(
-                                                                alignment:
-                                                                    Alignment
-                                                                        .topLeft,
-                                                                child: Row(
-                                                                  children: <
-                                                                      Widget>[
-                                                                    Padding(
-                                                                      padding:
-                                                                          const EdgeInsets.fromLTRB(
-                                                                              5,
-                                                                              0,
-                                                                              0,
-                                                                              0),
-                                                                      child:
-                                                                          Text(
-                                                                        ListOrderProducts[index]
-                                                                            [
-                                                                            'Name'],
-                                                                        style: StylesText
-                                                                            .style15Black,
-                                                                      ),
+                                                                        ),
+                                                                      ],
                                                                     ),
-                                                                  ],
-                                                                )),
-                                                          ),
-                                                          Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceBetween,
-                                                            children: <Widget>[
-                                                              ListOrderProducts[
-                                                                              index]
-                                                                          [
-                                                                          'Size'] ==
-                                                                      null
-                                                                  ? IgnorePointer(
-                                                                      ignoring:
-                                                                          true,
-                                                                      child: Opacity(
-                                                                          opacity: 0.0,
-                                                                          child: Padding(
-                                                                            padding: const EdgeInsets.fromLTRB(
-                                                                                10,
-                                                                                10,
-                                                                                0,
-                                                                                10),
-                                                                            child:
-                                                                                Text("Size: " + "M"),
-                                                                          )),
+                                                                    Column(
+                                                                      mainAxisAlignment:
+                                                                          MainAxisAlignment
+                                                                              .start,
+                                                                      crossAxisAlignment:
+                                                                          CrossAxisAlignment
+                                                                              .start,
+                                                                      children: <Widget>[
+                                                                        Padding(
+                                                                          padding:
+                                                                              const EdgeInsets
+                                                                                      .fromLTRB(
+                                                                                  5, 0, 0, 0),
+                                                                          child: Container(
+                                                                              alignment:
+                                                                                  Alignment
+                                                                                      .topLeft,
+                                                                              child: Row(
+                                                                                children: <
+                                                                                    Widget>[
+                                                                                  Padding(
+                                                                                    padding:
+                                                                                        const EdgeInsets.fromLTRB(
+                                                                                            5,
+                                                                                            0,
+                                                                                            0,
+                                                                                            0),
+                                                                                    child:
+                                                                                        Text(
+                                                                                      ListOrderProducts[index]
+                                                                                          [
+                                                                                          'Name'],
+                                                                                      style: StylesText
+                                                                                          .style15Black,
+                                                                                    ),
+                                                                                  ),
+                                                                                ],
+                                                                              )),
+                                                                        ),
+                                                                        Row(
+                                                                          mainAxisAlignment:
+                                                                              MainAxisAlignment
+                                                                                  .spaceBetween,
+                                                                          children: <Widget>[
+                                                                            ListOrderProducts[
+                                                                                            index]
+                                                                                        [
+                                                                                        'Size'] ==
+                                                                                    null
+                                                                                ? IgnorePointer(
+                                                                                    ignoring:
+                                                                                        true,
+                                                                                    child: Opacity(
+                                                                                        opacity: 0.0,
+                                                                                        child: Padding(
+                                                                                          padding: const EdgeInsets.fromLTRB(
+                                                                                              10,
+                                                                                              10,
+                                                                                              0,
+                                                                                              10),
+                                                                                          child:
+                                                                                              Text("Size: " + "M"),
+                                                                                        )),
+                                                                                  )
+                                                                                : Padding(
+                                                                                    padding: const EdgeInsets
+                                                                                            .fromLTRB(
+                                                                                        10,
+                                                                                        10,
+                                                                                        0,
+                                                                                        10),
+                                                                                    child: Text(
+                                                                                        "Size: " +
+                                                                                            ListOrderProducts[index]['Size']['Name'].toString()),
+                                                                                  ),
+                                                                            ListOrderProducts[
+                                                                                            index][
+                                                                                        'Toppings'] ==
+                                                                                    null
+                                                                                ? Container()
+                                                                                : Padding(
+                                                                                    padding: const EdgeInsets
+                                                                                            .only(
+                                                                                        left:
+                                                                                            50,
+                                                                                        top:
+                                                                                            0,
+                                                                                        right:
+                                                                                            0,
+                                                                                        bottom:
+                                                                                            0),
+                                                                                    child: multy_topping >
+                                                                                            1
+                                                                                        ? Text(
+                                                                                            "Topping: " + ListOrderProducts[index]['Toppings'][0]['Name'] + "...",
+                                                                                          )
+                                                                                        : Text(
+                                                                                            "Topping: " + ListOrderProducts[index]['Toppings'][0]['Name'],
+                                                                                          ))
+                                                                          ],
+                                                                        ),
+                                                                        Padding(
+                                                                          padding:
+                                                                              const EdgeInsets
+                                                                                      .fromLTRB(
+                                                                                  10,
+                                                                                  0,
+                                                                                  0,
+                                                                                  0),
+                                                                          child: Row(
+                                                                            children: <
+                                                                                Widget>[
+                                                                              Text("Quanlity: " +
+                                                                                  ListOrderProducts[index]
+                                                                                          [
+                                                                                          'Quantity']
+                                                                                      .toString()),
+                                                                              Padding(
+                                                                                padding:
+                                                                                    const EdgeInsets
+                                                                                            .fromLTRB(
+                                                                                        170,
+                                                                                        0,
+                                                                                        0,
+                                                                                        0),
+                                                                                child: Text(
+                                                                                  ListOrderProducts[index]
+                                                                                          [
+                                                                                          'Price']
+                                                                                      .toString(),
+                                                                                  style: TextStyle(
+                                                                                      color: Colors
+                                                                                          .red),
+                                                                                ),
+                                                                              ),
+                                                                            ],
+                                                                          ),
+                                                                        ),
+                                                                      ],
                                                                     )
-                                                                  : Padding(
-                                                                      padding: const EdgeInsets
-                                                                              .fromLTRB(
-                                                                          10,
-                                                                          10,
-                                                                          0,
-                                                                          10),
-                                                                      child: Text(
-                                                                          "Size: " +
-                                                                              ListOrderProducts[index]['Size']['Name'].toString()),
-                                                                    ),
-                                                              ListOrderProducts[
-                                                                              index][
-                                                                          'Toppings'] ==
-                                                                      null
-                                                                  ? Container()
-                                                                  : Padding(
-                                                                      padding: const EdgeInsets
-                                                                              .only(
-                                                                          left:
-                                                                              50,
-                                                                          top:
-                                                                              0,
-                                                                          right:
-                                                                              0,
-                                                                          bottom:
-                                                                              0),
-                                                                      child: multy_topping >
-                                                                              1
-                                                                          ? Text(
-                                                                              "Topping: " + ListOrderProducts[index]['Toppings'][0]['Name'] + "...",
-                                                                            )
-                                                                          : Text(
-                                                                              "Topping: " + ListOrderProducts[index]['Toppings'][0]['Name'],
-                                                                            ))
-                                                            ],
-                                                          ),
-                                                          Padding(
-                                                            padding:
-                                                                const EdgeInsets
-                                                                        .fromLTRB(
-                                                                    10,
-                                                                    0,
-                                                                    0,
-                                                                    0),
-                                                            child: Row(
-                                                              children: <
-                                                                  Widget>[
-                                                                Text("Quanlity: " +
-                                                                    ListOrderProducts[index]
-                                                                            [
-                                                                            'Quantity']
-                                                                        .toString()),
-                                                                Padding(
-                                                                  padding:
-                                                                      const EdgeInsets
-                                                                              .fromLTRB(
-                                                                          170,
-                                                                          0,
-                                                                          0,
-                                                                          0),
-                                                                  child: Text(
-                                                                    ListOrderProducts[index]
-                                                                            [
-                                                                            'Price']
-                                                                        .toString(),
-                                                                    style: TextStyle(
-                                                                        color: Colors
-                                                                            .red),
-                                                                  ),
+                                                                  ],
                                                                 ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      )
-                                                    ],
-                                                  ),
-                                                ]))),
-                                  ),
-                                  secondaryActions: <Widget>[
-                                    new IconSlideAction(
-                                        caption: 'Delete',
-                                        color: Colors.red,
-                                        icon: Icons.delete,
-                                        onTap: () {
-                                          showDialog(
-                                              context: context,
-                                              barrierDismissible: false,
-                                              builder: (BuildContext context) {
-                                                return AlertDialog(
-                                                  shape: RoundedRectangleBorder(
-                                                      borderRadius:
-                                                          BorderRadius.all(
-                                                              Radius.circular(
-                                                                  15.0))),
-                                                  title: new Text("Confirm",
-                                                      style: StylesText
-                                                          .style18RedaccentBold),
-                                                  content: new Text(
-                                                    "Do you want to delete " +
-                                                        ListOrderProducts[index]
-                                                                ['Name']
-                                                            .toString() +
-                                                        "?",
-                                                    style:
-                                                        StylesText.style15Black,
-                                                  ),
-                                                  actions: <Widget>[
-                                                    FlatButton(
-                                                      child: Text("No"),
-                                                      onPressed: () {
-                                                        Navigator.of(context)
-                                                            .pop();
-                                                      },
-                                                    ),
-                                                    FlatButton(
-                                                      child: Text("Yes"),
-                                                      onPressed: () {
-                                                        setState(() {
-                                                          ListOrderProducts
-                                                              .removeAt(index);
-                                                        });
-                                                        Navigator.of(context)
-                                                            .pop();
-                                                      },
-                                                    ),
-                                                  ],
-                                                );
-                                              });
-                                        }),
+                                                              ]))),
+                                                ),
+                                                secondaryActions: <Widget>[
+                                                  new IconSlideAction(
+                                                      caption: 'Delete',
+                                                      color: Colors.red,
+                                                      icon: Icons.delete,
+                                                      onTap: () {
+                                                        showDialog(
+                                                            context: context,
+                                                            barrierDismissible: false,
+                                                            builder: (BuildContext context) {
+                                                              return AlertDialog(
+                                                                shape: RoundedRectangleBorder(
+                                                                    borderRadius:
+                                                                        BorderRadius.all(
+                                                                            Radius.circular(
+                                                                                15.0))),
+                                                                title: new Text("Confirm",
+                                                                    style: StylesText
+                                                                        .style18RedaccentBold),
+                                                                content: new Text(
+                                                                  "Do you want to delete " +
+                                                                      ListOrderProducts[index]
+                                                                              ['Name']
+                                                                          .toString() +
+                                                                      "?",
+                                                                  style:
+                                                                      StylesText.style15Black,
+                                                                ),
+                                                                actions: <Widget>[
+                                                                  FlatButton(
+                                                                    child: Text("No"),
+                                                                    onPressed: () {
+                                                                      Navigator.of(context)
+                                                                          .pop();
+                                                                    },
+                                                                  ),
+                                                                  FlatButton(
+                                                                    child: Text("Yes"),
+                                                                    onPressed: () {
+                                                                      setState(() {
+                                                                        ListOrderProducts
+                                                                            .removeAt(index);
+                                                                      });
+                                                                      Navigator.of(context)
+                                                                          .pop();
+                                                                    },
+                                                                  ),
+                                                                ],
+                                                              );
+                                                            });
+                                                      }),
+                                                ],
+                                              );
+                                            },
+                                          ),
+                                          )
+                                        )),
                                   ],
-                                );
-                                // );
-                              },
+                                ),
+                              ),
                             ),
-                          )),
-                    ],
-                  ),
-                ),
-              ),
-        drawer: Drawer(
-          child: HomeMenu(),
-        ),
-        bottomNavigationBar: ListOrderProducts.isEmpty
-            ? Container(
-                child: Center(
-                    child:
-                        Text("No information", style: StylesText.style16Brown)),
-              )
-            : new Container(
-                height: Dimension.getHeight(0.05),
-                color: Colors.white,
-                child: Row(
-                  children: <Widget>[
-                    Expanded(
-                        child: MaterialButton(
-                      onPressed: () {
-                        Navigator.of(context).pushReplacement(MaterialPageRoute(
-                            builder: (context) => DashBoard()));
-                      },
-                      child: Text(
-                        "Continue shopping",
-                        style: StylesText.style14BrownBold,
-                      ),
-                      color: Colors.white,
-                    )),
-                    Expanded(
-                      child: MaterialButton(
-                          onPressed: () {
-                            if (orderBloc.isValidInfo(
-                                    name.text.trim().toString(),
-                                    phone.text.trim().toString(),
-                                    address.text.trim().toString()) ==
-                                true) {
-                              if (PostOrder(phone.text.trim().toString(),
-                                      address.text.trim().toString()) ==
-                                  true) {}
-                            }
-                          },
-                          child: Text(
-                            "Purchase ",
-                            style: StylesText.style14While,
+                          
+                    drawer: Drawer(
+                      child: HomeMenu(),
+                    ),
+                    bottomNavigationBar: ListOrderProducts.isEmpty
+                        ? Container(
+                            child: Center(
+                                child:
+                                    Text("No information", style: StylesText.style16Brown)),
+                          )
+                        : new Container(
+                            height: Dimension.getHeight(0.05),
+                            color: Colors.white,
+                            child: Row(
+                              children: <Widget>[
+                                Expanded(
+                                    child: MaterialButton(
+                                  onPressed: () {
+                                    Navigator.of(context).pushReplacement(
+                                        MaterialPageRoute(builder: (context) => DashBoard()));
+                                  },
+                                  child: Text(
+                                    "Continue shopping",
+                                    style: StylesText.style14BrownBold,
+                                  ),
+                                  color: Colors.white,
+                                )),
+                                Expanded(
+                                  child: MaterialButton(
+                                      onPressed: () {
+                                        if (orderBloc.isValidInfo(
+                                                name.text.trim().toString(),
+                                                phone.text.trim().toString(),
+                                                address.text.trim().toString()) ==
+                                            true) {
+                                          if (PostOrder(phone.text.trim().toString(),
+                                                  address.text.trim().toString()) ==
+                                              true) {}
+                                        }
+                                      },
+                                      child: Text(
+                                        "Purchase ",
+                                        style: StylesText.style14While,
+                                      ),
+                                      color: Colors.redAccent),
+                                )
+                              ],
+                            ),
                           ),
-                          color: Colors.redAccent),
-                    )
-                  ],
-                ),
-              ),
-      ),
-    );
-  }
+                  );
+                }
+              
+                void changedDropDownItem(String selectedcity) {
+                  setState(() {
+                    _currentCity = selectedcity;
+                  });
+                }
+              
+                 Future<void> refreshPage() async {
+    await Future.delayed(Duration(seconds: 1));
 
-  void changedDropDownItem(String selectedcity) {
     setState(() {
-      _currentCity = selectedcity;
+     build(context);
     });
   }
 }

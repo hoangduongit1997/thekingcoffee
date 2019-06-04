@@ -1,8 +1,10 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
-import 'package:thekingcoffee/app/config/config.dart';
-import 'package:thekingcoffee/app/screens/login.dart';
+import 'package:thekingcoffee/app/bloc/bottom_navigation_bloc.dart';
+import 'package:thekingcoffee/app/screens/dashboard.dart';
+import 'package:thekingcoffee/app/screens/shopping_list.dart';
+
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart'
@@ -105,8 +107,8 @@ class LoadingDialog_Order {
                         ),
                         onPressed: () {
                           ListOrderProducts[index] = this.selectedProduct;
-                          selectedProduct = {}; //reset sản phẩm chọn
-                          Navigator.of(context).pop();
+                          selectedProduct = {};
+                          Navigator.of(context).pop(); //reset sản phẩm chọn\
                         },
                       ),
                     ),

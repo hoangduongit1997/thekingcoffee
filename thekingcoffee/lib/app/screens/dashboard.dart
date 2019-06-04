@@ -21,8 +21,6 @@ class _HomeState extends State<DashBoard> {
   BottomNavBarBloc _bottomNavBarBloc;
   @override
   void initState() {
-    SystemChrome.setEnabledSystemUIOverlays([]);
-
     _bottomNavBarBloc = new BottomNavBarBloc();
     super.initState();
   }
