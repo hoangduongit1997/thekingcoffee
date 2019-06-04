@@ -19,6 +19,7 @@ class Order_Dialog2019 extends StatefulWidget {
   final String img;
   final String name;
   final String desc;
+  final int original_price;
   final int price;
   final int ishot;
   final int hashot;
@@ -29,12 +30,14 @@ class Order_Dialog2019 extends StatefulWidget {
   final List<dynamic> selectedToppings;
   final Map<String, dynamic> selectedPromotion;
   final List<dynamic> check_promotion_product;
+  final String note_item;
   Order_Dialog2019(
       this.callback,
       this.id,
       this.img,
       this.name,
       this.desc,
+      this.original_price,
       this.price,
       this.ishot,
       this.hashot,
@@ -44,7 +47,8 @@ class Order_Dialog2019 extends StatefulWidget {
       this.selectedSize,
       this.selectedToppings,
       this.selectedPromotion,
-      this.check_promotion_product);
+      this.check_promotion_product,
+      this.note_item);
   Order_DialogState createState() => Order_DialogState();
 }
 
@@ -205,7 +209,7 @@ class Order_DialogState extends State<Order_Dialog2019> {
           padding: const EdgeInsets.fromLTRB(2, 0, 0, 0),
           child: Container(
             width: Dimension.getWidth(1.0),
-            height: Dimension.getHeight(0.1),
+            height: Dimension.getHeight(0.115),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
@@ -358,6 +362,7 @@ class Order_DialogState extends State<Order_Dialog2019> {
   @override
   void initState() {
     super.initState();
+    note.text = widget.note_item.trim();
     money = widget.price;
     if (widget.size.length > 0) {
       money += widget.size[0]['PlusMonney'];
@@ -514,7 +519,7 @@ class Order_DialogState extends State<Order_Dialog2019> {
                                 Padding(
                                   padding:
                                       const EdgeInsets.fromLTRB(5, 0, 0, 0),
-                                  child: Text(widget.price.toString(),
+                                  child: Text(widget.original_price.toString(),
                                       style: StylesText.style16BrownBold),
                                 )
                               ],
@@ -525,25 +530,6 @@ class Order_DialogState extends State<Order_Dialog2019> {
                     ],
                   ),
                   Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                      child: Container(
-                        child: CustomPaint(
-                            painter: Drawhorizontalline(
-                                false, 180.0, 220.0, Colors.blueGrey, 0.5)),
-                      )),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: <Widget>[
-                        Expanded(
-                          child:
-                              Text(widget.desc, style: StylesText.style13Black),
-                        )
-                      ],
-                    ),
-                  ),
-                  Padding(
                       padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                       child: Container(
                         child: CustomPaint(
@@ -551,7 +537,7 @@ class Order_DialogState extends State<Order_Dialog2019> {
                                 false, 180.0, 220.0, Colors.blueGrey, 0.5)),
                       )),
                   Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.center,
@@ -587,7 +573,7 @@ class Order_DialogState extends State<Order_Dialog2019> {
                                         ),
                                         actions: <Widget>[
                                           FlatButton(
-                                            child: Text("Yes"),
+                                            child: Text("OK"),
                                             onPressed: () {
                                               Navigator.of(context).pop();
                                             },

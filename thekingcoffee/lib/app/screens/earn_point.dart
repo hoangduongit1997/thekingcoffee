@@ -12,6 +12,21 @@ class EarnPoint extends StatefulWidget {
 }
 
 class _EarnPointState extends State<EarnPoint> {
+  int id_user;
+  get_id_user() async {
+    final pref = await SharedPreferences.getInstance();
+    setState(() {
+      id_user = pref.getInt('id_user');
+    });
+    print(id_user.toString());
+  }
+
+  @override
+  void initState() {
+    get_id_user();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -32,19 +47,20 @@ class _EarnPointState extends State<EarnPoint> {
         ),
         resizeToAvoidBottomInset: false,
         body: Center(
-          child: Padding(
-              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-              child: BarCodeImage(
-                data: Config.id_user.toString(),
-                codeType: BarCodeType.Code93,
-                lineWidth: 5.0,
-                barHeight: Dimension.getHeight(0.3),
-                hasText: true,
-                onError: (error) {
-                  print('error = $error');
-                },
-              )),
-        ),
+            child: Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                child: id_user == null
+                    ? CircularProgressIndicator()
+                    : BarCodeImage(
+                        data: id_user.toString(),
+                        codeType: BarCodeType.Code93,
+                        lineWidth: 5.0,
+                        barHeight: Dimension.getHeight(0.3),
+                        hasText: true,
+                        onError: (error) {
+                          print('error = $error');
+                        },
+                      ))),
         drawer: Drawer(
           child: HomeMenu(),
         ),

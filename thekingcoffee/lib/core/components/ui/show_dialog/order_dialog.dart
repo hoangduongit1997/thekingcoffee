@@ -507,7 +507,7 @@ class Order_DialogState extends State<Order_Dialog> {
                                         ),
                                         actions: <Widget>[
                                           FlatButton(
-                                            child: Text("Yes"),
+                                            child: Text("OK"),
                                             onPressed: () {
                                               Navigator.of(context).pop();
                                             },

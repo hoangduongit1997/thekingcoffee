@@ -21,8 +21,10 @@ class _HistoryState extends State<History> {
   intData() async {
     final result = await Get_History();
     setState(() {
-      data_history = result;
-      length = data_history.length;
+      if (result != null) {
+        data_history = result;
+        length = data_history.length;
+      }
     });
   }
 

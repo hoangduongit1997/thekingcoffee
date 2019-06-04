@@ -27,6 +27,7 @@ class LoadingDialog_Order {
       String name,
       String img,
       String descript,
+      int original_price,
       int price,
       int ishot,
       int hashot,
@@ -37,7 +38,8 @@ class LoadingDialog_Order {
       Map<String, dynamic> selectedSize,
       List<dynamic> selectedToppings,
       Map<String, dynamic> selectedPromotion,
-      List<dynamic> check_promotion_product) {
+      List<dynamic> check_promotion_product,
+      String note) {
     showDialog(
         context: context,
         barrierDismissible: true,
@@ -54,6 +56,7 @@ class LoadingDialog_Order {
                       img,
                       name,
                       descript,
+                      original_price,
                       price,
                       ishot,
                       hashot,
@@ -63,7 +66,8 @@ class LoadingDialog_Order {
                       selectedSize,
                       selectedToppings,
                       selectedPromotion,
-                      check_promotion_product)),
+                      check_promotion_product,
+                      note)),
               actions: <Widget>[
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
