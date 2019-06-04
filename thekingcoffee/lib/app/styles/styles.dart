@@ -178,6 +178,11 @@ class StylesText {
     color: Colors.black,
     fontWeight: FontWeight.normal,
   );
+   static TextStyle style14Redaccent = TextStyle(
+    fontSize: SizeText.size14,
+    color: Colors.redAccent,
+    fontWeight: FontWeight.normal,
+  );
    static TextStyle style15Red = TextStyle(
     fontSize: SizeText.size15,
     color: Colors.red,

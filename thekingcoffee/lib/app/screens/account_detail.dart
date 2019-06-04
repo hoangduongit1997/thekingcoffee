@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:thekingcoffee/app/config/config.dart';
+import 'package:thekingcoffee/app/screens/dashboard.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
@@ -13,12 +14,6 @@ class Account extends StatefulWidget {
 }
 
 class _AccountState extends State<Account> {
-  @override
-  void initState() {
-    Config.isHideNavigation = true;
-    super.initState();
-  }
-
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
@@ -35,9 +30,9 @@ class _AccountState extends State<Account> {
             ),
             leading: FlatButton(
               onPressed: () {
-                Config.isHideNavigation = false;
-                Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (context) => PlaceholderMainWidget()));
+                Navigator.of(context).pop();
+                // Navigator.of(context, rootNavigator: true).pushReplacement(
+                //     MaterialPageRoute(builder: (context) => DashBoard()));
               },
               child: Icon(
                 Icons.arrow_back,
@@ -46,32 +41,70 @@ class _AccountState extends State<Account> {
             ),
           ),
           body: Container(
-              color: Colors.grey[300],
-              padding: const EdgeInsets.all(5.0),
-              width: double.infinity,
-              height: Dimension.getHeight(0.4),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                    child: Container(
-                      height: Dimension.getHeight(0.3),
-                      width: Dimension.getWidth(0.5),
-                      decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          border:
-                              Border.all(color: Colors.redAccent, width: 2.0),
-                          image: DecorationImage(
-                              fit: BoxFit.fill,
-                              image: NetworkImage(
-                                Config.ip +
-                                    "/storage/images/kingcoffee/congan.png",
-                              ))),
-                    ),
-                  )
-                ],
-              )),
+            width: double.infinity,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: <Widget>[
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                  child: Container(
+                      color: Colors.grey[300],
+                      padding: const EdgeInsets.all(5.0),
+                      width: double.infinity,
+                      height: Dimension.getHeight(0.30),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: <Widget>[
+                          Stack(
+                            alignment: AlignmentDirectional.topCenter,
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                child: Container(
+                                  width: double.infinity,
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.end,
+                                    children: <Widget>[
+                                      GestureDetector(
+                                        child: Icon(
+                                          Icons.more_horiz,
+                                          color: Colors.redAccent,
+                                        ),
+                                        onTap: () {},
+                                      )
+                                    ],
+                                  ),
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                child: Container(
+                                  height: Dimension.getHeight(0.28),
+                                  width: Dimension.getWidth(0.5),
+                                  decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      border: Border.all(
+                                          color: Colors.redAccent, width: 2.0),
+                                      image: DecorationImage(
+                                        fit: BoxFit.fill,
+                                        image: NetworkImage(
+                                          Config.ip +
+                                              "/storage/images/kingcoffee/congan.png",
+                                        ),
+                                      )),
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      )),
+                ),
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                )
+              ],
+            ),
+          ),
           drawer: Drawer(
             child: HomeMenu(),
           ),

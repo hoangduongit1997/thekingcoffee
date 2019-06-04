@@ -16,6 +16,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class Home_Card_Coffee extends StatefulWidget {
   Home_Card_Coffee({Key key}) : super(key: key);
+ 
 
   _Home_Card_Coffee_State createState() => _Home_Card_Coffee_State();
 }
@@ -28,17 +29,19 @@ var promotion_list_coffee = [];
 int promotion_coffee = 0;
 
 class _Home_Card_Coffee_State extends State<Home_Card_Coffee> {
-  intDataHomeScreen() async {
+  intDataCoffeeScreen() async {
     final result = await Get_Coffee_Product();
-    setState(() {
-      data = result;
-      lenght = data.length;
-    });
+    if (this.mounted) {
+      setState(() {
+        data = result;
+        lenght = data.length;
+      });
+    }
   }
 
   @override
   void initState() {
-    this.intDataHomeScreen();
+    this.intDataCoffeeScreen();
     super.initState();
   }
 
@@ -53,7 +56,7 @@ class _Home_Card_Coffee_State extends State<Home_Card_Coffee> {
             child: Column(
               children: <Widget>[
                 Container(
-                  height: Dimension.getHeight(0.35),
+                  height: Dimension.getHeight(0.36),
                   child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
@@ -160,7 +163,7 @@ class _Home_Card_Coffee_State extends State<Home_Card_Coffee> {
                                           )),
                                       Padding(
                                         padding: const EdgeInsets.fromLTRB(
-                                            0, 10, 0, 5),
+                                            0, 10, 0, 0),
                                         child: Container(
                                           width: Dimension.getWidth(0.51),
                                           child: Row(
@@ -206,7 +209,7 @@ class _Home_Card_Coffee_State extends State<Home_Card_Coffee> {
                                                                         0.035),
                                                                 width: Dimension
                                                                     .getHeight(
-                                                                        0.1),
+                                                                        0.05),
                                                                 color: Colors
                                                                     .redAccent,
                                                               )
@@ -334,6 +337,7 @@ class _Home_Card_Coffee_State extends State<Home_Card_Coffee> {
                                         data[index]['File_Path'],
                                         data[index]['Description'],
                                         data[index]['Price'],
+                                        data[index]['IsHot'],
                                         data[index]['IsHot'],
                                         data[index]['Toppings'],
                                         data[index]['Size'],

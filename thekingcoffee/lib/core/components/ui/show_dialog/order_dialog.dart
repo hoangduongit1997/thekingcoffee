@@ -5,6 +5,10 @@ import 'package:thekingcoffee/app/config/config.dart';
 
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
+import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart'
+    as prefix0;
+import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog.dart';
+import 'package:thekingcoffee/core/components/ui/show_dialog/show_message_dialog.dart';
 import 'package:thekingcoffee/core/components/widgets/drawline.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 
@@ -15,15 +19,17 @@ class Order_Dialog extends StatefulWidget {
   final String desc;
   final int price;
   final int ishot;
+  final int hashot;
   final List<dynamic> toppings;
   final List<dynamic> size;
   final List<dynamic> promotion;
   Order_Dialog(this.id, this.img, this.name, this.desc, this.price, this.ishot,
-      this.size, this.toppings, this.promotion);
+      this.hashot, this.size, this.toppings, this.promotion);
   Order_DialogState createState() => Order_DialogState();
 }
 
 class Order_DialogState extends State<Order_Dialog> {
+  TextEditingController note = new TextEditingController();
   var product = selectedProduct;
   int number = 1;
   int money;
@@ -34,7 +40,9 @@ class Order_DialogState extends State<Order_Dialog> {
   int selectedRadioTile;
   var selectedPromotion;
   var list_promotion_product = [];
-  // bool check_promotion_product = false;
+
+  int final_price_promotion_product = 0;
+
   var check_promotion_product = [];
 
   List<Widget> createRadioListSize() {
@@ -90,13 +98,11 @@ class Order_DialogState extends State<Order_Dialog> {
           int tempMoney = money;
           if (element != null) {
             temp.remove(element);
-            //tempMoney -= widget.price;
+
             tempMoney -= topping['Price'];
           } else {
             temp.add(topping);
             tempMoney += topping['Price'];
-            //tempMoney += widget.price;
-            //cong them tien
           }
           setState(() {
             money = tempMoney;
@@ -125,33 +131,31 @@ class Order_DialogState extends State<Order_Dialog> {
             style: StylesText.style13BrownBold,
           ),
           onChanged: (value) {
-            // money -= selectedsize['PlusMonney'];
             list_promotion_product = [];
             list_promotion_product = promotion['SaleForProducts'];
-            int changedMoney;
+            int oldMoney = 0, newMoney = 0;
             if (selectedPromotion != null) {
-              // tempMoney -= widget.price *
-              //     ((100 - selectedPromotion['PercentDiscount'])) /
-              //     100;
-              changedMoney = (widget.price *
-                      ((100 - selectedPromotion['PercentDiscount'])) /
-                      100)
+              oldMoney = ((widget.price -
+                      (widget.price *
+                          (selectedPromotion['PercentDiscount']) /
+                          100) -
+                      selectedPromotion['MoneyDiscount']))
                   .toInt();
             }
-            changedMoney -=
-                (widget.price * (value['PercentDiscount'] / 100)).toInt();
+
+            newMoney = ((widget.price -
+                    (widget.price * (value['PercentDiscount']) / 100) -
+                    value['MoneyDiscount']))
+                .toInt();
             setState(() {
-              // money += value['PlusMonney'];
               selectedPromotion = value;
-              money = money - changedMoney;
-
-              //Gen promotion product
+              money = money + oldMoney - newMoney;
             });
-            // selectedProduct['Price'] = money;
-            selectedsize = value;
-            // selectedProduct['Size'] = selectedsize;
 
-            // selectedPromotion = value;
+            selectedsize = value;
+
+            selectedProduct['Price'] = money;
+            selectedProduct['SelectedPromotion'] = selectedPromotion;
           },
           selected: selectedPromotion == promotion,
           activeColor: Colors.redAccent,
@@ -161,9 +165,13 @@ class Order_DialogState extends State<Order_Dialog> {
     return widgets_promotion;
   }
 
-  List<Widget> createRadioListPromotionProDuct() {
+  List<Widget> createCheckBoxListPromotionProDuct() {
     List<Widget> widgets_promotion_product = [];
     for (var promotion_product in list_promotion_product) {
+      final_price_promotion_product =
+          promotion_product['DetailedSaleForProduct']['Price'] -
+              promotion_product['MoneyDiscount'] -
+              promotion_product['PriceDiscount'];
       widgets_promotion_product.add(Container(
           child: CheckboxListTile(
         controlAffinity: ListTileControlAffinity.leading,
@@ -171,7 +179,7 @@ class Order_DialogState extends State<Order_Dialog> {
           padding: const EdgeInsets.fromLTRB(2, 0, 0, 0),
           child: Container(
             width: Dimension.getWidth(1.0),
-            height: Dimension.getHeight(0.1),
+            height: Dimension.getHeight(0.115),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
@@ -213,20 +221,69 @@ class Order_DialogState extends State<Order_Dialog> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(2, 0, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(2, 10, 0, 0),
                       child: Container(
-                        width: Dimension.getWidth(0.35),
-                        child: promotion_product['DetailedSaleForProduct']
-                                    ['Price'] ==
-                                null
-                            ? Container()
-                            : Text(
-                                promotion_product['DetailedSaleForProduct']
-                                        ['Price']
-                                    .toString(),
-                                style: StylesText.style13BrownNormalUnderline,
-                              ),
-                      ),
+                          width: Dimension.getWidth(0.35),
+                          child: promotion_product['DetailedSaleForProduct']
+                                      ['Price'] ==
+                                  null
+                              ? Container()
+                              : Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.fromLTRB(2, 0, 0, 0),
+                                      child: Text(
+                                        "Price",
+                                        style: StylesText.style13BrownNormal,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                                      child: Text(
+                                        promotion_product[
+                                                    'DetailedSaleForProduct']
+                                                ['Price']
+                                            .toString(),
+                                        style: StylesText
+                                            .style13BrownNormalUnderline,
+                                      ),
+                                    ),
+                                  ],
+                                )),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(2, 10, 0, 0),
+                      child: Container(
+                          width: Dimension.getWidth(0.35),
+                          child: promotion_product['DetailedSaleForProduct']
+                                      ['Price'] ==
+                                  null
+                              ? Container()
+                              : Row(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.fromLTRB(2, 0, 0, 0),
+                                      child: Text(
+                                        "Sell",
+                                        style: StylesText.style13BrownBold,
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                                      child: Text(
+                                        final_price_promotion_product
+                                            .toString(),
+                                        style: StylesText.style13BrownBold,
+                                      ),
+                                    ),
+                                  ],
+                                )),
                     )
                   ],
                 )
@@ -240,25 +297,26 @@ class Order_DialogState extends State<Order_Dialog> {
         onChanged: (value) {
           var lstVal = [];
           int tempMoney = money;
-          int factMoneyProduct = promotion_product['DetailedSaleForProduct']
-                  ['Price'] -
-              promotion_product['MoneyDiscount'] -
-              promotion_product['PriceDiscount'];
+
           if (value) {
             lstVal.add(promotion_product);
             //tang tien
-            tempMoney += factMoneyProduct;
+            tempMoney += final_price_promotion_product;
           } else {
             var temp = check_promotion_product
                 .firstWhere((t) => t == promotion_product, orElse: () => null);
             lstVal.remove(temp);
             //tru bot tien
-            tempMoney -= factMoneyProduct;
+            tempMoney -= final_price_promotion_product;
           }
           setState(() {
             check_promotion_product = lstVal;
             money = tempMoney;
           });
+          selectedProduct['check_promotion_product'] = check_promotion_product;
+          selectedProduct['Price'] = money;
+          selectedProduct['selectedDetailedSaleForProduct'] =
+              check_promotion_product;
         },
         activeColor: Colors.redAccent,
       )));
@@ -285,6 +343,11 @@ class Order_DialogState extends State<Order_Dialog> {
     //lay de list cart
     selectedProduct['ListSize'] = widget.size;
     selectedProduct['ListTopping'] = widget.toppings;
+    selectedProduct['IsHot'] = false;
+    selectedProduct['HasHot'] = widget.hashot;
+    selectedProduct['Original_Price'] = widget.price;
+    selectedProduct['Note'] = "";
+    selectedProduct['Promotion'] = widget.promotion;
   }
 
   @override
@@ -423,6 +486,36 @@ class Order_DialogState extends State<Order_Dialog> {
                           child: Container(
                             width: Dimension.getWidth(0.62),
                             child: TextField(
+                              textInputAction: TextInputAction.done,
+                              controller: note,
+                              onEditingComplete: () {
+                                selectedProduct['Note'] = note.text;
+                                showDialog(
+                                    context: context,
+                                    barrierDismissible: false,
+                                    builder: (BuildContext context) {
+                                      return AlertDialog(
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(15.0))),
+                                        title: new Text("Information",
+                                            style: StylesText
+                                                .style18RedaccentBold),
+                                        content: new Text(
+                                          "Add note successfull!",
+                                          style: StylesText.style15Black,
+                                        ),
+                                        actions: <Widget>[
+                                          FlatButton(
+                                            child: Text("OK"),
+                                            onPressed: () {
+                                              Navigator.of(context).pop();
+                                            },
+                                          ),
+                                        ],
+                                      );
+                                    });
+                              },
                               keyboardType: TextInputType.multiline,
                               maxLines: null,
                             ),
@@ -484,6 +577,8 @@ class Order_DialogState extends State<Order_Dialog> {
                                         onChanged: (bool value) {
                                           setState(() {
                                             checked_hot = value;
+                                            selectedProduct['IsHot'] =
+                                                checked_hot;
                                           });
                                         },
                                         activeColor: Colors.red,
@@ -593,7 +688,7 @@ class Order_DialogState extends State<Order_Dialog> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       children:
-                                          createRadioListPromotionProDuct(),
+                                          createCheckBoxListPromotionProDuct(),
                                     ),
                                   ),
                                 ),
@@ -662,6 +757,7 @@ class Order_DialogState extends State<Order_Dialog> {
                                           money -= widget.price;
                                         });
                                         selectedProduct['Quantity'] = number;
+                                        selectedProduct['Price'] = money;
                                       },
                                     ),
                                   ),
@@ -682,6 +778,7 @@ class Order_DialogState extends State<Order_Dialog> {
                                           money += widget.price;
                                         });
                                         selectedProduct['Quantity'] = number;
+                                        selectedProduct['Price'] = money;
                                       },
                                     ),
                                   ),

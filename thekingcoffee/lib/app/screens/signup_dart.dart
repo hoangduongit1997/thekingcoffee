@@ -30,6 +30,7 @@ class MyAppState extends State<SignUp> {
   TextEditingController _pass = new TextEditingController();
   TextEditingController _confirmpass = new TextEditingController();
   TextEditingController _date = new TextEditingController();
+  TextEditingController _fullname = new TextEditingController();
   final formats = {
     InputType.date: DateFormat('dd/MM/yyyy'),
   };
@@ -76,13 +77,13 @@ class MyAppState extends State<SignUp> {
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                       child: StreamBuilder<Object>(
-                          stream: signupBloc.nameStream,
+                          stream: signupBloc.usernameStream,
                           builder: (context, snapshot) {
                             return TextField(
                               controller: _name,
                               style: StylesText.style18Black,
                               decoration: InputDecoration(
-                                  labelText: "Name",
+                                  labelText: "Username",
                                   errorText:
                                       snapshot.hasError ? snapshot.error : null,
                                   labelStyle: StylesText.style12Bluegray),
@@ -134,6 +135,22 @@ class MyAppState extends State<SignUp> {
                               obscureText: !_showpass,
                               decoration: InputDecoration(
                                   labelText: "Confirm Password",
+                                  errorText:
+                                      snapshot.hasError ? snapshot.error : null,
+                                  labelStyle: StylesText.style12Bluegray),
+                            );
+                          }),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                      child: StreamBuilder<Object>(
+                          stream: signupBloc.fullnameStream,
+                          builder: (context, snapshot) {
+                            return TextField(
+                              controller: _fullname,
+                              style: StylesText.style18Black,
+                              decoration: InputDecoration(
+                                  labelText: "Fullname",
                                   errorText:
                                       snapshot.hasError ? snapshot.error : null,
                                   labelStyle: StylesText.style12Bluegray),
@@ -200,18 +217,21 @@ class MyAppState extends State<SignUp> {
     LoadingDialog.showLoadingDialog(context, "Loading...");
     if ((await Validation.isConnectedNetwork()) == true &&
         signupBloc.isValidInfo(
-                _name.text.trim(),
-                _phone.text.trim(),
-                _pass.text.trim(),
-                _confirmpass.text.trim(),
-                _date.text.trim(),
-                checked) ==
+              _name.text.trim(),
+              _phone.text.trim(),
+              _pass.text.trim(),
+              _confirmpass.text.trim(),
+              _date.text.trim(),
+              checked,
+              _fullname.text.trim(),
+            ) ==
             true) {
       if ((await PostSignUp(
               _name.text.trim().toString(),
               _pass.text.trim().toString(),
               _phone.text.trim().toString(),
-              _date.text.toString())) ==
+              _date.text.toString(),
+              _fullname.text.toString())) ==
           true) {
         LoadingDialog.hideLoadingDialog(context);
         Navigator.of(context).pushReplacement(
@@ -220,12 +240,14 @@ class MyAppState extends State<SignUp> {
     }
     if ((await Validation.isConnectedNetwork()) == true &&
         signupBloc.isValidInfo(
-                _name.text.trim(),
-                _phone.text.trim(),
-                _pass.text.trim(),
-                _confirmpass.text.trim(),
-                _date.text.trim(),
-                checked) ==
+              _name.text.trim(),
+              _phone.text.trim(),
+              _pass.text.trim(),
+              _confirmpass.text.trim(),
+              _date.text.trim(),
+              checked,
+              _fullname.text.trim(),
+            ) ==
             false) {
       LoadingDialog.hideLoadingDialog(context);
     }

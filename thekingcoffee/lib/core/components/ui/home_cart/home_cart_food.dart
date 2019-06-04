@@ -28,18 +28,20 @@ int promotion_food = 0;
 var promotion_list_food = [];
 
 class _Home_Card_Food_State extends State<Home_Card_Food> {
-  intDataHomeScreen() async {
+  intDataFoodScreen() async {
     final result = await Get_Food_Products();
-
-    setState(() {
-      data = result;
-      lenght = data.length;
-    });
+//lôi leake memory ở day
+    if (this.mounted) {
+      setState(() {
+        data = result;
+        lenght = data.length;
+      });
+    }
   }
 
   @override
   void initState() {
-    this.intDataHomeScreen();
+    this.intDataFoodScreen();
     super.initState();
   }
 
@@ -54,7 +56,7 @@ class _Home_Card_Food_State extends State<Home_Card_Food> {
             child: Column(
               children: <Widget>[
                 Container(
-                  height: Dimension.getHeight(0.35),
+                  height: Dimension.getHeight(0.36),
                   child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
@@ -334,6 +336,7 @@ class _Home_Card_Food_State extends State<Home_Card_Food> {
                                         data[index]['File_Path'],
                                         data[index]['Description'],
                                         data[index]['Price'],
+                                        data[index]['IsHot'],
                                         data[index]['IsHot'],
                                         data[index]['Toppings'],
                                         data[index]['Size'],

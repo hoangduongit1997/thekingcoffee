@@ -5,7 +5,6 @@ import 'package:thekingcoffee/app/screens/login.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/core/components/ui/tutorial/tutorial_helper.dart';
 
-
 class Tutorial extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -56,8 +55,8 @@ class MySplashScreenState extends State<MySplashScreen> {
   }
 
   void onDonePress() {
-    Navigator.of(context).pushReplacement(
-            MaterialPageRoute(builder: (context) => LoginWithPass()));
+    Navigator.of(context, rootNavigator: true).pushReplacement(
+        MaterialPageRoute(builder: (context) => LoginWithPass()));
   }
 
   Widget renderDoneBtn() {
@@ -74,17 +73,12 @@ class MySplashScreenState extends State<MySplashScreen> {
         body: Container(
             child: IntroSlider(
           isScrollable: false,
-          // List slides
           slides: this.slides,
-          // Done button
           renderDoneBtn: this.renderDoneBtn(),
           onDonePress: this.onDonePress,
           colorDoneBtn: Color(0x33000000),
           highlightColorDoneBtn: Color(0xff000000),
           isShowDotIndicator: false,
-          // Locale
-          // locale: 'en',
-          // Show or hide status bar
           shouldHideStatusBar: true,
         )));
   }

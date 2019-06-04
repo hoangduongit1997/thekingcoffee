@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
+import 'package:thekingcoffee/core/utils/utils.dart';
 
 class LoadingDialog {
   static void showLoadingDialog(BuildContext context, String msg) {
@@ -9,8 +10,11 @@ class LoadingDialog {
       builder: (context) => new Dialog(
             backgroundColor: Colors.transparent,
             child: Container(
-              color: Color(0xffffffff),
-              height: 100,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.all(Radius.circular(15.0)),
+              ),
+              height: Dimension.getHeight(0.2),
               child: new Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

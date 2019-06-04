@@ -19,8 +19,7 @@ Future<bool> PostLogin(String username, String password) async {
     final prefs = await SharedPreferences.getInstance();
     prefs.setString('token', token);
     prefs.setInt('id_user', id_user);
-    String a = prefs.getString('token');
-    print("Shared " + a);
+    Config.id_user = id_user;
     prefs.commit();
     Fluttertoast.showToast(
         msg: rest,

@@ -37,9 +37,9 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
       child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
         CarouselSlider(
           items: child,
-          autoPlay: false,
+          autoPlay: true,
           viewportFraction: 1.0,
-          autoPlayInterval: Duration(seconds: 7),
+          autoPlayInterval: Duration(seconds: 5),
           enlargeCenterPage: false,
           aspectRatio: 2.0,
           onPageChanged: (index) {
@@ -85,6 +85,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
               list_new_products[index]['File_Path'],
               list_new_products[index]['Description'],
               list_new_products[index]['Price'],
+              list_new_products[index]['IsHot'],
               list_new_products[index]['IsHot'],
               list_new_products[index]['Toppings'],
               list_new_products[index]['Size'],
@@ -212,7 +213,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
                                   false, 0.0, 200.0, Colors.blueGrey, 0.2)),
                         )),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(5, 30, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(5, 10, 0, 0),
                       child: Row(
                         children: <Widget>[
                           Stack(
