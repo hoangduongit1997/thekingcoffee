@@ -524,13 +524,13 @@ class Shopping_ListState extends State<Shopping_List> {
                   )),
                   Expanded(
                     child: MaterialButton(
-                        onPressed: () {
+                        onPressed: () async {
                           if (orderBloc.isValidInfo(
                                   name.text.trim().toString(),
                                   phone.text.trim().toString(),
                                   address.text.trim().toString()) ==
                               true) {
-                            if (PostOrder(phone.text.trim().toString(),
+                            if (await PostOrder(phone.text.trim().toString(),
                                     address.text.trim().toString()) ==
                                 true) {}
                           }

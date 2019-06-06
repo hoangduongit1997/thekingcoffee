@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:thekingcoffee/app/config/config.dart';
 
 import 'package:thekingcoffee/app/data/model/get_place_item.dart';
-import 'package:thekingcoffee/app/screens/dashboard.dart';
-import 'package:thekingcoffee/app/screens/shopping_list.dart';
-import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
+
 import 'package:thekingcoffee/core/components/widgets/address_picker.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 
@@ -116,9 +116,10 @@ class _HomePageState extends State<MapPage> {
         ));
   }
 
-  void onPlaceSelected(Get_Place_Item place, bool fromAddress) {
+  Future onPlaceSelected(Get_Place_Item place, bool fromAddress) async {
     _addMarker(place);
     _moveCamera(place);
+    await _add_latlog(place);
   }
 
   void _onMapTypeButtonPressed() {
@@ -145,8 +146,19 @@ class _HomePageState extends State<MapPage> {
   }
 
   void _moveCamera(Get_Place_Item place) {
-    _mapController.moveCamera(
-      CameraUpdate.newLatLngZoom(LatLng(place.lat, place.lng), 17.0),
-    );
+    _mapController.animateCamera(CameraUpdate.newCameraPosition(
+        CameraPosition(target: LatLng(place.lat, place.lng), zoom: 17.0)));
+  }
+
+  Future _add_latlog(Get_Place_Item place) async {
+    final pref = await SharedPreferences.getInstance();
+    pref.setDouble('Lat', place.lat);
+    pref.setDouble('Lng', place.lng);
+
+    pref.commit();
+    print("Sharepreferference: " +
+        pref.getDouble('Lat').toString() +
+        " " +
+        pref.getDouble('Lng').toString());
   }
 }

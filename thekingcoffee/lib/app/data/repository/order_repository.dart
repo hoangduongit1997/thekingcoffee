@@ -11,14 +11,17 @@ Future<bool> PostOrder(String phone, String address) async {
   final prefs = await SharedPreferences.getInstance();
   String token = prefs.getString('token');
   int id_user = prefs.getInt('id_user');
-  var x = [1, 3, 4, 5, 6];
-
+  double lat = prefs.getDouble('Lat');
+  double lng = prefs.getDouble('Lng');
   Map Order_Detail = {
+    "IsApp": true,
     "IdCustomer": id_user.toString(),
     "Address": address.toString(),
     "Phone": phone.toString(),
-    "Total": "1000",
-    "OrdersData": x
+    "Total": 1000,
+    "OrdersData": ListOrderProducts,
+    "Lat": lat.toString(),
+    "Long": lng.toString()
   };
   var body_order = json.encode(Order_Detail);
   Response response = await post(Config.order_API,
@@ -26,6 +29,14 @@ Future<bool> PostOrder(String phone, String address) async {
   String body = response.body;
   var data = json.decode(body);
   var rest = data['Message'];
+  Fluttertoast.showToast(
+      msg: rest,
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.BOTTOM,
+      timeInSecForIos: 1,
+      backgroundColor: Colors.redAccent,
+      textColor: Colors.white,
+      fontSize: 16.0);
   if (rest == "Order successfully") {
     status = true;
   } else {
