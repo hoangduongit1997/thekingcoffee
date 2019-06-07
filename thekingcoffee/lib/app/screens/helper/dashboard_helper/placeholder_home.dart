@@ -370,7 +370,6 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
 
   Future<void> refreshPage() async {
     await Future.delayed(Duration(seconds: 2));
-
     setState(() {
       Navigator.of(context, rootNavigator: true).pushReplacement(
           MaterialPageRoute(builder: (context) => DashBoard()));

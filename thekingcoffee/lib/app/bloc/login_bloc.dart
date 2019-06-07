@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:thekingcoffee/app/validation/validation.dart';
 
 class LoginBloc {
-  StreamController _usercontroller = new StreamController();
-  StreamController _passcontroller = new StreamController();
+  StreamController _usercontroller = new StreamController.broadcast();
+  StreamController _passcontroller = new StreamController.broadcast();
   Stream get userStream => _usercontroller.stream;
   Stream get passStream => _passcontroller.stream;
 

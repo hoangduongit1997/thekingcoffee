@@ -148,29 +148,45 @@ class Shopping_ListState extends State<Shopping_List> {
                         child: StreamBuilder<Object>(
                             stream: orderBloc.addressStream,
                             builder: (context, snapshot) {
-                              return TextField(
-                                onTap: () {
-                                  final result =
-                                      Navigator.of(context, rootNavigator: true)
+                              return Stack(
+                                alignment: AlignmentDirectional.centerEnd,
+                                children: <Widget>[
+                                  GestureDetector(
+                                    onDoubleTap: () {
+                                      final result = Navigator.of(context,
+                                              rootNavigator: true)
                                           .pushNamed('/map');
-                                  result.then((result) {
-                                    setState(() {
-                                      address.text = result as String;
-                                    });
-                                  });
-                                },
-                                decoration: InputDecoration(
-                                    errorText: snapshot.hasError
-                                        ? snapshot.error
-                                        : null,
-                                    icon: Icon(Icons.map),
-                                    hintText: "Enter your address..."),
-                                controller: address,
-                                style: StylesText.style15Black,
+                                      result.then((result) {
+                                        setState(() {
+                                          address.text = result as String;
+                                        });
+                                      });
+                                    },
+                                    child: TextField(
+                                      textAlign: TextAlign.left,
+                                      decoration: InputDecoration(
+                                          contentPadding: EdgeInsets.only(
+                                              right: 50, bottom: 10, top: 10),
+                                          errorText: snapshot.hasError
+                                              ? snapshot.error
+                                              : null,
+                                          icon: Icon(Icons.map),
+                                          hintText: "Enter your address..."),
+                                      controller: address,
+                                      style: StylesText.style15Black,
+                                    ),
+                                  ),
+                                  IconButton(
+                                    icon: Icon(Icons.close),
+                                    onPressed: () {
+                                      address.clear();
+                                    },
+                                  )
+                                ],
                               );
                             })),
                     Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                         child: Container(
                             child: RefreshIndicator(
                           backgroundColor: Colors.white,
