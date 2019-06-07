@@ -13,13 +13,39 @@ Future<bool> PostOrder(String phone, String address) async {
   int id_user = prefs.getInt('id_user');
   double lat = prefs.getDouble('Lat');
   double lng = prefs.getDouble('Lng');
+  var orderData=[];
+  for(var item in ListOrderProducts){
+    var product={};
+    product['Id']=item['Id'];
+    product['Quantity']=item['Quantity'];
+    product['Catalogue_Size_Id']=item['Size']['Id'];
+    if(item['Toppings']!=null){
+      var selectedToppings=[];
+      for(var topping in item['Toppings']){
+        selectedToppings.add(topping['Id']);
+      }
+      product['Toppings']=selectedToppings;
+    }
+    if(item['SelectedPromotion']!=null&&item['selectedDetailedSaleForProduct']!=null){
+      var selectedSaleProductFor=[];
+      for(var saleProductFor in item['selectedDetailedSaleForProduct']){
+        var temp={};
+        temp['Id']=saleProductFor['Id'];
+        temp['Quantity']=1;
+        temp['Id_detailedsale']=item['SelectedPromotion']['Id'];
+        selectedSaleProductFor.add(temp);
+      }
+      product['SaleProductFor']=selectedSaleProductFor;
+    }
+    orderData.add(product);
+  }
   Map Order_Detail = {
     "IsApp": true,
     "IdCustomer": id_user.toString(),
     "Address": address.toString(),
     "Phone": phone.toString(),
     "Total": 1000,
-    "OrdersData": ListOrderProducts,
+    "OrdersData": orderData,
     "Lat": lat.toString(),
     "Long": lng.toString()
   };
