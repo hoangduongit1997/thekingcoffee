@@ -147,8 +147,7 @@ class MyAppState extends State<LoginWithPass> {
                               padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
                               child: GestureDetector(
                                 onTap: () {
-                                  Config.islogin = 0;
-
+                                
                                   Navigator.of(context, rootNavigator: true)
                                       .pushReplacement(MaterialPageRoute(
                                           builder: (context) => DashBoard()));

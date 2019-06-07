@@ -3,15 +3,15 @@ import 'package:thekingcoffee/app/data/model/get_place_item.dart';
 import 'package:thekingcoffee/app/screens/address_picker_page.dart';
 import 'package:thekingcoffee/app/screens/map.dart';
 
-class RidePicker extends StatefulWidget {
+class AddressPicker extends StatefulWidget {
   final Function(Get_Place_Item, bool) onSelected;
-  RidePicker(this.onSelected);
+  AddressPicker(this.onSelected);
 
   @override
-  _RidePickerState createState() => _RidePickerState();
+  _AddressPickerState createState() => _AddressPickerState();
 }
 
-class _RidePickerState extends State<RidePicker> {
+class _AddressPickerState extends State<AddressPicker> {
   Get_Place_Item fromAddress;
   @override
   Widget build(BuildContext context) {

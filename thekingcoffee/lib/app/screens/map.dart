@@ -8,13 +8,14 @@ import 'package:location/location.dart';
 import 'package:thekingcoffee/app/data/model/get_place_item.dart';
 import 'package:thekingcoffee/core/components/widgets/address_picker.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
+import 'package:geocoder/geocoder.dart';
 
 class MapPage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
 
-String final_address = "";
+String final_address;
 
 class _HomePageState extends State<MapPage> {
   LocationData _startLocation;
@@ -73,9 +74,11 @@ class _HomePageState extends State<MapPage> {
       location = null;
     }
 
-    setState(() {
+    setState(() async {
       _startLocation = location;
-      _addMarker_Current_Position(
+      await _search_name_location(
+          _startLocation.latitude, _startLocation.longitude);
+      await _addMarker_Current_Position(
           _startLocation.latitude, _startLocation.longitude);
     });
   }
@@ -83,7 +86,7 @@ class _HomePageState extends State<MapPage> {
   @override
   void initState() {
     super.initState();
-
+    final_address = "";
     initPlatformState();
   }
 
@@ -133,7 +136,7 @@ class _HomePageState extends State<MapPage> {
                         Padding(
                           padding:
                               EdgeInsets.only(top: 80, left: 20, right: 20),
-                          child: RidePicker(onPlaceSelected),
+                          child: AddressPicker(onPlaceSelected),
                         ),
                       ],
                     ),
@@ -167,7 +170,7 @@ class _HomePageState extends State<MapPage> {
                         decoration: BoxDecoration(boxShadow: [
                           BoxShadow(
                             color: Colors.grey,
-                            blurRadius: 20.0,
+                            blurRadius: 40.0,
                             spreadRadius: 2.0,
                             offset: Offset(
                               8.0,
@@ -246,6 +249,7 @@ class _HomePageState extends State<MapPage> {
     final Marker marker = Marker(
       markerId: markerId,
       position: LatLng(lat, long),
+      infoWindow: InfoWindow(title: final_address),
       onTap: () {
         _onMarkerTapped(markerId);
       },
@@ -279,5 +283,26 @@ class _HomePageState extends State<MapPage> {
         pref.getDouble('Lat').toString() +
         " " +
         pref.getDouble('Lng').toString());
+  }
+
+  Future _add_latlog_current_location(double lat, double lng) async {
+    final pref = await SharedPreferences.getInstance();
+    pref.setDouble('Lat', lat);
+    pref.setDouble('Lng', lng);
+
+    pref.commit();
+    print("Sharepreference: " +
+        pref.getDouble('Lat').toString() +
+        " " +
+        pref.getDouble('Lng').toString());
+  }
+
+  _search_name_location(double lat, double long) async {
+    final coordinates = new Coordinates(lat, long);
+    var addresses =
+        await Geocoder.local.findAddressesFromCoordinates(coordinates);
+    var first = addresses.first;
+    final_address = first.addressLine.toString();
+    await _add_latlog_current_location(lat, long);
   }
 }

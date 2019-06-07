@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/screens/login.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
+import 'package:thekingcoffee/app/validation/validation.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart'
     as prefix0;
@@ -78,8 +79,8 @@ class LoadingDialog_Order {
                             style: StylesText.style14While,
                           )),
                         ),
-                        onPressed: () {
-                          if (Config.islogin == 0) {
+                        onPressed: () async {
+                          if ((await Validation.IsLogin()) == false) {
                             showDialog(
                                 context: context,
                                 builder: (BuildContext context) {
