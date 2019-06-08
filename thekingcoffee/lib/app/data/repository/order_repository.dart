@@ -13,16 +13,23 @@ Future<bool> PostOrder(String phone, String address) async {
   int id_user = prefs.getInt('id_user');
   double lat = prefs.getDouble('Lat');
   double lng = prefs.getDouble('Lng');
+  double total=0;
   var orderData=[];
   for(var item in ListOrderProducts){
+    total+=item['Price'];
     var product={};
+    product['Price']=item['Price'];
     product['Id']=item['Id'];
     product['Quantity']=item['Quantity'];
-    product['Catalogue_Size_Id']=item['Size']['Id'];
+    if(item['Size']!=null){
+      product['Catalogue_Size_Id']=item['Size']['Id'];
+    }
     if(item['Toppings']!=null){
       var selectedToppings=[];
       for(var topping in item['Toppings']){
-        selectedToppings.add(topping['Id']);
+        var t={};
+        t['Id']=topping['Id'];
+        selectedToppings.add(t);
       }
       product['Toppings']=selectedToppings;
     }
@@ -30,7 +37,7 @@ Future<bool> PostOrder(String phone, String address) async {
       var selectedSaleProductFor=[];
       for(var saleProductFor in item['selectedDetailedSaleForProduct']){
         var temp={};
-        temp['Id']=saleProductFor['Id'];
+        temp['IdProduct']=saleProductFor['IdProduct'];
         temp['Quantity']=1;
         temp['Id_detailedsale']=item['SelectedPromotion']['Id'];
         selectedSaleProductFor.add(temp);
@@ -44,7 +51,7 @@ Future<bool> PostOrder(String phone, String address) async {
     "IdCustomer": id_user.toString(),
     "Address": address.toString(),
     "Phone": phone.toString(),
-    "Total": 1000,
+    "Total": total,
     "OrdersData": orderData,
     "Lat": lat.toString(),
     "Long": lng.toString()
@@ -54,19 +61,18 @@ Future<bool> PostOrder(String phone, String address) async {
       body: body_order, headers: {'Token': token.toString()});
   String body = response.body;
   var data = json.decode(body);
-  var rest = data['Message'];
-  Fluttertoast.showToast(
-      msg: rest,
+  /*Fluttertoast.showToast(
+      msg: data['Message'],
       toastLength: Toast.LENGTH_SHORT,
       gravity: ToastGravity.BOTTOM,
       timeInSecForIos: 1,
       backgroundColor: Colors.redAccent,
       textColor: Colors.white,
       fontSize: 16.0);
-  if (rest == "Order successfully") {
+  if (data['Status']) {
     status = true;
   } else {
     status = false;
-  }
+  }*/
   return status;
 }
