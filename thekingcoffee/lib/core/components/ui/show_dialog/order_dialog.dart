@@ -777,7 +777,10 @@ class Order_DialogState extends State<Order_Dialog> {
                                       Padding(
                                         padding: const EdgeInsets.fromLTRB(
                                             5, 0, 0, 0),
-                                        child: Text(number.toString()),
+                                        child: Text(
+                                          number.toString(),
+                                          style: StylesText.style16Brown,
+                                        ),
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.fromLTRB(

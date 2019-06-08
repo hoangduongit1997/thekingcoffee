@@ -31,6 +31,7 @@ class Order_Dialog2019 extends StatefulWidget {
   final Map<String, dynamic> selectedPromotion;
   final List<dynamic> check_promotion_product;
   final String note_item;
+  int quantity;
   Order_Dialog2019(
       this.callback,
       this.id,
@@ -48,7 +49,8 @@ class Order_Dialog2019 extends StatefulWidget {
       this.selectedToppings,
       this.selectedPromotion,
       this.check_promotion_product,
-      this.note_item);
+      this.note_item,
+      this.quantity);
   Order_DialogState createState() => Order_DialogState();
 }
 
@@ -847,7 +849,10 @@ class Order_DialogState extends State<Order_Dialog2019> {
                                       Padding(
                                         padding: const EdgeInsets.fromLTRB(
                                             5, 0, 0, 0),
-                                        child: Text(number.toString()),
+                                        child: Text(
+                                          number.toString(),
+                                          style: StylesText.style16Brown,
+                                        ),
                                       ),
                                       Padding(
                                         padding: const EdgeInsets.fromLTRB(

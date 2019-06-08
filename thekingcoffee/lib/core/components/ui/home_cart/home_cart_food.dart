@@ -56,7 +56,7 @@ class _Home_Card_Food_State extends State<Home_Card_Food> {
             child: Column(
               children: <Widget>[
                 Container(
-                  height: Dimension.getHeight(0.36),
+                  height: Dimension.getHeight(0.33),
                   child: ListView.builder(
                       scrollDirection: Axis.horizontal,
                       shrinkWrap: true,
@@ -154,6 +154,8 @@ class _Home_Card_Food_State extends State<Home_Card_Food> {
                                                       Dimension.getWidth(0.51),
                                                   child: Text(
                                                     data[index]['Name'],
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
                                                     style: StylesText
                                                         .style17BrownBold,
                                                   ),
@@ -163,7 +165,7 @@ class _Home_Card_Food_State extends State<Home_Card_Food> {
                                           )),
                                       Padding(
                                         padding: const EdgeInsets.fromLTRB(
-                                            0, 10, 0, 5),
+                                            0, 10, 0, 0),
                                         child: Container(
                                           width: Dimension.getWidth(0.51),
                                           child: Row(
@@ -225,14 +227,14 @@ class _Home_Card_Food_State extends State<Home_Card_Food> {
                                       ),
                                       Padding(
                                           padding: const EdgeInsets.fromLTRB(
-                                              0, 5, 0, 0),
+                                              0, 2, 0, 0),
                                           child: Container(
                                             child: CustomPaint(
                                                 painter: Drawhorizontalline(
                                                     false,
                                                     0.0,
                                                     215.0,
-                                                    Colors.blueGrey,
+                                                    Colors.blueGrey[300],
                                                     0.5)),
                                           )),
                                       Padding(

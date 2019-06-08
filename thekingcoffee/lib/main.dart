@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:thekingcoffee/app/screens/login.dart';
 import 'package:thekingcoffee/app/screens/map.dart';
+import 'package:thekingcoffee/app/screens/shopping_list.dart';
 import 'package:thekingcoffee/app/screens/splash_screen.dart';
 
 void main() => runApp(MyApp());
 var routes = <String, WidgetBuilder>{
   '/map': (BuildContext context) => new MapPage(),
+  '/shop': (BuildContext context) => new Shopping_List(),
 };
 
 class MyApp extends StatelessWidget {

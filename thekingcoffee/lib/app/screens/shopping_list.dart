@@ -23,12 +23,21 @@ class Shopping_List extends StatefulWidget {
 class Shopping_ListState extends State<Shopping_List> {
   TextEditingController address = new TextEditingController();
   int multy_topping = 0;
+  int total_money = 0;
+  flus_total_money() {
+    for (var item in ListOrderProducts) {
+      setState(() {
+        total_money += item['Price'];
+      });
+    }
+  }
+
   @override
   void initState() {
     super.initState();
+    flus_total_money();
   }
 
-  var _scaffoldKey = new GlobalKey<ScaffoldState>();
   OrderBloc orderBloc = new OrderBloc();
   TextEditingController name = new TextEditingController(text: "Hoàng Dương");
   TextEditingController phone = new TextEditingController(text: "0798353751");
@@ -36,7 +45,6 @@ class Shopping_ListState extends State<Shopping_List> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: _scaffoldKey,
       appBar: AppBar(
         centerTitle: true,
         elevation: 0.8,
@@ -75,6 +83,7 @@ class Shopping_ListState extends State<Shopping_List> {
                                 child: Text("Yes"),
                                 onPressed: () {
                                   setState(() {
+                                    total_money = 0;
                                     ListOrderProducts.clear();
                                   });
                                   Navigator.of(context).pop();
@@ -165,8 +174,6 @@ class Shopping_ListState extends State<Shopping_List> {
                                     child: TextField(
                                       textAlign: TextAlign.left,
                                       decoration: InputDecoration(
-                                          contentPadding: EdgeInsets.only(
-                                              right: 50, bottom: 10, top: 10),
                                           errorText: snapshot.hasError
                                               ? snapshot.error
                                               : null,
@@ -176,17 +183,11 @@ class Shopping_ListState extends State<Shopping_List> {
                                       style: StylesText.style15Black,
                                     ),
                                   ),
-                                  IconButton(
-                                    icon: Icon(Icons.close),
-                                    onPressed: () {
-                                      address.clear();
-                                    },
-                                  )
                                 ],
                               );
                             })),
                     Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                        padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
                         child: Container(
                             child: RefreshIndicator(
                           backgroundColor: Colors.white,
@@ -229,6 +230,7 @@ class Shopping_ListState extends State<Shopping_List> {
                                       product['SelectedPromotion'],
                                       product['check_promotion_product'],
                                       product['Note'],
+                                      product['Quantity'],
                                     );
                                   },
                                   child: Container(
@@ -335,13 +337,21 @@ class Shopping_ListState extends State<Shopping_List> {
                                                                             0,
                                                                             0,
                                                                             0),
-                                                                    child: Text(
-                                                                      ListOrderProducts[
-                                                                              index]
-                                                                          [
-                                                                          'Name'],
-                                                                      style: StylesText
-                                                                          .style15Black,
+                                                                    child:
+                                                                        Container(
+                                                                      width: Dimension
+                                                                          .getWidth(
+                                                                              0.7),
+                                                                      child:
+                                                                          Text(
+                                                                        ListOrderProducts[index]
+                                                                            [
+                                                                            'Name'],
+                                                                        overflow:
+                                                                            TextOverflow.ellipsis,
+                                                                        style: StylesText
+                                                                            .style15Black,
+                                                                      ),
                                                                     ),
                                                                   ),
                                                                 ],
@@ -492,6 +502,9 @@ class Shopping_ListState extends State<Shopping_List> {
                                                     child: Text("Yes"),
                                                     onPressed: () {
                                                       setState(() {
+                                                        total_money -=
+                                                            ListOrderProducts[
+                                                                index]['Price'];
                                                         ListOrderProducts
                                                             .removeAt(index);
                                                       });
@@ -552,7 +565,7 @@ class Shopping_ListState extends State<Shopping_List> {
                           }
                         },
                         child: Text(
-                          "Purchase ",
+                          "Purchase " + total_money.toString() + " VND",
                           style: StylesText.style14While,
                         ),
                         color: Colors.redAccent),

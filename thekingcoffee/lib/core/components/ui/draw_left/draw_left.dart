@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/screens/account_detail.dart';
+import 'package:thekingcoffee/app/screens/dashboard.dart';
 
 import 'package:thekingcoffee/app/screens/earn_point.dart';
 
@@ -116,20 +117,6 @@ class _HomeMenuState extends State<HomeMenu> {
               InkWell(
                 child: ListTile(
                   title: Text(
-                    'Log in',
-                    style: StylesText.style13BlackBold,
-                  ),
-                  leading: Icon(Icons.open_in_browser, color: Colors.redAccent),
-                  onTap: () {
-                    Navigator.of(context, rootNavigator: true).pushReplacement(
-                        MaterialPageRoute(
-                            builder: (context) => LoginWithPass()));
-                  },
-                ),
-              ),
-              InkWell(
-                child: ListTile(
-                  title: Text(
                     'Log out',
                     style: StylesText.style13BlackBold,
                   ),
@@ -160,10 +147,10 @@ class _HomeMenuState extends State<HomeMenu> {
                                 onPressed: () async {
                                   SharedPreferences preferences =
                                       await SharedPreferences.getInstance();
-                                  preferences.clear();
-
-                                  Navigator.of(context, rootNavigator: true)
-                                      .pushReplacement(MaterialPageRoute(
+                                  await preferences.clear();
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
                                           builder: (context) =>
                                               LoginWithPass()));
                                 },
@@ -176,8 +163,8 @@ class _HomeMenuState extends State<HomeMenu> {
               ),
               InkWell(
                 onTap: () {
-                  Navigator.of(context, rootNavigator: true).pushReplacement(
-                      MaterialPageRoute(builder: (context) => History()));
+                  Navigator.of(context, rootNavigator: true)
+                      .push(MaterialPageRoute(builder: (context) => History()));
                 },
                 child: ListTile(
                   onTap: () {

@@ -14,6 +14,7 @@ import 'package:thekingcoffee/core/utils/utils.dart';
 
 class LoadingDialog_Order {
   Map<String, Object> selectedProduct = new Map();
+  BottomNavBarBloc _bottomNavBarBloc = new BottomNavBarBloc();
 
   void setValueSelectedProduct(String key, Object value) {
     var map = {key: value};
@@ -39,7 +40,8 @@ class LoadingDialog_Order {
       List<dynamic> selectedToppings,
       Map<String, dynamic> selectedPromotion,
       List<dynamic> check_promotion_product,
-      String note) {
+      String note,
+      int quantity) {
     showDialog(
         context: context,
         barrierDismissible: true,
@@ -67,7 +69,8 @@ class LoadingDialog_Order {
                       selectedToppings,
                       selectedPromotion,
                       check_promotion_product,
-                      note)),
+                      note,
+                      quantity)),
               actions: <Widget>[
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -112,7 +115,10 @@ class LoadingDialog_Order {
                         onPressed: () {
                           ListOrderProducts[index] = this.selectedProduct;
                           selectedProduct = {};
-                          Navigator.of(context).pop(); //reset sản phẩm chọn\
+
+                          _bottomNavBarBloc.pickItem(2);
+                          Navigator.pop(context);
+                          //reset sản phẩm chọn\
                         },
                       ),
                     ),

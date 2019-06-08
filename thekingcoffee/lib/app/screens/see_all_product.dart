@@ -100,12 +100,12 @@ class _See_All_ProductState extends State<See_All_Product> {
                                 ListOrderProducts);
                           },
                           child: Padding(
-                            padding: const EdgeInsets.all(0.85),
+                            padding: const EdgeInsets.all(2.0),
                             child: Center(
                               child: Container(
-                                  height: Dimension.getHeight(0.2),
+                                  height: Dimension.getHeight(0.168),
                                   padding:
-                                      const EdgeInsets.fromLTRB(5, 10, 5, 0),
+                                      const EdgeInsets.fromLTRB(5, 5, 5, 5),
                                   decoration: BoxDecoration(
                                       color: Colors.white,
                                       border:
@@ -185,6 +185,8 @@ class _See_All_ProductState extends State<See_All_Product> {
                                                           0.62),
                                                       child: Text(
                                                           data[index]['Name'],
+                                                          overflow: TextOverflow
+                                                              .ellipsis,
                                                           style: StylesText
                                                               .style20BrownBold),
                                                     ),

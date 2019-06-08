@@ -13,15 +13,13 @@ class History_Order_Detail extends StatefulWidget {
   var list_detailed_product = [];
   String phonenumber;
   String address;
-  int total;
+  String total;
   History_Order_Detail(this.list_detailed_product, this.order_code,
       this.address, this.phonenumber, this.total);
   _HistoryState createState() => _HistoryState();
 }
 
 class _HistoryState extends State<History_Order_Detail> {
- 
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -36,9 +34,7 @@ class _HistoryState extends State<History_Order_Detail> {
               ),
               leading: FlatButton(
                 onPressed: () {
-                 
-                  Navigator.of(context).pushReplacement(
-                      MaterialPageRoute(builder: (context) => History()));
+                  Navigator.of(context).pop();
                 },
                 child: Icon(
                   Icons.arrow_back,
@@ -61,7 +57,7 @@ class _HistoryState extends State<History_Order_Detail> {
                           width: double.infinity,
                           child: Text(
                             "Order detailed",
-                            style: StylesText.style18Black,
+                            style: StylesText.style15Black,
                           )),
                     ),
                     Padding(

@@ -17,15 +17,17 @@ class History extends StatefulWidget {
 class _HistoryState extends State<History> {
   var data_history = [];
   int length = 0;
-  var _scaffoldKey = new GlobalKey<ScaffoldState>();
+
   intData() async {
     final result = await Get_History();
-    setState(() {
-      if (result != null) {
-        data_history = result;
-        length = data_history.length;
-      }
-    });
+    if (this.mounted) {
+      setState(() {
+        if (result != null) {
+          data_history = result;
+          length = data_history.length;
+        }
+      });
+    }
   }
 
   @override
@@ -39,7 +41,6 @@ class _HistoryState extends State<History> {
     return MaterialApp(
         debugShowCheckedModeBanner: false,
         home: Scaffold(
-          key: _scaffoldKey,
           appBar: AppBar(
             backgroundColor: Colors.white,
             elevation: 0.5,
@@ -49,8 +50,6 @@ class _HistoryState extends State<History> {
             ),
             leading: FlatButton(
               onPressed: () {
-                // Navigator.of(context, rootNavigator: true).pushReplacement(
-                //     MaterialPageRoute(builder: (context) => DashBoard()));
                 Navigator.of(context).pop();
               },
               child: Icon(
@@ -194,7 +193,7 @@ class _HistoryState extends State<History> {
                                                           .fromLTRB(0, 0, 0, 0),
                                                       child: Text(
                                                         data_history[index]
-                                                                ['Price']
+                                                                ['Total']
                                                             .toString(),
                                                         style: StylesText
                                                             .style15Red,

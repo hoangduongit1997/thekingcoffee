@@ -151,6 +151,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
                         child: Container(
                           width: Dimension.getWidth(0.48),
                           child: Text(list_new_products[index]['Name'],
+                              overflow: TextOverflow.ellipsis,
                               style: StylesText.style20BrownBold),
                         ),
                       ),
@@ -287,8 +288,13 @@ class CarouselDemo extends StatelessWidget {
         body: Center(
           child: Padding(
               padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-              child: Container(
-                child: CarouselWithIndicator(),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  Container(
+                    child: CarouselWithIndicator(),
+                  ),
+                ],
               )),
         ),
       ),

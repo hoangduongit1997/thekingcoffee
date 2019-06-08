@@ -115,7 +115,7 @@ class _FindFoodState extends State<FindFood> {
                 Container(
                     color: Colors.white,
                     child: Padding(
-                        padding: const EdgeInsets.only(top: 10),
+                        padding: const EdgeInsets.all(5.0),
                         child: Container(
                             padding: EdgeInsets.fromLTRB(0, 10, 0, 20),
                             width: double.infinity,
@@ -150,12 +150,11 @@ class _FindFoodState extends State<FindFood> {
                                           ListOrderProducts);
                                     },
                                     child: Padding(
-                                      padding:
-                                          const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                      padding: const EdgeInsets.all(2.0),
                                       child: Container(
-                                          height: Dimension.getHeight(0.2),
+                                          height: Dimension.getHeight(0.168),
                                           padding: const EdgeInsets.fromLTRB(
-                                              5, 10, 5, 0),
+                                              5, 5, 5, 5),
                                           decoration: BoxDecoration(
                                               color: Colors.white,
                                               border: Border.all(
@@ -245,6 +244,9 @@ class _FindFoodState extends State<FindFood> {
                                                                   search_result[
                                                                           index]
                                                                       ['Name'],
+                                                                  overflow:
+                                                                      TextOverflow
+                                                                          .ellipsis,
                                                                   style: StylesText
                                                                       .style20BrownBold),
                                                             ),
