@@ -57,7 +57,8 @@ class Order_Dialog2019 extends StatefulWidget {
 class Order_DialogState extends State<Order_Dialog2019> {
   TextEditingController note = new TextEditingController();
   //var product = selectedProduct;
-  int number = 1;
+  int number;
+  double origin_price;
   int money;
   bool checked_hot = false;
   var selectedsize;
@@ -365,11 +366,12 @@ class Order_DialogState extends State<Order_Dialog2019> {
   void initState() {
     super.initState();
     note.text = widget.note_item.trim();
+    number=widget.quantity;
     money = widget.price;
     if (widget.size.length > 0) {
       money += widget.size[0]['PlusMonney'];
     }
-
+    origin_price=widget.price/widget.quantity;
     // if (widget.size != null && widget.size.length > 0) {
     //   selectedsize = widget.size[0];
     // }
@@ -837,7 +839,8 @@ class Order_DialogState extends State<Order_Dialog2019> {
                                                 return;
                                               }
                                               number--;
-                                              money -= widget.price;
+//                                              money -= widget.price;
+                                              money=origin_price.toInt()*number;
                                             });
                                             // selectedProduct['Quantity'] = number;
                                             // selectedProduct['Price'] = money;
@@ -863,7 +866,9 @@ class Order_DialogState extends State<Order_Dialog2019> {
                                           onPressed: () {
                                             setState(() {
                                               number++;
-                                              money += widget.price;
+//                                              money += widget.price;
+                                              money=origin_price.toInt()*number;
+
                                             });
                                             // selectedProduct['Quantity'] = number;
                                             // selectedProduct['Price'] = money;

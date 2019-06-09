@@ -297,6 +297,7 @@ class Shopping_ListState extends State<Shopping_List> {
                                       product['check_promotion_product'],
                                       product['Note'],
                                       product['Quantity'],
+                                      this.updateShoppingList
                                     );
                                   },
                                   child: Container(
@@ -648,6 +649,14 @@ class Shopping_ListState extends State<Shopping_List> {
     await Future.delayed(Duration(seconds: 1));
     setState(() {
       build(context);
+    });
+  }
+
+  void updateShoppingList(){
+    int total=ListOrderProducts.fold(0, (t, e) => t + e['Price']);
+    setState(() {
+      build(context);
+      total_money=total;
     });
   }
 }

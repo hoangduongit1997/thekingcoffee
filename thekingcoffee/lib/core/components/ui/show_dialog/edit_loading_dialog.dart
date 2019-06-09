@@ -41,7 +41,8 @@ class LoadingDialog_Order {
       Map<String, dynamic> selectedPromotion,
       List<dynamic> check_promotion_product,
       String note,
-      int quantity) {
+      int quantity,
+      Function() refreshListOrder) {
     showDialog(
         context: context,
         barrierDismissible: true,
@@ -115,7 +116,7 @@ class LoadingDialog_Order {
                         onPressed: () {
                           ListOrderProducts[index] = this.selectedProduct;
                           selectedProduct = {};
-
+                          refreshListOrder();
                           _bottomNavBarBloc.pickItem(2);
                           Navigator.pop(context);
                           //reset sản phẩm chọn\
