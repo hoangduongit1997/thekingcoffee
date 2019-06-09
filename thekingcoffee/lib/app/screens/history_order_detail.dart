@@ -95,9 +95,13 @@ class _HistoryState extends State<History_Order_Detail> {
                             ),
                             Padding(
                               padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
-                              child: Text(
-                                widget.address.toString(),
-                                style: StylesText.style15Black,
+                              child: Container(
+                                width: Dimension.getWidth(0.85),
+
+                                child: Text(
+                                  widget.address.toString(),
+                                  style: StylesText.style15Black,
+                                ),
                               ),
                             )
                           ],

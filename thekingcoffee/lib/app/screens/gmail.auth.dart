@@ -90,10 +90,15 @@ class VerifyPhonePageSate extends State<GmailAuth> {
 
   void onSubmitClick() async {
     LoadingDialog.showLoadingDialog(context, "Loading...");
+    if ((await Validation.isConnectedNetwork()) == false) {
+      Navigator.pop(context);
+      MsgDialog.showMsgDialog(
+          context, "No network!", "No network connection found");
+    }
     if ((await Validation.isConnectedNetwork()) == true &&
         resetPassBloc.isValidInfo(_gmail.text.trim().toString()) == true) {
+      LoadingDialog.hideLoadingDialog(context);
       if ((await SendCodeToGmail(_gmail.text.trim().toString())) == true) {
-        LoadingDialog.hideLoadingDialog(context);
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => VerifyGmail()));
       }
@@ -101,12 +106,6 @@ class VerifyPhonePageSate extends State<GmailAuth> {
     if ((await Validation.isConnectedNetwork()) &&
         resetPassBloc.isValidInfo(_gmail.text.trim().toString()) == false) {
       LoadingDialog.hideLoadingDialog(context);
-    }
-
-    if ((await Validation.isConnectedNetwork()) == false) {
-      LoadingDialog.hideLoadingDialog(context);
-      MsgDialog.showMsgDialog(
-          context, "No network!", "No network connection found");
     }
   }
 }

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:thekingcoffee/app/bloc/order_bloc.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/data/repository/order_repository.dart';
@@ -12,6 +13,8 @@ import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
 
 import 'package:thekingcoffee/core/components/ui/show_dialog/edit_loading_dialog.dart';
+import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog.dart';
+import 'package:thekingcoffee/core/components/ui/show_dialog/show_message_dialog.dart';
 
 import 'package:thekingcoffee/core/utils/utils.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
@@ -25,6 +28,7 @@ enum SingingCharacter { point, cast }
 
 class Shopping_ListState extends State<Shopping_List> {
   String _picked = "Change Points";
+  bool is_select_pay_method;
   _displayDialog(BuildContext context) async {
     return showDialog(
         context: context,
@@ -37,16 +41,20 @@ class Shopping_ListState extends State<Shopping_List> {
               style: StylesText.style18BrownBold,
             ),
             content: Container(
-              height: Dimension.getHeight(0.15),
+              height: Dimension.getHeight(0.135),
               child: RadioButtonGroup(
+                onSelected: (String selected) {
+                  setState(() {
+                    is_select_pay_method = true;
+                  });
+
+                  print(selected);
+                },
+                activeColor: Colors.redAccent,
                 labels: <String>[
-                  "Option 1",
-                  "Option 2",
+                  "Change points",
+                  "Cast",
                 ],
-                //  onSelected: (String selected) => print(selected)
-                onSelected: (String selected) => setState(() {
-                      _picked = selected;
-                    }),
               ),
             ),
             actions: <Widget>[
@@ -64,7 +72,12 @@ class Shopping_ListState extends State<Shopping_List> {
                   )),
                 ),
                 onPressed: () {
-                  Navigator.of(context).pop();
+                  if (is_select_pay_method == true) {
+                    Navigator.of(context).pop();
+                  } else {
+                    MsgDialog.showMsgDialog(
+                        context, "Notification", "You must choose pay mothod");
+                  }
                 },
               ),
             ],
@@ -75,6 +88,7 @@ class Shopping_ListState extends State<Shopping_List> {
   TextEditingController address = new TextEditingController();
   int multy_topping = 0;
   int total_money = 0;
+  int user_point = 0;
   flus_total_money() {
     for (var item in ListOrderProducts) {
       setState(() {
@@ -83,10 +97,17 @@ class Shopping_ListState extends State<Shopping_List> {
     }
   }
 
+  get_point_user() async {
+    final pref = await SharedPreferences.getInstance();
+    user_point = pref.getInt('points');
+  }
+
   @override
   void initState() {
     super.initState();
     flus_total_money();
+    get_point_user();
+    is_select_pay_method = false;
   }
 
   OrderBloc orderBloc = new OrderBloc();
@@ -193,9 +214,6 @@ class Shopping_ListState extends State<Shopping_List> {
                             stream: orderBloc.phoneStream,
                             builder: (context, snapshot) {
                               return TextField(
-                                onTap: () {
-                                  _displayDialog(context);
-                                },
                                 keyboardType: TextInputType.phone,
                                 decoration: InputDecoration(
                                     icon: Icon(Icons.phone),
@@ -212,6 +230,7 @@ class Shopping_ListState extends State<Shopping_List> {
                             stream: orderBloc.addressStream,
                             builder: (context, snapshot) {
                               return TextField(
+                                autofocus: false,
                                 onTap: () {
                                   final result =
                                       Navigator.of(context, rootNavigator: true)
@@ -601,14 +620,18 @@ class Shopping_ListState extends State<Shopping_List> {
                   Expanded(
                     child: MaterialButton(
                         onPressed: () async {
-                          if (orderBloc.isValidInfo(
+                          if (user_point > 100) {
+                            _displayDialog(context);
+                          } else if (orderBloc.isValidInfo(
                                   name.text.trim().toString(),
                                   phone.text.trim().toString(),
                                   address.text.trim().toString()) ==
                               true) {
-                            if (await PostOrder(phone.text.trim().toString(),
-                                    address.text.trim().toString()) ==
-                                true) {}
+//                            if (await PostOrder(phone.text.trim().toString(),
+//                                    address.text.trim().toString()) ==
+//                                true) {}
+                          await PostOrder(phone.text.trim().toString(),
+                                    address.text.trim().toString());
                           }
                         },
                         child: Text(

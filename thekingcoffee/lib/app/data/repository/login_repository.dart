@@ -11,8 +11,7 @@ Future<bool> PostLogin(String username, String password) async {
   Response response = await post(Config.login_Api, body: LoginJson);
   String body = response.body;
   var data = json.decode(body);
-  var rest = data['Message'];
-  if (rest == "Login successfully") {
+  if (data['Status'] == 1) {
     status = true;
     var token = data['Value']['Token'];
     var id_user = data['Value']['Id'];
@@ -23,7 +22,7 @@ Future<bool> PostLogin(String username, String password) async {
     prefs.setInt('points', point);
     prefs.commit();
     Fluttertoast.showToast(
-        msg: rest,
+        msg: data['Message'].toString(),
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIos: 1,
@@ -32,7 +31,7 @@ Future<bool> PostLogin(String username, String password) async {
         fontSize: 16.0);
   } else {
     Fluttertoast.showToast(
-        msg: rest,
+        msg: data['Message'].toString(),
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIos: 1,

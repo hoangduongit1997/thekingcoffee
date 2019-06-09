@@ -13,6 +13,7 @@ import 'package:thekingcoffee/app/screens/login.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:thekingcoffee/app/validation/validation.dart';
+import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
 
 class HomeMenu extends StatefulWidget {
   @override
@@ -156,6 +157,7 @@ class _HomeMenuState extends State<HomeMenu> {
                               FlatButton(
                                 child: Text("Yes"),
                                 onPressed: () async {
+                                  ListOrderProducts.clear();
                                   SharedPreferences preferences =
                                       await SharedPreferences.getInstance();
                                   await preferences.clear();

@@ -5,8 +5,8 @@ import 'package:http/http.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-Future<bool> PostSignUp(
-    String name, String pass, String phone, String date,String fullname) async {
+Future<bool> PostSignUp(String name, String pass, String phone, String date,
+    String fullname) async {
   bool status = false;
   final SignUpJson = {
     "Username": name,
@@ -19,8 +19,7 @@ Future<bool> PostSignUp(
   Response response = await post(Config.signup_API, body: SignUpJson);
   String body = response.body;
   var data = json.decode(body);
-  var rest = data['Message'];
-  if (rest == "Sign up successfully") {
+  if (data['Status'] == 1) {
     status = true;
     var token = data['Value']['Token'];
     var id_user = data['Value']['Id'];
@@ -29,7 +28,7 @@ Future<bool> PostSignUp(
     prefs.setInt('id_user', id_user);
     prefs.commit();
     Fluttertoast.showToast(
-        msg: rest,
+        msg: data['Message'].toString(),
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIos: 1,
@@ -38,7 +37,7 @@ Future<bool> PostSignUp(
         fontSize: 16.0);
   } else {
     Fluttertoast.showToast(
-        msg: rest,
+        msg: data['Message'].toString(),
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIos: 1,

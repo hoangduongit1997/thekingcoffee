@@ -179,7 +179,7 @@ class Order_DialogState extends State<Order_Dialog> {
           padding: const EdgeInsets.fromLTRB(2, 0, 0, 0),
           child: Container(
             width: Dimension.getWidth(1.0),
-            height: Dimension.getHeight(0.115),
+            height: Dimension.getHeight(0.16),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[

@@ -13,36 +13,37 @@ Future<bool> PostOrder(String phone, String address) async {
   int id_user = prefs.getInt('id_user');
   double lat = prefs.getDouble('Lat');
   double lng = prefs.getDouble('Lng');
-  double total=0;
-  var orderData=[];
-  for(var item in ListOrderProducts){
-    total+=item['Price'];
-    var product={};
-    product['Price']=item['Price'];
-    product['Id']=item['Id'];
-    product['Quantity']=item['Quantity'];
-    if(item['Size']!=null){
-      product['Catalogue_Size_Id']=item['Size']['Id'];
+  double total = 0;
+  var orderData = [];
+  for (var item in ListOrderProducts) {
+    total += item['Price'];
+    var product = {};
+    product['Price'] = item['Price'];
+    product['Id'] = item['Id'];
+    product['Quantity'] = item['Quantity'];
+    if (item['Size'] != null) {
+      product['Catalogue_Size_Id'] = item['Size']['Id'];
     }
-    if(item['Toppings']!=null){
-      var selectedToppings=[];
-      for(var topping in item['Toppings']){
-        var t={};
-        t['Id']=topping['Id'];
+    if (item['Toppings'] != null) {
+      var selectedToppings = [];
+      for (var topping in item['Toppings']) {
+        var t = {};
+        t['Id'] = topping['Id'];
         selectedToppings.add(t);
       }
-      product['Toppings']=selectedToppings;
+      product['Toppings'] = selectedToppings;
     }
-    if(item['SelectedPromotion']!=null&&item['selectedDetailedSaleForProduct']!=null){
-      var selectedSaleProductFor=[];
-      for(var saleProductFor in item['selectedDetailedSaleForProduct']){
-        var temp={};
-        temp['IdProduct']=saleProductFor['IdProduct'];
-        temp['Quantity']=1;
-        temp['Id_detailedsale']=item['SelectedPromotion']['Id'];
+    if (item['SelectedPromotion'] != null &&
+        item['selectedDetailedSaleForProduct'] != null) {
+      var selectedSaleProductFor = [];
+      for (var saleProductFor in item['selectedDetailedSaleForProduct']) {
+        var temp = {};
+        temp['IdProduct'] = saleProductFor['IdProduct'];
+        temp['Quantity'] = 1;
+        temp['Id_detailedsale'] = item['SelectedPromotion']['Id'];
         selectedSaleProductFor.add(temp);
       }
-      product['SaleProductFor']=selectedSaleProductFor;
+      product['SaleProductFor'] = selectedSaleProductFor;
     }
     orderData.add(product);
   }

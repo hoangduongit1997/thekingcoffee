@@ -19,26 +19,24 @@ Future<bool> ReSetPass_Res(
       .timeout(const Duration(seconds: 4));
   String body = response.body;
   var data = json.decode(body);
-  var rest = data['Message'];
 
-  if (rest == "Reset password successfully") {
+  if (data['Status'] == 1) {
     status = true;
     final pref = await SharedPreferences.getInstance();
     pref.clear();
     pref.commit();
     Fluttertoast.showToast(
-        msg: "Reset password successfully!",
+        msg: data['Message'].toString(),
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIos: 1,
         backgroundColor: Colors.redAccent,
         textColor: Colors.white,
         fontSize: 16.0);
-  }
-  if (rest == "Check mail for getting cod") {
+  } else {
     status = false;
     Fluttertoast.showToast(
-        msg: "Error! Please try again",
+        msg: data['Message'].toString(),
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIos: 1,
