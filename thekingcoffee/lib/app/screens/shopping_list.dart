@@ -15,12 +15,63 @@ import 'package:thekingcoffee/core/components/ui/show_dialog/edit_loading_dialog
 
 import 'package:thekingcoffee/core/utils/utils.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:grouped_buttons/grouped_buttons.dart';
 
 class Shopping_List extends StatefulWidget {
   Shopping_ListState createState() => Shopping_ListState();
 }
 
+enum SingingCharacter { point, cast }
+
 class Shopping_ListState extends State<Shopping_List> {
+  String _picked = "Change Points";
+  _displayDialog(BuildContext context) async {
+    return showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.all(Radius.circular(15.0))),
+            title: Text(
+              'Payment method',
+              style: StylesText.style18BrownBold,
+            ),
+            content: Container(
+              height: Dimension.getHeight(0.15),
+              child: RadioButtonGroup(
+                labels: <String>[
+                  "Option 1",
+                  "Option 2",
+                ],
+                //  onSelected: (String selected) => print(selected)
+                onSelected: (String selected) => setState(() {
+                      _picked = selected;
+                    }),
+              ),
+            ),
+            actions: <Widget>[
+              FlatButton(
+                child: Container(
+                  width: Dimension.getWidth(0.3),
+                  height: Dimension.getHeight(0.04),
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                      color: Colors.redAccent),
+                  child: Center(
+                      child: Text(
+                    "OK",
+                    style: StylesText.style14While,
+                  )),
+                ),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        });
+  }
+
   TextEditingController address = new TextEditingController();
   int multy_topping = 0;
   int total_money = 0;
@@ -142,6 +193,9 @@ class Shopping_ListState extends State<Shopping_List> {
                             stream: orderBloc.phoneStream,
                             builder: (context, snapshot) {
                               return TextField(
+                                onTap: () {
+                                  _displayDialog(context);
+                                },
                                 keyboardType: TextInputType.phone,
                                 decoration: InputDecoration(
                                     icon: Icon(Icons.phone),
@@ -157,33 +211,26 @@ class Shopping_ListState extends State<Shopping_List> {
                         child: StreamBuilder<Object>(
                             stream: orderBloc.addressStream,
                             builder: (context, snapshot) {
-                              return Stack(
-                                alignment: AlignmentDirectional.centerEnd,
-                                children: <Widget>[
-                                  GestureDetector(
-                                    onDoubleTap: () {
-                                      final result = Navigator.of(context,
-                                              rootNavigator: true)
+                              return TextField(
+                                onTap: () {
+                                  final result =
+                                      Navigator.of(context, rootNavigator: true)
                                           .pushNamed('/map');
-                                      result.then((result) {
-                                        setState(() {
-                                          address.text = result as String;
-                                        });
-                                      });
-                                    },
-                                    child: TextField(
-                                      textAlign: TextAlign.left,
-                                      decoration: InputDecoration(
-                                          errorText: snapshot.hasError
-                                              ? snapshot.error
-                                              : null,
-                                          icon: Icon(Icons.map),
-                                          hintText: "Enter your address..."),
-                                      controller: address,
-                                      style: StylesText.style15Black,
-                                    ),
-                                  ),
-                                ],
+                                  result.then((result) {
+                                    setState(() {
+                                      address.text = result as String;
+                                    });
+                                  });
+                                },
+                                textAlign: TextAlign.left,
+                                decoration: InputDecoration(
+                                    errorText: snapshot.hasError
+                                        ? snapshot.error
+                                        : null,
+                                    icon: Icon(Icons.map),
+                                    hintText: "Enter your address..."),
+                                controller: address,
+                                style: StylesText.style15Black,
                               );
                             })),
                     Padding(
@@ -580,7 +627,6 @@ class Shopping_ListState extends State<Shopping_List> {
 
   Future<void> refreshPage() async {
     await Future.delayed(Duration(seconds: 1));
-
     setState(() {
       build(context);
     });

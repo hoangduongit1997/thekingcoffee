@@ -16,9 +16,11 @@ Future<bool> PostLogin(String username, String password) async {
     status = true;
     var token = data['Value']['Token'];
     var id_user = data['Value']['Id'];
+    var point = data['Value']['Point'];
     final prefs = await SharedPreferences.getInstance();
     prefs.setString('token', token);
     prefs.setInt('id_user', id_user);
+    prefs.setInt('points', point);
     prefs.commit();
     Fluttertoast.showToast(
         msg: rest,

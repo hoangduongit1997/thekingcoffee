@@ -21,8 +21,13 @@ class HomeMenu extends StatefulWidget {
 
 class _HomeMenuState extends State<HomeMenu> {
   bool islogin;
+  String point;
   CheckLogin() async {
     if ((await Validation.IsLogin() == true)) {
+      final pref = await SharedPreferences.getInstance();
+      setState(() {
+        point = pref.getInt('points').toString();
+      });
       print("Is Login");
       setState(() {
         islogin = true;
@@ -47,28 +52,34 @@ class _HomeMenuState extends State<HomeMenu> {
         ? ListView(
             children: <Widget>[
               new UserAccountsDrawerHeader(
-                accountName: Text(
-                  'Hoàng Dương',
-                  style: StylesText.style15BlackBold,
-                ),
-                accountEmail: Text(
-                  'hoangduongit1997@gmail.com',
-                  style: StylesText.style13Black,
-                ),
-                currentAccountPicture: GestureDetector(
-                    child: Container(
-                  height: 100,
-                  width: 100,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                          fit: BoxFit.fill,
-                          image: NetworkImage(
-                            Config.ip + "/storage/images/kingcoffee/congan.png",
-                          ))),
-                )),
-                decoration: new BoxDecoration(color: Colors.redAccent),
-              ),
+                  accountName: Text(
+                    'Hoàng Dương',
+                    style: StylesText.style15BlackBold,
+                  ),
+                  accountEmail: Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: <Widget>[
+                      Text(
+                        point,
+                        style: StylesText.style13BlackBold,
+                      ),
+                      Icon(Icons.star, color: Colors.yellowAccent)
+                    ],
+                  ),
+                  currentAccountPicture: GestureDetector(
+                      child: Container(
+                    height: 100,
+                    width: 100,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                            fit: BoxFit.fill,
+                            image: NetworkImage(
+                              Config.ip +
+                                  "/storage/images/kingcoffee/congan.png",
+                            ))),
+                  )),
+                  decoration: new BoxDecoration(color: Colors.redAccent[400])),
               InkWell(
                 onTap: () {
                   Navigator.of(context, rootNavigator: true)
