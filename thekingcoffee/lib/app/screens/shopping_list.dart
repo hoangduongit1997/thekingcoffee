@@ -18,18 +18,19 @@ import 'package:thekingcoffee/core/components/ui/show_dialog/show_message_dialog
 
 import 'package:thekingcoffee/core/utils/utils.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-import 'package:grouped_buttons/grouped_buttons.dart';
+
 
 class Shopping_List extends StatefulWidget {
   Shopping_ListState createState() => Shopping_ListState();
 }
 
-enum SingingCharacter { point, cast }
+
 
 class Shopping_ListState extends State<Shopping_List> {
-  String _picked = "Change Points";
-  bool is_select_pay_method;
-  _displayDialog(BuildContext context) async {
+int group_value_method;
+
+
+  _display_dialog_paymethod(BuildContext context) async {
     return showDialog(
         context: context,
         builder: (context) {
@@ -41,21 +42,32 @@ class Shopping_ListState extends State<Shopping_List> {
               style: StylesText.style18BrownBold,
             ),
             content: Container(
-              height: Dimension.getHeight(0.135),
-              child: RadioButtonGroup(
-                onSelected: (String selected) {
-                  setState(() {
-                    is_select_pay_method = true;
-                  });
+              height: Dimension.getHeight(0.155),
+              child:Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                mainAxisSize: MainAxisSize.min,
+                children: <Widget>[
+                  RadioListTile(
+                    activeColor: Colors.redAccent,
+                    dense: true,
+                    title: Text("Change Points"),
+                    value: 1,
+                    groupValue: group_value_method,
+                    onChanged: (int value) =>change_method(value)
 
-                  print(selected);
-                },
-                activeColor: Colors.redAccent,
-                labels: <String>[
-                  "Change points",
-                  "Cast",
+                  ),
+                  RadioListTile(
+                    activeColor: Colors.redAccent,
+
+                    title: Text("Cast"),
+                    dense: true,
+                    value: 2,
+                    groupValue: group_value_method,
+                      onChanged: (int value) =>change_method(value)
+
+                  ),
                 ],
-              ),
+              )
             ),
             actions: <Widget>[
               FlatButton(
@@ -72,12 +84,10 @@ class Shopping_ListState extends State<Shopping_List> {
                   )),
                 ),
                 onPressed: () {
-                  if (is_select_pay_method == true) {
-                    Navigator.of(context).pop();
-                  } else {
+
                     MsgDialog.showMsgDialog(
-                        context, "Notification", "You must choose pay mothod");
-                  }
+                        context, "Notification", "OK");
+
                 },
               ),
             ],
@@ -107,7 +117,7 @@ class Shopping_ListState extends State<Shopping_List> {
     super.initState();
     flus_total_money();
     get_point_user();
-    is_select_pay_method = false;
+
   }
 
   OrderBloc orderBloc = new OrderBloc();
@@ -622,7 +632,7 @@ class Shopping_ListState extends State<Shopping_List> {
                     child: MaterialButton(
                         onPressed: () async {
                           if (user_point > 100) {
-                            _displayDialog(context);
+                            _display_dialog_paymethod(context);
                           } else if (orderBloc.isValidInfo(
                                   name.text.trim().toString(),
                                   phone.text.trim().toString(),
@@ -657,6 +667,18 @@ class Shopping_ListState extends State<Shopping_List> {
     setState(() {
       build(context);
       total_money=total;
+    });
+  }
+
+  change_method(int value) {
+    setState(() {
+      if(value==1)
+        {
+          group_value_method=1;
+        }
+      else{
+        group_value_method=2;
+      }
     });
   }
 }
