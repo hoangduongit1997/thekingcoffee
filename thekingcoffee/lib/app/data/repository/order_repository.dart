@@ -7,8 +7,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
 import 'package:http/http.dart' as http;
 
-
-Future<int> PostOrder(String phone, String address) async {
+Future<bool> PostOrder(String phone, String address) async {
+  bool status_oder = false;
   final prefs = await SharedPreferences.getInstance();
   String token = prefs.getString('token');
   int id_user = prefs.getInt('id_user');
@@ -19,12 +19,13 @@ Future<int> PostOrder(String phone, String address) async {
   for (var item in ListOrderProducts) {
     total += item['Price'];
     var product = {};
-    product['Price'] = item['Price'];
+
     product['Id'] = item['Id'];
     product['Quantity'] = item['Quantity'];
     if (item['Size'] != null) {
       product['Catalogue_Size_Id'] = item['Size']['Id'];
     }
+    product['Price'] = item['Price'];
     if (item['Toppings'] != null) {
       var selectedToppings = [];
       for (var topping in item['Toppings']) {
@@ -60,21 +61,29 @@ Future<int> PostOrder(String phone, String address) async {
   };
   var body_order = json.encode(Order_Detail);
   Response response1 = await post(Config.order_API,
-      headers: {'Token': token,'Content-Type':'application/json'},
+      headers: {'Token': token, 'Content-Type': 'application/json'},
       body: body_order);
   var data = json.decode(response1.body);
-  /*Fluttertoast.showToast(
-      msg: data['Message'],
-      toastLength: Toast.LENGTH_SHORT,
-      gravity: ToastGravity.BOTTOM,
-      timeInSecForIos: 1,
-      backgroundColor: Colors.redAccent,
-      textColor: Colors.white,
-      fontSize: 16.0);
-  if (data['Status']) {
-    status = true;
+  if (data['Status'] == 1) {
+    status_oder = true;
+    Fluttertoast.showToast(
+        msg: data['Message'],
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIos: 1,
+        backgroundColor: Colors.redAccent,
+        textColor: Colors.white,
+        fontSize: 16.0);
   } else {
-    status = false;
-  }*/
-  return data['Status'];
+    status_oder = false;
+    Fluttertoast.showToast(
+        msg: data['Message'],
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIos: 1,
+        backgroundColor: Colors.redAccent,
+        textColor: Colors.white,
+        fontSize: 16.0);
+  }
+  return status_oder;
 }

@@ -627,11 +627,9 @@ class Shopping_ListState extends State<Shopping_List> {
                                   phone.text.trim().toString(),
                                   address.text.trim().toString()) ==
                               true) {
-//                            if (await PostOrder(phone.text.trim().toString(),
-//                                    address.text.trim().toString()) ==
-//                                true) {}
-                          await PostOrder(phone.text.trim().toString(),
-                                    address.text.trim().toString());
+                            if (await PostOrder(phone.text.trim().toString(),
+                                    address.text.trim().toString()) ==
+                                true) {}
                           }
                         },
                         child: Text(
