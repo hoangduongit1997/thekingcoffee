@@ -1,11 +1,8 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:thekingcoffee/app/config/config.dart';
-import 'package:thekingcoffee/app/data/repository/get_history.dart';
-import 'package:thekingcoffee/app/screens/helper/dashboard_helper/placeholder_home.dart';
-import 'package:thekingcoffee/app/screens/history.dart';
+
 import 'package:thekingcoffee/app/styles/styles.dart';
-import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 
 class History_Order_Detail extends StatefulWidget {
@@ -97,7 +94,6 @@ class _HistoryState extends State<History_Order_Detail> {
                               padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
                               child: Container(
                                 width: Dimension.getWidth(0.85),
-
                                 child: Text(
                                   widget.address.toString(),
                                   style: StylesText.style15Black,
