@@ -14,6 +14,7 @@ import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:thekingcoffee/app/validation/validation.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class HomeMenu extends StatefulWidget {
   @override
@@ -21,6 +22,15 @@ class HomeMenu extends StatefulWidget {
 }
 
 class _HomeMenuState extends State<HomeMenu> {
+  Future<void> _launched;
+  Future<void> _makePhoneCall(String url) async {
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Could not launch $url';
+    }
+  }
+
   bool islogin;
   String point;
   CheckLogin() async {
@@ -161,9 +171,8 @@ class _HomeMenuState extends State<HomeMenu> {
                                   SharedPreferences preferences =
                                       await SharedPreferences.getInstance();
                                   await preferences.clear();
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
+                                  Navigator.of(context, rootNavigator: true)
+                                      .pushReplacement(MaterialPageRoute(
                                           builder: (context) =>
                                               LoginWithPass()));
                                 },
@@ -172,6 +181,20 @@ class _HomeMenuState extends State<HomeMenu> {
                           );
                         });
                   },
+                ),
+              ),
+              InkWell(
+                onTap: () {
+                  setState(() {
+                    _launched = _makePhoneCall('tel:+84798353751');
+                  });
+                },
+                child: ListTile(
+                  title: Text(
+                    'Help',
+                    style: StylesText.style13BlackBold,
+                  ),
+                  leading: Icon(Icons.help_outline, color: Colors.redAccent),
                 ),
               ),
               InkWell(
@@ -249,10 +272,6 @@ class _HomeMenuState extends State<HomeMenu> {
                 ),
               ),
               InkWell(
-                onTap: () {
-                  Navigator.of(context, rootNavigator: true).pushReplacement(
-                      MaterialPageRoute(builder: (context) => History()));
-                },
                 child: ListTile(
                   onTap: () {
                     showDialog(

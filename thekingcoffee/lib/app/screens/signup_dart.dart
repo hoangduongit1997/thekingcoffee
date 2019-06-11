@@ -39,33 +39,32 @@ class MyAppState extends State<SignUp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(
-          primaryColor: Colors.orange,
-        ),
-        home: Scaffold(
-          resizeToAvoidBottomInset: true,
-          appBar: AppBar(
-            backgroundColor: Colors.white,
-            elevation: 0.0,
-            title: Text(
-              "Register",
-              style: StylesText.style20BrownBold,
-            ),
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () => Navigator.pop(context, true),
-            ),
-            actions: <Widget>[
-              IconButton(
-                  icon: SvgPicture.asset('assets/images/danger.svg',
-                      width: Dimension.getWidth(0.064),
-                      height: Dimension.getWidth(0.031)),
-                  onPressed: null)
-            ],
+    return Scaffold(
+        resizeToAvoidBottomInset: true,
+        appBar: AppBar(
+          backgroundColor: Colors.white,
+          elevation: 0.0,
+          title: Text(
+            "Register",
+            style: StylesText.style20BrownBold,
           ),
-          body: Container(
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back, color: Colors.brown),
+            onPressed: () => Navigator.pop(context),
+          ),
+          actions: <Widget>[
+            IconButton(
+                icon: SvgPicture.asset('assets/images/danger.svg',
+                    width: Dimension.getWidth(0.064),
+                    height: Dimension.getWidth(0.031)),
+                onPressed: null)
+          ],
+        ),
+        body: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).requestFocus(new FocusNode());
+          },
+          child: Container(
               padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
               constraints: BoxConstraints.expand(),
               color: Colors.white,

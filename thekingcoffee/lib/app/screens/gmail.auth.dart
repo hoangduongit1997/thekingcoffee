@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:thekingcoffee/app/bloc/gmail_auth_bloc.dart';
 import 'package:thekingcoffee/app/data/repository/sendcodetogamil.dart';
 import 'package:thekingcoffee/app/screens/veryfy_gmail.dart';
@@ -23,69 +22,69 @@ class VerifyPhonePageSate extends State<GmailAuth> {
   TextEditingController _gmail = new TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(
-        primaryColor: Colors.orange,
-      ),
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        resizeToAvoidBottomInset: true,
-        body: Container(
-            padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
-            constraints: BoxConstraints.expand(),
-            color: Colors.white,
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 120, 0, 0),
-                    child: Text("Forget password?",
-                        style: StylesText.style24BrownBold),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-                    child: Text("Enter your email to continute",
-                        style: StylesText.style16BrownBold),
-                  ),
-                  Padding(
+    return GestureDetector(
+        onTap: () {
+          FocusScope.of(context).requestFocus(new FocusNode());
+        },
+        child: Scaffold(
+          resizeToAvoidBottomInset: true,
+          body: Container(
+              padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
+              constraints: BoxConstraints.expand(),
+              color: Colors.white,
+              child: SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: <Widget>[
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 120, 0, 0),
+                      child: Text("Forget password?",
+                          style: StylesText.style24BrownBold),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                      child: Text("Enter your email to continute",
+                          style: StylesText.style16BrownBold),
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
+                        child: StreamBuilder<Object>(
+                            stream: resetPassBloc.gmailStream,
+                            builder: (context, snapshot) {
+                              return TextField(
+                                controller: _gmail,
+                                style: StylesText.style18Black,
+                                decoration: InputDecoration(
+                                    labelText: "Email",
+                                    errorText: snapshot.hasError
+                                        ? snapshot.error
+                                        : null,
+                                    labelStyle: StylesText.style12Bluegray),
+                              );
+                            })),
+                    Padding(
                       padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                      child: StreamBuilder<Object>(
-                          stream: resetPassBloc.gmailStream,
-                          builder: (context, snapshot) {
-                            return TextField(
-                              controller: _gmail,
-                              style: StylesText.style18Black,
-                              decoration: InputDecoration(
-                                  labelText: "Email",
-                                  errorText:
-                                      snapshot.hasError ? snapshot.error : null,
-                                  labelStyle: StylesText.style12Bluegray),
-                            );
-                          })),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 20, 0, 20),
-                    child: SizedBox(
-                      width: Dimension.getWidth(0.86),
-                      height: Dimension.getHeight(0.063),
-                      child: RaisedButton(
-                        color: Colors.red[300],
-                        child: Text(
-                          "Submit",
-                          style: StylesText.style16While,
+                      child: SizedBox(
+                        width: Dimension.getWidth(0.86),
+                        height: Dimension.getHeight(0.063),
+                        child: RaisedButton(
+                          color: Colors.red[300],
+                          child: Text(
+                            "Submit",
+                            style: StylesText.style16While,
+                          ),
+                          shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8))),
+                          onPressed: onSubmitClick,
                         ),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(8))),
-                        onPressed: onSubmitClick,
                       ),
                     ),
-                  ),
-                ],
-              ),
-            )),
-      ),
-    );
+                  ],
+                ),
+              )),
+        ));
   }
 
   void onSubmitClick() async {

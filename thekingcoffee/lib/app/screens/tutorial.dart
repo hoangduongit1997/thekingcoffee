@@ -70,16 +70,20 @@ class MySplashScreenState extends State<MySplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
-        body: Container(
-            child: IntroSlider(
-          isScrollable: false,
-          slides: this.slides,
-          renderDoneBtn: this.renderDoneBtn(),
-          onDonePress: this.onDonePress,
-          colorDoneBtn: Color(0x33000000),
-          highlightColorDoneBtn: Color(0xff000000),
-          isShowDotIndicator: false,
-          shouldHideStatusBar: true,
-        )));
+        body: GestureDetector(
+            onTap: () {
+              FocusScope.of(context).requestFocus(new FocusNode());
+            },
+            child: Container(
+                child: IntroSlider(
+              isScrollable: false,
+              slides: this.slides,
+              renderDoneBtn: this.renderDoneBtn(),
+              onDonePress: this.onDonePress,
+              colorDoneBtn: Color(0x33000000),
+              highlightColorDoneBtn: Color(0xff000000),
+              isShowDotIndicator: false,
+              shouldHideStatusBar: true,
+            ))));
   }
 }
