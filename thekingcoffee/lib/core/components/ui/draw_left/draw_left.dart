@@ -14,6 +14,7 @@ import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:thekingcoffee/app/validation/validation.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
+import 'package:thekingcoffee/core/utils/utils.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class HomeMenu extends StatefulWidget {
@@ -159,13 +160,35 @@ class _HomeMenuState extends State<HomeMenu> {
                             ),
                             actions: <Widget>[
                               FlatButton(
-                                child: Text("No"),
+                                child: Container(
+                                  width: Dimension.getWidth(0.28),
+                                  height: Dimension.getHeight(0.04),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(15.0)),
+                                      color: Colors.brown),
+                                  child: Center(
+                                      child: Text(
+                                    "Cancel",
+                                    style: StylesText.style14While,
+                                  )),
+                                ),
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },
                               ),
                               FlatButton(
-                                child: Text("Yes"),
+                                child: Container(
+                                    width: Dimension.getWidth(0.28),
+                                    height: Dimension.getHeight(0.04),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(15.0)),
+                                        color: Colors.redAccent),
+                                    child: Center(
+                                      child: Text("Yes",
+                                          style: StylesText.style14While),
+                                    )),
                                 onPressed: () async {
                                   ListOrderProducts.clear();
                                   SharedPreferences preferences =

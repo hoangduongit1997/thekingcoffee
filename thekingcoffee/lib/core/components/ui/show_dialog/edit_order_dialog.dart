@@ -552,35 +552,16 @@ class Order_DialogState extends State<Order_Dialog> {
                                     textInputAction: TextInputAction.done,
                                     controller: note,
                                     onEditingComplete: () {
-                                      // selectedProduct['Note'] = note.text;
-                                      widget.callback('Note', note.text);
-                                      showDialog(
-                                          context: context,
-                                          barrierDismissible: false,
-                                          builder: (BuildContext context) {
-                                            return AlertDialog(
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(
-                                                              15.0))),
-                                              title: new Text("Information",
-                                                  style: StylesText
-                                                      .style18RedaccentBold),
-                                              content: new Text(
-                                                "Add note successfull!",
-                                                style: StylesText.style15Black,
-                                              ),
-                                              actions: <Widget>[
-                                                FlatButton(
-                                                  child: Text("OK"),
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                ),
-                                              ],
-                                            );
-                                          });
+                                      if (note.text.toString().length > 0) {
+                                        widget.callback('Note', note.text);
+                                        MsgDialog.showMsgDialog(
+                                            context,
+                                            "Information",
+                                            "Edit note successfully");
+                                      } else {
+                                        MsgDialog.showMsgDialog(context,
+                                            "Information", "Note empty");
+                                      }
                                     },
                                     keyboardType: TextInputType.multiline,
                                     maxLines: null,

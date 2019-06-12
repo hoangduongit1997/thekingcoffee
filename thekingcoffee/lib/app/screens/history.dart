@@ -80,6 +80,7 @@ class _HistoryState extends State<History> {
                                 data_history[index]['Address'],
                                 data_history[index]['Phone'],
                                 data_history[index]['Total'],
+                                data_history[index]['Time_Ordered'],
                               )));
                     },
                     child: Padding(
@@ -141,7 +142,7 @@ class _HistoryState extends State<History> {
                                                   const EdgeInsets.fromLTRB(
                                                       0, 0, 0, 0),
                                               child: Text(
-                                                "Đơn hàng " +
+                                                "Oder " +
                                                     data_history[index]['Id']
                                                         .toString(),
                                                 style:
@@ -174,12 +175,12 @@ class _HistoryState extends State<History> {
                                                               ['State'] ==
                                                           "1"
                                                       ? Text(
-                                                          "Đã hoàn thành",
+                                                          "Done",
                                                           style: StylesText
                                                               .style15Red,
                                                         )
                                                       : Text(
-                                                          "Đang xử lý",
+                                                          "Processing",
                                                           style: StylesText
                                                               .style15Red,
                                                         )),

@@ -499,33 +499,10 @@ class Order_DialogState extends State<Order_Dialog> {
                                     controller: note,
                                     onEditingComplete: () {
                                       selectedProduct['Note'] = note.text;
-                                      showDialog(
-                                          context: context,
-                                          barrierDismissible: false,
-                                          builder: (BuildContext context) {
-                                            return AlertDialog(
-                                              shape: RoundedRectangleBorder(
-                                                  borderRadius:
-                                                      BorderRadius.all(
-                                                          Radius.circular(
-                                                              15.0))),
-                                              title: new Text("Information",
-                                                  style: StylesText
-                                                      .style18RedaccentBold),
-                                              content: new Text(
-                                                "Add note successfull!",
-                                                style: StylesText.style15Black,
-                                              ),
-                                              actions: <Widget>[
-                                                FlatButton(
-                                                  child: Text("OK"),
-                                                  onPressed: () {
-                                                    Navigator.of(context).pop();
-                                                  },
-                                                ),
-                                              ],
-                                            );
-                                          });
+                                      MsgDialog.showMsgDialog(
+                                          context,
+                                          "Information",
+                                          "Add note successfully");
                                     },
                                     keyboardType: TextInputType.multiline,
                                     maxLines: null,

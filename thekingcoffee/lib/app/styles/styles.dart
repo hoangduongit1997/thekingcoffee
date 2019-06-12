@@ -111,6 +111,26 @@ class StylesText {
       color: Colors.brown,
       fontWeight: FontWeight.bold,
       fontFamily: 'Raleway');
+  static TextStyle style15BlackNormalRaleway = TextStyle(
+      fontSize: SizeText.size15,
+      color: Colors.black,
+      fontWeight: FontWeight.normal,
+      fontFamily: 'Raleway');
+  static TextStyle style15BrownNormalRaleway = TextStyle(
+      fontSize: SizeText.size15,
+      color: Colors.brown,
+      fontWeight: FontWeight.normal,
+      fontFamily: 'Raleway');
+  static TextStyle style15BrownBoldRaleway = TextStyle(
+      fontSize: SizeText.size15,
+      color: Colors.brown,
+      fontWeight: FontWeight.bold,
+      fontFamily: 'Raleway');
+  static TextStyle style18BrownBoldRaleway = TextStyle(
+      fontSize: SizeText.size18,
+      color: Colors.brown,
+      fontWeight: FontWeight.bold,
+      fontFamily: 'Raleway');
   static TextStyle style15RedAccentBold = TextStyle(
     fontSize: SizeText.size15,
     color: Colors.redAccent,
@@ -131,17 +151,19 @@ class StylesText {
     color: Colors.brown,
     fontWeight: FontWeight.normal,
   );
-   static TextStyle style13BrownNormalUnderline = TextStyle(
-    fontSize: SizeText.size13,
-    color: Colors.brown,
-    fontWeight: FontWeight.normal,
-    decoration: TextDecoration.lineThrough
-  );
+  static TextStyle style13BrownNormalUnderline = TextStyle(
+      fontSize: SizeText.size13,
+      color: Colors.brown,
+      fontWeight: FontWeight.normal,
+      decoration: TextDecoration.lineThrough);
   static TextStyle style14BrownBold = TextStyle(
-    fontSize: SizeText.size14,
-    color: Colors.brown,
-    fontWeight: FontWeight.bold
-  );
+      fontSize: SizeText.size14,
+      color: Colors.brown,
+      fontWeight: FontWeight.bold);
+  static TextStyle style14BrownNormal = TextStyle(
+      fontSize: SizeText.size14,
+      color: Colors.brown,
+      fontWeight: FontWeight.normal);
   static TextStyle style11BrownNormal = TextStyle(
     fontSize: SizeText.size11,
     color: Colors.brown,
@@ -151,7 +173,6 @@ class StylesText {
     fontSize: SizeText.size13,
     color: Colors.brown,
     fontWeight: FontWeight.bold,
-    
   );
   static TextStyle style13BlackBold = TextStyle(
     fontSize: SizeText.size13,
@@ -173,17 +194,17 @@ class StylesText {
     color: Colors.black,
     fontWeight: FontWeight.normal,
   );
-   static TextStyle style14Black = TextStyle(
+  static TextStyle style14Black = TextStyle(
     fontSize: SizeText.size14,
     color: Colors.black,
     fontWeight: FontWeight.normal,
   );
-   static TextStyle style14Redaccent = TextStyle(
+  static TextStyle style14Redaccent = TextStyle(
     fontSize: SizeText.size14,
     color: Colors.redAccent,
     fontWeight: FontWeight.normal,
   );
-   static TextStyle style15Red = TextStyle(
+  static TextStyle style15Red = TextStyle(
     fontSize: SizeText.size15,
     color: Colors.red,
     fontWeight: FontWeight.normal,
