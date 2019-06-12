@@ -21,12 +21,13 @@ class _ResetPassState extends State<ResetPass> {
   TextEditingController _confirm = new TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: Container(
+    return Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).requestFocus(new FocusNode());
+          },
+          child: Container(
               padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
               constraints: BoxConstraints.expand(),
               color: Colors.white,
@@ -98,9 +99,7 @@ class _ResetPassState extends State<ResetPass> {
                   ],
                 ),
               )),
-        ),
-      ),
-    );
+        ));
   }
 
   void onSubmitClick() async {

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 import 'package:thekingcoffee/app/styles/styles.dart';
 
 import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
@@ -30,98 +29,95 @@ class _LanguageState extends State<ChangeLanguage> {
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        key: _scaffoldKey,
-        appBar: AppBar(
-          backgroundColor: Colors.white,
-          title: Text(
-            "Display language",
-            style: StylesText.style20BrownBold,
-          ),
-          leading: FlatButton(
-              onPressed: () {
-                Navigator.pop(context);
-              },
-              child: Icon(
-                Icons.arrow_back,
-                color: Colors.brown,
-              )),
+    return Scaffold(
+      key: _scaffoldKey,
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: Text(
+          "Display language",
+          style: StylesText.style20BrownBold,
         ),
-        resizeToAvoidBottomInset: false,
-        body: Container(
-          padding: const EdgeInsets.all(2.0),
-          width: double.infinity,
-          height: double.infinity,
-          child: ListView(
-            children: <Widget>[
-              Card(
-                child: ListTile(
-                    leading: SvgPicture.asset(
-                      "assets/icons/america.svg",
-                      width: Dimension.getWidth(0.1),
-                      height: Dimension.getWidth(0.1),
-                    ),
-                    onTap: () async {
-                      widget.tap_vn = 0;
-                      if (widget.tap_en == 0) {
-                        setState(() {
-                          if (isEnSelected == true) {
-                            isEnSelected = true;
-                            isVnSelected = false;
-                          } else {
-                            isEnSelected = true;
-                            isVnSelected = false;
-                          }
-                        });
-                      }
-                      widget.tap_en++;
-                    },
-                    title: Text(
-                      "English",
-                      style: StylesText.style16Brown,
-                    ),
-                    trailing: Icon(Icons.check,
-                        color: isEnSelected
-                            ? Colors.redAccent
-                            : Colors.transparent)),
-              ),
-              Card(
-                child: ListTile(
+        leading: FlatButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            child: Icon(
+              Icons.arrow_back,
+              color: Colors.brown,
+            )),
+      ),
+      resizeToAvoidBottomInset: false,
+      body: Container(
+        padding: const EdgeInsets.all(2.0),
+        width: double.infinity,
+        height: double.infinity,
+        child: ListView(
+          children: <Widget>[
+            Card(
+              child: ListTile(
+                  leading: SvgPicture.asset(
+                    "assets/icons/america.svg",
+                    width: Dimension.getWidth(0.1),
+                    height: Dimension.getWidth(0.1),
+                  ),
                   onTap: () async {
-                    widget.tap_en = 0;
-                    if (widget.tap_vn == 0) {
+                    widget.tap_vn = 0;
+                    if (widget.tap_en == 0) {
                       setState(() {
-                        if (isVnSelected) {
-                          isVnSelected = true;
-                          isEnSelected = false;
+                        if (isEnSelected == true) {
+                          isEnSelected = true;
+                          isVnSelected = false;
                         } else {
-                          isVnSelected = true;
-                          isEnSelected = false;
+                          isEnSelected = true;
+                          isVnSelected = false;
                         }
                       });
                     }
-                    widget.tap_vn++;
+                    widget.tap_en++;
                   },
-                  leading: SvgPicture.asset("assets/icons/vietnam.svg",
-                      width: Dimension.getWidth(0.1),
-                      height: Dimension.getWidth(0.1)),
                   title: Text(
-                    "Tiếng Việt",
+                    "English",
                     style: StylesText.style16Brown,
                   ),
                   trailing: Icon(Icons.check,
-                      color:
-                          isVnSelected ? Colors.redAccent : Colors.transparent),
+                      color: isEnSelected
+                          ? Colors.redAccent
+                          : Colors.transparent)),
+            ),
+            Card(
+              child: ListTile(
+                onTap: () async {
+                  widget.tap_en = 0;
+                  if (widget.tap_vn == 0) {
+                    setState(() {
+                      if (isVnSelected) {
+                        isVnSelected = true;
+                        isEnSelected = false;
+                      } else {
+                        isVnSelected = true;
+                        isEnSelected = false;
+                      }
+                    });
+                  }
+                  widget.tap_vn++;
+                },
+                leading: SvgPicture.asset("assets/icons/vietnam.svg",
+                    width: Dimension.getWidth(0.1),
+                    height: Dimension.getWidth(0.1)),
+                title: Text(
+                  "Tiếng Việt",
+                  style: StylesText.style16Brown,
                 ),
+                trailing: Icon(Icons.check,
+                    color:
+                        isVnSelected ? Colors.redAccent : Colors.transparent),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
-        drawer: Drawer(
-          child: HomeMenu(),
-        ),
+      ),
+      drawer: Drawer(
+        child: HomeMenu(),
       ),
     );
   }

@@ -34,61 +34,63 @@ class _HomeState extends State<DashBoard> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays([]);
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(primaryColor: Colors.redAccent),
-      home: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: StreamBuilder<NavBarItem>(
-          stream: _bottomNavBarBloc.itemStream,
-          initialData: _bottomNavBarBloc.defaultItem,
-          builder: (BuildContext context, AsyncSnapshot<NavBarItem> snapshot) {
-            switch (snapshot.data) {
-              case NavBarItem.HOME:
-                return PlaceholderMainWidget();
-              case NavBarItem.FAVORITE:
-                return Favorite_Page();
-              case NavBarItem.SHOPPING_LIST:
-                return Shopping_List();
-              case NavBarItem.SETTING:
-                return Setting();
-            }
-          },
-        ),
-        bottomNavigationBar: StreamBuilder(
-          stream: _bottomNavBarBloc.itemStream,
-          initialData: _bottomNavBarBloc.defaultItem,
-          builder: (BuildContext context, AsyncSnapshot<NavBarItem> snapshot) {
-            return BottomNavigationBar(
-              type: BottomNavigationBarType.fixed,
-              fixedColor: Colors.redAccent,
-              currentIndex: snapshot.data.index,
-              onTap: _bottomNavBarBloc.pickItem,
-              items: [
-                BottomNavigationBarItem(
-                  title: Text(
-                    "Home",
+    return GestureDetector(
+        onTap: () {
+          FocusScope.of(context).requestFocus(new FocusNode());
+        },
+        child: Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: StreamBuilder<NavBarItem>(
+            stream: _bottomNavBarBloc.itemStream,
+            initialData: _bottomNavBarBloc.defaultItem,
+            builder:
+                (BuildContext context, AsyncSnapshot<NavBarItem> snapshot) {
+              switch (snapshot.data) {
+                case NavBarItem.HOME:
+                  return PlaceholderMainWidget();
+                case NavBarItem.FAVORITE:
+                  return Favorite_Page();
+                case NavBarItem.SHOPPING_LIST:
+                  return Shopping_List();
+                case NavBarItem.SETTING:
+                  return Setting();
+              }
+            },
+          ),
+          bottomNavigationBar: StreamBuilder(
+            stream: _bottomNavBarBloc.itemStream,
+            initialData: _bottomNavBarBloc.defaultItem,
+            builder:
+                (BuildContext context, AsyncSnapshot<NavBarItem> snapshot) {
+              return BottomNavigationBar(
+                type: BottomNavigationBarType.fixed,
+                fixedColor: Colors.redAccent,
+                currentIndex: snapshot.data.index,
+                onTap: _bottomNavBarBloc.pickItem,
+                items: [
+                  BottomNavigationBarItem(
+                    title: Text(
+                      "Home",
+                    ),
+                    icon: Icon(Icons.home),
                   ),
-                  icon: Icon(Icons.home),
-                ),
-                BottomNavigationBarItem(
-                  title: Text('Favorite'),
-                  icon: Icon(Icons.favorite_border),
-                ),
-                BottomNavigationBarItem(
-                  title: Text('Shopping List'),
-                  icon: Icon(Icons.shopping_cart),
-                ),
-                BottomNavigationBarItem(
-                  title: Text('Settings'),
-                  icon: Icon(Icons.settings),
-                ),
-              ],
-            );
-          },
-        ),
-      ),
-    );
+                  BottomNavigationBarItem(
+                    title: Text('Favorite'),
+                    icon: Icon(Icons.favorite_border),
+                  ),
+                  BottomNavigationBarItem(
+                    title: Text('Shopping List'),
+                    icon: Icon(Icons.shopping_cart),
+                  ),
+                  BottomNavigationBarItem(
+                    title: Text('Settings'),
+                    icon: Icon(Icons.settings),
+                  ),
+                ],
+              );
+            },
+          ),
+        ));
   }
 
   // Future<String> _getLanguageCode() async {

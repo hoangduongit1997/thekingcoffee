@@ -19,11 +19,13 @@ class VerifyGmail extends StatefulWidget {
 class VerifyPhonePageSate extends State<VerifyGmail> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          resizeToAvoidBottomInset: true,
-          body: Container(
+    return Scaffold(
+        resizeToAvoidBottomInset: true,
+        body: GestureDetector(
+          onTap: () {
+            FocusScope.of(context).requestFocus(new FocusNode());
+          },
+          child: Container(
               padding: EdgeInsets.fromLTRB(30, 0, 30, 0),
               constraints: BoxConstraints.expand(),
               color: Colors.white,

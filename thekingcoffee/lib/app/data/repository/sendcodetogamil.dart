@@ -14,9 +14,7 @@ Future<bool> SendCodeToGmail(String gmail) async {
 
   var data = json.decode(body);
 
-  var rest = data['Message'];
-  var error = data['Error'];
-  if (rest == "Sent code to your email") {
+  if (data['Status'] == 1) {
     status = true;
     var id_request = data['Value']['IdRequest'];
     var id_user = data['Value']['IdCustomer'];
@@ -27,17 +25,16 @@ Future<bool> SendCodeToGmail(String gmail) async {
     prefs.setInt('id_user', id_user);
     prefs.commit();
     Fluttertoast.showToast(
-        msg: rest,
+        msg: data['Message'].toString(),
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIos: 1,
         backgroundColor: Colors.redAccent,
         textColor: Colors.white,
         fontSize: 16.0);
-  }
-  if (error == 'Email sent doesnot belong any user') {
+  } else {
     Fluttertoast.showToast(
-        msg: "Email is not belong to any user",
+        msg: data['Message'].toString(),
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIos: 1,

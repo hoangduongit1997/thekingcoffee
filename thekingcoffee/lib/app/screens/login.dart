@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
@@ -45,229 +47,235 @@ class MyAppState extends State<LoginWithPass> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays([]);
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primaryColor: Colors.orange,
-      ),
-      home: Scaffold(
-        resizeToAvoidBottomInset: true,
-        body: Container(
-            padding: EdgeInsets.fromLTRB(30, 50, 30, 0),
-            constraints: BoxConstraints.expand(),
-            color: Colors.white,
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: <Widget>[
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
-                    child: Text("Welcome to", style: StylesText.style20Brown),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                    child:
-                        Text("The King Coffee", style: StylesText.style20Brown),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-                    child: Text("Sign in to continue",
-                        style: StylesText.style16Brown),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                    child: StreamBuilder<Object>(
-                        stream: loginBloc.userStream,
-                        builder: (context, snapshot) {
-                          return TextField(
-                            controller: _user,
-                            style: StylesText.style18Black,
-                            decoration: InputDecoration(
-                                labelText: "Email or phone number",
-                                errorText:
-                                    snapshot.hasError ? snapshot.error : null,
-                                labelStyle: StylesText.style12Bluegray),
-                          );
-                        }),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-                    child: Stack(
-                      alignment: AlignmentDirectional.centerEnd,
-                      children: <Widget>[
-                        StreamBuilder<Object>(
-                            stream: loginBloc.passStream,
+    return WillPopScope(
+      onWillPop: () {
+        SystemChannels.platform.invokeMethod('SystemNavigator.pop');
+      },
+      child: Scaffold(
+          resizeToAvoidBottomInset: true,
+          body: GestureDetector(
+            onTap: () {
+              FocusScope.of(context).requestFocus(new FocusNode());
+            },
+            child: Container(
+                padding: EdgeInsets.fromLTRB(30, 50, 30, 0),
+                constraints: BoxConstraints.expand(),
+                color: Colors.white,
+                child: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: <Widget>[
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
+                        child:
+                            Text("Welcome to", style: StylesText.style20Brown),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                        child: Text("The King Coffee",
+                            style: StylesText.style20Brown),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                        child: Text("Sign in to continue",
+                            style: StylesText.style16Brown),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                        child: StreamBuilder<Object>(
+                            stream: loginBloc.userStream,
                             builder: (context, snapshot) {
                               return TextField(
+                                controller: _user,
                                 style: StylesText.style18Black,
-                                controller: _pass,
-                                obscureText: !_showpass,
                                 decoration: InputDecoration(
-                                    labelText: "Password",
+                                    labelText: "Email or phone number",
                                     errorText: snapshot.hasError
                                         ? snapshot.error
                                         : null,
                                     labelStyle: StylesText.style12Bluegray),
                               );
                             }),
-                        GestureDetector(
-                            onTap: ShowPass,
-                            child: Text(
-                              _showpass ? "Hide" : "Show",
-                              style: StylesText.style12BluegrayBold,
-                            ))
-                      ],
-                    ),
-                  ),
-                  Row(
-                    textDirection: TextDirection.rtl,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-                          child: GestureDetector(
-                            onTap: () => {
-                                  Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => GmailAuth()))
-                                },
-                            child: Text("Forget password?",
-                                style: StylesText.style16Red300Bold),
-                          )),
-                      Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-                          child: GestureDetector(
-                            onTap: () {
-                              Config.islogin = 0;
-
-                              Navigator.of(context, rootNavigator: true)
-                                  .pushReplacement(MaterialPageRoute(
-                                      builder: (context) => DashBoard()));
-                            },
-                            child: Text("Skip",
-                                style: StylesText.style16Red300Bold),
-                          )),
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                    child: SizedBox(
-                      width: Dimension.getWidth(0.86),
-                      height: Dimension.getHeight(0.063),
-                      child: RaisedButton(
-                        color: Colors.red[300],
-                        child: Text("Log in", style: StylesText.style16While),
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.all(Radius.circular(8))),
-                        onPressed: onSigninClick,
                       ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-                    child: Container(
-                      height: Dimension.getHeight(0.05),
-                      width: Dimension.getWidth(0.5),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.center,
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                        child: Stack(
+                          alignment: AlignmentDirectional.centerEnd,
+                          children: <Widget>[
+                            StreamBuilder<Object>(
+                                stream: loginBloc.passStream,
+                                builder: (context, snapshot) {
+                                  return TextField(
+                                    style: StylesText.style18Black,
+                                    controller: _pass,
+                                    obscureText: !_showpass,
+                                    decoration: InputDecoration(
+                                        labelText: "Password",
+                                        errorText: snapshot.hasError
+                                            ? snapshot.error
+                                            : null,
+                                        labelStyle: StylesText.style12Bluegray),
+                                  );
+                                }),
+                            GestureDetector(
+                                onTap: ShowPass,
+                                child: Text(
+                                  _showpass ? "Hide" : "Show",
+                                  style: StylesText.style12BluegrayBold,
+                                ))
+                          ],
+                        ),
+                      ),
+                      Row(
+                        textDirection: TextDirection.rtl,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: <Widget>[
-                          Text(
-                            "New account?",
-                            style: StylesText.style16Brown,
-                          ),
-                          GestureDetector(
-                              onTap: () => {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => SignUp()))
-                                  },
-                              child: Text(
-                                "Sign up",
-                                style: StylesText.style16Red300Bold,
-                              ))
+                          Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                              child: GestureDetector(
+                                onTap: () => {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  GmailAuth()))
+                                    },
+                                child: Text("Forget password?",
+                                    style: StylesText.style16Red300Bold),
+                              )),
+                          Padding(
+                              padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context, rootNavigator: true)
+                                      .pushReplacement(MaterialPageRoute(
+                                          builder: (context) => DashBoard()));
+                                },
+                                child: Text("Skip",
+                                    style: StylesText.style16Red300Bold),
+                              )),
                         ],
                       ),
-                    ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                        child: SizedBox(
+                          width: Dimension.getWidth(0.86),
+                          height: Dimension.getHeight(0.063),
+                          child: RaisedButton(
+                            color: Colors.red[300],
+                            child:
+                                Text("Log in", style: StylesText.style16While),
+                            shape: RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(8))),
+                            onPressed: onSigninClick,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                        child: Container(
+                          height: Dimension.getHeight(0.05),
+                          width: Dimension.getWidth(0.5),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                "New account?",
+                                style: StylesText.style16Brown,
+                              ),
+                              GestureDetector(
+                                  onTap: () => {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) => SignUp()))
+                                      },
+                                  child: Text(
+                                    "Sign up",
+                                    style: StylesText.style16Red300Bold,
+                                  ))
+                            ],
+                          ),
+                        ),
+                      ),
+                      // Padding(
+                      //   padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                      //   child: Container(
+                      //       height: Dimension.getHeight(0.2),
+                      //       width: Dimension.getWidth(0.5),
+                      //       child: Container(
+                      //         width: Dimension.getWidth(0.5),
+                      //         color: Colors.white,
+                      //         child: Row(
+                      //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      //           children: <Widget>[
+                      //             GestureDetector(
+                      //               onTap: () {
+                      //                 tap_vn = 0;
+                      //                 if (tap_en == 0) {
+                      //                   changeLanguage();
+                      //                   setState(() {
+                      //                     istap_vn = true;
+                      //                     istap_en = false;
+                      //                   });
+                      //                 }
+                      //                 tap_en++;
+                      //               },
+                      //               child: Container(
+                      //                   decoration: BoxDecoration(
+                      //                     border: Border(
+                      //                         bottom: BorderSide(
+                      //                             color: istap_vn
+                      //                                 ? Colors.redAccent
+                      //                                 : Colors.transparent,
+                      //                             width: 2.0)),
+                      //                   ),
+                      //                   child: Text(
+                      //                     "Tiếng Việt",
+                      //                     style: istap_vn
+                      //                         ? StylesText.style17BrownBoldlRaleway
+                      //                         : StylesText.style18Black,
+                      //                   )),
+                      //             ),
+                      //             GestureDetector(
+                      //                 onTap: () async {
+                      //                   tap_en = 0;
+                      //                   if (tap_vn == 0) {
+                      //                     changeLanguage();
+                      //                     setState(() {
+                      //                       istap_en = true;
+                      //                       istap_vn = false;
+                      //                     });
+                      //                   }
+                      //                   tap_vn++;
+                      //                 },
+                      //                 child: Container(
+                      //                     decoration: BoxDecoration(
+                      //                       border: Border(
+                      //                           bottom: BorderSide(
+                      //                               color: istap_en
+                      //                                   ? Colors.redAccent
+                      //                                   : Colors.transparent,
+                      //                               width: 2.0)),
+                      //                     ),
+                      //                     child: Text(
+                      //                       "English",
+                      //                       style: istap_en
+                      //                           ? StylesText
+                      //                               .style17BrownBoldlRaleway
+                      //                           : StylesText.style18Black,
+                      //                     )))
+                      //           ],
+                      //         ),
+                      //       )),
+                      // )
+                    ],
                   ),
-                  // Padding(
-                  //   padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-                  //   child: Container(
-                  //       height: Dimension.getHeight(0.2),
-                  //       width: Dimension.getWidth(0.5),
-                  //       child: Container(
-                  //         width: Dimension.getWidth(0.5),
-                  //         color: Colors.white,
-                  //         child: Row(
-                  //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  //           children: <Widget>[
-                  //             GestureDetector(
-                  //               onTap: () {
-                  //                 tap_vn = 0;
-                  //                 if (tap_en == 0) {
-                  //                   changeLanguage();
-                  //                   setState(() {
-                  //                     istap_vn = true;
-                  //                     istap_en = false;
-                  //                   });
-                  //                 }
-                  //                 tap_en++;
-                  //               },
-                  //               child: Container(
-                  //                   decoration: BoxDecoration(
-                  //                     border: Border(
-                  //                         bottom: BorderSide(
-                  //                             color: istap_vn
-                  //                                 ? Colors.redAccent
-                  //                                 : Colors.transparent,
-                  //                             width: 2.0)),
-                  //                   ),
-                  //                   child: Text(
-                  //                     "Tiếng Việt",
-                  //                     style: istap_vn
-                  //                         ? StylesText.style17BrownBoldlRaleway
-                  //                         : StylesText.style18Black,
-                  //                   )),
-                  //             ),
-                  //             GestureDetector(
-                  //                 onTap: () async {
-                  //                   tap_en = 0;
-                  //                   if (tap_vn == 0) {
-                  //                     changeLanguage();
-                  //                     setState(() {
-                  //                       istap_en = true;
-                  //                       istap_vn = false;
-                  //                     });
-                  //                   }
-                  //                   tap_vn++;
-                  //                 },
-                  //                 child: Container(
-                  //                     decoration: BoxDecoration(
-                  //                       border: Border(
-                  //                           bottom: BorderSide(
-                  //                               color: istap_en
-                  //                                   ? Colors.redAccent
-                  //                                   : Colors.transparent,
-                  //                               width: 2.0)),
-                  //                     ),
-                  //                     child: Text(
-                  //                       "English",
-                  //                       style: istap_en
-                  //                           ? StylesText
-                  //                               .style17BrownBoldlRaleway
-                  //                           : StylesText.style18Black,
-                  //                     )))
-                  //           ],
-                  //         ),
-                  //       )),
-                  // )
-                ],
-              ),
-            )),
-      ),
+                )),
+          )),
     );
   }
 
@@ -284,7 +292,7 @@ class MyAppState extends State<LoginWithPass> {
       if (await PostLogin(
               _user.text.trim().toString(), _pass.text.trim().toString()) ==
           true) {
-        Navigator.of(context).pushReplacement(
+        Navigator.of(context, rootNavigator: true).pushReplacement(
             MaterialPageRoute(builder: (context) => DashBoard()));
       }
     }

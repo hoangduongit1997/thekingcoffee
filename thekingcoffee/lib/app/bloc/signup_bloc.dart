@@ -2,13 +2,13 @@ import 'dart:async';
 import 'package:thekingcoffee/app/validation/validation.dart';
 
 class SignupBloc {
-  StreamController _accpetcontroller = new StreamController();
-  StreamController _usernamecontroller = new StreamController();
-  StreamController _phonecontroller = new StreamController();
-  StreamController _passcontroller = new StreamController();
-  StreamController _confirmpasscontroller = new StreamController();
-  StreamController _datecontroller = new StreamController();
-  StreamController _fullnamecontroler = new StreamController();
+  StreamController _accpetcontroller = new StreamController.broadcast();
+  StreamController _usernamecontroller = new StreamController.broadcast();
+  StreamController _phonecontroller = new StreamController.broadcast();
+  StreamController _passcontroller = new StreamController.broadcast();
+  StreamController _confirmpasscontroller = new StreamController.broadcast();
+  StreamController _datecontroller = new StreamController.broadcast();
+  StreamController _fullnamecontroler = new StreamController.broadcast();
   Stream get usernameStream => _usernamecontroller.stream;
   Stream get phoneStream => _phonecontroller.stream;
   Stream get passStream => _passcontroller.stream;
@@ -89,5 +89,6 @@ class SignupBloc {
     _passcontroller.close();
     _phonecontroller.close();
     _accpetcontroller.close();
+    _fullnamecontroler.close();
   }
 }

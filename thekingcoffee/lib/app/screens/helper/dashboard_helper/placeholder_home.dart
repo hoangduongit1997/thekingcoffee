@@ -71,10 +71,11 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(primaryColor: Colors.redAccent),
-        home: Scaffold(
+    return GestureDetector(
+        onTap: () {
+          FocusScope.of(context).requestFocus(new FocusNode());
+        },
+        child: Scaffold(
           resizeToAvoidBottomPadding: false,
           key: _scaffoldKey,
           appBar: AppBar(
@@ -139,26 +140,24 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                             ),
                           )),
                       Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                          child: Center(
-                            child: Container(
-                                width: double.infinity,
-                                height: Dimension.getHeight(0.29),
-                                child: Center(
-                                  child: list_new_products == null ||
-                                          list_new_products.length == 0
-                                      ? Container(
-                                          child: Center(
-                                            child: CircularProgressIndicator(
-                                              valueColor:
-                                                  new AlwaysStoppedAnimation<
-                                                      Color>(Colors.redAccent),
-                                            ),
-                                          ),
-                                        )
-                                      : CarouselDemo(),
-                                )),
-                          )),
+                        padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                        child: Container(
+                            height: Dimension.getHeight(0.29),
+                            child: Center(
+                              child: list_new_products == null ||
+                                      list_new_products.length == 0
+                                  ? Container(
+                                      child: Center(
+                                        child: CircularProgressIndicator(
+                                          valueColor:
+                                              new AlwaysStoppedAnimation<Color>(
+                                                  Colors.redAccent),
+                                        ),
+                                      ),
+                                    )
+                                  : CarouselDemo(),
+                            )),
+                      ),
                       Padding(
                           padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                           child: Container(
@@ -192,24 +191,29 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                           )),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                        child: Container(
-                            color: Colors.white,
-                            height: Dimension.getHeight(0.36),
-                            width: double.infinity,
-                            child: Center(
-                              child: list_coffee == null ||
-                                      list_coffee.length == 0
-                                  ? Container(
-                                      child: Center(
-                                        child: CircularProgressIndicator(
-                                          valueColor:
-                                              new AlwaysStoppedAnimation<Color>(
-                                                  Colors.redAccent),
-                                        ),
-                                      ),
-                                    )
-                                  : Home_Card_Coffee(),
-                            )),
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: <Widget>[
+                            Container(
+                                color: Colors.white,
+                                height: Dimension.getHeight(0.331),
+                                width: double.infinity,
+                                child: Center(
+                                  child: list_coffee == null ||
+                                          list_coffee.length == 0
+                                      ? Container(
+                                          child: Center(
+                                            child: CircularProgressIndicator(
+                                              valueColor:
+                                                  new AlwaysStoppedAnimation<
+                                                      Color>(Colors.redAccent),
+                                            ),
+                                          ),
+                                        )
+                                      : Home_Card_Coffee(),
+                                )),
+                          ],
+                        ),
                       ),
                       Padding(
                           padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
@@ -245,7 +249,7 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
                         child: Container(
-                            height: Dimension.getHeight(0.36),
+                            height: Dimension.getHeight(0.331),
                             width: double.infinity,
                             child: list_tea == null || list_tea.length == 0
                                 ? Container(
@@ -293,7 +297,7 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
                         child: Container(
-                            height: Dimension.getHeight(0.36),
+                            height: Dimension.getHeight(0.331),
                             width: double.infinity,
                             child: list_drinking == null ||
                                     list_drinking.length == 0
@@ -342,7 +346,7 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 5, 0, 10),
                         child: Container(
-                          height: Dimension.getHeight(0.36),
+                          height: Dimension.getHeight(0.331),
                           width: double.infinity,
                           child: list_food == null || list_food.length == 0
                               ? Container(
@@ -370,7 +374,6 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
 
   Future<void> refreshPage() async {
     await Future.delayed(Duration(seconds: 2));
-
     setState(() {
       Navigator.of(context, rootNavigator: true).pushReplacement(
           MaterialPageRoute(builder: (context) => DashBoard()));

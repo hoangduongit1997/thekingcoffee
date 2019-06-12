@@ -151,6 +151,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
                         child: Container(
                           width: Dimension.getWidth(0.48),
                           child: Text(list_new_products[index]['Name'],
+                              overflow: TextOverflow.ellipsis,
                               style: StylesText.style20BrownBold),
                         ),
                       ),
@@ -280,17 +281,19 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
 class CarouselDemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Center(
-          child: Padding(
-              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-              child: Container(
-                child: CarouselWithIndicator(),
-              )),
-        ),
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: Center(
+        child: Padding(
+            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: <Widget>[
+                Container(
+                  child: CarouselWithIndicator(),
+                ),
+              ],
+            )),
       ),
     );
   }

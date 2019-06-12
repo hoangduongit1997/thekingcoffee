@@ -17,9 +17,11 @@ class _AccountState extends State<Account> {
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
+    return GestureDetector(
+        onTap: () {
+          FocusScope.of(context).requestFocus(new FocusNode());
+        },
+        child: Scaffold(
           appBar: AppBar(
             key: _scaffoldKey,
             backgroundColor: Colors.white,
@@ -31,8 +33,6 @@ class _AccountState extends State<Account> {
             leading: FlatButton(
               onPressed: () {
                 Navigator.of(context).pop();
-                // Navigator.of(context, rootNavigator: true).pushReplacement(
-                //     MaterialPageRoute(builder: (context) => DashBoard()));
               },
               child: Icon(
                 Icons.arrow_back,

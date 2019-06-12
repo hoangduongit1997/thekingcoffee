@@ -29,41 +29,38 @@ class _EarnPointState extends State<EarnPoint> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text("Your code", style: StylesText.style20BrownBold),
-          elevation: 0.5,
-          backgroundColor: Colors.white,
-          leading: FlatButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Icon(
-                Icons.arrow_back,
-                color: Colors.brown,
-              )),
-        ),
-        resizeToAvoidBottomInset: false,
-        body: Center(
-            child: Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                child: id_user == null
-                    ? CircularProgressIndicator()
-                    : BarCodeImage(
-                        data: id_user.toString(),
-                        codeType: BarCodeType.Code93,
-                        lineWidth: 5.0,
-                        barHeight: Dimension.getHeight(0.3),
-                        hasText: true,
-                        onError: (error) {
-                          print('error = $error');
-                        },
-                      ))),
-        drawer: Drawer(
-          child: HomeMenu(),
-        ),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Your code", style: StylesText.style20BrownBold),
+        elevation: 0.5,
+        backgroundColor: Colors.white,
+        leading: FlatButton(
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+            child: Icon(
+              Icons.arrow_back,
+              color: Colors.brown,
+            )),
+      ),
+      resizeToAvoidBottomInset: false,
+      body: Center(
+          child: Padding(
+              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+              child: id_user == null
+                  ? CircularProgressIndicator()
+                  : BarCodeImage(
+                      data: id_user.toString(),
+                      codeType: BarCodeType.Code93,
+                      lineWidth: 5.0,
+                      barHeight: Dimension.getHeight(0.3),
+                      hasText: true,
+                      onError: (error) {
+                        print('error = $error');
+                      },
+                    ))),
+      drawer: Drawer(
+        child: HomeMenu(),
       ),
     );
   }

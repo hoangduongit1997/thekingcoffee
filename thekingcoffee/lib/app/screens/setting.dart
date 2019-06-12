@@ -14,76 +14,63 @@ class _SettingState extends State<Setting> {
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          key: _scaffoldKey,
-          appBar: AppBar(
-            centerTitle: true,
-            elevation: 0.8,
-            backgroundColor: Colors.white,
-            title: Text(
-              "Settings",
-              style: StylesText.style20BrownBold,
+    return Scaffold(
+      key: _scaffoldKey,
+      appBar: AppBar(
+        centerTitle: true,
+        elevation: 0.8,
+        backgroundColor: Colors.white,
+        title: Text(
+          "Settings",
+          style: StylesText.style20BrownBold,
+        ),
+      ),
+      body: Container(
+        padding: const EdgeInsets.all(2.0),
+        width: double.infinity,
+        height: double.infinity,
+        child: ListView(
+          children: <Widget>[
+            Card(
+              child: ListTile(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => ChangeLanguage()));
+                },
+                title: Text(
+                  'Display language',
+                  style: StylesText.style16Brown,
+                ),
+                trailing: Text("English", style: StylesText.style14Redaccent),
+              ),
             ),
-            // leading: FlatButton(
-            //     onPressed: () {
-            //       Config.current_botton_tab = 0;
-            //       Navigator.of(context).pushReplacement(
-            //           MaterialPageRoute(builder: (context) => DashBoard()));
-            //     },
-            //     child: Icon(
-            //       Icons.arrow_back,
-            //       color: Colors.brown,
-            //     )),
-          ),
-          body: Container(
-            padding: const EdgeInsets.all(2.0),
-            width: double.infinity,
-            height: double.infinity,
-            child: ListView(
-              children: <Widget>[
-                Card(
-                  child: ListTile(
-                    onTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => ChangeLanguage()));
-                    },
-                    title: Text(
-                      'Display language',
-                      style: StylesText.style16Brown,
-                    ),
-                    trailing:
-                        Text("English", style: StylesText.style14Redaccent),
-                  ),
+            Card(
+              child: ListTile(
+                title: Text(
+                  'Terms of service',
+                  style: StylesText.style16Brown,
                 ),
-                Card(
-                  child: ListTile(
-                    title: Text(
-                      'Terms of service',
-                      style: StylesText.style16Brown,
-                    ),
-                    trailing:
-                        Icon(Icons.arrow_forward_ios, color: Colors.grey[300]),
-                  ),
-                ),
-                Card(
-                  child: ListTile(
-                    title: Text(
-                      'Version 1.0',
-                      style: StylesText.style16Brown,
-                    ),
-                    trailing:
-                        Icon(Icons.arrow_forward_ios, color: Colors.grey[300]),
-                  ),
-                ),
-              ],
+                trailing:
+                    Icon(Icons.arrow_forward_ios, color: Colors.grey[300]),
+              ),
             ),
-          ),
-          resizeToAvoidBottomInset: false,
-          drawer: Drawer(
-            child: HomeMenu(),
-          ),
-        ));
+            Card(
+              child: ListTile(
+                title: Text(
+                  'Version 1.0',
+                  style: StylesText.style16Brown,
+                ),
+                trailing:
+                    Icon(Icons.arrow_forward_ios, color: Colors.grey[300]),
+              ),
+            ),
+          ],
+        ),
+      ),
+      resizeToAvoidBottomInset: false,
+      drawer: Drawer(
+        child: HomeMenu(),
+      ),
+    );
   }
 }
