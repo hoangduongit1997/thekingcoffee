@@ -38,206 +38,202 @@ class _HistoryState extends State<History> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          appBar: AppBar(
-            backgroundColor: Colors.white,
-            elevation: 0.5,
-            title: Text(
-              "History",
-              style: StylesText.style20BrownBold,
-            ),
-            leading: FlatButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: Icon(
-                Icons.arrow_back,
-                color: Colors.brown,
-              ),
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0.5,
+        title: Text(
+          "History",
+          style: StylesText.style20BrownBold,
+        ),
+        leading: FlatButton(
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
+          child: Icon(
+            Icons.arrow_back,
+            color: Colors.brown,
           ),
-          resizeToAvoidBottomInset: false,
-          body: data_history == null || data_history.length == 0
-              ? Container(
-                  child: Center(child: Text("No information")),
-                )
-              : Container(
-                  padding: const EdgeInsets.fromLTRB(5, 5, 5, 10),
-                  color: Colors.grey[300],
-                  width: double.infinity,
-                  height: MediaQuery.of(context).size.height,
-                  child: ListView.builder(
-                    itemCount: length,
-                    scrollDirection: Axis.vertical,
-                    shrinkWrap: true,
-                    itemBuilder: (context, index) {
-                      return GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => History_Order_Detail(
-                                    data_history[index]['DetailedOrder'],
-                                    data_history[index]['Id'],
-                                    data_history[index]['Address'],
-                                    data_history[index]['Phone'],
-                                    data_history[index]['Total'],
-                                  )));
-                        },
-                        child: Padding(
-                          padding: const EdgeInsets.all(2.0),
-                          child: Container(
-                            height: Dimension.getHeight(0.15),
-                            padding: const EdgeInsets.all(5.0),
-                            decoration: BoxDecoration(
-                                color: Colors.white,
-                                border: Border.all(color: Colors.grey[300]),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(8.0))),
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
+        ),
+      ),
+      resizeToAvoidBottomInset: false,
+      body: data_history == null || data_history.length == 0
+          ? Container(
+              child: Center(child: Text("No information")),
+            )
+          : Container(
+              padding: const EdgeInsets.fromLTRB(5, 5, 5, 10),
+              color: Colors.grey[300],
+              width: double.infinity,
+              height: MediaQuery.of(context).size.height,
+              child: ListView.builder(
+                itemCount: length,
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => History_Order_Detail(
+                                data_history[index]['DetailedOrder'],
+                                data_history[index]['Id'],
+                                data_history[index]['Address'],
+                                data_history[index]['Phone'],
+                                data_history[index]['Total'],
+                              )));
+                    },
+                    child: Padding(
+                      padding: const EdgeInsets.all(2.0),
+                      child: Container(
+                        height: Dimension.getHeight(0.15),
+                        padding: const EdgeInsets.all(5.0),
+                        decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(color: Colors.grey[300]),
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(8.0))),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: <Widget>[
+                            Row(
                               children: <Widget>[
-                                Row(
+                                Stack(
+                                  alignment: AlignmentDirectional.topEnd,
                                   children: <Widget>[
-                                    Stack(
-                                      alignment: AlignmentDirectional.topEnd,
-                                      children: <Widget>[
-                                        Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              0, 0, 0, 0),
-                                          child: Container(
-                                            height: Dimension.getHeight(0.13),
-                                            width: Dimension.getWidth(0.25),
-                                            decoration: new BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
-                                              border: new Border.all(
-                                                  color: Colors.white),
-                                            ),
-                                            child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
-                                                child: Icon(
-                                                  Icons.store,
-                                                  color: Colors.redAccent,
-                                                  size: 50.0,
-                                                )),
-                                          ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                      child: Container(
+                                        height: Dimension.getHeight(0.13),
+                                        width: Dimension.getWidth(0.25),
+                                        decoration: new BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                          border: new Border.all(
+                                              color: Colors.white),
                                         ),
-                                      ],
+                                        child: ClipRRect(
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                            child: Icon(
+                                              Icons.store,
+                                              color: Colors.redAccent,
+                                              size: 50.0,
+                                            )),
+                                      ),
                                     ),
-                                    Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: <Widget>[
-                                        Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              0, 0, 0, 10),
-                                          child: Container(
-                                            alignment: Alignment.topLeft,
-                                            child: Row(
-                                              children: <Widget>[
-                                                Padding(
+                                  ],
+                                ),
+                                Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          0, 0, 0, 10),
+                                      child: Container(
+                                        alignment: Alignment.topLeft,
+                                        child: Row(
+                                          children: <Widget>[
+                                            Padding(
+                                              padding:
+                                                  const EdgeInsets.fromLTRB(
+                                                      0, 0, 0, 0),
+                                              child: Text(
+                                                "Đơn hàng " +
+                                                    data_history[index]['Id']
+                                                        .toString(),
+                                                style:
+                                                    StylesText.style15BlackBold,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          0, 0, 0, 10),
+                                      child: Container(
+                                        alignment: Alignment.topLeft,
+                                        child: Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width -
+                                              Dimension.getWidth(0.33),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: <Widget>[
+                                              Padding(
+                                                  padding:
+                                                      const EdgeInsets.fromLTRB(
+                                                          0, 0, 0, 0),
+                                                  child: data_history[index]
+                                                              ['State'] ==
+                                                          "1"
+                                                      ? Text(
+                                                          "Đã hoàn thành",
+                                                          style: StylesText
+                                                              .style15Red,
+                                                        )
+                                                      : Text(
+                                                          "Đang xử lý",
+                                                          style: StylesText
+                                                              .style15Red,
+                                                        )),
+                                              Padding(
                                                   padding:
                                                       const EdgeInsets.fromLTRB(
                                                           0, 0, 0, 0),
                                                   child: Text(
-                                                    "Đơn hàng " +
-                                                        data_history[index]
-                                                                ['Id']
-                                                            .toString(),
-                                                    style: StylesText
-                                                        .style15BlackBold,
-                                                  ),
+                                                    data_history[index]['Total']
+                                                        .toString(),
+                                                    style:
+                                                        StylesText.style15Red,
+                                                  )),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                      child: Container(
+                                          alignment: Alignment.topLeft,
+                                          child: Row(
+                                            children: <Widget>[
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.fromLTRB(
+                                                        0, 0, 0, 0),
+                                                child: Text(
+                                                  data_history[index]
+                                                      ['Time_Ordered'],
+                                                  style:
+                                                      StylesText.style15Black,
                                                 ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              0, 0, 0, 10),
-                                          child: Container(
-                                            alignment: Alignment.topLeft,
-                                            child: Container(
-                                              width: MediaQuery.of(context)
-                                                      .size
-                                                      .width -
-                                                  Dimension.getWidth(0.33),
-                                              child: Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment
-                                                        .spaceBetween,
-                                                children: <Widget>[
-                                                  Padding(
-                                                      padding: const EdgeInsets
-                                                          .fromLTRB(0, 0, 0, 0),
-                                                      child: data_history[index]
-                                                                  ['State'] ==
-                                                              "1"
-                                                          ? Text(
-                                                              "Đã hoàn thành",
-                                                              style: StylesText
-                                                                  .style15Red,
-                                                            )
-                                                          : Text(
-                                                              "Đang xử lý",
-                                                              style: StylesText
-                                                                  .style15Red,
-                                                            )),
-                                                  Padding(
-                                                      padding: const EdgeInsets
-                                                          .fromLTRB(0, 0, 0, 0),
-                                                      child: Text(
-                                                        data_history[index]
-                                                                ['Total']
-                                                            .toString(),
-                                                        style: StylesText
-                                                            .style15Red,
-                                                      )),
-                                                ],
                                               ),
-                                            ),
-                                          ),
-                                        ),
-                                        Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              0, 0, 0, 0),
-                                          child: Container(
-                                              alignment: Alignment.topLeft,
-                                              child: Row(
-                                                children: <Widget>[
-                                                  Padding(
-                                                    padding: const EdgeInsets
-                                                        .fromLTRB(0, 0, 0, 0),
-                                                    child: Text(
-                                                      data_history[index]
-                                                          ['Time_Ordered'],
-                                                      style: StylesText
-                                                          .style15Black,
-                                                    ),
-                                                  ),
-                                                ],
-                                              )),
-                                        ),
-                                      ],
-                                    )
+                                            ],
+                                          )),
+                                    ),
                                   ],
-                                ),
+                                )
                               ],
                             ),
-                          ),
+                          ],
                         ),
-                      );
-                    },
-                  ),
-                ),
-          drawer: Drawer(
-            child: HomeMenu(),
-          ),
-        ));
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+      drawer: Drawer(
+        child: HomeMenu(),
+      ),
+    );
   }
 }

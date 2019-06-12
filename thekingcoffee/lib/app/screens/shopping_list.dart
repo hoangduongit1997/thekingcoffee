@@ -126,7 +126,11 @@ int group_value_method;
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return GestureDetector(
+      onTap: (){
+        FocusScope.of(context).requestFocus(new FocusNode());
+      },
+      child: Scaffold(
       appBar: AppBar(
         centerTitle: true,
         elevation: 0.8,
@@ -652,7 +656,9 @@ int group_value_method;
                 ],
               ),
             ),
+    )
     );
+    
   }
 
   Future<void> refreshPage() async {

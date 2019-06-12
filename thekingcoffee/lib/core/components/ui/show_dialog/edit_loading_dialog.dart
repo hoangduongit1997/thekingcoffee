@@ -53,7 +53,7 @@ class LoadingDialog_Order {
               content: Container(
                   height: Dimension.getHeight(0.55),
                   width: Dimension.getWidth(1.5),
-                  child: Order_Dialog2019(
+                  child: Order_Dialog(
                       this.setValueSelectedProduct,
                       id,
                       img,

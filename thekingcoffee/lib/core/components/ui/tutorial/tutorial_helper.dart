@@ -6,8 +6,6 @@ import 'package:thekingcoffee/core/utils/utils.dart';
 
 void main() => runApp(CarouselDemo());
 
-
-
 class CarouselWithIndicator extends StatefulWidget {
   @override
   _CarouselWithIndicatorState createState() => _CarouselWithIndicatorState();
@@ -123,17 +121,14 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
 class CarouselDemo extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: Center(
-          child: Padding(
-              padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-              child: Container(
-                child: CarouselWithIndicator(),
-              )),
-        ),
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: Center(
+        child: Padding(
+            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+            child: Container(
+              child: CarouselWithIndicator(),
+            )),
       ),
     );
   }

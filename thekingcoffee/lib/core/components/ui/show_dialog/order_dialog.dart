@@ -352,453 +352,101 @@ class Order_DialogState extends State<Order_Dialog> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(primaryColor: Colors.redAccent),
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: GestureDetector(
-            onTap: () {
-              FocusScope.of(context).requestFocus(new FocusNode());
-            },
-            child: Container(
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                ),
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: <Widget>[
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: <Widget>[
-                              Padding(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                                  child: Container(
-                                      height: Dimension.getHeight(0.15),
-                                      width: Dimension.getWidth(0.3),
-                                      child: ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(8.0),
-                                        child: CachedNetworkImage(
-                                            imageUrl: Config.ip + widget.img,
-                                            fit: BoxFit.cover,
-                                            height: Dimension.getHeight(0.3),
-                                            width: Dimension.getWidth(0.5),
-                                            placeholder: (context, url) =>
-                                                new SizedBox(
-                                                  child: Center(
-                                                      child:
-                                                          CircularProgressIndicator(
-                                                    valueColor:
-                                                        new AlwaysStoppedAnimation<
-                                                                Color>(
-                                                            Colors.redAccent),
+    return GestureDetector(
+        onTap: () {
+          FocusScope.of(context).requestFocus(new FocusNode());
+        },
+        child: Scaffold(
+            resizeToAvoidBottomInset: false,
+            body: GestureDetector(
+              onTap: () {
+                FocusScope.of(context).requestFocus(new FocusNode());
+              },
+              child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                  ),
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: <Widget>[
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: <Widget>[
+                                Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                    child: Container(
+                                        height: Dimension.getHeight(0.15),
+                                        width: Dimension.getWidth(0.3),
+                                        child: ClipRRect(
+                                          borderRadius:
+                                              BorderRadius.circular(8.0),
+                                          child: CachedNetworkImage(
+                                              imageUrl: Config.ip + widget.img,
+                                              fit: BoxFit.cover,
+                                              height: Dimension.getHeight(0.3),
+                                              width: Dimension.getWidth(0.5),
+                                              placeholder: (context, url) =>
+                                                  new SizedBox(
+                                                    child: Center(
+                                                        child:
+                                                            CircularProgressIndicator(
+                                                      valueColor:
+                                                          new AlwaysStoppedAnimation<
+                                                                  Color>(
+                                                              Colors.redAccent),
+                                                    )),
                                                   )),
-                                                )),
-                                      )))
-                            ],
-                          ),
-                          Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(2, 0, 0, 15),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: <Widget>[
-                                    Container(
-                                      width: Dimension.getWidth(0.45),
-                                      child: Text(
-                                        widget.name,
-                                        style: StylesText.style20BrownBold,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.fromLTRB(2, 20, 0, 0),
-                                child: Row(
-                                  children: <Widget>[
-                                    Padding(
-                                      padding: const EdgeInsets.all(0.0),
-                                      child: CircleAvatar(
-                                        backgroundColor: Colors.white,
-                                        foregroundColor: Colors.redAccent,
-                                        radius: 12.0,
-                                        child: Icon(
-                                          Icons.monetization_on,
-                                          color: Colors.redAccent,
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.fromLTRB(5, 0, 0, 0),
-                                      child: Text(widget.price.toString(),
-                                          style: StylesText.style16BrownBold),
-                                    )
-                                  ],
-                                ),
-                              )
-                            ],
-                          )
-                        ],
-                      ),
-                      Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                          child: Container(
-                            child: CustomPaint(
-                                painter: Drawhorizontalline(
-                                    false, 180.0, 220.0, Colors.blueGrey, 0.5)),
-                          )),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            Expanded(
-                              child: Text(widget.desc,
-                                  style: StylesText.style13Black),
-                            )
-                          ],
-                        ),
-                      ),
-                      Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                          child: Container(
-                            child: CustomPaint(
-                                painter: Drawhorizontalline(
-                                    false, 180.0, 220.0, Colors.blueGrey, 0.5)),
-                          )),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: <Widget>[
-                            Text(
-                              "Note",
-                              style: StylesText.style16Brown,
+                                        )))
+                              ],
                             ),
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
-                              child: Container(
-                                width: Dimension.getWidth(0.62),
-                                child: TextField(
-                                  textInputAction: TextInputAction.done,
-                                  controller: note,
-                                  onEditingComplete: () {
-                                    selectedProduct['Note'] = note.text;
-                                    showDialog(
-                                        context: context,
-                                        barrierDismissible: false,
-                                        builder: (BuildContext context) {
-                                          return AlertDialog(
-                                            shape: RoundedRectangleBorder(
-                                                borderRadius: BorderRadius.all(
-                                                    Radius.circular(15.0))),
-                                            title: new Text("Information",
-                                                style: StylesText
-                                                    .style18RedaccentBold),
-                                            content: new Text(
-                                              "Add note successfull!",
-                                              style: StylesText.style15Black,
-                                            ),
-                                            actions: <Widget>[
-                                              FlatButton(
-                                                child: Text("OK"),
-                                                onPressed: () {
-                                                  Navigator.of(context).pop();
-                                                },
-                                              ),
-                                            ],
-                                          );
-                                        });
-                                  },
-                                  keyboardType: TextInputType.multiline,
-                                  maxLines: null,
-                                ),
-                              ),
-                            )
-                          ],
-                        ),
-                      ),
-                      widget.size == null || widget.size.length == 0
-                          ? Container()
-                          : Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                              child: Container(
-                                child: CustomPaint(
-                                    painter: Drawhorizontalline(false, 180.0,
-                                        220.0, Colors.blueGrey, 0.5)),
-                              )),
-                      widget.size == null || widget.size.length == 0
-                          ? Container()
-                          : Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: <Widget>[
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: createRadioListSize(),
-                                  )
-                                ],
-                              )),
-                      widget.ishot == 1
-                          ? Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                              child: Container(
-                                child: CustomPaint(
-                                    painter: Drawhorizontalline(false, 180.0,
-                                        220.0, Colors.blueGrey, 0.5)),
-                              ))
-                          : Container(),
-                      widget.ishot == 1
-                          ? Container(
-                              width: Dimension.getWidth(1.0),
-                              child: Padding(
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Padding(
                                   padding:
-                                      const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                      const EdgeInsets.fromLTRB(2, 0, 0, 15),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: <Widget>[
-                                      Text("Kind",
-                                          style: StylesText.style16Brown),
+                                      Container(
+                                        width: Dimension.getWidth(0.45),
+                                        child: Text(
+                                          widget.name,
+                                          style: StylesText.style20BrownBold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(2, 20, 0, 0),
+                                  child: Row(
+                                    children: <Widget>[
                                       Padding(
-                                        padding: const EdgeInsets.fromLTRB(
-                                            20, 0, 0, 0),
-                                        child: Container(
-                                          width: Dimension.getWidth(0.5),
-                                          child: CheckboxListTile(
-                                            controlAffinity:
-                                                ListTileControlAffinity.leading,
-                                            title: Text("Hot"),
-                                            value: checked_hot,
-                                            onChanged: (bool value) {
-                                              setState(() {
-                                                checked_hot = value;
-                                                selectedProduct['IsHot'] =
-                                                    checked_hot;
-                                              });
-                                            },
-                                            activeColor: Colors.red,
+                                        padding: const EdgeInsets.all(0.0),
+                                        child: CircleAvatar(
+                                          backgroundColor: Colors.white,
+                                          foregroundColor: Colors.redAccent,
+                                          radius: 12.0,
+                                          child: Icon(
+                                            Icons.monetization_on,
+                                            color: Colors.redAccent,
                                           ),
                                         ),
                                       ),
-                                    ],
-                                  )))
-                          : Container(),
-                      widget.toppings == null || widget.toppings.length == 0
-                          ? Container()
-                          : Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                              child: Container(
-                                child: CustomPaint(
-                                    painter: Drawhorizontalline(false, 180.0,
-                                        220.0, Colors.blueGrey, 0.5)),
-                              )),
-                      widget.toppings == null || widget.toppings.length == 0
-                          ? Container()
-                          : Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                              child: Column(
-                                children: <Widget>[
-                                  Row(
-                                    children: <Widget>[
-                                      Text(
-                                        "Topping",
-                                        style: StylesText.style16Brown,
-                                      )
-                                    ],
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                                    child: Container(
-                                      width: Dimension.getWidth(1.0),
-                                      child: Center(
-                                        child: Column(
-                                          children: createCheckedBoxTopping(),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                      widget.promotion == null || widget.promotion.length == 0
-                          ? Container()
-                          : Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                              child: Container(
-                                child: CustomPaint(
-                                    painter: Drawhorizontalline(false, 180.0,
-                                        220.0, Colors.blueGrey, 0.5)),
-                              )),
-                      widget.promotion == null || widget.promotion.length == 0
-                          ? Container()
-                          : Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                              child: Column(
-                                children: <Widget>[
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        "Discount",
-                                        style: StylesText.style16Brown,
-                                      ),
-                                    ],
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                                    child: Container(
-                                      width: Dimension.getWidth(1.0),
-                                      child: Center(
-                                        child: Column(
-                                          children: createRadioListPromotion(),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                      list_promotion_product == null ||
-                              list_promotion_product.length == 0
-                          ? Container()
-                          : Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                              child: Column(
-                                children: <Widget>[
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        "Promotion Products",
-                                        style: StylesText.style16Brown,
-                                      ),
-                                    ],
-                                  ),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                                    child: Container(
-                                      width: Dimension.getWidth(1.0),
-                                      child: Center(
-                                        child: Column(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children:
-                                              createCheckBoxListPromotionProDuct(),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                      Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-                          child: Container(
-                            child: CustomPaint(
-                                painter: Drawhorizontalline(
-                                    false, 180.0, 220.0, Colors.blueGrey, 0.5)),
-                          )),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            Padding(
-                              padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                              child: Text(
-                                "Money",
-                                style: StylesText.style16Brown,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: <Widget>[
-                            Stack(
-                              alignment: AlignmentDirectional.centerStart,
-                              children: <Widget>[
-                                Container(
-                                  padding:
-                                      const EdgeInsets.fromLTRB(30, 0, 0, 0),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: <Widget>[
-                                      Text(
-                                        money.toString(),
-                                        style: StylesText.style20BrownBold,
-                                      )
-                                    ],
-                                  ),
-                                ),
-                                Container(
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: <Widget>[
-                                      Padding(
-                                        padding: const EdgeInsets.fromLTRB(
-                                            190, 0, 0, 0),
-                                        child: IconButton(
-                                          icon: Icon(Icons.arrow_back_ios,
-                                              color: Colors.brown),
-                                          onPressed: () {
-                                            setState(() {
-                                              if (number == 1) {
-                                                return;
-                                              }
-                                              number--;
-                                              money -= widget.price;
-                                            });
-                                            selectedProduct['Quantity'] =
-                                                number;
-                                            selectedProduct['Price'] = money;
-                                          },
-                                        ),
-                                      ),
                                       Padding(
                                         padding: const EdgeInsets.fromLTRB(
                                             5, 0, 0, 0),
-                                        child: Text(
-                                          number.toString(),
-                                          style: StylesText.style16Brown,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: const EdgeInsets.fromLTRB(
-                                            5, 0, 0, 0),
-                                        child: IconButton(
-                                          icon: Icon(Icons.arrow_forward_ios,
-                                              color: Colors.brown),
-                                          onPressed: () {
-                                            setState(() {
-                                              number++;
-                                              money += widget.price;
-                                            });
-                                            selectedProduct['Quantity'] =
-                                                number;
-                                            selectedProduct['Price'] = money;
-                                          },
-                                        ),
-                                      ),
+                                        child: Text(widget.price.toString(),
+                                            style: StylesText.style16BrownBold),
+                                      )
                                     ],
                                   ),
                                 )
@@ -806,11 +454,374 @@ class Order_DialogState extends State<Order_Dialog> {
                             )
                           ],
                         ),
-                      ),
-                    ],
-                  ),
-                )),
-          )),
-    );
+                        Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                            child: Container(
+                              child: CustomPaint(
+                                  painter: Drawhorizontalline(false, 180.0,
+                                      220.0, Colors.blueGrey, 0.5)),
+                            )),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              Expanded(
+                                child: Text(widget.desc,
+                                    style: StylesText.style13Black),
+                              )
+                            ],
+                          ),
+                        ),
+                        Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                            child: Container(
+                              child: CustomPaint(
+                                  painter: Drawhorizontalline(false, 180.0,
+                                      220.0, Colors.blueGrey, 0.5)),
+                            )),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: <Widget>[
+                              Text(
+                                "Note",
+                                style: StylesText.style16Brown,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                child: Container(
+                                  width: Dimension.getWidth(0.62),
+                                  child: TextField(
+                                    textInputAction: TextInputAction.done,
+                                    controller: note,
+                                    onEditingComplete: () {
+                                      selectedProduct['Note'] = note.text;
+                                      showDialog(
+                                          context: context,
+                                          barrierDismissible: false,
+                                          builder: (BuildContext context) {
+                                            return AlertDialog(
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.all(
+                                                          Radius.circular(
+                                                              15.0))),
+                                              title: new Text("Information",
+                                                  style: StylesText
+                                                      .style18RedaccentBold),
+                                              content: new Text(
+                                                "Add note successfull!",
+                                                style: StylesText.style15Black,
+                                              ),
+                                              actions: <Widget>[
+                                                FlatButton(
+                                                  child: Text("OK"),
+                                                  onPressed: () {
+                                                    Navigator.of(context).pop();
+                                                  },
+                                                ),
+                                              ],
+                                            );
+                                          });
+                                    },
+                                    keyboardType: TextInputType.multiline,
+                                    maxLines: null,
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        ),
+                        widget.size == null || widget.size.length == 0
+                            ? Container()
+                            : Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                child: Container(
+                                  child: CustomPaint(
+                                      painter: Drawhorizontalline(false, 180.0,
+                                          220.0, Colors.blueGrey, 0.5)),
+                                )),
+                        widget.size == null || widget.size.length == 0
+                            ? Container()
+                            : Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  children: <Widget>[
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: createRadioListSize(),
+                                    )
+                                  ],
+                                )),
+                        widget.ishot == 1
+                            ? Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                child: Container(
+                                  child: CustomPaint(
+                                      painter: Drawhorizontalline(false, 180.0,
+                                          220.0, Colors.blueGrey, 0.5)),
+                                ))
+                            : Container(),
+                        widget.ishot == 1
+                            ? Container(
+                                width: Dimension.getWidth(1.0),
+                                child: Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text("Kind",
+                                            style: StylesText.style16Brown),
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              20, 0, 0, 0),
+                                          child: Container(
+                                            width: Dimension.getWidth(0.5),
+                                            child: CheckboxListTile(
+                                              controlAffinity:
+                                                  ListTileControlAffinity
+                                                      .leading,
+                                              title: Text("Hot"),
+                                              value: checked_hot,
+                                              onChanged: (bool value) {
+                                                setState(() {
+                                                  checked_hot = value;
+                                                  selectedProduct['IsHot'] =
+                                                      checked_hot;
+                                                });
+                                              },
+                                              activeColor: Colors.red,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    )))
+                            : Container(),
+                        widget.toppings == null || widget.toppings.length == 0
+                            ? Container()
+                            : Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                                child: Container(
+                                  child: CustomPaint(
+                                      painter: Drawhorizontalline(false, 180.0,
+                                          220.0, Colors.blueGrey, 0.5)),
+                                )),
+                        widget.toppings == null || widget.toppings.length == 0
+                            ? Container()
+                            : Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                child: Column(
+                                  children: <Widget>[
+                                    Row(
+                                      children: <Widget>[
+                                        Text(
+                                          "Topping",
+                                          style: StylesText.style16Brown,
+                                        )
+                                      ],
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          0, 10, 0, 0),
+                                      child: Container(
+                                        width: Dimension.getWidth(1.0),
+                                        child: Center(
+                                          child: Column(
+                                            children: createCheckedBoxTopping(),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                        widget.promotion == null || widget.promotion.length == 0
+                            ? Container()
+                            : Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                                child: Container(
+                                  child: CustomPaint(
+                                      painter: Drawhorizontalline(false, 180.0,
+                                          220.0, Colors.blueGrey, 0.5)),
+                                )),
+                        widget.promotion == null || widget.promotion.length == 0
+                            ? Container()
+                            : Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                child: Column(
+                                  children: <Widget>[
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text(
+                                          "Discount",
+                                          style: StylesText.style16Brown,
+                                        ),
+                                      ],
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          0, 10, 0, 0),
+                                      child: Container(
+                                        width: Dimension.getWidth(1.0),
+                                        child: Center(
+                                          child: Column(
+                                            children:
+                                                createRadioListPromotion(),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                        list_promotion_product == null ||
+                                list_promotion_product.length == 0
+                            ? Container()
+                            : Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                child: Column(
+                                  children: <Widget>[
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text(
+                                          "Promotion Products",
+                                          style: StylesText.style16Brown,
+                                        ),
+                                      ],
+                                    ),
+                                    Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          0, 10, 0, 0),
+                                      child: Container(
+                                        width: Dimension.getWidth(1.0),
+                                        child: Center(
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children:
+                                                createCheckBoxListPromotionProDuct(),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                        Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                            child: Container(
+                              child: CustomPaint(
+                                  painter: Drawhorizontalline(false, 180.0,
+                                      220.0, Colors.blueGrey, 0.5)),
+                            )),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              Padding(
+                                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                child: Text(
+                                  "Money",
+                                  style: StylesText.style16Brown,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              Stack(
+                                alignment: AlignmentDirectional.centerStart,
+                                children: <Widget>[
+                                  Container(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(30, 0, 0, 0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: <Widget>[
+                                        Text(
+                                          money.toString(),
+                                          style: StylesText.style20BrownBold,
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  Container(
+                                    child: Row(
+                                      mainAxisAlignment: MainAxisAlignment.end,
+                                      children: <Widget>[
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              190, 0, 0, 0),
+                                          child: IconButton(
+                                            icon: Icon(Icons.arrow_back_ios,
+                                                color: Colors.brown),
+                                            onPressed: () {
+                                              setState(() {
+                                                if (number == 1) {
+                                                  return;
+                                                }
+                                                number--;
+                                                money -= widget.price;
+                                              });
+                                              selectedProduct['Quantity'] =
+                                                  number;
+                                              selectedProduct['Price'] = money;
+                                            },
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              5, 0, 0, 0),
+                                          child: Text(
+                                            number.toString(),
+                                            style: StylesText.style16Brown,
+                                          ),
+                                        ),
+                                        Padding(
+                                          padding: const EdgeInsets.fromLTRB(
+                                              5, 0, 0, 0),
+                                          child: IconButton(
+                                            icon: Icon(Icons.arrow_forward_ios,
+                                                color: Colors.brown),
+                                            onPressed: () {
+                                              setState(() {
+                                                number++;
+                                                money += widget.price;
+                                              });
+                                              selectedProduct['Quantity'] =
+                                                  number;
+                                              selectedProduct['Price'] = money;
+                                            },
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              )
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  )),
+            )));
   }
 }

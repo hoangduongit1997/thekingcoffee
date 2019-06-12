@@ -93,103 +93,100 @@ class _HomePageState extends State<MapPage> {
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays([]);
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: Container(
-            constraints: BoxConstraints.expand(),
-            color: Colors.white,
-            child: Center(
-              child: Stack(
-                children: <Widget>[
-                  _startLocation == null
-                      ? Container()
-                      : GoogleMap(
-                          mapType: _currentMapType,
-                          onMapCreated: (GoogleMapController controller) {
-                            _mapController = controller;
-                          },
-                          markers: Set<Marker>.of(markers.values),
-                          scrollGesturesEnabled: true,
-                          rotateGesturesEnabled: true,
-                          tiltGesturesEnabled: true,
-                          myLocationEnabled: true,
-                          myLocationButtonEnabled: true,
-                          minMaxZoomPreference: MinMaxZoomPreference.unbounded,
-                          compassEnabled: true,
-                          zoomGesturesEnabled: true,
-                          initialCameraPosition: CameraPosition(
-                            target: LatLng(_startLocation.latitude,
-                                _startLocation.longitude),
-                            zoom: 14.4746,
-                          ),
-                        ),
-                  Positioned(
-                    left: 0,
-                    top: 0,
-                    right: 0,
-                    child: Column(
-                      mainAxisSize: MainAxisSize.max,
-                      children: <Widget>[
-                        Padding(
-                          padding:
-                              EdgeInsets.only(top: 80, left: 20, right: 20),
-                          child: AddressPicker(onPlaceSelected),
-                        ),
-                      ],
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: Container(
+        constraints: BoxConstraints.expand(),
+        color: Colors.white,
+        child: Center(
+          child: Stack(
+            children: <Widget>[
+              _startLocation == null
+                  ? Container()
+                  : GoogleMap(
+                      mapType: _currentMapType,
+                      onMapCreated: (GoogleMapController controller) {
+                        _mapController = controller;
+                      },
+                      markers: Set<Marker>.of(markers.values),
+                      scrollGesturesEnabled: true,
+                      rotateGesturesEnabled: true,
+                      tiltGesturesEnabled: true,
+                      myLocationEnabled: true,
+                      myLocationButtonEnabled: true,
+                      minMaxZoomPreference: MinMaxZoomPreference.unbounded,
+                      compassEnabled: true,
+                      zoomGesturesEnabled: true,
+                      initialCameraPosition: CameraPosition(
+                        target: LatLng(
+                            _startLocation.latitude, _startLocation.longitude),
+                        zoom: 14.4746,
+                      ),
                     ),
-                  ),
-                ],
+              Positioned(
+                left: 0,
+                top: 0,
+                right: 0,
+                child: Column(
+                  mainAxisSize: MainAxisSize.max,
+                  children: <Widget>[
+                    Padding(
+                      padding: EdgeInsets.only(top: 80, left: 20, right: 20),
+                      child: AddressPicker(onPlaceSelected),
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+      floatingActionButton: Container(
+        padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: FloatingActionButton(
+                backgroundColor: Colors.white,
+                onPressed: _onMapTypeButtonPressed,
+                tooltip: 'Change style map',
+                child: Icon(
+                  Icons.map,
+                  color: Colors.redAccent,
+                ),
               ),
             ),
-          ),
-          floatingActionButton: Container(
-            padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: FloatingActionButton(
-                    backgroundColor: Colors.white,
-                    onPressed: _onMapTypeButtonPressed,
-                    tooltip: 'Change style map',
-                    child: Icon(
-                      Icons.map,
+            Padding(
+                padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
+                child: Container(
+                    height: Dimension.getHeight(0.128),
+                    width: Dimension.getWidth(0.128),
+                    decoration: BoxDecoration(boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey,
+                        blurRadius: 40.0,
+                        spreadRadius: 2.0,
+                        offset: Offset(
+                          8.0,
+                          8.0,
+                        ),
+                      )
+                    ], shape: BoxShape.circle, color: Colors.white),
+                    child: IconButton(
+                      tooltip: "Send to this address",
+                      icon: Icon(Icons.send),
                       color: Colors.redAccent,
-                    ),
-                  ),
-                ),
-                Padding(
-                    padding: const EdgeInsets.fromLTRB(8, 0, 8, 8),
-                    child: Container(
-                        height: Dimension.getHeight(0.128),
-                        width: Dimension.getWidth(0.128),
-                        decoration: BoxDecoration(boxShadow: [
-                          BoxShadow(
-                            color: Colors.grey,
-                            blurRadius: 40.0,
-                            spreadRadius: 2.0,
-                            offset: Offset(
-                              8.0,
-                              8.0,
-                            ),
-                          )
-                        ], shape: BoxShape.circle, color: Colors.white),
-                        child: IconButton(
-                          tooltip: "Send to this address",
-                          icon: Icon(Icons.send),
-                          color: Colors.redAccent,
-                          onPressed: () {
-                            Navigator.of(context).pop(final_address);
-                          },
-                        ))),
-              ],
-            ),
-          ),
-          floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
-        ));
+                      onPressed: () {
+                        Navigator.of(context).pop(final_address);
+                      },
+                    ))),
+          ],
+        ),
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endFloat,
+    );
   }
 
   Future onPlaceSelected(Get_Place_Item place, bool fromAddress) async {

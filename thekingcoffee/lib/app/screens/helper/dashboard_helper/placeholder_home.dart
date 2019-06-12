@@ -71,10 +71,11 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(primaryColor: Colors.redAccent),
-        home: Scaffold(
+    return GestureDetector(
+        onTap: () {
+          FocusScope.of(context).requestFocus(new FocusNode());
+        },
+        child: Scaffold(
           resizeToAvoidBottomPadding: false,
           key: _scaffoldKey,
           appBar: AppBar(

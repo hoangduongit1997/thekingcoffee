@@ -30,7 +30,7 @@ var promotion_list_food = [];
 class _Home_Card_Food_State extends State<Home_Card_Food> {
   intDataFoodScreen() async {
     final result = await Get_Food_Products();
-//lôi leake memory ở day
+
     if (this.mounted) {
       setState(() {
         data = result;
@@ -47,310 +47,291 @@ class _Home_Card_Food_State extends State<Home_Card_Food> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: Container(
-            child: Column(
-              children: <Widget>[
-                Container(
-                  height: Dimension.getHeight(0.33),
-                  child: ListView.builder(
-                      scrollDirection: Axis.horizontal,
-                      shrinkWrap: true,
-                      physics: const ClampingScrollPhysics(),
-                      itemCount: lenght,
-                      itemBuilder: (BuildContext context, int index) {
-                        promotion_list_food =
-                            data[index]['Promotion'] as List<dynamic>;
-                        promotion_food = promotion_list_food.length;
+    return Scaffold(
+      resizeToAvoidBottomInset: false,
+      body: Container(
+        child: Column(
+          children: <Widget>[
+            Container(
+              height: Dimension.getHeight(0.33),
+              child: ListView.builder(
+                  scrollDirection: Axis.horizontal,
+                  shrinkWrap: true,
+                  physics: const ClampingScrollPhysics(),
+                  itemCount: lenght,
+                  itemBuilder: (BuildContext context, int index) {
+                    promotion_list_food =
+                        data[index]['Promotion'] as List<dynamic>;
+                    promotion_food = promotion_list_food.length;
 
-                        if (data == null) {
-                          return Center(
-                            child: CircularProgressIndicator(),
-                          );
-                        } else {
-                          return new GestureDetector(
-                              child: Container(
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      border:
-                                          Border.all(color: Colors.grey[300]),
-                                      borderRadius: BorderRadius.all(
-                                          Radius.circular(8.0))),
-                                  margin: EdgeInsets.only(right: 12),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                    if (data == null) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    } else {
+                      return new GestureDetector(
+                          child: Container(
+                              decoration: BoxDecoration(
+                                  color: Colors.white,
+                                  border: Border.all(color: Colors.grey[300]),
+                                  borderRadius:
+                                      BorderRadius.all(Radius.circular(8.0))),
+                              margin: EdgeInsets.only(right: 12),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: <Widget>[
+                                  Row(
                                     children: <Widget>[
-                                      Row(
+                                      Stack(
+                                        alignment: AlignmentDirectional.topEnd,
                                         children: <Widget>[
-                                          Stack(
-                                            alignment:
-                                                AlignmentDirectional.topEnd,
-                                            children: <Widget>[
-                                              Padding(
-                                                padding:
-                                                    const EdgeInsets.fromLTRB(
-                                                        0, 0, 0, 0),
-                                                child: Container(
-                                                  height:
-                                                      Dimension.getHeight(0.18),
-                                                  width:
-                                                      Dimension.getWidth(0.51),
-                                                  decoration: new BoxDecoration(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8.0),
-                                                    border: new Border.all(
-                                                        color: Colors.grey),
-                                                  ),
-                                                  child: ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            8.0),
-                                                    child: CachedNetworkImage(
-                                                      imageUrl: Config.ip +
-                                                          data[index]
-                                                              ['File_Path'],
-                                                      fit: BoxFit.fill,
-                                                      placeholder:
-                                                          (context, url) =>
-                                                              new SizedBox(
-                                                                child: Center(
-                                                                  child:
-                                                                      CircularProgressIndicator(
-                                                                    valueColor:
-                                                                        new AlwaysStoppedAnimation(
-                                                                            Colors.redAccent),
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                    ),
-                                                  ),
+                                          Padding(
+                                            padding: const EdgeInsets.fromLTRB(
+                                                0, 0, 0, 0),
+                                            child: Container(
+                                              height: Dimension.getHeight(0.18),
+                                              width: Dimension.getWidth(0.51),
+                                              decoration: new BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
+                                                border: new Border.all(
+                                                    color: Colors.grey),
+                                              ),
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(8.0),
+                                                child: CachedNetworkImage(
+                                                  imageUrl: Config.ip +
+                                                      data[index]['File_Path'],
+                                                  fit: BoxFit.fill,
+                                                  placeholder: (context, url) =>
+                                                      new SizedBox(
+                                                        child: Center(
+                                                          child:
+                                                              CircularProgressIndicator(
+                                                            valueColor:
+                                                                new AlwaysStoppedAnimation(
+                                                                    Colors
+                                                                        .redAccent),
+                                                          ),
+                                                        ),
+                                                      ),
                                                 ),
                                               ),
-                                              Favorite(
-                                                color: Colors.red,
-                                              ),
-                                            ],
+                                            ),
+                                          ),
+                                          Favorite(
+                                            color: Colors.red,
                                           ),
                                         ],
                                       ),
-                                      Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              0, 10, 0, 0),
-                                          child: Container(
-                                            width: Dimension.getWidth(0.51),
-                                            child: Row(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: <Widget>[
-                                                Container(
-                                                  width:
-                                                      Dimension.getWidth(0.51),
-                                                  child: Text(
-                                                    data[index]['Name'],
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: StylesText
-                                                        .style17BrownBold,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          )),
-                                      Padding(
-                                        padding: const EdgeInsets.fromLTRB(
-                                            0, 10, 0, 0),
-                                        child: Container(
-                                          width: Dimension.getWidth(0.51),
-                                          child: Row(
-                                            children: <Widget>[
-                                              Stack(
-                                                alignment: AlignmentDirectional
-                                                    .centerStart,
-                                                children: <Widget>[
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: <Widget>[
-                                                      StarRating(
-                                                        size: 13.0,
-                                                        rating: double.tryParse(
-                                                            data[index]['Start']
-                                                                .toString()),
-                                                        color: Colors.orange,
-                                                        borderColor:
-                                                            Colors.grey,
-                                                        starCount: 5,
-                                                      ),
-                                                      Text(
-                                                          data[index]['Start']
-                                                              .toString(),
-                                                          style: StylesText
-                                                              .style13BrownNormal)
-                                                    ],
-                                                  ),
-                                                  data[index]['IsHot'] == 1
-                                                      ? Container(
-                                                          width: Dimension
-                                                              .getWidth(0.51),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .end,
-                                                            children: <Widget>[
-                                                              SvgPicture.asset(
-                                                                'assets/icons/hot_tea.svg',
-                                                                height: Dimension
-                                                                    .getHeight(
-                                                                        0.035),
-                                                                width: Dimension
-                                                                    .getHeight(
-                                                                        0.1),
-                                                                color: Colors
-                                                                    .redAccent,
-                                                              )
-                                                            ],
-                                                          ),
-                                                        )
-                                                      : Container()
-                                                ],
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                      Padding(
-                                          padding: const EdgeInsets.fromLTRB(
-                                              0, 2, 0, 0),
-                                          child: Container(
-                                            child: CustomPaint(
-                                                painter: Drawhorizontalline(
-                                                    false,
-                                                    0.0,
-                                                    215.0,
-                                                    Colors.blueGrey[300],
-                                                    0.5)),
-                                          )),
-                                      Padding(
-                                        padding: const EdgeInsets.fromLTRB(
-                                            0, 10, 0, 0),
-                                        child: Container(
-                                          width: Dimension.getWidth(0.51),
-                                          child: Row(
-                                            children: <Widget>[
-                                              Stack(
-                                                alignment: AlignmentDirectional
-                                                    .centerStart,
-                                                children: <Widget>[
-                                                  Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment.start,
-                                                    children: <Widget>[
-                                                      Icon(
-                                                        Icons.monetization_on,
-                                                        color: Colors.redAccent,
-                                                      ),
-                                                      Text(
-                                                        data[index]['Price']
-                                                            .toString(),
-                                                        style: StylesText
-                                                            .style13BrownBold,
-                                                      )
-                                                    ],
-                                                  ),
-                                                  promotion_list_food == null ||
-                                                          promotion_list_food
-                                                                  .length ==
-                                                              0
-                                                      ? IgnorePointer(
-                                                          ignoring: true,
-                                                          child: Opacity(
-                                                              opacity: 0.0,
-                                                              child: Container(
-                                                                width: Dimension
-                                                                    .getWidth(
-                                                                        0.51),
-                                                                child: Row(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .end,
-                                                                  children: <
-                                                                      Widget>[
-                                                                    Icon(
-                                                                      Icons
-                                                                          .fastfood,
-                                                                      color: Colors
-                                                                          .redAccent,
-                                                                    ),
-                                                                    Text(
-                                                                      promotion_food
-                                                                              .toString() +
-                                                                          " discount",
-                                                                      style: StylesText
-                                                                          .style13BrownBold,
-                                                                    )
-                                                                  ],
-                                                                ),
-                                                              )),
-                                                        )
-                                                      : Container(
-                                                          width: Dimension
-                                                              .getWidth(0.51),
-                                                          child: Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .end,
-                                                            children: <Widget>[
-                                                              Icon(
-                                                                Icons.fastfood,
-                                                                color: Colors
-                                                                    .redAccent,
-                                                              ),
-                                                              Text(
-                                                                promotion_food
-                                                                        .toString() +
-                                                                    " discount",
-                                                                style: StylesText
-                                                                    .style13BrownBold,
-                                                              )
-                                                            ],
-                                                          ),
-                                                        )
-                                                ],
-                                              )
-                                            ],
-                                          ),
-                                        ),
-                                      )
                                     ],
-                                  )),
-                              onTap: () => {
-                                    LoadingDialog_Order.showLoadingDialog(
-                                        context,
-                                        data[index]['Id'],
-                                        data[index]['Name'],
-                                        data[index]['File_Path'],
-                                        data[index]['Description'],
-                                        data[index]['Price'],
-                                        data[index]['IsHot'],
-                                        data[index]['IsHot'],
-                                        data[index]['Toppings'],
-                                        data[index]['Size'],
-                                        data[index]['Promotion'],
-                                        ListOrderProducts),
-                                  });
-                        }
-                      }),
-                ),
-              ],
+                                  ),
+                                  Padding(
+                                      padding: const EdgeInsets.fromLTRB(
+                                          0, 10, 0, 0),
+                                      child: Container(
+                                        width: Dimension.getWidth(0.51),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            Container(
+                                              width: Dimension.getWidth(0.51),
+                                              child: Text(
+                                                data[index]['Name'],
+                                                overflow: TextOverflow.ellipsis,
+                                                style:
+                                                    StylesText.style17BrownBold,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      )),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                    child: Container(
+                                      width: Dimension.getWidth(0.51),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Stack(
+                                            alignment: AlignmentDirectional
+                                                .centerStart,
+                                            children: <Widget>[
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: <Widget>[
+                                                  StarRating(
+                                                    size: 13.0,
+                                                    rating: double.tryParse(
+                                                        data[index]['Start']
+                                                            .toString()),
+                                                    color: Colors.orange,
+                                                    borderColor: Colors.grey,
+                                                    starCount: 5,
+                                                  ),
+                                                  Text(
+                                                      data[index]['Start']
+                                                          .toString(),
+                                                      style: StylesText
+                                                          .style13BrownNormal)
+                                                ],
+                                              ),
+                                              data[index]['IsHot'] == 1
+                                                  ? Container(
+                                                      width: Dimension.getWidth(
+                                                          0.51),
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .end,
+                                                        children: <Widget>[
+                                                          SvgPicture.asset(
+                                                            'assets/icons/hot_tea.svg',
+                                                            height: Dimension
+                                                                .getHeight(
+                                                                    0.035),
+                                                            width: Dimension
+                                                                .getHeight(0.1),
+                                                            color: Colors
+                                                                .redAccent,
+                                                          )
+                                                        ],
+                                                      ),
+                                                    )
+                                                  : Container()
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Padding(
+                                      padding:
+                                          const EdgeInsets.fromLTRB(0, 2, 0, 0),
+                                      child: Container(
+                                        child: CustomPaint(
+                                            painter: Drawhorizontalline(
+                                                false,
+                                                0.0,
+                                                215.0,
+                                                Colors.blueGrey[300],
+                                                0.5)),
+                                      )),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                    child: Container(
+                                      width: Dimension.getWidth(0.51),
+                                      child: Row(
+                                        children: <Widget>[
+                                          Stack(
+                                            alignment: AlignmentDirectional
+                                                .centerStart,
+                                            children: <Widget>[
+                                              Row(
+                                                mainAxisAlignment:
+                                                    MainAxisAlignment.start,
+                                                children: <Widget>[
+                                                  Icon(
+                                                    Icons.monetization_on,
+                                                    color: Colors.redAccent,
+                                                  ),
+                                                  Text(
+                                                    data[index]['Price']
+                                                        .toString(),
+                                                    style: StylesText
+                                                        .style13BrownBold,
+                                                  )
+                                                ],
+                                              ),
+                                              promotion_list_food == null ||
+                                                      promotion_list_food
+                                                              .length ==
+                                                          0
+                                                  ? IgnorePointer(
+                                                      ignoring: true,
+                                                      child: Opacity(
+                                                          opacity: 0.0,
+                                                          child: Container(
+                                                            width: Dimension
+                                                                .getWidth(0.51),
+                                                            child: Row(
+                                                              mainAxisAlignment:
+                                                                  MainAxisAlignment
+                                                                      .end,
+                                                              children: <
+                                                                  Widget>[
+                                                                Icon(
+                                                                  Icons
+                                                                      .fastfood,
+                                                                  color: Colors
+                                                                      .redAccent,
+                                                                ),
+                                                                Text(
+                                                                  promotion_food
+                                                                          .toString() +
+                                                                      " discount",
+                                                                  style: StylesText
+                                                                      .style13BrownBold,
+                                                                )
+                                                              ],
+                                                            ),
+                                                          )),
+                                                    )
+                                                  : Container(
+                                                      width: Dimension.getWidth(
+                                                          0.51),
+                                                      child: Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .end,
+                                                        children: <Widget>[
+                                                          Icon(
+                                                            Icons.fastfood,
+                                                            color: Colors
+                                                                .redAccent,
+                                                          ),
+                                                          Text(
+                                                            promotion_food
+                                                                    .toString() +
+                                                                " discount",
+                                                            style: StylesText
+                                                                .style13BrownBold,
+                                                          )
+                                                        ],
+                                                      ),
+                                                    )
+                                            ],
+                                          )
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              )),
+                          onTap: () => {
+                                LoadingDialog_Order.showLoadingDialog(
+                                    context,
+                                    data[index]['Id'],
+                                    data[index]['Name'],
+                                    data[index]['File_Path'],
+                                    data[index]['Description'],
+                                    data[index]['Price'],
+                                    data[index]['IsHot'],
+                                    data[index]['IsHot'],
+                                    data[index]['Toppings'],
+                                    data[index]['Size'],
+                                    data[index]['Promotion'],
+                                    ListOrderProducts),
+                              });
+                    }
+                  }),
             ),
-          ),
+          ],
         ),
       ),
     );
