@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:thekingcoffee/app/config/config.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 
 Find_Food(String food) async {
   try {
@@ -10,7 +11,7 @@ Find_Food(String food) async {
     final res = json.decode(response.body)['Value'];
     if (res == null) {
       Fluttertoast.showToast(
-          msg: "There is no product for searching",
+          msg: allTranslations.text("no_food").toString(),
           toastLength: Toast.LENGTH_LONG,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIos: 1,

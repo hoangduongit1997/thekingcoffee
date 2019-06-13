@@ -6,6 +6,7 @@ import 'package:thekingcoffee/app/data/repository/signup_reposotory.dart';
 import 'package:thekingcoffee/app/screens/login.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/app/validation/validation.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/show_message_dialog.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
@@ -44,7 +45,7 @@ class MyAppState extends State<SignUp> {
           backgroundColor: Colors.white,
           elevation: 0.0,
           title: Text(
-            "Register",
+            allTranslations.text("register").toString(),
             style: StylesText.style20BrownBold,
           ),
           leading: IconButton(
@@ -85,7 +86,9 @@ class MyAppState extends State<SignUp> {
                                     borderSide:
                                         BorderSide(color: Colors.redAccent),
                                   ),
-                                  labelText: "Username",
+                                  labelText: allTranslations
+                                      .text("user_name")
+                                      .toString(),
                                   errorText:
                                       snapshot.hasError ? snapshot.error : null,
                                   labelStyle: StylesText.style12Bluegray),
@@ -106,7 +109,9 @@ class MyAppState extends State<SignUp> {
                                     borderSide:
                                         BorderSide(color: Colors.redAccent),
                                   ),
-                                  labelText: "Password",
+                                  labelText: allTranslations
+                                      .text("password")
+                                      .toString(),
                                   errorText:
                                       snapshot.hasError ? snapshot.error : null,
                                   labelStyle: StylesText.style12Bluegray),
@@ -127,7 +132,9 @@ class MyAppState extends State<SignUp> {
                                     borderSide:
                                         BorderSide(color: Colors.redAccent),
                                   ),
-                                  labelText: "Confirm Password",
+                                  labelText: allTranslations
+                                      .text("retype_pass")
+                                      .toString(),
                                   errorText:
                                       snapshot.hasError ? snapshot.error : null,
                                   labelStyle: StylesText.style12Bluegray),
@@ -148,7 +155,9 @@ class MyAppState extends State<SignUp> {
                                     borderSide:
                                         BorderSide(color: Colors.redAccent),
                                   ),
-                                  labelText: "Phone number",
+                                  labelText: allTranslations
+                                      .text("phone_number")
+                                      .toString(),
                                   errorText:
                                       snapshot.hasError ? snapshot.error : null,
                                   labelStyle: StylesText.style12Bluegray),
@@ -188,7 +197,9 @@ class MyAppState extends State<SignUp> {
                                     borderSide:
                                         BorderSide(color: Colors.redAccent),
                                   ),
-                                  labelText: "Fullname",
+                                  labelText: allTranslations
+                                      .text("full_name")
+                                      .toString(),
                                   errorText:
                                       snapshot.hasError ? snapshot.error : null,
                                   labelStyle: StylesText.style12Bluegray),
@@ -210,7 +221,9 @@ class MyAppState extends State<SignUp> {
                                   borderSide:
                                       BorderSide(color: Colors.redAccent),
                                 ),
-                                labelText: 'Date of birth',
+                                labelText: allTranslations
+                                    .text("date_of_birth")
+                                    .toString(),
                                 errorText:
                                     snapshot.hasError ? snapshot.error : null,
                                 labelStyle: StylesText.style12Bluegray,
@@ -223,7 +236,8 @@ class MyAppState extends State<SignUp> {
                     Padding(
                         padding: const EdgeInsets.fromLTRB(0, 20, 0, 10),
                         child: CheckboxListTile(
-                          title: Text("Accept terms & conditions"),
+                          title: Text(
+                              allTranslations.text("accept_terms").toString()),
                           value: checked,
                           activeColor: Colors.red[300],
                           onChanged: (bool value) {
@@ -240,8 +254,9 @@ class MyAppState extends State<SignUp> {
                         height: Dimension.getHeight(0.063),
                         child: RaisedButton(
                           color: Colors.red[300],
-                          child:
-                              Text("Sign up", style: StylesText.style16While),
+                          child: Text(
+                              allTranslations.text("sign_up").toString(),
+                              style: StylesText.style16While),
                           shape: RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(8))),
@@ -256,7 +271,8 @@ class MyAppState extends State<SignUp> {
   }
 
   void onSignupClick() async {
-    LoadingDialog.showLoadingDialog(context, "Loading...");
+    LoadingDialog.showLoadingDialog(
+        context, allTranslations.text("splash_screen").toString());
     if ((await Validation.isConnectedNetwork()) == true &&
         signupBloc.isValidInfo(
               _name.text.trim(),
@@ -298,7 +314,9 @@ class MyAppState extends State<SignUp> {
     if ((await Validation.isConnectedNetwork()) == false) {
       LoadingDialog.hideLoadingDialog(context);
       MsgDialog.showMsgDialog(
-          context, "No network!", "No network connection found");
+          context,
+          allTranslations.text("title_no_netword").toString(),
+          allTranslations.text("no_network").toString());
     }
   }
 }

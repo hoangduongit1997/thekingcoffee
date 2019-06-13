@@ -12,6 +12,7 @@ import 'package:thekingcoffee/app/screens/login.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:thekingcoffee/app/validation/validation.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -27,7 +28,7 @@ class _HomeMenuState extends State<HomeMenu> {
     if (await canLaunch(url)) {
       await launch(url);
     } else {
-      throw 'Could not launch $url';
+      throw allTranslations.text("could_not_run ") + '$url';
     }
   }
 
@@ -98,7 +99,7 @@ class _HomeMenuState extends State<HomeMenu> {
                 },
                 child: ListTile(
                   title: Text(
-                    'My account',
+                    allTranslations.text("my_account").toString(),
                     style: StylesText.style13BlackBold,
                   ),
                   leading: Icon(
@@ -114,7 +115,7 @@ class _HomeMenuState extends State<HomeMenu> {
                 },
                 child: ListTile(
                   title: Text(
-                    'Earn points',
+                    allTranslations.text("earn_point").toString(),
                     style: StylesText.style13BlackBold,
                   ),
                   leading: Icon(
@@ -130,7 +131,7 @@ class _HomeMenuState extends State<HomeMenu> {
                 },
                 child: ListTile(
                   title: Text(
-                    'History',
+                    allTranslations.text("history").toString(),
                     style: StylesText.style13BlackBold,
                   ),
                   leading: Icon(Icons.history, color: Colors.redAccent),
@@ -139,7 +140,7 @@ class _HomeMenuState extends State<HomeMenu> {
               InkWell(
                 child: ListTile(
                   title: Text(
-                    'Log out',
+                    allTranslations.text("log_out").toString(),
                     style: StylesText.style13BlackBold,
                   ),
                   leading: Icon(Icons.error_outline, color: Colors.redAccent),

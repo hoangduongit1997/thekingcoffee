@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
 import 'package:http/http.dart' as http;
 
@@ -67,7 +68,7 @@ Future<bool> PostOrder(String phone, String address) async {
   if (data['Status'] == 1) {
     status_oder = true;
     Fluttertoast.showToast(
-        msg: data['Message'],
+        msg: allTranslations.text("order_suc").toString(),
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIos: 1,
@@ -77,7 +78,7 @@ Future<bool> PostOrder(String phone, String address) async {
   } else {
     status_oder = false;
     Fluttertoast.showToast(
-        msg: data['Message'],
+        msg: allTranslations.text("order_false").toString(),
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIos: 1,

@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 
 Future<bool> ReSetPass_Res(
     String code, int id_user, String id_request, String pass) async {
@@ -26,7 +27,7 @@ Future<bool> ReSetPass_Res(
     pref.clear();
     pref.commit();
     Fluttertoast.showToast(
-        msg: data['Message'].toString(),
+        msg: allTranslations.text("reset_pass_suc").toString(),
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIos: 1,
@@ -36,7 +37,7 @@ Future<bool> ReSetPass_Res(
   } else {
     status = false;
     Fluttertoast.showToast(
-        msg: data['Message'].toString(),
+        msg: allTranslations.text("reset_pass_false").toString(),
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIos: 1,

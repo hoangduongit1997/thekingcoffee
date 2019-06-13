@@ -78,7 +78,7 @@ class VerifyPhonePageSate extends State<GmailAuth> {
                         child: RaisedButton(
                           color: Colors.red[300],
                           child: Text(
-                            "Submit",
+                            allTranslations.text("submit").toString(),
                             style: StylesText.style16While,
                           ),
                           shape: RoundedRectangleBorder(
@@ -95,11 +95,14 @@ class VerifyPhonePageSate extends State<GmailAuth> {
   }
 
   void onSubmitClick() async {
-    LoadingDialog.showLoadingDialog(context, "Loading...");
+    LoadingDialog.showLoadingDialog(
+        context, allTranslations.text("splash_screen").toString());
     if ((await Validation.isConnectedNetwork()) == false) {
       Navigator.pop(context);
       MsgDialog.showMsgDialog(
-          context, "No network!", "No network connection found");
+          context,
+          allTranslations.text("title_no_netword").toString(),
+          allTranslations.text("no_network").toString());
     }
     if ((await Validation.isConnectedNetwork()) == true &&
         resetPassBloc.isValidInfo(_gmail.text.trim().toString()) == true) {

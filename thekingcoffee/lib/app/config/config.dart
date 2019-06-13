@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-
 class Config {
   static String find_food_API = ip + "api/Product/FindProduct?Name=";
   static String ip = "http://207.148.71.41/";

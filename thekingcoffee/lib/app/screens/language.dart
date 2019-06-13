@@ -35,7 +35,7 @@ class _LanguageState extends State<ChangeLanguage> {
       appBar: AppBar(
         backgroundColor: Colors.white,
         title: Text(
-          "Display language",
+          allTranslations.text("language").toString(),
           style: StylesText.style20BrownBold,
         ),
         leading: FlatButton(

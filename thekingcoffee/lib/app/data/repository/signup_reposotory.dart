@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 
 Future<bool> PostSignUp(String name, String pass, String phone, String date,
     String fullname, String gmail) async {
@@ -29,7 +30,7 @@ Future<bool> PostSignUp(String name, String pass, String phone, String date,
     prefs.setInt('id_user', id_user);
     prefs.commit();
     Fluttertoast.showToast(
-        msg: data['Message'].toString(),
+        msg: allTranslations.text("sign_up_suc").toString(),
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIos: 1,
@@ -38,7 +39,7 @@ Future<bool> PostSignUp(String name, String pass, String phone, String date,
         fontSize: 16.0);
   } else {
     Fluttertoast.showToast(
-        msg: data['Message'].toString(),
+        msg: allTranslations.text("sign_up_false").toString(),
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIos: 1,

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:thekingcoffee/app/config/config.dart';
-
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 
 Future<bool> Gmail_Auth_Code(
     String code, int id_user, String id_request) async {
@@ -26,7 +26,7 @@ Future<bool> Gmail_Auth_Code(
   }
   if (rest == "Check mail for getting cod") {
     Fluttertoast.showToast(
-        msg: "Code input wrong!",
+        msg: allTranslations.text("code_input_wrong").toString(),
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIos: 1,
@@ -37,7 +37,7 @@ Future<bool> Gmail_Auth_Code(
   }
   if (rest == "Data for reset password is wrong") {
     Fluttertoast.showToast(
-        msg: "Code input wrong!",
+        msg: allTranslations.text("code_input_wrong").toString(),
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIos: 1,

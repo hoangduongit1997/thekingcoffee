@@ -3,6 +3,7 @@ import 'package:thekingcoffee/app/data/repository/gmail_auth.dart';
 import 'package:thekingcoffee/app/screens/reset_pass.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/app/validation/validation.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 import 'package:thekingcoffee/core/components/lib/verifyphone/verification_code_input.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/show_message_dialog.dart';
@@ -36,12 +37,13 @@ class VerifyPhonePageSate extends State<VerifyGmail> {
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 80, 0, 0),
-                      child: Text("Verify your Gmail",
+                      child: Text(allTranslations.text("very_mail").toString(),
                           style: StylesText.style24BrownBold),
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-                      child: Text("Enter code we sent to your Gmail",
+                      child: Text(
+                          allTranslations.text("very_mail_title").toString(),
                           style: StylesText.style16BrownBold),
                     ),
                     Padding(
@@ -51,7 +53,10 @@ class VerifyPhonePageSate extends State<VerifyGmail> {
                           length: 6,
                           onCompleted: (String value) async {
                             LoadingDialog.showLoadingDialog(
-                                context, "Loading...");
+                                context,
+                                allTranslations
+                                    .text("splash_screen")
+                                    .toString());
                             final prefs = await SharedPreferences.getInstance()
                                 .timeout(const Duration(seconds: 4));
                             prefs.setString('code', value);
@@ -77,8 +82,14 @@ class VerifyPhonePageSate extends State<VerifyGmail> {
                             if ((await Validation.isConnectedNetwork()) ==
                                 false) {
                               LoadingDialog.hideLoadingDialog(context);
-                              MsgDialog.showMsgDialog(context, "No network!",
-                                  "No network connection found");
+                              MsgDialog.showMsgDialog(
+                                  context,
+                                  allTranslations
+                                      .text("title_no_netword")
+                                      .toString(),
+                                  allTranslations
+                                      .text("no_network")
+                                      .toString());
                             }
                           },
                         )),

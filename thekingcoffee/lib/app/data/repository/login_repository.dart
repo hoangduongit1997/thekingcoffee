@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 
 Future<bool> PostLogin(String username, String password) async {
   bool status = false;
@@ -22,7 +23,7 @@ Future<bool> PostLogin(String username, String password) async {
     prefs.setInt('points', point);
     prefs.commit();
     Fluttertoast.showToast(
-        msg: data['Message'].toString(),
+        msg: allTranslations.text("login_suc").toString(),
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIos: 1,
@@ -31,7 +32,7 @@ Future<bool> PostLogin(String username, String password) async {
         fontSize: 16.0);
   } else {
     Fluttertoast.showToast(
-        msg: data['Message'].toString(),
+        msg: allTranslations.text("login_false").toString(),
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIos: 1,
