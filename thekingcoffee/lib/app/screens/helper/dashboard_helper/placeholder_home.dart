@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter/widgets.dart';
 
-import 'package:thekingcoffee/app/data/model/radiomodel.dart';
-
 import 'package:thekingcoffee/app/data/repository/get_coffee_products.dart';
 
 import 'package:thekingcoffee/app/data/repository/get_drinking_products.dart';
@@ -16,6 +14,7 @@ import 'package:thekingcoffee/app/screens/find_food.dart';
 import 'package:thekingcoffee/app/screens/see_all_product.dart';
 
 import 'package:thekingcoffee/app/styles/styles.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 
 import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
@@ -44,8 +43,6 @@ var list_all_product = [];
 class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  List<RadioModel> _langList = new List<RadioModel>();
-  int _index = 0;
   intDataHomeSlider() async {
     final result = await Get_New_Products();
     final coffee = await Is_Has_Coffee_Product();
@@ -80,7 +77,8 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
           key: _scaffoldKey,
           appBar: AppBar(
             centerTitle: true,
-            title: Text("Home", style: StylesText.style20BrownBold),
+            title: Text(allTranslations.text("home_page").toString(),
+                style: StylesText.style20BrownBold),
             leading: FlatButton(
                 onPressed: () {
                   _scaffoldKey.currentState.openDrawer();
@@ -115,7 +113,7 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                        child: Text("All catalogues",
+                        child: Text(allTranslations.text("all_cato").toString(),
                             style: StylesText.style20BrownNomorlRaleway),
                       ),
                       Padding(
@@ -134,7 +132,10 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                Text("New product",
+                                Text(
+                                    allTranslations
+                                        .text("new_product")
+                                        .toString(),
                                     style: StylesText.style17BrownBoldlRaleway),
                               ],
                             ),
@@ -174,7 +175,7 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                Text("Coffee",
+                                Text(allTranslations.text("coffee").toString(),
                                     style: StylesText.style17BrownBoldlRaleway),
                                 GestureDetector(
                                     onTap: () {
@@ -182,9 +183,15 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   See_All_Product(
-                                                      "All Coffee", 2)));
+                                                      allTranslations
+                                                          .text("all_coffee")
+                                                          .toString(),
+                                                      2)));
                                     },
-                                    child: Text("See all",
+                                    child: Text(
+                                        allTranslations
+                                            .text("see_all")
+                                            .toString(),
                                         style: StylesText.style15RedAccentBold))
                               ],
                             ),
@@ -231,7 +238,7 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                Text("Tea",
+                                Text(allTranslations.text("tea").toString(),
                                     style: StylesText.style17BrownBoldlRaleway),
                                 GestureDetector(
                                     onTap: () {
@@ -239,9 +246,15 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   See_All_Product(
-                                                      "All Tea", 4)));
+                                                      allTranslations
+                                                          .text("all_tea")
+                                                          .toString(),
+                                                      4)));
                                     },
-                                    child: Text("See all",
+                                    child: Text(
+                                        allTranslations
+                                            .text("see_all")
+                                            .toString(),
                                         style: StylesText.style15RedAccentBold))
                               ],
                             ),
@@ -279,7 +292,8 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                Text("Drinking",
+                                Text(
+                                    allTranslations.text("drinking").toString(),
                                     style: StylesText.style17BrownBoldlRaleway),
                                 GestureDetector(
                                     onTap: () {
@@ -287,9 +301,15 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   See_All_Product(
-                                                      "All Drinking", 1)));
+                                                      allTranslations
+                                                          .text("all_drinking")
+                                                          .toString(),
+                                                      1)));
                                     },
-                                    child: Text("See all",
+                                    child: Text(
+                                        allTranslations
+                                            .text("see_all")
+                                            .toString(),
                                         style: StylesText.style15RedAccentBold))
                               ],
                             ),
@@ -328,7 +348,7 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                Text("Food",
+                                Text(allTranslations.text("food").toString(),
                                     style: StylesText.style17BrownBoldlRaleway),
                                 GestureDetector(
                                     onTap: () {
@@ -336,9 +356,15 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   See_All_Product(
-                                                      "All Food", 3)));
+                                                      allTranslations
+                                                          .text("all_food")
+                                                          .toString(),
+                                                      3)));
                                     },
-                                    child: Text("See all",
+                                    child: Text(
+                                        allTranslations
+                                            .text("see_all")
+                                            .toString(),
                                         style: StylesText.style15RedAccentBold))
                               ],
                             ),

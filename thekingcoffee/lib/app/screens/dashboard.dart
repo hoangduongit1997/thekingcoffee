@@ -9,6 +9,7 @@ import 'package:thekingcoffee/app/screens/helper/dashboard_helper/placeholder_ho
 import 'package:thekingcoffee/app/screens/setting.dart';
 import 'package:thekingcoffee/app/screens/shopping_list.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 
 class DashBoard extends StatefulWidget {
   @override
@@ -70,20 +71,21 @@ class _HomeState extends State<DashBoard> {
                 items: [
                   BottomNavigationBarItem(
                     title: Text(
-                      "Home",
+                      allTranslations.text("home_page").toString(),
                     ),
                     icon: Icon(Icons.home),
                   ),
                   BottomNavigationBarItem(
-                    title: Text('Favorite'),
+                    title: Text(allTranslations.text("favorite").toString()),
                     icon: Icon(Icons.favorite_border),
                   ),
                   BottomNavigationBarItem(
-                    title: Text('Shopping List'),
+                    title:
+                        Text(allTranslations.text("shopping_list").toString()),
                     icon: Icon(Icons.shopping_cart),
                   ),
                   BottomNavigationBarItem(
-                    title: Text('Settings'),
+                    title: Text(allTranslations.text("setting").toString()),
                     icon: Icon(Icons.settings),
                   ),
                 ],
@@ -92,42 +94,4 @@ class _HomeState extends State<DashBoard> {
           ),
         ));
   }
-
-  // Future<String> _getLanguageCode() async {
-  //   var prefs = await SharedPreferences.getInstance();
-  //   if (prefs.getString('languageCode') == null) {
-  //     return null;
-  //   }
-  //   print('_fetchLocale():' + prefs.getString('languageCode'));
-  //   return prefs.getString('languageCode');
-  // }
-
-  // void _initLanguage() async {
-  //   Future<String> status = _getLanguageCode();
-  //   status.then((result) {
-  //     if (result != null && result.compareTo('en') == 0) {
-  //       setState(() {
-  //         _index = 0;
-  //       });
-  //     }
-  //     if (result != null && result.compareTo('vi') == 0) {
-  //       setState(() {
-  //         _index = 1;
-  //       });
-  //     } else {
-  //       setState(() {
-  //         _index = 0;
-  //       });
-  //     }
-
-  //     _setupLangList();
-  //   });
-  // }
-
-  // void _setupLangList() {
-  //   setState(() {
-  //     _langList.add(new RadioModel(_index == 0 ? true : false, 'English'));
-  //     _langList.add(new RadioModel(_index == 0 ? false : true, 'VN'));
-  //   });
-  // }
 }

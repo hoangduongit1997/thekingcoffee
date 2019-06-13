@@ -8,6 +8,7 @@ import 'package:thekingcoffee/app/data/repository/find_food.dart';
 import 'package:thekingcoffee/app/screens/dashboard.dart';
 import 'package:thekingcoffee/app/screens/helper/dashboard_helper/placeholder_home.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog_order.dart';
@@ -79,7 +80,12 @@ class _FindFoodState extends State<FindFood> {
               Padding(
                 padding: EdgeInsets.only(left: 0, right: 50),
                 child: TextField(
-                  decoration: InputDecoration(hintText: "Search"),
+                  decoration: InputDecoration(
+                    hintText: allTranslations.text("search").toString(),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.redAccent),
+                    ),
+                  ),
                   controller: food,
                   textInputAction: TextInputAction.search,
                   onSubmitted: (str) async {

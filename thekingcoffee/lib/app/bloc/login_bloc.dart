@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:thekingcoffee/app/validation/validation.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 
 class LoginBloc {
   StreamController _usercontroller = new StreamController.broadcast();
@@ -12,7 +13,8 @@ class LoginBloc {
     bool status = true;
     if (!Validation.isValidUser(user)) {
       status = false;
-      _usercontroller.sink.addError("Username invalid");
+      _usercontroller.sink
+          .addError(allTranslations.text("username_invalid").toString());
     }
     if (Validation.isValidUser(user)) {
       status = true;
@@ -21,7 +23,8 @@ class LoginBloc {
 
     if (!Validation.isValidPass(pass)) {
       status = false;
-      _passcontroller.sink.addError("Password invalid");
+      _passcontroller.sink
+          .addError(allTranslations.text("password_invalid").toString());
     }
     if (Validation.isValidPass(pass)) {
       status = true;

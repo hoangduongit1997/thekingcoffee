@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:thekingcoffee/app/validation/validation.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 
 class OrderBloc {
   StreamController _namecontroller = new StreamController.broadcast();
@@ -14,7 +15,8 @@ class OrderBloc {
     bool status = true;
     if (!Validation.isValidUser(name)) {
       status = false;
-      _namecontroller.sink.addError("Name invalid");
+      _namecontroller.sink
+          .addError(allTranslations.text("invalid_name").toString());
     }
     if (Validation.isValidUser(name)) {
       status = true;
@@ -22,7 +24,8 @@ class OrderBloc {
     }
     if (!Validation.isValidPhoneNumber(phone)) {
       status = false;
-      _phonecontroller.sink.addError("Phone invalid");
+      _phonecontroller.sink
+          .addError(allTranslations.text("invalid_phone_number").toString());
     }
     if (Validation.isValidPhoneNumber(phone)) {
       status = true;
@@ -30,7 +33,8 @@ class OrderBloc {
     }
     if (!Validation.isValidAddress(address)) {
       status = false;
-      _addresscontroller.sink.addError("Address invalid");
+      _addresscontroller.sink
+          .addError(allTranslations.text("invalid_address").toString());
     }
     if (Validation.isValidAddress(address)) {
       status = true;

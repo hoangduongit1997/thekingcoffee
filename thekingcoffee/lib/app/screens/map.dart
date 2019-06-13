@@ -245,7 +245,7 @@ class _HomePageState extends State<MapPage> {
     final Marker marker = Marker(
       markerId: markerId,
       position: LatLng(lat, long),
-      infoWindow: InfoWindow(title: final_address),
+      infoWindow: InfoWindow(title: final_address.toString()),
       onTap: () {
         _onMarkerTapped(markerId);
       },
@@ -275,10 +275,6 @@ class _HomePageState extends State<MapPage> {
     pref.setDouble('Lng', place.lng);
 
     pref.commit();
-    print("Sharepreferference: " +
-        pref.getDouble('Lat').toString() +
-        " " +
-        pref.getDouble('Lng').toString());
   }
 
   Future _add_latlog_current_location(double lat, double lng) async {
@@ -298,7 +294,10 @@ class _HomePageState extends State<MapPage> {
     var addresses =
         await Geocoder.local.findAddressesFromCoordinates(coordinates);
     var first = addresses.first;
-    final_address = first.addressLine.toString();
+    setState(() {
+      final_address = first.addressLine.toString();
+    });
+
     await _add_latlog_current_location(lat, long);
   }
 }

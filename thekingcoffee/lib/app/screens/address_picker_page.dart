@@ -98,6 +98,12 @@ class _RidePickerPageState extends State<RidePickerPage> {
                               Padding(
                                 padding: EdgeInsets.only(left: 40, right: 50),
                                 child: TextField(
+                                  decoration: InputDecoration(
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.redAccent),
+                                    ),
+                                  ),
                                   controller: _addressController,
                                   textInputAction: TextInputAction.search,
                                   onSubmitted: (str) {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:thekingcoffee/app/styles/styles.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 
 import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -63,6 +64,7 @@ class _LanguageState extends State<ChangeLanguage> {
                   onTap: () async {
                     widget.tap_vn = 0;
                     if (widget.tap_en == 0) {
+                      await allTranslations.setNewLanguage('en');
                       setState(() {
                         if (isEnSelected == true) {
                           isEnSelected = true;
@@ -89,6 +91,7 @@ class _LanguageState extends State<ChangeLanguage> {
                 onTap: () async {
                   widget.tap_en = 0;
                   if (widget.tap_vn == 0) {
+                    await allTranslations.setNewLanguage('vi');
                     setState(() {
                       if (isVnSelected) {
                         isVnSelected = true;

@@ -51,6 +51,10 @@ class _ResetPassState extends State<ResetPass> {
                               obscureText: true,
                               style: StylesText.style18Black,
                               decoration: InputDecoration(
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.redAccent),
+                                  ),
                                   labelText: "Password",
                                   errorText:
                                       snapshot.hasError ? snapshot.error : null,
@@ -71,6 +75,10 @@ class _ResetPassState extends State<ResetPass> {
                                   controller: _confirm,
                                   obscureText: true,
                                   decoration: InputDecoration(
+                                      focusedBorder: UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.redAccent),
+                                      ),
                                       labelText: "Retype Password",
                                       errorText: snapshot.hasError
                                           ? snapshot.error

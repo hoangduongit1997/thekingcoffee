@@ -6,7 +6,7 @@ import 'package:thekingcoffee/app/config/config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 Future<bool> PostSignUp(String name, String pass, String phone, String date,
-    String fullname) async {
+    String fullname, String gmail) async {
   bool status = false;
   final SignUpJson = {
     "Username": name,
@@ -14,7 +14,8 @@ Future<bool> PostSignUp(String name, String pass, String phone, String date,
     "Phone": phone,
     "Name": fullname,
     "Repassword": pass,
-    "Age": date
+    "Age": date,
+    "Gmail": gmail
   };
   Response response = await post(Config.signup_API, body: SignUpJson);
   String body = response.body;

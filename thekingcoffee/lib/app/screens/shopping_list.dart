@@ -8,6 +8,7 @@ import 'package:thekingcoffee/app/data/repository/order_repository.dart';
 import 'package:thekingcoffee/app/screens/dashboard.dart';
 
 import 'package:thekingcoffee/app/styles/styles.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 
 import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
@@ -63,7 +64,7 @@ class Shopping_ListState extends State<Shopping_List> {
             elevation: 0.8,
             backgroundColor: Colors.white,
             title: Text(
-              "Shopping List",
+              allTranslations.text("shopping_list").toString(),
               style: StylesText.style20BrownBold,
             ),
             actions: <Widget>[
@@ -116,7 +117,7 @@ class Shopping_ListState extends State<Shopping_List> {
           body: ListOrderProducts.isEmpty
               ? Container(
                   child: Center(
-                      child: Text("No information",
+                      child: Text(allTranslations.text("no_info").toString(),
                           style: StylesText.style16Brown)),
                 )
               : SingleChildScrollView(
@@ -141,10 +142,16 @@ class Shopping_ListState extends State<Shopping_List> {
                                 builder: (context, snapshot) {
                                   return TextField(
                                     decoration: InputDecoration(
+                                        focusedBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Colors.redAccent),
+                                        ),
                                         errorText: snapshot.hasError
                                             ? snapshot.error
                                             : null,
-                                        icon: Icon(Icons.account_circle)),
+                                        icon: Icon(
+                                          Icons.account_circle,
+                                        )),
                                     controller: name,
                                     style: StylesText.style15Black,
                                   );
@@ -157,7 +164,13 @@ class Shopping_ListState extends State<Shopping_List> {
                                   return TextField(
                                     keyboardType: TextInputType.phone,
                                     decoration: InputDecoration(
-                                        icon: Icon(Icons.phone),
+                                        focusedBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Colors.redAccent),
+                                        ),
+                                        icon: Icon(
+                                          Icons.phone,
+                                        ),
                                         errorText: snapshot.hasError
                                             ? snapshot.error
                                             : null),
@@ -184,10 +197,16 @@ class Shopping_ListState extends State<Shopping_List> {
                                     },
                                     textAlign: TextAlign.left,
                                     decoration: InputDecoration(
+                                        focusedBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Colors.redAccent),
+                                        ),
                                         errorText: snapshot.hasError
                                             ? snapshot.error
                                             : null,
-                                        icon: Icon(Icons.map),
+                                        icon: Icon(
+                                          Icons.map,
+                                        ),
                                         hintText: "Enter your address..."),
                                     controller: address,
                                     style: StylesText.style15Black,
@@ -538,7 +557,7 @@ class Shopping_ListState extends State<Shopping_List> {
           bottomNavigationBar: ListOrderProducts.isEmpty
               ? Container(
                   child: Center(
-                      child: Text("No information",
+                      child: Text(allTranslations.text("no_info").toString(),
                           style: StylesText.style16Brown)),
                 )
               : new Container(

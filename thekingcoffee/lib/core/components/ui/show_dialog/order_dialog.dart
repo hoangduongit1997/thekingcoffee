@@ -498,11 +498,16 @@ class Order_DialogState extends State<Order_Dialog> {
                                     textInputAction: TextInputAction.done,
                                     controller: note,
                                     onEditingComplete: () {
-                                      selectedProduct['Note'] = note.text;
-                                      MsgDialog.showMsgDialog(
-                                          context,
-                                          "Information",
-                                          "Add note successfully");
+                                      if (note.text.toString().length > 0) {
+                                        selectedProduct['Note'] = note.text;
+                                        MsgDialog.showMsgDialog(
+                                            context,
+                                            "Information",
+                                            "Add note successfully");
+                                      } else {
+                                        MsgDialog.showMsgDialog(context,
+                                            "Information", "Note empty");
+                                      }
                                     },
                                     keyboardType: TextInputType.multiline,
                                     maxLines: null,

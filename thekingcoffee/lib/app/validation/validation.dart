@@ -58,4 +58,13 @@ class Validation {
     }
     return status;
   }
+
+  static check_language() async {
+    SharedPreferences check = await SharedPreferences.getInstance();
+    if (check.getString('language') == 'vi')
+      return 1;
+    else if (check.getString('language') == 'en') {
+      return 0;
+    }
+  }
 }

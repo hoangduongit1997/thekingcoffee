@@ -14,6 +14,7 @@ import 'package:thekingcoffee/app/screens/signup_dart.dart';
 
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/app/validation/validation.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 
 import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/show_message_dialog.dart';
@@ -68,8 +69,9 @@ class MyAppState extends State<LoginWithPass> {
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
-                        child:
-                            Text("Welcome to", style: StylesText.style20Brown),
+                        child: Text(
+                            allTranslations.text("title_name").toString(),
+                            style: StylesText.style20Brown),
                       ),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
@@ -78,7 +80,8 @@ class MyAppState extends State<LoginWithPass> {
                       ),
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-                        child: Text("Sign in to continue",
+                        child: Text(
+                            allTranslations.text("title_second").toString(),
                             style: StylesText.style16Brown),
                       ),
                       Padding(
@@ -90,7 +93,13 @@ class MyAppState extends State<LoginWithPass> {
                                 controller: _user,
                                 style: StylesText.style18Black,
                                 decoration: InputDecoration(
-                                    labelText: "Email or phone number",
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.redAccent),
+                                    ),
+                                    labelText: allTranslations
+                                        .text("email")
+                                        .toString(),
                                     errorText: snapshot.hasError
                                         ? snapshot.error
                                         : null,
@@ -111,7 +120,13 @@ class MyAppState extends State<LoginWithPass> {
                                     controller: _pass,
                                     obscureText: !_showpass,
                                     decoration: InputDecoration(
-                                        labelText: "Password",
+                                        focusedBorder: UnderlineInputBorder(
+                                          borderSide: BorderSide(
+                                              color: Colors.redAccent),
+                                        ),
+                                        labelText: allTranslations
+                                            .text("password")
+                                            .toString(),
                                         errorText: snapshot.hasError
                                             ? snapshot.error
                                             : null,
@@ -121,7 +136,13 @@ class MyAppState extends State<LoginWithPass> {
                             GestureDetector(
                                 onTap: ShowPass,
                                 child: Text(
-                                  _showpass ? "Hide" : "Show",
+                                  _showpass
+                                      ? allTranslations
+                                          .text("action_enable")
+                                          .toString()
+                                      : allTranslations
+                                          .text("action_disable")
+                                          .toString(),
                                   style: StylesText.style12BluegrayBold,
                                 ))
                           ],
@@ -141,7 +162,10 @@ class MyAppState extends State<LoginWithPass> {
                                               builder: (context) =>
                                                   GmailAuth()))
                                     },
-                                child: Text("Forget password?",
+                                child: Text(
+                                    allTranslations
+                                        .text("forget_pass")
+                                        .toString(),
                                     style: StylesText.style16Red300Bold),
                               )),
                           Padding(
@@ -152,7 +176,8 @@ class MyAppState extends State<LoginWithPass> {
                                       .pushReplacement(MaterialPageRoute(
                                           builder: (context) => DashBoard()));
                                 },
-                                child: Text("Skip",
+                                child: Text(
+                                    allTranslations.text("skip").toString(),
                                     style: StylesText.style16Red300Bold),
                               )),
                         ],
@@ -164,8 +189,9 @@ class MyAppState extends State<LoginWithPass> {
                           height: Dimension.getHeight(0.063),
                           child: RaisedButton(
                             color: Colors.red[300],
-                            child:
-                                Text("Log in", style: StylesText.style16While),
+                            child: Text(
+                                allTranslations.text("login_button").toString(),
+                                style: StylesText.style16While),
                             shape: RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(8))),
@@ -183,7 +209,7 @@ class MyAppState extends State<LoginWithPass> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               Text(
-                                "New account?",
+                                allTranslations.text("new_account").toString(),
                                 style: StylesText.style16Brown,
                               ),
                               GestureDetector(
@@ -194,84 +220,88 @@ class MyAppState extends State<LoginWithPass> {
                                                 builder: (context) => SignUp()))
                                       },
                                   child: Text(
-                                    "Sign up",
+                                    allTranslations.text("sign_up").toString(),
                                     style: StylesText.style16Red300Bold,
                                   ))
                             ],
                           ),
                         ),
                       ),
-                      // Padding(
-                      //   padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-                      //   child: Container(
-                      //       height: Dimension.getHeight(0.2),
-                      //       width: Dimension.getWidth(0.5),
-                      //       child: Container(
-                      //         width: Dimension.getWidth(0.5),
-                      //         color: Colors.white,
-                      //         child: Row(
-                      //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      //           children: <Widget>[
-                      //             GestureDetector(
-                      //               onTap: () {
-                      //                 tap_vn = 0;
-                      //                 if (tap_en == 0) {
-                      //                   changeLanguage();
-                      //                   setState(() {
-                      //                     istap_vn = true;
-                      //                     istap_en = false;
-                      //                   });
-                      //                 }
-                      //                 tap_en++;
-                      //               },
-                      //               child: Container(
-                      //                   decoration: BoxDecoration(
-                      //                     border: Border(
-                      //                         bottom: BorderSide(
-                      //                             color: istap_vn
-                      //                                 ? Colors.redAccent
-                      //                                 : Colors.transparent,
-                      //                             width: 2.0)),
-                      //                   ),
-                      //                   child: Text(
-                      //                     "Tiếng Việt",
-                      //                     style: istap_vn
-                      //                         ? StylesText.style17BrownBoldlRaleway
-                      //                         : StylesText.style18Black,
-                      //                   )),
-                      //             ),
-                      //             GestureDetector(
-                      //                 onTap: () async {
-                      //                   tap_en = 0;
-                      //                   if (tap_vn == 0) {
-                      //                     changeLanguage();
-                      //                     setState(() {
-                      //                       istap_en = true;
-                      //                       istap_vn = false;
-                      //                     });
-                      //                   }
-                      //                   tap_vn++;
-                      //                 },
-                      //                 child: Container(
-                      //                     decoration: BoxDecoration(
-                      //                       border: Border(
-                      //                           bottom: BorderSide(
-                      //                               color: istap_en
-                      //                                   ? Colors.redAccent
-                      //                                   : Colors.transparent,
-                      //                               width: 2.0)),
-                      //                     ),
-                      //                     child: Text(
-                      //                       "English",
-                      //                       style: istap_en
-                      //                           ? StylesText
-                      //                               .style17BrownBoldlRaleway
-                      //                           : StylesText.style18Black,
-                      //                     )))
-                      //           ],
-                      //         ),
-                      //       )),
-                      // )
+                      Padding(
+                        padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                        child: Container(
+                            height: Dimension.getHeight(0.2),
+                            width: Dimension.getWidth(0.5),
+                            child: Container(
+                              width: Dimension.getWidth(0.5),
+                              color: Colors.white,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: <Widget>[
+                                  GestureDetector(
+                                    onTap: () async {
+                                      tap_vn = 0;
+                                      if (tap_en == 0) {
+                                        await allTranslations
+                                            .setNewLanguage('vi');
+                                        setState(() {
+                                          istap_vn = true;
+                                          istap_en = false;
+                                        });
+                                      }
+                                      tap_en++;
+                                    },
+                                    child: Container(
+                                        decoration: BoxDecoration(
+                                          border: Border(
+                                              bottom: BorderSide(
+                                                  color: istap_vn
+                                                      ? Colors.redAccent
+                                                      : Colors.transparent,
+                                                  width: 2.0)),
+                                        ),
+                                        child: Text(
+                                          "Tiếng Việt",
+                                          style: istap_vn
+                                              ? StylesText
+                                                  .style17BrownBoldlRaleway
+                                              : StylesText.style18Black,
+                                        )),
+                                  ),
+                                  GestureDetector(
+                                      onTap: () async {
+                                        tap_en = 0;
+                                        if (tap_vn == 0) {
+                                          await allTranslations
+                                              .setNewLanguage('en');
+                                          setState(() {
+                                            istap_en = true;
+                                            istap_vn = false;
+                                          });
+                                        }
+                                        tap_vn++;
+                                      },
+                                      child: Container(
+                                          decoration: BoxDecoration(
+                                            border: Border(
+                                                bottom: BorderSide(
+                                                    color: istap_en
+                                                        ? Colors.redAccent
+                                                        : Colors.transparent,
+                                                    width: 2.0)),
+                                          ),
+                                          child: Text(
+                                            "English",
+                                            style: istap_en
+                                                ? StylesText
+                                                    .style17BrownBoldlRaleway
+                                                : StylesText.style18Black,
+                                          )))
+                                ],
+                              ),
+                            )),
+                      )
                     ],
                   ),
                 )),
@@ -301,54 +331,6 @@ class MyAppState extends State<LoginWithPass> {
       LoadingDialog.hideLoadingDialog(context);
     }
   }
-
-  // Future<String> _getLanguageCode() async {
-  //   var prefs = await SharedPreferences.getInstance();
-  //   if (prefs.getString('languageCode') == null) {
-  //     return null;
-  //   }
-  //   print('_fetchLocale():' + prefs.getString('languageCode'));
-  //   return prefs.getString('languageCode');
-  // }
-
-  // void _initLanguage() async {
-  //   Future<String> status = _getLanguageCode();
-  //   status.then((result) {
-  //     if (result != null && result.compareTo('en') == 0) {
-  //       setState(() {
-  //         _index = 0;
-  //       });
-  //     }
-  //     if (result != null && result.compareTo('vi') == 0) {
-  //       setState(() {
-  //         _index = 1;
-  //       });
-  //     } else {
-  //       setState(() {
-  //         _index = 0;
-  //       });
-  //     }
-
-  //     _setupLangList();
-  //   });
-  // }
-
-  // void _setupLangList() {
-  //   setState(() {
-  //     _langList.add(new RadioModel(_index == 0 ? true : false, 'English'));
-  //     _langList.add(new RadioModel(_index == 0 ? false : true, 'VN'));
-  //   });
-  // }
-
-  // void _updateLocale(String lang, String country) async {
-  //   print(lang + ':' + country);
-
-  //   var prefs = await SharedPreferences.getInstance();
-  //   prefs.setString('languageCode', lang);
-  //   prefs.setString('countryCode', country);
-
-  //   MyApp.setLocale(context, Locale(lang, country));
-  // }
 
   void ShowPass() {
     setState(() {

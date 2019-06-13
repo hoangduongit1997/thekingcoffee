@@ -5,6 +5,7 @@ import 'package:thekingcoffee/app/screens/veryfy_gmail.dart';
 
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/app/validation/validation.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/show_message_dialog.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
@@ -39,12 +40,14 @@ class VerifyPhonePageSate extends State<GmailAuth> {
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 120, 0, 0),
-                      child: Text("Forget password?",
+                      child: Text(
+                          allTranslations.text("forget_pass").toString(),
                           style: StylesText.style24BrownBold),
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-                      child: Text("Enter your email to continute",
+                      child: Text(
+                          allTranslations.text("title_forget_pass").toString(),
                           style: StylesText.style16BrownBold),
                     ),
                     Padding(
@@ -56,6 +59,10 @@ class VerifyPhonePageSate extends State<GmailAuth> {
                                 controller: _gmail,
                                 style: StylesText.style18Black,
                                 decoration: InputDecoration(
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.redAccent),
+                                    ),
                                     labelText: "Email",
                                     errorText: snapshot.hasError
                                         ? snapshot.error

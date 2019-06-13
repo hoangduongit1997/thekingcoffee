@@ -27,7 +27,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
                 Padding(
                     padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                     child: Container(
-                      width: Dimension.getWidth(0.66),
+                      width: Dimension.getWidth(0.7),
                       height: Dimension.getHeight(0.56),
                       decoration: BoxDecoration(
                         color: Colors.white,

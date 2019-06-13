@@ -27,7 +27,11 @@ class _HistoryState extends State<History_Order_Detail> {
         Padding(
           padding: const EdgeInsets.fromLTRB(10, 0, 10, 10),
           child: TextField(
-            decoration: InputDecoration(hintText: "Share your thinking to us"),
+            decoration: InputDecoration(
+                focusedBorder: UnderlineInputBorder(
+                  borderSide: BorderSide(color: Colors.redAccent),
+                ),
+                hintText: "Share your thinking to us"),
             keyboardType: TextInputType.multiline,
             maxLines: null,
           ),

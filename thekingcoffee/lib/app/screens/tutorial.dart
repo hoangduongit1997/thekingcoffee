@@ -24,7 +24,6 @@ class MySplashScreen extends StatefulWidget {
   MySplashScreenState createState() => new MySplashScreenState();
 }
 
-// Custom config
 class MySplashScreenState extends State<MySplashScreen> {
   List<Slide> slides = new List();
   @override

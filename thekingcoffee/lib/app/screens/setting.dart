@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:thekingcoffee/app/screens/language.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
 
 class Setting extends StatefulWidget {
@@ -21,7 +22,7 @@ class _SettingState extends State<Setting> {
         elevation: 0.8,
         backgroundColor: Colors.white,
         title: Text(
-          "Settings",
+          allTranslations.text("setting"),
           style: StylesText.style20BrownBold,
         ),
       ),
@@ -38,16 +39,18 @@ class _SettingState extends State<Setting> {
                       builder: (context) => ChangeLanguage()));
                 },
                 title: Text(
-                  'Display language',
+                  allTranslations.text("language").toString(),
                   style: StylesText.style16Brown,
                 ),
-                trailing: Text("English", style: StylesText.style14Redaccent),
+                trailing: Text(
+                    allTranslations.text("language_settings").toString(),
+                    style: StylesText.style14Redaccent),
               ),
             ),
             Card(
               child: ListTile(
                 title: Text(
-                  'Terms of service',
+                  allTranslations.text("terms"),
                   style: StylesText.style16Brown,
                 ),
                 trailing:
@@ -57,7 +60,7 @@ class _SettingState extends State<Setting> {
             Card(
               child: ListTile(
                 title: Text(
-                  'Version 1.0',
+                  allTranslations.text("version").toString() + " 1.0.0",
                   style: StylesText.style16Brown,
                 ),
                 trailing:

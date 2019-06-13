@@ -1,97 +1,63 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:thekingcoffee/app/screens/map.dart';
 import 'package:thekingcoffee/app/screens/shopping_list.dart';
 import 'package:thekingcoffee/app/screens/splash_screen.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'app/validation/validation.dart';
 
-void main() => runApp(MyApp());
+void main() async {
+  int value = await Validation.check_language();
+  if (value == 1) {
+    await allTranslations.init('vi');
+  } else if (value == 0) {
+    await allTranslations.init('en');
+  } else {
+    await allTranslations.init('vi');
+  }
+
+  runApp(MyApp());
+}
+
 var routes = <String, WidgetBuilder>{
   '/map': (BuildContext context) => new MapPage(),
   '/shop': (BuildContext context) => new Shopping_List(),
 };
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  @override
+  void initState() {
+    super.initState();
+    allTranslations.onLocaleChangedCallback = _onLocaleChanged;
+  }
+
+  _onLocaleChanged() async {
+    SharedPreferences language = await SharedPreferences.getInstance();
+    language.setString('language', '${allTranslations.currentLanguage}');
+    print('Language has been changed to: ${allTranslations.currentLanguage}');
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        debugShowCheckedModeBanner: false,
-        theme: ThemeData(primaryColor: Colors.redAccent),
-        home: Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: SplashScreen(),
-        ),
-        routes: routes);
+      theme: ThemeData(primaryColor: Colors.redAccent),
+      debugShowCheckedModeBanner: false,
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+      ],
+      supportedLocales: allTranslations.supportedLocales(),
+      home: Scaffold(
+        resizeToAvoidBottomInset: false,
+        body: SplashScreen(),
+      ),
+      routes: routes,
+    );
   }
 }
-
-// class MyApp extends StatelessElement {}
-// static void setLocale(BuildContext context, Locale newLocale) async {
-//   print('setLocale()');
-//   _MyAppState state = context.ancestorStateOfType(TypeMatcher<_MyAppState>());
-
-//   state.setState(() {
-//     state.locale = newLocale;
-//   });
-// }
-
-//   @override
-//   State<StatefulWidget> createState() {
-//     return _MyAppState();
-//   }
-// }
-
-// class _MyAppState extends State<MyApp> {
-// Locale locale;
-// bool localeLoaded = false;
-// @override
-// void initState() {
-//   super.initState();
-
-//   this._fetchLocale().then((locale) {
-//     setState(() {
-//       this.localeLoaded = true;
-//       this.locale = locale;
-//     });
-//   });
-// }
-
-// @override
-// Widget build(BuildContext context) {
-// if (this.localeLoaded == false) {
-//   return Center(
-//     child: CircularProgressIndicator(
-//       valueColor: new AlwaysStoppedAnimation(Colors.redAccent),
-//     ),
-//   );
-// } else {
-// return MaterialApp(
-//   theme: ThemeData(primaryColor: Colors.redAccent),
-//   title: 'The King Coffee',
-//   debugShowCheckedModeBanner: false,
-//   home: Scaffold(
-//     resizeToAvoidBottomInset: false,
-//     body: SplashScreen(),
-//   ),
-// localizationsDelegates: [
-//   AppLocalizationsDelegate(),
-//   GlobalMaterialLocalizations.delegate,
-//   GlobalWidgetsLocalizations.delegate,
-// ],
-// supportedLocales: [
-//   const Locale('en', ''),
-//   const Locale('vi', ''),
-// ],
-// locale: locale,
-// );
-// }
-// }
-
-// _fetchLocale() async {
-//   var prefs = await SharedPreferences.getInstance();
-
-//   if (prefs.getString('languageCode') == null) {
-//     return null;
-//   }
-//   return Locale(
-//       prefs.getString('languageCode'), prefs.getString('countryCode'));
-// }
-// }

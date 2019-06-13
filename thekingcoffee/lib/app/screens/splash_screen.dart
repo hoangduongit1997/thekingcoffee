@@ -1,17 +1,15 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import 'package:thekingcoffee/app/config/config.dart';
-import 'package:thekingcoffee/app/data/model/radiomodel.dart';
+
 import 'package:thekingcoffee/app/screens/dashboard.dart';
-import 'package:thekingcoffee/app/screens/login.dart';
+
 import 'package:thekingcoffee/app/screens/tutorial.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/app/validation/validation.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 
 import 'package:thekingcoffee/core/utils/utils.dart';
-import 'package:thekingcoffee/main.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -21,12 +19,10 @@ class SplashScreen extends StatefulWidget {
 }
 
 class SplashScreenState extends State<SplashScreen> {
-  // List<RadioModel> _langList = new List<RadioModel>();
-  // int _index = 0;
   @override
   void initState() {
     super.initState();
-    // _initLanguage();
+
     loadSplash();
   }
 
@@ -106,7 +102,7 @@ class SplashScreenState extends State<SplashScreen> {
                             padding: EdgeInsets.only(top: 20.0),
                           ),
                           Text(
-                            "Loading...",
+                            allTranslations.text("splash_screen").toString(),
                             softWrap: true,
                             textAlign: TextAlign.center,
                             style: StylesText.style16BrownBold,
@@ -121,52 +117,4 @@ class SplashScreenState extends State<SplashScreen> {
           ),
         ));
   }
-
-  // Future<String> _getLanguageCode() async {
-  //   var prefs = await SharedPreferences.getInstance();
-  //   if (prefs.getString('languageCode') == null) {
-  //     return null;
-  //   }
-  //   print('_fetchLocale():' + prefs.getString('languageCode'));
-  //   return prefs.getString('languageCode');
-  // }
-
-  // void _initLanguage() async {
-  //   Future<String> status = _getLanguageCode();
-  //   status.then((result) {
-  //     if (result != null && result.compareTo('en') == 0) {
-  //       setState(() {
-  //         _index = 0;
-  //       });
-  //     }
-  //     if (result != null && result.compareTo('vi') == 0) {
-  //       setState(() {
-  //         _index = 1;
-  //       });
-  //     } else {
-  //       setState(() {
-  //         _index = 0;
-  //       });
-  //     }
-
-  //     _setupLangList();
-  //   });
-  // }
-
-  // void _setupLangList() {
-  //   setState(() {
-  //     _langList.add(new RadioModel(_index == 0 ? true : false, 'English'));
-  //     _langList.add(new RadioModel(_index == 0 ? false : true, 'VN'));
-  //   });
-  // }
-
-  // void _updateLocale(String lang, String country) async {
-  //   print(lang + ':' + country);
-
-  //   var prefs = await SharedPreferences.getInstance();
-  //   prefs.setString('languageCode', lang);
-  //   prefs.setString('countryCode', country);
-
-  //   MyApp.setLocale(context, Locale(lang, country));
-  // }
 }

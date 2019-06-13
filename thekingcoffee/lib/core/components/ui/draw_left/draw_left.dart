@@ -3,7 +3,6 @@ import 'package:flutter/services.dart';
 
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/screens/account_detail.dart';
-import 'package:thekingcoffee/app/screens/dashboard.dart';
 
 import 'package:thekingcoffee/app/screens/earn_point.dart';
 
