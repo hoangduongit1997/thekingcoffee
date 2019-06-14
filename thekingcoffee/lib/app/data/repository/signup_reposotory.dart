@@ -16,7 +16,7 @@ Future<bool> PostSignUp(String name, String pass, String phone, String date,
     "Name": fullname,
     "Repassword": pass,
     "Age": date,
-    "Gmail": gmail
+    "Email": gmail
   };
   Response response = await post(Config.signup_API, body: SignUpJson);
   String body = response.body;

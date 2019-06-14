@@ -215,7 +215,7 @@ class _Home_Card_Tea_State extends State<Home_Card_Tea> {
                                             painter: Drawhorizontalline(
                                                 false,
                                                 0.0,
-                                                215.0,
+                                                Dimension.getWidth(0.51),
                                                 Colors.blueGrey[300],
                                                 0.5)),
                                       )),

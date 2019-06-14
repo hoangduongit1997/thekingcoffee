@@ -16,7 +16,6 @@ Get_History() async {
       headers: {'Token': token.toString()},
     );
     final res = json.decode(response.body)['Value'];
-    print(res);
     return res;
   } catch (e) {
     print(e.toString());

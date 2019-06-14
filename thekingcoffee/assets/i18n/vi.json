@@ -81,5 +81,8 @@
   "could_not_run": "Không thể mở",
   "my_account": "Tài khoản",
   "earn_point": "Tích điểm",
-  "skip": "Bỏ qua"
+  "skip": "Bỏ qua",
+  "help_draw_left": "Trợ giúp",
+  "exit_draw_left": "Thoát",
+  "login": "Đăng nhập"
 }

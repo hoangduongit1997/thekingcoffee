@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/screens/account_detail.dart';
@@ -71,11 +72,15 @@ class _HomeMenuState extends State<HomeMenu> {
                   accountEmail: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
+                      SvgPicture.asset(
+                        'assets/icons/point.svg',
+                        width: Dimension.getWidth(0.03),
+                        height: Dimension.getHeight(0.03),
+                      ),
                       Text(
-                        point,
+                        "  " + point,
                         style: StylesText.style13BlackBold,
                       ),
-                      Icon(Icons.star, color: Colors.yellowAccent)
                     ],
                   ),
                   currentAccountPicture: GestureDetector(
@@ -214,7 +219,7 @@ class _HomeMenuState extends State<HomeMenu> {
                 },
                 child: ListTile(
                   title: Text(
-                    'Help',
+                    allTranslations.text("help_draw_left").toString(),
                     style: StylesText.style13BlackBold,
                   ),
                   leading: Icon(Icons.help_outline, color: Colors.redAccent),
@@ -259,7 +264,7 @@ class _HomeMenuState extends State<HomeMenu> {
                         });
                   },
                   title: Text(
-                    'Exit',
+                    allTranslations.text("exit_draw_left").toString(),
                     style: StylesText.style13BlackBold,
                   ),
                   leading: Icon(Icons.exit_to_app, color: Colors.redAccent),
@@ -283,7 +288,7 @@ class _HomeMenuState extends State<HomeMenu> {
               InkWell(
                 child: ListTile(
                   title: Text(
-                    'Log in',
+                    allTranslations.text("login").toString(),
                     style: StylesText.style13BlackBold,
                   ),
                   leading: Icon(Icons.open_in_browser, color: Colors.redAccent),
@@ -329,7 +334,7 @@ class _HomeMenuState extends State<HomeMenu> {
                         });
                   },
                   title: Text(
-                    'Exit',
+                    allTranslations.text("exit_draw_left").toString(),
                     style: StylesText.style13BlackBold,
                   ),
                   leading: Icon(Icons.exit_to_app, color: Colors.redAccent),

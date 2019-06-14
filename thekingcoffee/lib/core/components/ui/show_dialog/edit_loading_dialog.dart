@@ -119,7 +119,6 @@ class LoadingDialog_Order {
                           refreshListOrder();
                           _bottomNavBarBloc.pickItem(2);
                           Navigator.pop(context);
-                          //reset sản phẩm chọn\
                         },
                       ),
                     ),

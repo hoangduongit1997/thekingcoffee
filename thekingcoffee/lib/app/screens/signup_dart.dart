@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+
 import 'package:intl/intl.dart';
 import 'package:thekingcoffee/app/bloc/signup_bloc.dart';
 import 'package:thekingcoffee/app/data/repository/signup_reposotory.dart';
@@ -55,8 +55,8 @@ class MyAppState extends State<SignUp> {
           actions: <Widget>[
             IconButton(
                 icon: SvgPicture.asset('assets/images/danger.svg',
-                    width: Dimension.getWidth(0.064),
-                    height: Dimension.getWidth(0.031)),
+                    width: Dimension.getWidth(0.04),
+                    height: Dimension.getWidth(0.04)),
                 onPressed: null)
           ],
         ),

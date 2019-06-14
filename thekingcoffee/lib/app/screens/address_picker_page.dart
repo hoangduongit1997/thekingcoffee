@@ -99,6 +99,7 @@ class _RidePickerPageState extends State<RidePickerPage> {
                                 padding: EdgeInsets.only(left: 40, right: 50),
                                 child: TextField(
                                   decoration: InputDecoration(
+                                    hintText: "Enter your address...",
                                     focusedBorder: UnderlineInputBorder(
                                       borderSide:
                                           BorderSide(color: Colors.redAccent),
@@ -144,6 +145,8 @@ class _RidePickerPageState extends State<RidePickerPage> {
                                   scrollDirection: Axis.vertical,
                                   itemBuilder: (context, index) {
                                     return ListTile(
+                                      leading: Icon(Icons.location_city,
+                                          color: Colors.grey),
                                       title: Text(places.elementAt(index).name),
                                       subtitle:
                                           Text(places.elementAt(index).address),
@@ -173,7 +176,7 @@ class _RidePickerPageState extends State<RidePickerPage> {
   }
 
   Future<void> onrefresh() async {
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 1));
     setState(() {
       placeBloc.searchPlace(_addressController.text);
     });

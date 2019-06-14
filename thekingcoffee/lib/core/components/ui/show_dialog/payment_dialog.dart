@@ -71,7 +71,7 @@ class Payment_Dialog_State extends State<Payment_Dialog> {
             )),
           ),
           onPressed: () {
-            MsgDialog.showMsgDialog(context, "Notification", "OK");
+            Navigator.of(context).pop();
           },
         ),
         FlatButton(

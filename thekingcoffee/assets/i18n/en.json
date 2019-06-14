@@ -4,6 +4,7 @@
   "title_tutorial_2": "Enjoy the natural taste",
   "subtitle_tutorial_2": "Products are delicious and pure",
   "title_tutorial_3": "No preservatives",
+  "earn_point": "Earn points",
   "subtitle_tutorial_3": "Products are used during the day",
   "title_name": "Welcome to",
   "no_food": "There is no product for searching",
@@ -14,6 +15,7 @@
   "reset_pass_suc": "Reset password successfully",
   "reset_pass_false": "Reset password false!",
   "login_suc": "Login successfully!",
+  "login": "Login",
   "login_false": "Login false!",
   "order_suc": "Order successfully!",
   "order_false": "Order false!",
@@ -81,5 +83,7 @@
   "action_enable": "Hide",
   "action_disable": "Show",
   "skip": "Skip",
-  "home_page": "Home"
+  "home_page": "Home",
+  "help_draw_left": "Help",
+  "exit_draw_left": "Exit"
 }

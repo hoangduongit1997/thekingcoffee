@@ -211,7 +211,11 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
                         child: Container(
                           child: CustomPaint(
                               painter: Drawhorizontalline(
-                                  false, 0.0, 200.0, Colors.blueGrey, 0.2)),
+                                  false,
+                                  0.0,
+                                  Dimension.getWidth(0.55),
+                                  Colors.blueGrey,
+                                  0.2)),
                         )),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(5, 10, 0, 0),
