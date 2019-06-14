@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:thekingcoffee/app/screens/login.dart';
 import 'package:thekingcoffee/app/screens/map.dart';
 import 'package:thekingcoffee/app/screens/shopping_list.dart';
 import 'package:thekingcoffee/app/screens/splash_screen.dart';
@@ -11,10 +12,16 @@ void main() async {
   int value = await Validation.check_language();
   if (value == 1) {
     await allTranslations.init('vi');
+    istap_en = false;
+    istap_vn = true;
   } else if (value == 0) {
     await allTranslations.init('en');
+    istap_en = true;
+    istap_vn = false;
   } else {
     await allTranslations.init('vi');
+    istap_en = false;
+    istap_vn = true;
   }
 
   runApp(MyApp());

@@ -131,11 +131,11 @@ class Shopping_ListState extends State<Shopping_List> {
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         Container(
                           padding: const EdgeInsets.fromLTRB(2, 0, 2, 2),
                           decoration: BoxDecoration(
-                              color: Colors.grey[200],
                               borderRadius:
                                   BorderRadius.all(Radius.circular(8.0))),
                           child: Column(
@@ -146,9 +146,18 @@ class Shopping_ListState extends State<Shopping_List> {
                                 padding: const EdgeInsets.all(5.0),
                                 child: Container(
                                   width: double.infinity,
-                                  child: Text(
-                                    "Delivery information",
-                                    style: StylesText.style13Black,
+                                  child: Container(
+                                    color: Colors.grey[200],
+                                    height: Dimension.getHeight(0.05),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: <Widget>[
+                                        Text(
+                                          "Delivery information",
+                                          style: StylesText.style13Black,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
@@ -385,350 +394,340 @@ class Shopping_ListState extends State<Shopping_List> {
                         Padding(
                           padding: const EdgeInsets.all(0.0),
                           child: Container(
-                              height: Dimension.getHeight(0.3),
-                              child: RefreshIndicator(
-                                backgroundColor: Colors.white,
-                                color: Colors.redAccent,
-                                onRefresh: refreshPage,
-                                child: Column(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: <Widget>[
-                                    Padding(
-                                          padding: const EdgeInsets.all(5.0),
-                                          child: Container(
-                                            width: double.infinity,
-                                            child: Text(
-                                              "List detailed order",
-                                               style: StylesText.style13Black
-                                            ),
-                                          ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisSize: MainAxisSize.min,
+                              children: <Widget>[
+                                Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Container(
+                                    color: Colors.grey[200],
+                                    height: Dimension.getHeight(0.05),
+                                    child: Row(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: <Widget>[
+                                        Text("List detailed order",
+                                            style: StylesText.style13Black),
+                                      ],
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(0.0),
-                                      child: ListView.builder(
-                                        shrinkWrap: true,
-                                        scrollDirection: Axis.vertical,
-                                        itemCount: ListOrderProducts.length,
-                                        itemBuilder: (context, index) {
-                                          var list_multy_topping =
-                                              ListOrderProducts[index]['Toppings']
-                                                  as List<dynamic>;
-                                          if (list_multy_topping != null) {
-                                            multy_topping = list_multy_topping.length;
-                                          }
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.all(0.0),
+                                  child: Container(
+                                    height: Dimension.getHeight(0.3),
+                                    child: ListView.builder(
+                                      shrinkWrap: true,
+                                      itemCount: ListOrderProducts.length,
+                                      itemBuilder: (context, index) {
+                                        var list_multy_topping =
+                                            ListOrderProducts[index]['Toppings']
+                                                as List<dynamic>;
+                                        if (list_multy_topping != null) {
+                                          multy_topping =
+                                              list_multy_topping.length;
+                                        }
 
-                                          return Slidable(
-                                            delegate: new SlidableDrawerDelegate(),
-                                            actionExtentRatio: 0.25,
-                                            child: GestureDetector(
-                                              onTap: () {
-                                                var product =
-                                                    ListOrderProducts[index];
-                                                LoadingDialog_Order()
-                                                    .showLoadingDialog(
-                                                        index,
-                                                        context,
-                                                        product['Id'],
-                                                        product['Name'],
-                                                        product['Img'],
-                                                        "",
-                                                        product['Original_Price'],
-                                                        product['Price'],
-                                                        1,
-                                                        1,
-                                                        product['ListTopping'],
-                                                        product['ListSize'],
-                                                        product['Promotion'],
-                                                        [],
-                                                        product['Size'],
-                                                        product['Toppings'],
-                                                        product['SelectedPromotion'],
-                                                        product[
-                                                            'check_promotion_product'],
-                                                        product['Note'],
-                                                        product['Quantity'],
-                                                        this.updateShoppingList);
-                                              },
-                                              child: Container(
-                                                  padding: const EdgeInsets.all(2.0),
-                                                  child: Container(
-                                                      height:
-                                                          Dimension.getHeight(0.1),
-                                                      decoration: BoxDecoration(
-                                                          color: Colors.white,
-                                                          border: Border.all(
-                                                              color: Colors
-                                                                  .grey[300]),
-                                                          borderRadius:
-                                                              BorderRadius.all(
-                                                                  Radius.circular(
-                                                                      8.0))),
-                                                      child: Column(
-                                                        mainAxisSize: MainAxisSize.min,
-                                                          mainAxisAlignment:
-                                                              MainAxisAlignment.start,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: <Widget>[
-                                                            Row(
-                                                              children: <Widget>[
-                                                                Stack(
-                                                                  alignment:
-                                                                      AlignmentDirectional
-                                                                          .topEnd,
-                                                                  children: <Widget>[
-                                                                    Padding(
-                                                                      padding:
-                                                                          const EdgeInsets
-                                                                                  .fromLTRB(
-                                                                              0,
-                                                                              0,
-                                                                              0,
-                                                                              0),
+                                        return Slidable(
+                                          delegate:
+                                              new SlidableDrawerDelegate(),
+                                          actionExtentRatio: 0.25,
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              var product =
+                                                  ListOrderProducts[index];
+                                              LoadingDialog_Order()
+                                                  .showLoadingDialog(
+                                                      index,
+                                                      context,
+                                                      product['Id'],
+                                                      product['Name'],
+                                                      product['Img'],
+                                                      "",
+                                                      product['Original_Price'],
+                                                      product['Price'],
+                                                      1,
+                                                      1,
+                                                      product['ListTopping'],
+                                                      product['ListSize'],
+                                                      product['Promotion'],
+                                                      [],
+                                                      product['Size'],
+                                                      product['Toppings'],
+                                                      product[
+                                                          'SelectedPromotion'],
+                                                      product[
+                                                          'check_promotion_product'],
+                                                      product['Note'],
+                                                      product['Quantity'],
+                                                      this.updateShoppingList);
+                                            },
+                                            child: Container(
+                                                padding:
+                                                    const EdgeInsets.all(2.0),
+                                                child: Container(
+                                                    height: Dimension.getHeight(
+                                                        0.1),
+                                                    decoration: BoxDecoration(
+                                                        color: Colors.white,
+                                                        border: Border.all(
+                                                            color: Colors
+                                                                .grey[300]),
+                                                        borderRadius:
+                                                            BorderRadius.all(
+                                                                Radius.circular(
+                                                                    8.0))),
+                                                    child: Column(
+                                                        mainAxisSize:
+                                                            MainAxisSize.min,
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .start,
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: <Widget>[
+                                                          Row(
+                                                            children: <Widget>[
+                                                              Stack(
+                                                                alignment:
+                                                                    AlignmentDirectional
+                                                                        .topEnd,
+                                                                children: <
+                                                                    Widget>[
+                                                                  Padding(
+                                                                    padding:
+                                                                        const EdgeInsets.fromLTRB(
+                                                                            0,
+                                                                            0,
+                                                                            0,
+                                                                            0),
+                                                                    child:
+                                                                        Container(
+                                                                      height: Dimension
+                                                                          .getHeight(
+                                                                              0.08),
+                                                                      width: Dimension
+                                                                          .getWidth(
+                                                                              0.15),
+                                                                      decoration:
+                                                                          new BoxDecoration(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(8.0),
+                                                                        border: new Border.all(
+                                                                            color:
+                                                                                Colors.grey),
+                                                                      ),
                                                                       child:
-                                                                          Container(
-                                                                        height: Dimension
-                                                                            .getHeight(
-                                                                                0.08),
-                                                                        width: Dimension
-                                                                            .getWidth(
-                                                                                0.15),
-                                                                        decoration:
-                                                                            new BoxDecoration(
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(
-                                                                                  8.0),
-                                                                          border: new Border
-                                                                                  .all(
-                                                                              color: Colors
-                                                                                  .grey),
-                                                                        ),
+                                                                          ClipRRect(
+                                                                        borderRadius:
+                                                                            BorderRadius.circular(8.0),
                                                                         child:
-                                                                            ClipRRect(
-                                                                          borderRadius:
-                                                                              BorderRadius.circular(
-                                                                                  8.0),
-                                                                          child:
-                                                                              CachedNetworkImage(
-                                                                            imageUrl: Config
-                                                                                    .ip +
-                                                                                ListOrderProducts[index]
-                                                                                    [
-                                                                                    'Img'],
-                                                                            fit: BoxFit
-                                                                                .fill,
-                                                                            placeholder:
-                                                                                (context, url) =>
-                                                                                    new SizedBox(
-                                                                                      child: Center(
-                                                                                        child: CircularProgressIndicator(
-                                                                                          valueColor: new AlwaysStoppedAnimation(Colors.redAccent),
-                                                                                        ),
-                                                                                      ),
-                                                                                    ),
-                                                                          ),
+                                                                            CachedNetworkImage(
+                                                                          imageUrl:
+                                                                              Config.ip + ListOrderProducts[index]['Img'],
+                                                                          fit: BoxFit
+                                                                              .fill,
+                                                                          placeholder: (context, url) =>
+                                                                              new SizedBox(
+                                                                                child: Center(
+                                                                                  child: CircularProgressIndicator(
+                                                                                    valueColor: new AlwaysStoppedAnimation(Colors.redAccent),
+                                                                                  ),
+                                                                                ),
+                                                                              ),
                                                                         ),
                                                                       ),
                                                                     ),
-                                                                  ],
-                                                                ),
-                                                                Column(
-                                                                  mainAxisAlignment:
-                                                                      MainAxisAlignment
-                                                                          .start,
-                                                                  crossAxisAlignment:
-                                                                      CrossAxisAlignment
-                                                                          .start,
-                                                                  children: <Widget>[
-                                                                    Padding(
-                                                                      padding:
-                                                                          const EdgeInsets
-                                                                                  .fromLTRB(
-                                                                              5,
-                                                                              0,
-                                                                              0,
-                                                                              0),
-                                                                      child:
-                                                                          Container(
-                                                                              alignment:
-                                                                                  Alignment
-                                                                                      .topLeft,
-                                                                              child:
-                                                                                  Row(
-                                                                                children: <
-                                                                                    Widget>[
-                                                                                  Padding(
-                                                                                    padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
-                                                                                    child: Container(
-                                                                                      width: Dimension.getWidth(0.7),
-                                                                                      child: Text(
-                                                                                        ListOrderProducts[index]['Name'],
-                                                                                        overflow: TextOverflow.ellipsis,
-                                                                                        style: StylesText.style15Black,
-                                                                                      ),
-                                                                                    ),
-                                                                                  ),
-                                                                                ],
-                                                                              )),
-                                                                    ),
-                                                                    Row(
-                                                                      mainAxisAlignment:
-                                                                          MainAxisAlignment
-                                                                              .spaceBetween,
+                                                                  ),
+                                                                ],
+                                                              ),
+                                                              Column(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .start,
+                                                                crossAxisAlignment:
+                                                                    CrossAxisAlignment
+                                                                        .start,
+                                                                children: <
+                                                                    Widget>[
+                                                                  Padding(
+                                                                    padding:
+                                                                        const EdgeInsets.fromLTRB(
+                                                                            5,
+                                                                            0,
+                                                                            0,
+                                                                            0),
+                                                                    child: Container(
+                                                                        alignment: Alignment.topLeft,
+                                                                        child: Row(
+                                                                          children: <
+                                                                              Widget>[
+                                                                            Padding(
+                                                                              padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
+                                                                              child: Container(
+                                                                                width: Dimension.getWidth(0.7),
+                                                                                child: Text(
+                                                                                  ListOrderProducts[index]['Name'],
+                                                                                  overflow: TextOverflow.ellipsis,
+                                                                                  style: StylesText.style15Black,
+                                                                                ),
+                                                                              ),
+                                                                            ),
+                                                                          ],
+                                                                        )),
+                                                                  ),
+                                                                  Row(
+                                                                    mainAxisAlignment:
+                                                                        MainAxisAlignment
+                                                                            .spaceBetween,
+                                                                    children: <
+                                                                        Widget>[
+                                                                      ListOrderProducts[index]['Size'] ==
+                                                                              null
+                                                                          ? IgnorePointer(
+                                                                              ignoring: true,
+                                                                              child: Opacity(
+                                                                                  opacity: 0.0,
+                                                                                  child: Padding(
+                                                                                    padding: const EdgeInsets.fromLTRB(10, 10, 0, 10),
+                                                                                    child: Text("Size: " + "M"),
+                                                                                  )),
+                                                                            )
+                                                                          : Padding(
+                                                                              padding: const EdgeInsets.fromLTRB(10, 10, 0, 10),
+                                                                              child: Text("Size: " + ListOrderProducts[index]['Size']['Name'].toString()),
+                                                                            ),
+                                                                      ListOrderProducts[index]['Toppings'] ==
+                                                                              null
+                                                                          ? Container()
+                                                                          : Padding(
+                                                                              padding: const EdgeInsets.only(left: 50, top: 0, right: 0, bottom: 0),
+                                                                              child: multy_topping > 1
+                                                                                  ? Text(
+                                                                                      "Topping: " + ListOrderProducts[index]['Toppings'][0]['Name'] + "...",
+                                                                                    )
+                                                                                  : Text(
+                                                                                      "Topping: " + ListOrderProducts[index]['Toppings'][0]['Name'],
+                                                                                    ))
+                                                                    ],
+                                                                  ),
+                                                                  Padding(
+                                                                    padding:
+                                                                        const EdgeInsets.fromLTRB(
+                                                                            10,
+                                                                            0,
+                                                                            0,
+                                                                            0),
+                                                                    child: Row(
                                                                       children: <
                                                                           Widget>[
-                                                                        ListOrderProducts[index]
-                                                                                    [
-                                                                                    'Size'] ==
-                                                                                null
-                                                                            ? IgnorePointer(
-                                                                                ignoring:
-                                                                                    true,
-                                                                                child: Opacity(
-                                                                                    opacity: 0.0,
-                                                                                    child: Padding(
-                                                                                      padding: const EdgeInsets.fromLTRB(10, 10, 0, 10),
-                                                                                      child: Text("Size: " + "M"),
-                                                                                    )),
-                                                                              )
-                                                                            : Padding(
-                                                                                padding: const EdgeInsets.fromLTRB(
-                                                                                    10,
-                                                                                    10,
-                                                                                    0,
-                                                                                    10),
-                                                                                child:
-                                                                                    Text("Size: " + ListOrderProducts[index]['Size']['Name'].toString()),
-                                                                              ),
-                                                                        ListOrderProducts[index]
-                                                                                    [
-                                                                                    'Toppings'] ==
-                                                                                null
-                                                                            ? Container()
-                                                                            : Padding(
-                                                                                padding: const EdgeInsets.only(
-                                                                                    left: 50,
-                                                                                    top: 0,
-                                                                                    right: 0,
-                                                                                    bottom: 0),
-                                                                                child: multy_topping > 1
-                                                                                    ? Text(
-                                                                                        "Topping: " + ListOrderProducts[index]['Toppings'][0]['Name'] + "...",
-                                                                                      )
-                                                                                    : Text(
-                                                                                        "Topping: " + ListOrderProducts[index]['Toppings'][0]['Name'],
-                                                                                      ))
-                                                                      ],
-                                                                    ),
-                                                                    Padding(
-                                                                      padding:
-                                                                          const EdgeInsets
-                                                                                  .fromLTRB(
-                                                                              10,
+                                                                        Text("Quanlity: " +
+                                                                            ListOrderProducts[index]['Quantity'].toString()),
+                                                                        Padding(
+                                                                          padding: const EdgeInsets.fromLTRB(
+                                                                              170,
                                                                               0,
                                                                               0,
                                                                               0),
-                                                                      child: Row(
-                                                                        children: <
-                                                                            Widget>[
-                                                                          Text("Quanlity: " +
-                                                                              ListOrderProducts[index]['Quantity']
-                                                                                  .toString()),
-                                                                          Padding(
-                                                                            padding:
-                                                                                const EdgeInsets.fromLTRB(
-                                                                                    170,
-                                                                                    0,
-                                                                                    0,
-                                                                                    0),
-                                                                            child:
-                                                                                Text(
-                                                                              ListOrderProducts[index]['Price']
-                                                                                  .toString(),
-                                                                              style: TextStyle(
-                                                                                  color:
-                                                                                      Colors.red),
-                                                                            ),
+                                                                          child:
+                                                                              Text(
+                                                                            ListOrderProducts[index]['Price'].toString(),
+                                                                            style:
+                                                                                TextStyle(color: Colors.red),
                                                                           ),
-                                                                        ],
-                                                                      ),
+                                                                        ),
+                                                                      ],
                                                                     ),
-                                                                  ],
-                                                                )
-                                                              ],
-                                                            ),
-                                                          ]))),
-                                            ),
-                                            secondaryActions: <Widget>[
-                                              new IconSlideAction(
-                                                  caption: 'Delete',
-                                                  color: Colors.red,
-                                                  icon: Icons.delete,
-                                                  onTap: () {
-                                                    showDialog(
-                                                        context: context,
-                                                        barrierDismissible: false,
-                                                        builder:
-                                                            (BuildContext context) {
-                                                          return AlertDialog(
-                                                            shape: RoundedRectangleBorder(
-                                                                borderRadius:
-                                                                    BorderRadius.all(
-                                                                        Radius.circular(
-                                                                            15.0))),
-                                                            title: new Text("Confirm",
-                                                                style: StylesText
-                                                                    .style18RedaccentBold),
-                                                            content: new Text(
-                                                              "Do you want to delete " +
-                                                                  ListOrderProducts[
-                                                                              index]
-                                                                          ['Name']
-                                                                      .toString() +
-                                                                  "?",
-                                                              style: StylesText
-                                                                  .style15Black,
-                                                            ),
-                                                            actions: <Widget>[
-                                                              FlatButton(
-                                                                child: Text("No"),
-                                                                onPressed: () {
-                                                                  Navigator.of(
-                                                                          context)
-                                                                      .pop();
-                                                                },
-                                                              ),
-                                                              FlatButton(
-                                                                child: Text("Yes"),
-                                                                onPressed: () {
-                                                                  setState(() {
-                                                                    total_money -=
-                                                                        ListOrderProducts[
-                                                                                index]
-                                                                            ['Price'];
-                                                                    ListOrderProducts
-                                                                        .removeAt(
-                                                                            index);
-                                                                  });
-                                                                  Navigator.of(
-                                                                          context)
-                                                                      .pop();
-                                                                },
-                                                              ),
+                                                                  ),
+                                                                ],
+                                                              )
                                                             ],
-                                                          );
-                                                        });
-                                                  }),
-                                            ],
-                                          );
-                                        },
-                                      ),
+                                                          ),
+                                                        ]))),
+                                          ),
+                                          secondaryActions: <Widget>[
+                                            new IconSlideAction(
+                                                caption: 'Delete',
+                                                color: Colors.red,
+                                                icon: Icons.delete,
+                                                onTap: () {
+                                                  showDialog(
+                                                      context: context,
+                                                      barrierDismissible: false,
+                                                      builder: (BuildContext
+                                                          context) {
+                                                        return AlertDialog(
+                                                          shape: RoundedRectangleBorder(
+                                                              borderRadius: BorderRadius
+                                                                  .all(Radius
+                                                                      .circular(
+                                                                          15.0))),
+                                                          title: new Text(
+                                                              "Confirm",
+                                                              style: StylesText
+                                                                  .style18RedaccentBold),
+                                                          content: new Text(
+                                                            "Do you want to delete " +
+                                                                ListOrderProducts[
+                                                                            index]
+                                                                        ['Name']
+                                                                    .toString() +
+                                                                "?",
+                                                            style: StylesText
+                                                                .style15Black,
+                                                          ),
+                                                          actions: <Widget>[
+                                                            FlatButton(
+                                                              child: Text("No"),
+                                                              onPressed: () {
+                                                                Navigator.of(
+                                                                        context)
+                                                                    .pop();
+                                                              },
+                                                            ),
+                                                            FlatButton(
+                                                              child:
+                                                                  Text("Yes"),
+                                                              onPressed: () {
+                                                                setState(() {
+                                                                  total_money -=
+                                                                      ListOrderProducts[
+                                                                              index]
+                                                                          [
+                                                                          'Price'];
+                                                                  ListOrderProducts
+                                                                      .removeAt(
+                                                                          index);
+                                                                });
+                                                                Navigator.of(
+                                                                        context)
+                                                                    .pop();
+                                                              },
+                                                            ),
+                                                          ],
+                                                        );
+                                                      });
+                                                }),
+                                          ],
+                                        );
+                                      },
                                     ),
-                                  ],
+                                  ),
                                 ),
-                              )),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(5, 5, 5, 0),
+                          child: Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[Text("Tạm tính"), Text("100")],
+                            ),
+                          ),
                         )
                       ],
                     ),
@@ -788,13 +787,6 @@ class Shopping_ListState extends State<Shopping_List> {
                   ),
                 ),
         ));
-  }
-
-  Future<void> refreshPage() async {
-    await Future.delayed(Duration(seconds: 1));
-    setState(() {
-      build(context);
-    });
   }
 
   void updateShoppingList() {

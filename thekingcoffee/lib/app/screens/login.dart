@@ -27,13 +27,14 @@ class LoginWithPass extends StatefulWidget {
   }
 }
 
+bool istap_en = false;
+bool istap_vn = true;
+
 class MyAppState extends State<LoginWithPass> {
   int tap_en = 0;
   int tap_vn = 0;
 
   int _index = 0;
-  bool istap_en = false;
-  bool istap_vn = true;
 
   @override
   void initState() {

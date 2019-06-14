@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thekingcoffee/app/screens/login.dart';
 
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
@@ -20,12 +21,7 @@ class _LanguageState extends State<ChangeLanguage> {
   @override
   void initState() {
     super.initState();
-    isEnSelected = true;
-    isVnSelected = false;
   }
-
-  var isEnSelected = false;
-  var isVnSelected = false;
 
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
@@ -66,12 +62,12 @@ class _LanguageState extends State<ChangeLanguage> {
                     if (widget.tap_en == 0) {
                       await allTranslations.setNewLanguage('en');
                       setState(() {
-                        if (isEnSelected == true) {
-                          isEnSelected = true;
-                          isVnSelected = false;
+                        if (istap_en == true) {
+                          istap_en = true;
+                          istap_vn = false;
                         } else {
-                          isEnSelected = true;
-                          isVnSelected = false;
+                          istap_en = true;
+                          istap_vn = false;
                         }
                       });
                     }
@@ -82,9 +78,7 @@ class _LanguageState extends State<ChangeLanguage> {
                     style: StylesText.style16Brown,
                   ),
                   trailing: Icon(Icons.check,
-                      color: isEnSelected
-                          ? Colors.redAccent
-                          : Colors.transparent)),
+                      color: istap_en ? Colors.redAccent : Colors.transparent)),
             ),
             Card(
               child: ListTile(
@@ -93,12 +87,12 @@ class _LanguageState extends State<ChangeLanguage> {
                   if (widget.tap_vn == 0) {
                     await allTranslations.setNewLanguage('vi');
                     setState(() {
-                      if (isVnSelected) {
-                        isVnSelected = true;
-                        isEnSelected = false;
+                      if (istap_vn) {
+                        istap_vn = true;
+                        istap_en = false;
                       } else {
-                        isVnSelected = true;
-                        isEnSelected = false;
+                        istap_vn = true;
+                        istap_en = false;
                       }
                     });
                   }
@@ -112,8 +106,7 @@ class _LanguageState extends State<ChangeLanguage> {
                   style: StylesText.style16Brown,
                 ),
                 trailing: Icon(Icons.check,
-                    color:
-                        isVnSelected ? Colors.redAccent : Colors.transparent),
+                    color: istap_vn ? Colors.redAccent : Colors.transparent),
               ),
             ),
           ],
