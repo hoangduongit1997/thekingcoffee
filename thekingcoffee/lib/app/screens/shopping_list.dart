@@ -7,6 +7,7 @@ import 'package:thekingcoffee/app/bloc/order_bloc.dart';
 import 'package:thekingcoffee/app/bloc/place_bloc.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/data/model/get_place_item.dart';
+import 'package:thekingcoffee/app/data/repository/check_enought_point.dart';
 import 'package:thekingcoffee/app/data/repository/order_repository.dart';
 import 'package:thekingcoffee/app/screens/dashboard.dart';
 
@@ -37,6 +38,7 @@ class Shopping_ListState extends State<Shopping_List> {
   int multy_topping = 0;
   int total_money = 0;
   int user_point = 0;
+
   flus_total_money() {
     for (var item in ListOrderProducts) {
       setState(() {
@@ -56,6 +58,7 @@ class Shopping_ListState extends State<Shopping_List> {
   TextEditingController name = new TextEditingController(text: "Hoàng Dương");
   TextEditingController phone = new TextEditingController(text: "0798353751");
   bool ischecked_address = false;
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -763,19 +766,38 @@ class Shopping_ListState extends State<Shopping_List> {
                       Expanded(
                         child: MaterialButton(
                             onPressed: () async {
-                              showDialog(
-                                  context: context,
-                                  builder: (_) => Payment_Dialog());
-                              // if (orderBloc.isValidInfo(
-                              //         name.text.trim().toString(),
-                              //         phone.text.trim().toString(),
-                              //         address.text.trim().toString()) ==
-                              //     true) {
-                              //   if (await PostOrder(
-                              //           phone.text.trim().toString(),
-                              //           address.text.trim().toString()) ==
-                              //       true) {}
-                              // }
+                              LoadingDialog.showLoadingDialog(
+                                  context, "Loading...");
+                              if ((await check_enough_point(total_money)) ==
+                                  true) {
+                                LoadingDialog.hideLoadingDialog(context);
+                                showDialog(
+                                    context: context,
+                                    builder: (_) => Payment_Dialog());
+                              } else {
+                                if (orderBloc.isValidInfo(
+                                        name.text.trim().toString(),
+                                        phone.text.trim().toString(),
+                                        address.text.trim().toString()) ==
+                                    true) {
+                                  if (await PostOrder(
+                                          phone.text.trim().toString(),
+                                          address.text.trim().toString()) ==
+                                      true) {
+                                    LoadingDialog.hideLoadingDialog(context);
+                                    MsgDialog.showMsgDialog(context,
+                                        "Information", "Order succesfull!");
+                                    setState(() {
+                                      total_money = 0;
+                                      ListOrderProducts.clear();
+                                    });
+                                  }
+                                } else {
+                                  LoadingDialog.hideLoadingDialog(context);
+                                  MsgDialog.showMsgDialog(
+                                      context, "Information", "Error!");
+                                }
+                              }
                             },
                             child: Text(
                               "Purchase " + total_money.toString() + " VND",

@@ -65,26 +65,13 @@ Future<bool> PostOrder(String phone, String address) async {
       headers: {'Token': token, 'Content-Type': 'application/json'},
       body: body_order);
   var data = json.decode(response1.body);
+  prefs.setInt("points", data['Value']['Customer']['Point']);
   if (data['Status'] == 1) {
     status_oder = true;
-    Fluttertoast.showToast(
-        msg: allTranslations.text("order_suc").toString(),
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIos: 1,
-        backgroundColor: Colors.redAccent,
-        textColor: Colors.white,
-        fontSize: 16.0);
+
   } else {
     status_oder = false;
-    Fluttertoast.showToast(
-        msg: allTranslations.text("order_false").toString(),
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIos: 1,
-        backgroundColor: Colors.redAccent,
-        textColor: Colors.white,
-        fontSize: 16.0);
+
   }
   return status_oder;
 }

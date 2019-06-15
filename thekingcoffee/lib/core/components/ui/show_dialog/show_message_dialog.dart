@@ -7,6 +7,7 @@ class MsgDialog {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
+
             contentPadding: const EdgeInsets.all(0.0),
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.all(Radius.circular(15.0))),
