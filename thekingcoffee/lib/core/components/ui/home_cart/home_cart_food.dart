@@ -5,6 +5,7 @@ import 'package:thekingcoffee/app/config/config.dart';
 
 import 'package:thekingcoffee/app/data/repository/get_food_products.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog_order.dart';
 import 'package:thekingcoffee/core/components/widgets/drawline.dart';
@@ -217,7 +218,7 @@ class _Home_Card_Food_State extends State<Home_Card_Food> {
                                             painter: Drawhorizontalline(
                                                 false,
                                                 0.0,
-                                               Dimension.getWidth(0.51),
+                                                Dimension.getWidth(0.51),
                                                 Colors.blueGrey[300],
                                                 0.5)),
                                       )),
@@ -274,7 +275,11 @@ class _Home_Card_Food_State extends State<Home_Card_Food> {
                                                                 Text(
                                                                   promotion_food
                                                                           .toString() +
-                                                                      " discount",
+                                                                      " " +
+                                                                      allTranslations
+                                                                          .text(
+                                                                              "discount")
+                                                                          .toString(),
                                                                   style: StylesText
                                                                       .style13BrownBold,
                                                                 )

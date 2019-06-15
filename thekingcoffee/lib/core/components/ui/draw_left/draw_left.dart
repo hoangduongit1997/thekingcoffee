@@ -157,10 +157,11 @@ class _HomeMenuState extends State<HomeMenu> {
                             shape: RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(15.0))),
-                            title: new Text("Confirm",
+                            title: new Text(
+                                allTranslations.text("confirm").toString(),
                                 style: StylesText.style18RedaccentBold),
                             content: new Text(
-                              "Do you want to log out ?",
+                              allTranslations.text("do_log_out").toString(),
                               style: StylesText.style15Black,
                             ),
                             actions: <Widget>[
@@ -174,7 +175,7 @@ class _HomeMenuState extends State<HomeMenu> {
                                       color: Colors.brown),
                                   child: Center(
                                       child: Text(
-                                    "Cancel",
+                                    allTranslations.text("cancel").toString(),
                                     style: StylesText.style14While,
                                   )),
                                 ),
@@ -191,8 +192,20 @@ class _HomeMenuState extends State<HomeMenu> {
                                             Radius.circular(15.0)),
                                         color: Colors.redAccent),
                                     child: Center(
-                                      child: Text("Yes",
-                                          style: StylesText.style14While),
+                                      child: Container(
+                                          width: Dimension.getWidth(0.28),
+                                          height: Dimension.getHeight(0.04),
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(15.0)),
+                                              color: Colors.redAccent),
+                                          child: Center(
+                                            child: Text(
+                                                allTranslations
+                                                    .text("yes")
+                                                    .toString(),
+                                                style: StylesText.style14While),
+                                          )),
                                     )),
                                 onPressed: () async {
                                   ListOrderProducts.clear();
@@ -239,21 +252,47 @@ class _HomeMenuState extends State<HomeMenu> {
                             shape: RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(15.0))),
-                            title: new Text("Confirm",
+                            title: new Text(
+                                allTranslations.text("confirm").toString(),
                                 style: StylesText.style18RedaccentBold),
                             content: new Text(
-                              "Do you want to exit ?",
+                              allTranslations.text("do_exit").toString(),
                               style: StylesText.style15Black,
                             ),
                             actions: <Widget>[
                               FlatButton(
-                                child: Text("No"),
+                                child: Container(
+                                  width: Dimension.getWidth(0.28),
+                                  height: Dimension.getHeight(0.04),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(15.0)),
+                                      color: Colors.brown),
+                                  child: Center(
+                                      child: Text(
+                                    allTranslations.text("cancel").toString(),
+                                    style: StylesText.style14While,
+                                  )),
+                                ),
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },
                               ),
                               FlatButton(
-                                child: Text("Yes"),
+                                child: Container(
+                                    width: Dimension.getWidth(0.28),
+                                    height: Dimension.getHeight(0.04),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(15.0)),
+                                        color: Colors.redAccent),
+                                    child: Center(
+                                      child: Text(
+                                          allTranslations
+                                              .text("yes")
+                                              .toString(),
+                                          style: StylesText.style14While),
+                                    )),
                                 onPressed: () {
                                   SystemChannels.platform
                                       .invokeMethod('SystemNavigator.pop');
@@ -309,21 +348,47 @@ class _HomeMenuState extends State<HomeMenu> {
                             shape: RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(15.0))),
-                            title: new Text("Confirm",
+                            title: new Text(
+                                allTranslations.text("confirm").toString(),
                                 style: StylesText.style18RedaccentBold),
                             content: new Text(
-                              "Do you want to exit ?",
+                              allTranslations.text("do_exit").toString(),
                               style: StylesText.style15Black,
                             ),
                             actions: <Widget>[
                               FlatButton(
-                                child: Text("No"),
+                                child: Container(
+                                  width: Dimension.getWidth(0.28),
+                                  height: Dimension.getHeight(0.04),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(15.0)),
+                                      color: Colors.brown),
+                                  child: Center(
+                                      child: Text(
+                                    allTranslations.text("cancel").toString(),
+                                    style: StylesText.style14While,
+                                  )),
+                                ),
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },
                               ),
                               FlatButton(
-                                child: Text("Yes"),
+                                child: Container(
+                                    width: Dimension.getWidth(0.28),
+                                    height: Dimension.getHeight(0.04),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(15.0)),
+                                        color: Colors.redAccent),
+                                    child: Center(
+                                      child: Text(
+                                          allTranslations
+                                              .text("yes")
+                                              .toString(),
+                                          style: StylesText.style14While),
+                                    )),
                                 onPressed: () {
                                   SystemChannels.platform
                                       .invokeMethod('SystemNavigator.pop');

@@ -5,6 +5,7 @@ import 'package:thekingcoffee/app/config/config.dart';
 
 import 'package:thekingcoffee/app/data/repository/get_drinking_products.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog_order.dart';
 import 'package:thekingcoffee/core/components/widgets/drawline.dart';
@@ -273,7 +274,11 @@ class _Home_Card_Drinking_State extends State<Home_Card_Drinking> {
                                                                 Text(
                                                                   promotion_drinking
                                                                           .toString() +
-                                                                      " discount",
+                                                                      " " +
+                                                                      allTranslations
+                                                                          .text(
+                                                                              "discount")
+                                                                          .toString(),
                                                                   style: StylesText
                                                                       .style13BrownBold,
                                                                 )

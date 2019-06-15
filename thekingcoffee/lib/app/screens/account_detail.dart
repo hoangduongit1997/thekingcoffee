@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/screens/dashboard.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 
@@ -27,7 +28,7 @@ class _AccountState extends State<Account> {
             backgroundColor: Colors.white,
             elevation: 0.5,
             title: Text(
-              "Account information",
+              allTranslations.text("account_information").toString(),
               style: StylesText.style20BrownBold,
             ),
             leading: FlatButton(

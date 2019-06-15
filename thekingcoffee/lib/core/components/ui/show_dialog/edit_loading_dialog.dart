@@ -6,6 +6,7 @@ import 'package:thekingcoffee/app/screens/dashboard.dart';
 import 'package:thekingcoffee/app/screens/shopping_list.dart';
 
 import 'package:thekingcoffee/app/styles/styles.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart'
     as prefix0;
@@ -88,7 +89,7 @@ class LoadingDialog_Order {
                               color: Colors.brown),
                           child: Center(
                               child: Text(
-                            "Cancel",
+                            allTranslations.text("cancel").toString(),
                             style: StylesText.style14While,
                           )),
                         ),
@@ -109,7 +110,7 @@ class LoadingDialog_Order {
                               color: Colors.redAccent),
                           child: Center(
                               child: Text(
-                            "Save change",
+                            allTranslations.text("Save_change").toString(),
                             style: StylesText.style14While,
                           )),
                         ),

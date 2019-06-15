@@ -317,11 +317,14 @@ class LoginState extends State<LoginWithPass> {
   }
 
   void onSigninClick() async {
-    LoadingDialog.showLoadingDialog(context, "Loading...");
+    LoadingDialog.showLoadingDialog(
+        context, allTranslations.text("splash_screen").toString());
     if ((await Validation.isConnectedNetwork()) == false) {
       Navigator.pop(context);
       MsgDialog.showMsgDialog(
-          context, "No network!", "No network connection found");
+          context,
+          allTranslations.text("title_no_netword").toString(),
+          allTranslations.text("no_network").toString());
     }
     if ((await Validation.isConnectedNetwork()) == true &&
         loginBloc.isValidInfo(_user.text.trim(), _pass.text.trim()) == true) {

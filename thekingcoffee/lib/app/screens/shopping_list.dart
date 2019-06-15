@@ -10,7 +10,6 @@ import 'package:thekingcoffee/app/data/model/get_place_item.dart';
 import 'package:thekingcoffee/app/data/repository/check_enought_point.dart';
 import 'package:thekingcoffee/app/data/repository/order_repository.dart';
 
-
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 
@@ -88,27 +87,55 @@ class Shopping_ListState extends State<Shopping_List> {
                       onPressed: () {
                         showDialog(
                             context: context,
-                            barrierDismissible: false,
+                            barrierDismissible: true,
                             builder: (BuildContext context) {
                               return AlertDialog(
                                 shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.all(
                                         Radius.circular(15.0))),
-                                title: new Text("Confirm",
+                                title: new Text(
+                                    allTranslations.text("confirm").toString(),
                                     style: StylesText.style18RedaccentBold),
                                 content: new Text(
-                                  "Do you want to delete all shopping list ?",
+                                  allTranslations.text("do_you").toString(),
                                   style: StylesText.style15Black,
                                 ),
                                 actions: <Widget>[
                                   FlatButton(
-                                    child: Text("No"),
+                                    child: Container(
+                                      width: Dimension.getWidth(0.28),
+                                      height: Dimension.getHeight(0.04),
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(15.0)),
+                                          color: Colors.brown),
+                                      child: Center(
+                                          child: Text(
+                                        allTranslations
+                                            .text("cancel")
+                                            .toString(),
+                                        style: StylesText.style14While,
+                                      )),
+                                    ),
                                     onPressed: () {
                                       Navigator.of(context).pop();
                                     },
                                   ),
                                   FlatButton(
-                                    child: Text("Yes"),
+                                    child: Container(
+                                        width: Dimension.getWidth(0.28),
+                                        height: Dimension.getHeight(0.04),
+                                        decoration: BoxDecoration(
+                                            borderRadius: BorderRadius.all(
+                                                Radius.circular(15.0)),
+                                            color: Colors.redAccent),
+                                        child: Center(
+                                          child: Text(
+                                              allTranslations
+                                                  .text("yes")
+                                                  .toString(),
+                                              style: StylesText.style14While),
+                                        )),
                                     onPressed: () {
                                       setState(() {
                                         total_money = 0;
@@ -159,7 +186,9 @@ class Shopping_ListState extends State<Shopping_List> {
                                       mainAxisSize: MainAxisSize.max,
                                       children: <Widget>[
                                         Text(
-                                          "Delivery information",
+                                          allTranslations
+                                              .text("Delivery_information")
+                                              .toString(),
                                           style: StylesText.style15Black,
                                         ),
                                       ],
@@ -269,8 +298,9 @@ class Shopping_ListState extends State<Shopping_List> {
                                                       icon: Icon(
                                                         Icons.map,
                                                       ),
-                                                      hintText:
-                                                          "Enter your address..."),
+                                                      hintText: allTranslations
+                                                          .text("enter_address")
+                                                          .toString()),
                                                   controller: address,
                                                   style:
                                                       StylesText.style15Black,
@@ -412,7 +442,10 @@ class Shopping_ListState extends State<Shopping_List> {
                                     child: Row(
                                       mainAxisSize: MainAxisSize.max,
                                       children: <Widget>[
-                                        Text("List detailed order",
+                                        Text(
+                                            allTranslations
+                                                .text("List_detailed_order")
+                                                .toString(),
                                             style: StylesText.style15Black),
                                       ],
                                     ),
@@ -634,7 +667,8 @@ class Shopping_ListState extends State<Shopping_List> {
                                                                     child: Row(
                                                                       children: <
                                                                           Widget>[
-                                                                        Text("Quanlity: " +
+                                                                        Text(allTranslations.text("Quanlity").toString() +
+                                                                            " " +
                                                                             ListOrderProducts[index]['Quantity'].toString()),
                                                                         Padding(
                                                                           padding: const EdgeInsets.fromLTRB(
@@ -660,13 +694,15 @@ class Shopping_ListState extends State<Shopping_List> {
                                           ),
                                           secondaryActions: <Widget>[
                                             new IconSlideAction(
-                                                caption: 'Delete',
+                                                caption: allTranslations
+                                                    .text("delete")
+                                                    .toString(),
                                                 color: Colors.red,
                                                 icon: Icons.delete,
                                                 onTap: () {
                                                   showDialog(
                                                       context: context,
-                                                      barrierDismissible: false,
+                                                      barrierDismissible: true,
                                                       builder: (BuildContext
                                                           context) {
                                                         return AlertDialog(
@@ -676,11 +712,18 @@ class Shopping_ListState extends State<Shopping_List> {
                                                                       .circular(
                                                                           15.0))),
                                                           title: new Text(
-                                                              "Confirm",
+                                                              allTranslations
+                                                                  .text(
+                                                                      "confirm")
+                                                                  .toString(),
                                                               style: StylesText
                                                                   .style18RedaccentBold),
                                                           content: new Text(
-                                                            "Do you want to delete " +
+                                                            allTranslations
+                                                                    .text(
+                                                                        "do_you_want")
+                                                                    .toString() +
+                                                                " " +
                                                                 ListOrderProducts[
                                                                             index]
                                                                         ['Name']
@@ -691,7 +734,29 @@ class Shopping_ListState extends State<Shopping_List> {
                                                           ),
                                                           actions: <Widget>[
                                                             FlatButton(
-                                                              child: Text("No"),
+                                                              child: Container(
+                                                                width: Dimension
+                                                                    .getWidth(
+                                                                        0.28),
+                                                                height: Dimension
+                                                                    .getHeight(
+                                                                        0.04),
+                                                                decoration: BoxDecoration(
+                                                                    borderRadius:
+                                                                        BorderRadius.all(Radius.circular(
+                                                                            15.0)),
+                                                                    color: Colors
+                                                                        .brown),
+                                                                child: Center(
+                                                                    child: Text(
+                                                                  allTranslations
+                                                                      .text(
+                                                                          "cancel")
+                                                                      .toString(),
+                                                                  style: StylesText
+                                                                      .style14While,
+                                                                )),
+                                                              ),
                                                               onPressed: () {
                                                                 Navigator.of(
                                                                         context)
@@ -699,8 +764,28 @@ class Shopping_ListState extends State<Shopping_List> {
                                                               },
                                                             ),
                                                             FlatButton(
-                                                              child:
-                                                                  Text("Yes"),
+                                                              child: Container(
+                                                                  width: Dimension
+                                                                      .getWidth(
+                                                                          0.28),
+                                                                  height: Dimension
+                                                                      .getHeight(
+                                                                          0.04),
+                                                                  decoration: BoxDecoration(
+                                                                      borderRadius:
+                                                                          BorderRadius.all(Radius.circular(
+                                                                              15.0)),
+                                                                      color: Colors
+                                                                          .redAccent),
+                                                                  child: Center(
+                                                                    child: Text(
+                                                                        allTranslations
+                                                                            .text(
+                                                                                "yes")
+                                                                            .toString(),
+                                                                        style: StylesText
+                                                                            .style14While),
+                                                                  )),
                                                               onPressed: () {
                                                                 setState(() {
                                                                   total_money -=
@@ -739,7 +824,7 @@ class Shopping_ListState extends State<Shopping_List> {
                               mainAxisSize: MainAxisSize.max,
                               children: <Widget>[
                                 Text(
-                                  "Tạm tính",
+                                  allTranslations.text("estimate").toString(),
                                   style: StylesText.style14Black,
                                 ),
                                 Text(
@@ -758,7 +843,9 @@ class Shopping_ListState extends State<Shopping_List> {
                               mainAxisSize: MainAxisSize.max,
                               children: <Widget>[
                                 Text(
-                                  "Phí giao hàng",
+                                  allTranslations
+                                      .text("shipping_fee")
+                                      .toString(),
                                   style: StylesText.style14Black,
                                 ),
                                 Text(
@@ -788,7 +875,9 @@ class Shopping_ListState extends State<Shopping_List> {
                               mainAxisSize: MainAxisSize.max,
                               children: <Widget>[
                                 Text(
-                                  "Tổng cộng",
+                                  allTranslations
+                                      .text("total_money")
+                                      .toString(),
                                   style: StylesText.style16BlackNormal,
                                 ),
                                 Text(
@@ -835,7 +924,12 @@ class Shopping_ListState extends State<Shopping_List> {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
                                   Text(
-                                    "Total: " + total_money.toString() + " VND",
+                                    allTranslations
+                                            .text("total_money")
+                                            .toString() +
+                                        " " +
+                                        total_money.toString() +
+                                        " VND",
                                     style: StylesText.style13BrownBold,
                                   ),
                                 ],
@@ -867,7 +961,9 @@ class Shopping_ListState extends State<Shopping_List> {
                                         ),
                                       ),
                                       Text(
-                                        "Coupon code",
+                                        allTranslations
+                                            .text("Coupon_code")
+                                            .toString(),
                                         style: StylesText.style13BrownBold,
                                       ),
                                     ],
@@ -885,8 +981,8 @@ class Shopping_ListState extends State<Shopping_List> {
                             Expanded(
                               child: MaterialButton(
                                   onPressed: () async {
-                                    LoadingDialog.showLoadingDialog(
-                                        context, "Loading...");
+                                    LoadingDialog.showLoadingDialog(context,
+                                        allTranslations.text("splash_screen"));
                                     if ((await check_enough_point(
                                                 total_money)) ==
                                             true &&
@@ -926,8 +1022,12 @@ class Shopping_ListState extends State<Shopping_List> {
                                               context);
                                           MsgDialog.showMsgDialog(
                                               context,
-                                              "Information",
-                                              "Order succesfull!");
+                                              allTranslations
+                                                  .text("Information")
+                                                  .toString(),
+                                              allTranslations
+                                                  .text("order_suc")
+                                                  .toString());
                                           setState(() {
                                             total_money = 0;
                                             ListOrderProducts.clear();
@@ -937,12 +1037,18 @@ class Shopping_ListState extends State<Shopping_List> {
                                         LoadingDialog.hideLoadingDialog(
                                             context);
                                         MsgDialog.showMsgDialog(
-                                            context, "Information", "Error!");
+                                            context,
+                                            allTranslations
+                                                .text("Information")
+                                                .toString(),
+                                            allTranslations
+                                                .text("order_false")
+                                                .toString());
                                       }
                                     }
                                   },
                                   child: Text(
-                                    "Purchase",
+                                    allTranslations.text("Purchase").toString(),
                                     style: StylesText.style16While,
                                   ),
                                   color: Colors.redAccent),

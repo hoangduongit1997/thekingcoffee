@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:thekingcoffee/app/data/model/get_place_item.dart';
 import 'package:thekingcoffee/app/screens/address_picker_page.dart';
 import 'package:thekingcoffee/app/screens/map.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 
 class AddressPicker extends StatefulWidget {
   final Function(Get_Place_Item, bool) onSelected;
@@ -71,7 +72,7 @@ class _AddressPickerState extends State<AddressPicker> {
                       padding: EdgeInsets.only(left: 40, right: 50),
                       child: Text(
                         fromAddress == null
-                            ? "Enter your address"
+                            ? allTranslations.text("enter_address").toString()
                             : fromAddress.address,
                         overflow: TextOverflow.ellipsis,
                         style:

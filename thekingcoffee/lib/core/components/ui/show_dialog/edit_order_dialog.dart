@@ -4,8 +4,8 @@ import 'package:flutter/widgets.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 
 import 'package:thekingcoffee/app/styles/styles.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 
-import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/show_message_dialog.dart';
 import 'package:thekingcoffee/core/components/widgets/drawline.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
@@ -266,7 +266,9 @@ class Order_DialogState extends State<Order_Dialog> {
                                       padding:
                                           const EdgeInsets.fromLTRB(2, 0, 0, 0),
                                       child: Text(
-                                        "Price",
+                                        allTranslations
+                                            .text("Price")
+                                            .toString(),
                                         style: StylesText.style13BrownNormal,
                                       ),
                                     ),
@@ -300,7 +302,7 @@ class Order_DialogState extends State<Order_Dialog> {
                                       padding:
                                           const EdgeInsets.fromLTRB(2, 0, 0, 0),
                                       child: Text(
-                                        "Sell",
+                                        allTranslations.text("Sell").toString(),
                                         style: StylesText.style13BrownBold,
                                       ),
                                     ),
@@ -541,7 +543,7 @@ class Order_DialogState extends State<Order_Dialog> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               Text(
-                                "Note",
+                                allTranslations.text("Note").toString(),
                                 style: StylesText.style16Brown,
                               ),
                               Padding(
@@ -556,11 +558,17 @@ class Order_DialogState extends State<Order_Dialog> {
                                         widget.callback('Note', note.text);
                                         MsgDialog.showMsgDialog(
                                             context,
-                                            "Information",
+                                            allTranslations
+                                                .text("Information")
+                                                .toString(),
                                             "Edit note successfully");
                                       } else {
-                                        MsgDialog.showMsgDialog(context,
-                                            "Information", "Note empty");
+                                        MsgDialog.showMsgDialog(
+                                            context,
+                                            allTranslations
+                                                .text("Information")
+                                                .toString(),
+                                            "Note empty");
                                       }
                                     },
                                     keyboardType: TextInputType.multiline,

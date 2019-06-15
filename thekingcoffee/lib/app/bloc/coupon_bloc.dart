@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:thekingcoffee/app/validation/validation.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 
 class Coupon_Bloc {
   StreamController _coupon = new StreamController.broadcast();
@@ -9,7 +10,7 @@ class Coupon_Bloc {
     bool status = false;
     if (!Validation.isValidAddress(coupon)) {
       status = false;
-      _coupon.sink.addError("Invalid Coupon");
+      _coupon.sink.addError(allTranslations.text("invalid_coupon").toString());
     }
     if (Validation.isValidAddress(coupon)) {
       status = true;

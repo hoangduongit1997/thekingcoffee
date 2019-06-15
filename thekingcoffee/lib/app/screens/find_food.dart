@@ -89,7 +89,8 @@ class _FindFoodState extends State<FindFood> {
                   controller: food,
                   textInputAction: TextInputAction.search,
                   onSubmitted: (str) async {
-                    LoadingDialog.showLoadingDialog(context, "Loading");
+                    LoadingDialog.showLoadingDialog(context,
+                        allTranslations.text("splash_screen").toString());
                     if (str.length > 0) {
                       final resutl = await Find_Food(str);
                       setState(() {
@@ -105,7 +106,7 @@ class _FindFoodState extends State<FindFood> {
                     } else {
                       LoadingDialog.hideLoadingDialog(context);
                       Fluttertoast.showToast(
-                          msg: "No information found",
+                          msg: allTranslations.text("no_info").toString(),
                           toastLength: Toast.LENGTH_SHORT,
                           gravity: ToastGravity.BOTTOM,
                           timeInSecForIos: 1,

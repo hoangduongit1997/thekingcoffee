@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:thekingcoffee/app/bloc/place_bloc.dart';
 import 'package:thekingcoffee/app/data/model/get_place_item.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 
 class RidePickerPage extends StatefulWidget {
@@ -47,7 +48,7 @@ class _RidePickerPageState extends State<RidePickerPage> {
           ),
           backgroundColor: Colors.white,
           title: Text(
-            "Enter your address",
+            allTranslations.text("enter_address").toString(),
             style: StylesText.style20BrownBold,
           ),
         ),
@@ -99,7 +100,9 @@ class _RidePickerPageState extends State<RidePickerPage> {
                                 padding: EdgeInsets.only(left: 40, right: 50),
                                 child: TextField(
                                   decoration: InputDecoration(
-                                    hintText: "Enter your address...",
+                                    hintText: allTranslations
+                                        .text("enter_address")
+                                        .toString(),
                                     focusedBorder: UnderlineInputBorder(
                                       borderSide:
                                           BorderSide(color: Colors.redAccent),

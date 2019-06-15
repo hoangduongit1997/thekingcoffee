@@ -3,6 +3,7 @@ import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/data/repository/get_history.dart';
 import 'package:thekingcoffee/app/screens/history_order_detail.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 
@@ -41,7 +42,7 @@ class _HistoryState extends State<History> {
         backgroundColor: Colors.white,
         elevation: 0.5,
         title: Text(
-          "History",
+          allTranslations.text("history_order").toString(),
           style: StylesText.style20BrownBold,
         ),
         leading: FlatButton(
@@ -61,7 +62,12 @@ class _HistoryState extends State<History> {
         onRefresh: onrefresh,
         child: data_history == null || data_history.length == 0
             ? Container(
-                child: Center(child: Text("No information")),
+                child: Center(
+                  child: Text(
+                    allTranslations.text("no_info").toString(),
+                    style: StylesText.style13Black,
+                  ),
+                ),
               )
             : Container(
                 padding: const EdgeInsets.fromLTRB(5, 5, 5, 10),
@@ -148,7 +154,10 @@ class _HistoryState extends State<History> {
                                                     const EdgeInsets.fromLTRB(
                                                         0, 0, 0, 0),
                                                 child: Text(
-                                                  "Oder " +
+                                                  allTranslations
+                                                          .text("order")
+                                                          .toString() +
+                                                      " " +
                                                       data_history[index]['Id']
                                                           .toString(),
                                                   style: StylesText
@@ -181,12 +190,16 @@ class _HistoryState extends State<History> {
                                                                 ['State'] ==
                                                             "1"
                                                         ? Text(
-                                                            "Done",
+                                                            allTranslations
+                                                                .text("done")
+                                                                .toString(),
                                                             style: StylesText
                                                                 .style15Red,
                                                           )
                                                         : Text(
-                                                            "Processing",
+                                                            allTranslations
+                                                                .text("process")
+                                                                .toString(),
                                                             style: StylesText
                                                                 .style15Red,
                                                           )),

@@ -6,6 +6,7 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:location/location.dart';
 import 'package:thekingcoffee/app/data/model/get_place_item.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 import 'package:thekingcoffee/core/components/widgets/address_picker.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 import 'package:geocoder/geocoder.dart';
@@ -151,7 +152,7 @@ class _MapPageState extends State<MapPage> {
               child: FloatingActionButton(
                 backgroundColor: Colors.white,
                 onPressed: _onMapTypeButtonPressed,
-                tooltip: 'Change style map',
+                tooltip: allTranslations.text("Change_style_map").toString(),
                 child: Icon(
                   Icons.map,
                   color: Colors.redAccent,
@@ -175,7 +176,7 @@ class _MapPageState extends State<MapPage> {
                       )
                     ], shape: BoxShape.circle, color: Colors.white),
                     child: IconButton(
-                      tooltip: "Send to this address",
+                      tooltip: allTranslations.text("send_address").toString(),
                       icon: Icon(Icons.send),
                       color: Colors.redAccent,
                       onPressed: () {

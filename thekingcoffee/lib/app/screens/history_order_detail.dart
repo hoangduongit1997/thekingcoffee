@@ -4,6 +4,7 @@ import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/data/repository/rate_order_repository.dart';
 
 import 'package:thekingcoffee/app/styles/styles.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/show_message_dialog.dart';
 import 'package:thekingcoffee/core/components/widgets/rating.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
@@ -42,7 +43,7 @@ class _History_oder_Detai_State extends State<History_Order_Detail> {
                 focusedBorder: UnderlineInputBorder(
                   borderSide: BorderSide(color: Colors.redAccent),
                 ),
-                hintText: "Share your thinking to us"),
+                hintText: allTranslations.text("comment").toString()),
             keyboardType: TextInputType.multiline,
             controller: _rate_comment,
             maxLines: null,
@@ -58,7 +59,7 @@ class _History_oder_Detai_State extends State<History_Order_Detail> {
                           color: Colors.orangeAccent),
                       child: Center(
                           child: Text(
-                        "Send",
+                      allTranslations.text("submit").toString(),
                         style: StylesText.style14While,
                       )),
                     ),
@@ -76,7 +77,7 @@ class _History_oder_Detai_State extends State<History_Order_Detail> {
                     backgroundColor: Colors.white,
                     elevation: 0.5,
                     title: Text(
-                      "Order " + widget.order_code.toString(),
+                      allTranslations.text("order").toString()+" "+ widget.order_code.toString(),
                       style: StylesText.style20BrownBold,
                     ),
                     leading: FlatButton(
@@ -120,7 +121,7 @@ class _History_oder_Detai_State extends State<History_Order_Detail> {
                                       Padding(
                                         padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
                                         child: Text(
-                                          "Thank you for using our services !",
+                                          allTranslations.text("thank").toString(),
                                           style: StylesText.style18BrownBoldRaleway,
                                         ),
                                       ),
@@ -164,7 +165,7 @@ class _History_oder_Detai_State extends State<History_Order_Detail> {
                                         Padding(
                                         padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
                                         child: Text(
-                                          "Thanks for your evaluation!",
+                                          allTranslations.text("thank_ordered").toString(),
                                           style: StylesText.style18BrownBoldRaleway,
                                         ),
                                       ),
@@ -199,7 +200,7 @@ class _History_oder_Detai_State extends State<History_Order_Detail> {
                                         child: Container(
                                             width: double.infinity,
                                             child: Text(
-                                              "Detailed order",
+                                              allTranslations.text("detaied_order").toString(),
                                               style: StylesText.style15BrownNormalRaleway,
                                             )),
                                       ),
@@ -302,7 +303,7 @@ class _History_oder_Detai_State extends State<History_Order_Detail> {
                                         child: Container(
                                           width: double.infinity,
                                           child: Text(
-                                            "List detailed order",
+                                            allTranslations.text("list_detailed_order").toString(),
                                             style: StylesText.style15BrownNormalRaleway,
                                           ),
                                         ),
@@ -519,7 +520,7 @@ class _History_oder_Detai_State extends State<History_Order_Detail> {
                                         padding: const EdgeInsets.fromLTRB(10, 10, 0, 20),
                                         child: Row(
                                           children: <Widget>[
-                                            Text("Total money: ",
+                                            Text(allTranslations.text("total_money").toString()+": ",
                                                 style:
                                                     StylesText.style15BrownNormalRaleway),
                                             Text(
@@ -545,7 +546,7 @@ class _History_oder_Detai_State extends State<History_Order_Detail> {
                print(_rate_comment.text.toString());
               if((await Rate_Order(widget.order_code.toString(),rating,_rate_comment.text.toString())==true))
               {
-                MsgDialog.showMsgDialog(context,"Information","Thanks for your evaluation");
+                MsgDialog.showMsgDialog(context,allTranslations.text("Information").toString(),allTranslations.text("thank_ordered").toString());
               }
   }
 }

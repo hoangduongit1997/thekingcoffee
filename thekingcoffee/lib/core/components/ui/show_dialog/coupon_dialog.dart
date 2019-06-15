@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:thekingcoffee/app/bloc/coupon_bloc.dart';
 
 import 'package:thekingcoffee/app/styles/styles.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 
 import 'package:thekingcoffee/core/utils/utils.dart';
 
@@ -35,7 +36,7 @@ class Coupon_Dialog_State extends State<Coupon_Dialog> {
       shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(Radius.circular(15.0))),
       title: Text(
-        'Coupon Code',
+        allTranslations.text("Coupon_code").toString(),
         style: StylesText.style18BrownBold,
       ),
       content: Container(
@@ -45,11 +46,13 @@ class Coupon_Dialog_State extends State<Coupon_Dialog> {
               child: Container(
             width: Dimension.getWidth(0.65),
             child: StreamBuilder<Object>(
-                stream: null,
+                stream: coupon_bloc.coupon_stream,
                 builder: (context, snapshot) {
                   return TextField(
+                    controller: counpon_code,
                     decoration: InputDecoration(
-                        hintText: "Enter",
+                        hintText:
+                            allTranslations.text("enter_coupon").toString(),
                         border: new OutlineInputBorder(
                             borderSide:
                                 new BorderSide(color: Colors.redAccent))),
@@ -73,7 +76,7 @@ class Coupon_Dialog_State extends State<Coupon_Dialog> {
                         color: Colors.brown),
                     child: Center(
                         child: Text(
-                      "Cancel",
+                      allTranslations.text("cancel").toString(),
                       style: StylesText.style14While,
                     )),
                   ),
@@ -90,11 +93,11 @@ class Coupon_Dialog_State extends State<Coupon_Dialog> {
                         color: Colors.redAccent),
                     child: Center(
                         child: Text(
-                      "Apply",
+                      allTranslations.text("Apply").toString(),
                       style: StylesText.style14While,
                     )),
                   ),
-                  onPressed: () {},
+                  onPressed: onApplyCode,
                 ),
               ],
             ),
@@ -102,5 +105,9 @@ class Coupon_Dialog_State extends State<Coupon_Dialog> {
         )
       ],
     );
+  }
+
+  void onApplyCode() {
+    if (coupon_bloc.isValidInfo(counpon_code.text.toString().trim())) {}
   }
 }

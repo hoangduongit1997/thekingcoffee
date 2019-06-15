@@ -5,6 +5,7 @@ import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/data/repository/get_data_all_product.dart';
 import 'package:thekingcoffee/app/screens/dashboard.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog_order.dart';
@@ -62,7 +63,11 @@ class _See_All_ProductState extends State<See_All_Product> {
       resizeToAvoidBottomInset: false,
       body: data.length == 0 || data.isEmpty == true
           ? Container(
-              child: Center(child: Text("No information")),
+              child: Center(
+                  child: Text(
+                allTranslations.text("no_info").toString(),
+                style: StylesText.style13Black,
+              )),
             )
           : Container(
               padding: const EdgeInsets.all(5.0),
@@ -339,7 +344,7 @@ class _See_All_ProductState extends State<See_All_Product> {
                                                                                 color: Colors.redAccent,
                                                                               ),
                                                                               Text(
-                                                                                promotion_product.toString() + " discount",
+                                                                                promotion_product.toString() +" "+ allTranslations.text("discount").toString(),
                                                                                 style: StylesText.style13BrownBold,
                                                                               )
                                                                             ],
