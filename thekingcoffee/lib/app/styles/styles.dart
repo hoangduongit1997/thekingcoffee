@@ -83,6 +83,10 @@ class StylesText {
       fontSize: SizeText.size16,
       color: Colors.brown,
       fontWeight: FontWeight.bold);
+  static TextStyle style16BlackNormal = TextStyle(
+      fontSize: SizeText.size16,
+      color: Colors.black,
+      fontWeight: FontWeight.normal);
   static TextStyle style30WhileBoldRobotoMono = TextStyle(
       fontSize: SizeText.size30,
       color: Colors.white,
@@ -177,6 +181,11 @@ class StylesText {
   static TextStyle style13BlackBold = TextStyle(
     fontSize: SizeText.size13,
     color: Colors.black,
+    fontWeight: FontWeight.bold,
+  );
+  static TextStyle style13White = TextStyle(
+    fontSize: SizeText.size13,
+    color: Colors.white,
     fontWeight: FontWeight.bold,
   );
   static TextStyle style13Black = TextStyle(

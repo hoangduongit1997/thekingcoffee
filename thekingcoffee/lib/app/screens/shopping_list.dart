@@ -16,12 +16,14 @@ import 'package:thekingcoffee/core/components/lib/change_language/change_languag
 
 import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
+import 'package:thekingcoffee/core/components/ui/show_dialog/coupon_dialog.dart';
 
 import 'package:thekingcoffee/core/components/ui/show_dialog/edit_loading_dialog.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/payment_dialog.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/show_message_dialog.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:thekingcoffee/core/components/widgets/drawline.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
@@ -121,14 +123,10 @@ class Shopping_ListState extends State<Shopping_List> {
             ],
           ),
           resizeToAvoidBottomInset: false,
-          body: ListOrderProducts.isEmpty
-              ? Container(
-                  child: Center(
-                      child: Text(allTranslations.text("no_info").toString(),
-                          style: StylesText.style16Brown)),
-                )
-              : SingleChildScrollView(
-                  child: Container(
+          body: SingleChildScrollView(
+            child: ListOrderProducts.isEmpty
+                ? Container()
+                : Container(
                     padding: const EdgeInsets.all(2.0),
                     color: Colors.white,
                     child: Column(
@@ -157,7 +155,7 @@ class Shopping_ListState extends State<Shopping_List> {
                                       children: <Widget>[
                                         Text(
                                           "Delivery information",
-                                          style: StylesText.style13Black,
+                                          style: StylesText.style15Black,
                                         ),
                                       ],
                                     ),
@@ -282,7 +280,7 @@ class Shopping_ListState extends State<Shopping_List> {
                                       child: Padding(
                                         padding: const EdgeInsets.all(0.0),
                                         child: FlatButton(
-                                          splashColor: Colors.brown,
+                                          splashColor: Colors.grey[300],
                                           child: SvgPicture.asset(
                                             "assets/icons/earth.svg",
                                             color: Colors.redAccent,
@@ -410,7 +408,7 @@ class Shopping_ListState extends State<Shopping_List> {
                                       mainAxisSize: MainAxisSize.max,
                                       children: <Widget>[
                                         Text("List detailed order",
-                                            style: StylesText.style13Black),
+                                            style: StylesText.style15Black),
                                       ],
                                     ),
                                   ),
@@ -418,7 +416,13 @@ class Shopping_ListState extends State<Shopping_List> {
                                 Padding(
                                   padding: const EdgeInsets.all(0.0),
                                   child: Container(
-                                    height: Dimension.getHeight(0.3),
+                                      child: ConstrainedBox(
+                                    constraints: new BoxConstraints(
+                                      minHeight: Dimension.getHeight(0.1),
+                                      minWidth: double.infinity,
+                                      maxHeight: Dimension.getHeight(0.3),
+                                      maxWidth: double.infinity,
+                                    ),
                                     child: ListView.builder(
                                       shrinkWrap: true,
                                       itemCount: ListOrderProducts.length,
@@ -716,98 +720,234 @@ class Shopping_ListState extends State<Shopping_List> {
                                         );
                                       },
                                     ),
-                                  ),
+                                  )),
                                 ),
                               ],
                             ),
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(5, 5, 5, 0),
+                          padding: const EdgeInsets.fromLTRB(5, 10, 5, 0),
                           child: Container(
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               mainAxisSize: MainAxisSize.max,
-                              children: <Widget>[Text("Tạm tính"), Text("100")],
+                              children: <Widget>[
+                                Text(
+                                  "Tạm tính",
+                                  style: StylesText.style14Black,
+                                ),
+                                Text(
+                                  total_money.toString(),
+                                  style: StylesText.style14Black,
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(5, 10, 5, 0),
+                          child: Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                                Text(
+                                  "Phí giao hàng",
+                                  style: StylesText.style14Black,
+                                ),
+                                Text(
+                                  total_money.toString(),
+                                  style: StylesText.style14Black,
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                        Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                            child: Container(
+                              child: CustomPaint(
+                                  painter: Drawhorizontalline(
+                                      false,
+                                      0.0,
+                                      Dimension.getWidth(1.0),
+                                      Colors.blueGrey[300],
+                                      0.3)),
+                            )),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(5, 10, 5, 0),
+                          child: Container(
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              mainAxisSize: MainAxisSize.max,
+                              children: <Widget>[
+                                Text(
+                                  "Tổng cộng",
+                                  style: StylesText.style16BlackNormal,
+                                ),
+                                Text(
+                                  total_money.toString(),
+                                  style: StylesText.style16BlackNormal,
+                                )
+                              ],
                             ),
                           ),
                         )
                       ],
                     ),
                   ),
-                ),
+          ),
           drawer: Drawer(
             child: HomeMenu(),
           ),
-          bottomNavigationBar: ListOrderProducts.isEmpty
-              ? Container(
-                  child: Center(
-                      child: Text(allTranslations.text("no_info").toString(),
-                          style: StylesText.style16Brown)),
-                )
-              : new Container(
-                  height: Dimension.getHeight(0.05),
-                  color: Colors.white,
-                  child: Row(
+          bottomNavigationBar: Container(
+            child: ListOrderProducts.isEmpty
+                ? Container(
+                    child: Center(
+                        child: Text(allTranslations.text("no_info").toString(),
+                            style: StylesText.style16Brown)),
+                  )
+                : new Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
                     children: <Widget>[
-                      Expanded(
-                          child: MaterialButton(
-                        onPressed: () {
-                          Navigator.of(context).pushReplacement(
-                              MaterialPageRoute(
-                                  builder: (context) => DashBoard()));
-                        },
-                        child: Text(
-                          "Continue shopping",
-                          style: StylesText.style14BrownBold,
+                      Padding(
+                        padding: const EdgeInsets.all(0.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: <Widget>[
+                            Expanded(
+                                child: OutlineButton(
+                              splashColor: Colors.white,
+                              borderSide: BorderSide(
+                                color: Colors.redAccent,
+                                style: BorderStyle.solid,
+                                width: 0.8,
+                              ),
+                              onPressed: () {},
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: <Widget>[
+                                  Text(
+                                    "Total: " + total_money.toString() + " VND",
+                                    style: StylesText.style13BrownBold,
+                                  ),
+                                ],
+                              ),
+                              color: Colors.white,
+                            )),
+                            Expanded(
+                              child: OutlineButton(
+                                  splashColor: Colors.grey[300],
+                                  borderSide: BorderSide(
+                                    color: Colors.redAccent,
+                                    style: BorderStyle.solid,
+                                    width: 0.8,
+                                  ),
+                                  onPressed: () {
+                                    showDialog(
+                                        context: context,
+                                        builder: (_) => Coupon_Dialog());
+                                  },
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: <Widget>[
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            0, 0, 5, 0),
+                                        child: Icon(
+                                          Icons.card_giftcard,
+                                          color: Colors.redAccent,
+                                        ),
+                                      ),
+                                      Text(
+                                        "Coupon code",
+                                        style: StylesText.style13BrownBold,
+                                      ),
+                                    ],
+                                  ),
+                                  color: Colors.white),
+                            )
+                          ],
                         ),
-                        color: Colors.white,
-                      )),
-                      Expanded(
-                        child: MaterialButton(
-                            onPressed: () async {
-                              LoadingDialog.showLoadingDialog(
-                                  context, "Loading...");
-                              if ((await check_enough_point(total_money)) ==
-                                  true) {
-                                LoadingDialog.hideLoadingDialog(context);
-                                showDialog(
-                                    context: context,
-                                    builder: (_) => Payment_Dialog());
-                              } else {
-                                if (orderBloc.isValidInfo(
-                                        name.text.trim().toString(),
-                                        phone.text.trim().toString(),
-                                        address.text.trim().toString()) ==
-                                    true) {
-                                  if (await PostOrder(
-                                          phone.text.trim().toString(),
-                                          address.text.trim().toString()) ==
-                                      true) {
-                                    LoadingDialog.hideLoadingDialog(context);
-                                    MsgDialog.showMsgDialog(context,
-                                        "Information", "Order succesfull!");
-                                    setState(() {
-                                      total_money = 0;
-                                      ListOrderProducts.clear();
-                                    });
-                                  }
-                                } else {
-                                  LoadingDialog.hideLoadingDialog(context);
-                                  MsgDialog.showMsgDialog(
-                                      context, "Information", "Error!");
-                                }
-                              }
-                            },
-                            child: Text(
-                              "Purchase " + total_money.toString() + " VND",
-                              style: StylesText.style14While,
-                            ),
-                            color: Colors.redAccent),
-                      )
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(0.0),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.max,
+                          children: <Widget>[
+                            Expanded(
+                              child: MaterialButton(
+                                  onPressed: () async {
+                                    LoadingDialog.showLoadingDialog(
+                                        context, "Loading...");
+                                    if ((await check_enough_point(
+                                                total_money)) ==
+                                            true &&
+                                        orderBloc.isValidInfo(
+                                                name.text.trim().toString(),
+                                                phone.text.trim().toString(),
+                                                address.text
+                                                    .trim()
+                                                    .toString()) ==
+                                            true) {
+                                      LoadingDialog.hideLoadingDialog(context);
+                                      showDialog(
+                                              context: context,
+                                              builder: (_) => Payment_Dialog(
+                                                  phone.text.trim().toString(),
+                                                  address.text
+                                                      .trim()
+                                                      .toString()))
+                                          .then((value) => setState(() {
+                                                if (value != null) {
+                                                  ListOrderProducts.clear();
+                                                } else {}
+                                              }));
+                                    } else {
+                                      if (orderBloc.isValidInfo(
+                                              name.text.trim().toString(),
+                                              phone.text.trim().toString(),
+                                              address.text.trim().toString()) ==
+                                          true) {
+                                        if (await PostOrder(
+                                                phone.text.trim().toString(),
+                                                address.text
+                                                    .trim()
+                                                    .toString()) ==
+                                            true) {
+                                          LoadingDialog.hideLoadingDialog(
+                                              context);
+                                          MsgDialog.showMsgDialog(
+                                              context,
+                                              "Information",
+                                              "Order succesfull!");
+                                          setState(() {
+                                            total_money = 0;
+                                            ListOrderProducts.clear();
+                                          });
+                                        }
+                                      } else {
+                                        LoadingDialog.hideLoadingDialog(
+                                            context);
+                                        MsgDialog.showMsgDialog(
+                                            context, "Information", "Error!");
+                                      }
+                                    }
+                                  },
+                                  child: Text(
+                                    "Purchase",
+                                    style: StylesText.style16While,
+                                  ),
+                                  color: Colors.redAccent),
+                            )
+                          ],
+                        ),
+                      ),
                     ],
                   ),
-                ),
+          ),
         ));
   }
 
