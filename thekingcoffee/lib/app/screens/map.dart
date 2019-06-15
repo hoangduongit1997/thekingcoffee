@@ -12,12 +12,12 @@ import 'package:geocoder/geocoder.dart';
 
 class MapPage extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _MapPageState createState() => _MapPageState();
 }
 
 String final_address;
 
-class _HomePageState extends State<MapPage> {
+class _MapPageState extends State<MapPage> {
   LocationData _startLocation;
   StreamSubscription<LocationData> _locationSubscription;
   Location _locationService = new Location();

@@ -19,10 +19,10 @@ class History_Order_Detail extends StatefulWidget {
  
   History_Order_Detail(this.list_detailed_product, this.order_code,
       this.address, this.phonenumber, this.total, this.time,this.start);
-  _HistoryState createState() => _HistoryState();
+ _History_oder_Detai_State createState() => _History_oder_Detai_State();
 }
 
-class _HistoryState extends State<History_Order_Detail> {
+class _History_oder_Detai_State extends State<History_Order_Detail> {
   TextEditingController _rate_comment;
   @override
   void initState() { 

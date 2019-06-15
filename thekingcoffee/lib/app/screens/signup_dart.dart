@@ -16,12 +16,13 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 class SignUp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return MyAppState();
+    return SignUpState();
   }
 }
 
-class MyAppState extends State<SignUp> {
+class SignUpState extends State<SignUp> {
   SignupBloc signupBloc = new SignupBloc();
+
   bool _showpass = false;
   bool checked = false;
   TextEditingController _name = new TextEditingController();
@@ -36,6 +37,11 @@ class MyAppState extends State<SignUp> {
   };
   InputType inputType = InputType.date;
   DateTime date;
+  @override
+  void dispose() {
+    signupBloc.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

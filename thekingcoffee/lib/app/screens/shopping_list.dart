@@ -9,7 +9,7 @@ import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/data/model/get_place_item.dart';
 import 'package:thekingcoffee/app/data/repository/check_enought_point.dart';
 import 'package:thekingcoffee/app/data/repository/order_repository.dart';
-import 'package:thekingcoffee/app/screens/dashboard.dart';
+
 
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
@@ -60,6 +60,11 @@ class Shopping_ListState extends State<Shopping_List> {
   TextEditingController name = new TextEditingController(text: "Hoàng Dương");
   TextEditingController phone = new TextEditingController(text: "0798353751");
   bool ischecked_address = false;
+  @override
+  void dispose() {
+    placeBloc.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {

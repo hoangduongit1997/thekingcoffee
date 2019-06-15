@@ -21,6 +21,12 @@ class _ResetPassState extends State<ResetPass> {
   TextEditingController _pass = new TextEditingController();
   TextEditingController _confirm = new TextEditingController();
   @override
+  void dispose() {
+    resetpass.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,

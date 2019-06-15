@@ -22,6 +22,12 @@ class VerifyPhonePageSate extends State<GmailAuth> {
   GmailAuthBloc resetPassBloc = new GmailAuthBloc();
   TextEditingController _gmail = new TextEditingController();
   @override
+  void dispose() {
+    resetPassBloc.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return GestureDetector(
         onTap: () {

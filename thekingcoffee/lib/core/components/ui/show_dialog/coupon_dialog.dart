@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:thekingcoffee/app/bloc/coupon_bloc.dart';
 
 import 'package:thekingcoffee/app/styles/styles.dart';
 
@@ -13,10 +14,18 @@ class Coupon_Dialog extends StatefulWidget {
 
 class Coupon_Dialog_State extends State<Coupon_Dialog> {
   TextEditingController counpon_code;
+  Coupon_Bloc coupon_bloc;
   @override
   void initState() {
+    coupon_bloc = new Coupon_Bloc();
     counpon_code = new TextEditingController();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    coupon_bloc.dispose();
+    super.dispose();
   }
 
   @override
@@ -35,12 +44,17 @@ class Coupon_Dialog_State extends State<Coupon_Dialog> {
           child: Center(
               child: Container(
             width: Dimension.getWidth(0.65),
-            child: TextField(
-              decoration: InputDecoration(
-                  hintText: "Enter",
-                  border: new OutlineInputBorder(
-                      borderSide: new BorderSide(color: Colors.redAccent))),
-            ),
+            child: StreamBuilder<Object>(
+                stream: null,
+                builder: (context, snapshot) {
+                  return TextField(
+                    decoration: InputDecoration(
+                        hintText: "Enter",
+                        border: new OutlineInputBorder(
+                            borderSide:
+                                new BorderSide(color: Colors.redAccent))),
+                  );
+                }),
           ))),
       actions: <Widget>[
         Container(

@@ -12,19 +12,19 @@ class Tutorial extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         home: Scaffold(
           resizeToAvoidBottomInset: false,
-          body: MySplashScreen(),
+          body: TutorialState(),
         ));
   }
 }
 
-class MySplashScreen extends StatefulWidget {
-  MySplashScreen({Key key}) : super(key: key);
+class TutorialState extends StatefulWidget {
+  TutorialState({Key key}) : super(key: key);
 
   @override
-  MySplashScreenState createState() => new MySplashScreenState();
+  TutorialStatePage createState() => new TutorialStatePage();
 }
 
-class MySplashScreenState extends State<MySplashScreen> {
+class TutorialStatePage extends State<TutorialState> {
   List<Slide> slides = new List();
   @override
   void initState() {

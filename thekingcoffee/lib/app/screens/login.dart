@@ -23,14 +23,14 @@ import 'package:thekingcoffee/core/utils/utils.dart';
 class LoginWithPass extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return MyAppState();
+    return LoginState();
   }
 }
 
 bool istap_en = false;
 bool istap_vn = true;
 
-class MyAppState extends State<LoginWithPass> {
+class LoginState extends State<LoginWithPass> {
   int tap_en = 0;
   int tap_vn = 0;
 
@@ -46,6 +46,12 @@ class MyAppState extends State<LoginWithPass> {
   bool _showpass = false;
   TextEditingController _user = new TextEditingController();
   TextEditingController _pass = new TextEditingController();
+  @override
+  void dispose() {
+    loginBloc.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     SystemChrome.setEnabledSystemUIOverlays([]);

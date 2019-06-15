@@ -23,6 +23,12 @@ class Payment_Dialog_State extends State<Payment_Dialog> {
   OrderBloc orderBloc = new OrderBloc();
   SingingCharacter _character = SingingCharacter.Change_Points;
   @override
+  void dispose() {
+    orderBloc.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return AlertDialog(
       contentPadding: const EdgeInsets.all(0.0),

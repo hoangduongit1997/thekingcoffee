@@ -9,10 +9,10 @@ import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
 class Favorite_Page extends StatefulWidget {
   Favorite_Page({Key key}) : super(key: key);
 
-  Shopping_ListState createState() => Shopping_ListState();
+  Favorite_Page_State createState() => Favorite_Page_State();
 }
 
-class Shopping_ListState extends State<Favorite_Page> {
+class Favorite_Page_State extends State<Favorite_Page> {
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
   TextEditingController name = new TextEditingController(text: "Hoàng Dương");
   TextEditingController phone = new TextEditingController(text: "0798353751");
