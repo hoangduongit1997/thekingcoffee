@@ -547,9 +547,9 @@ class Order_DialogState extends State<Order_Dialog> {
                                 style: StylesText.style16Brown,
                               ),
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
                                 child: Container(
-                                  width: Dimension.getWidth(0.62),
+                                  width: Dimension.getWidth(0.6),
                                   child: TextField(
                                     textInputAction: TextInputAction.done,
                                     controller: note,
@@ -561,14 +561,18 @@ class Order_DialogState extends State<Order_Dialog> {
                                             allTranslations
                                                 .text("Information")
                                                 .toString(),
-                                            "Edit note successfully");
+                                            allTranslations
+                                                .text("edit_note")
+                                                .toString());
                                       } else {
                                         MsgDialog.showMsgDialog(
                                             context,
                                             allTranslations
                                                 .text("Information")
                                                 .toString(),
-                                            "Note empty");
+                                            allTranslations
+                                                .text("note_empty")
+                                                .toString());
                                       }
                                     },
                                     keyboardType: TextInputType.multiline,
@@ -621,7 +625,10 @@ class Order_DialogState extends State<Order_Dialog> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       children: <Widget>[
-                                        Text("Kind",
+                                        Text(
+                                            allTranslations
+                                                .text("Kind")
+                                                .toString(),
                                             style: StylesText.style16Brown),
                                         Padding(
                                           padding: const EdgeInsets.fromLTRB(
@@ -632,7 +639,12 @@ class Order_DialogState extends State<Order_Dialog> {
                                               controlAffinity:
                                                   ListTileControlAffinity
                                                       .leading,
-                                              title: Text("Hot"),
+                                              title: Text(
+                                                allTranslations
+                                                    .text("Hot")
+                                                    .toString(),
+                                                style: StylesText.style16Brown,
+                                              ),
                                               value: checked_hot,
                                               onChanged: (bool value) {
                                                 setState(() {
@@ -708,7 +720,9 @@ class Order_DialogState extends State<Order_Dialog> {
                                           MainAxisAlignment.start,
                                       children: <Widget>[
                                         Text(
-                                          "Discount",
+                                          allTranslations
+                                              .text("discount_order")
+                                              .toString(),
                                           style: StylesText.style16Brown,
                                         ),
                                       ],
@@ -741,7 +755,9 @@ class Order_DialogState extends State<Order_Dialog> {
                                           MainAxisAlignment.start,
                                       children: <Widget>[
                                         Text(
-                                          "Promotion Products",
+                                          allTranslations
+                                              .text("Promotion_Products")
+                                              .toString(),
                                           style: StylesText.style16Brown,
                                         ),
                                       ],
@@ -779,7 +795,7 @@ class Order_DialogState extends State<Order_Dialog> {
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                                 child: Text(
-                                  "Money",
+                                  allTranslations.text("Money").toString(),
                                   style: StylesText.style16Brown,
                                 ),
                               ),

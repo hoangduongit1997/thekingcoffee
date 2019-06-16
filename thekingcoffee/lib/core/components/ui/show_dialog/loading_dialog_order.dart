@@ -5,6 +5,7 @@ import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/screens/login.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/app/validation/validation.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart'
     as prefix0;
@@ -54,7 +55,7 @@ class LoadingDialog_Order {
                               color: Colors.brown),
                           child: Center(
                               child: Text(
-                            "Cancel",
+                            allTranslations.text("cancel").toString(),
                             style: StylesText.style14While,
                           )),
                         ),
@@ -75,7 +76,7 @@ class LoadingDialog_Order {
                               color: Colors.redAccent),
                           child: Center(
                               child: Text(
-                            "Add to cart",
+                            allTranslations.text("Add_to_cart").toString(),
                             style: StylesText.style14While,
                           )),
                         ),
@@ -88,21 +89,52 @@ class LoadingDialog_Order {
                                     shape: RoundedRectangleBorder(
                                         borderRadius: BorderRadius.all(
                                             Radius.circular(15.0))),
-                                    title: new Text("Confirm",
+                                    title: new Text(
+                                        allTranslations
+                                            .text("confirm")
+                                            .toString(),
                                         style: StylesText.style18RedaccentBold),
                                     content: new Text(
-                                      "You need to login to continute !",
+                                      allTranslations
+                                          .text("need_login")
+                                          .toString(),
                                       style: StylesText.style15Black,
                                     ),
                                     actions: <Widget>[
                                       FlatButton(
-                                        child: Text("Cancel"),
+                                        child: Container(
+                                          width: Dimension.getWidth(0.32),
+                                          height: Dimension.getHeight(0.06),
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(15.0)),
+                                              color: Colors.brown),
+                                          child: Center(
+                                              child: Text(
+                                            allTranslations
+                                                .text("cancel")
+                                                .toString(),
+                                            style: StylesText.style14While,
+                                          )),
+                                        ),
                                         onPressed: () {
                                           Navigator.of(context).pop();
                                         },
                                       ),
                                       FlatButton(
-                                        child: Text("OK"),
+                                        child: Container(
+                                          width: Dimension.getWidth(0.32),
+                                          height: Dimension.getHeight(0.06),
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(15.0)),
+                                              color: Colors.redAccent),
+                                          child: Center(
+                                              child: Text(
+                                            "OK",
+                                            style: StylesText.style14While,
+                                          )),
+                                        ),
                                         onPressed: () {
                                           Navigator.of(context).pushReplacement(
                                               MaterialPageRoute(

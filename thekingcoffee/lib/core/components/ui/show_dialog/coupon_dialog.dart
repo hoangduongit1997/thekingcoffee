@@ -51,6 +51,7 @@ class Coupon_Dialog_State extends State<Coupon_Dialog> {
                   return TextField(
                     controller: counpon_code,
                     decoration: InputDecoration(
+                        errorText: snapshot.hasError ? snapshot.error : null,
                         hintText:
                             allTranslations.text("enter_coupon").toString(),
                         border: new OutlineInputBorder(
