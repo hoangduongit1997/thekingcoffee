@@ -8,9 +8,12 @@ import 'package:thekingcoffee/app/bloc/place_bloc.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/data/model/get_place_item.dart';
 import 'package:thekingcoffee/app/data/repository/check_enought_point.dart';
+import 'package:thekingcoffee/app/data/repository/get_fee_ship.dart';
 import 'package:thekingcoffee/app/data/repository/order_repository.dart';
+import 'package:thekingcoffee/app/screens/map.dart';
 
 import 'package:thekingcoffee/app/styles/styles.dart';
+import 'package:thekingcoffee/app/validation/validation.dart';
 import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 
 import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
@@ -37,13 +40,14 @@ class Shopping_ListState extends State<Shopping_List> {
 
   TextEditingController address = new TextEditingController();
   int multy_topping = 0;
-  int total_money = 0;
+  int estimate = 0;
+  int fee_ship = 0;
   int user_point = 0;
 
   flus_total_money() {
     for (var item in ListOrderProducts) {
       setState(() {
-        total_money += item['Price'];
+        estimate += item['Price'];
       });
     }
   }
@@ -138,7 +142,7 @@ class Shopping_ListState extends State<Shopping_List> {
                                         )),
                                     onPressed: () {
                                       setState(() {
-                                        total_money = 0;
+                                        estimate = 0;
                                         ListOrderProducts.clear();
                                       });
                                       Navigator.of(context).pop();
@@ -280,6 +284,8 @@ class Shopping_ListState extends State<Shopping_List> {
                                               stream: orderBloc.addressStream,
                                               builder: (context, snapshot) {
                                                 return TextField(
+                                                  enableInteractiveSelection:
+                                                      false,
                                                   textInputAction:
                                                       TextInputAction.search,
                                                   autofocus: false,
@@ -323,13 +329,26 @@ class Shopping_ListState extends State<Shopping_List> {
                                             height: Dimension.getHeight(0.08),
                                           ),
                                           onPressed: () {
+                                            Get_Place_Item item;
                                             final result = Navigator.of(context,
                                                     rootNavigator: true)
                                                 .pushNamed('/map');
-                                            result.then((result) {
+                                            result.then((result) async {
+                                              item = result;
+                                              LoadingDialog.showLoadingDialog(
+                                                  context,
+                                                  allTranslations
+                                                      .text("splash_screen")
+                                                      .toString());
+                                              int temp = await Get_fee_ship(
+                                                  item.lat, item.lng);
                                               setState(() {
-                                                address.text = result as String;
+                                                fee_ship = temp;
+
+                                                address.text = item.address;
                                               });
+                                              LoadingDialog.hideLoadingDialog(
+                                                  context);
                                             });
                                           },
                                         ),
@@ -380,6 +399,24 @@ class Shopping_ListState extends State<Shopping_List> {
                                                             .elementAt(index)
                                                             .address),
                                                         onTap: () async {
+                                                          LoadingDialog
+                                                              .showLoadingDialog(
+                                                                  context,
+                                                                  allTranslations
+                                                                      .text(
+                                                                          "splash_screen")
+                                                                      .toString());
+                                                          fee_ship = 0;
+                                                          int temp =
+                                                              await Get_fee_ship(
+                                                                  places
+                                                                      .elementAt(
+                                                                          index)
+                                                                      .lat,
+                                                                  places
+                                                                      .elementAt(
+                                                                          index)
+                                                                      .lng);
                                                           SharedPreferences
                                                               pref =
                                                               await SharedPreferences
@@ -398,6 +435,7 @@ class Shopping_ListState extends State<Shopping_List> {
                                                                   .lng);
 
                                                           setState(() {
+                                                            fee_ship = temp;
                                                             address.text =
                                                                 places
                                                                     .elementAt(
@@ -407,6 +445,9 @@ class Shopping_ListState extends State<Shopping_List> {
                                                             ischecked_address =
                                                                 true;
                                                           });
+                                                          LoadingDialog
+                                                              .hideLoadingDialog(
+                                                                  context);
                                                         },
                                                       );
                                                     },
@@ -788,7 +829,7 @@ class Shopping_ListState extends State<Shopping_List> {
                                                                   )),
                                                               onPressed: () {
                                                                 setState(() {
-                                                                  total_money -=
+                                                                  estimate -=
                                                                       ListOrderProducts[
                                                                               index]
                                                                           [
@@ -828,7 +869,7 @@ class Shopping_ListState extends State<Shopping_List> {
                                   style: StylesText.style14Black,
                                 ),
                                 Text(
-                                  total_money.toString(),
+                                  estimate.toString(),
                                   style: StylesText.style14Black,
                                 )
                               ],
@@ -849,7 +890,7 @@ class Shopping_ListState extends State<Shopping_List> {
                                   style: StylesText.style14Black,
                                 ),
                                 Text(
-                                  total_money.toString(),
+                                  fee_ship.toString(),
                                   style: StylesText.style14Black,
                                 )
                               ],
@@ -881,7 +922,7 @@ class Shopping_ListState extends State<Shopping_List> {
                                   style: StylesText.style16BlackNormal,
                                 ),
                                 Text(
-                                  total_money.toString(),
+                                  (fee_ship + estimate).toString(),
                                   style: StylesText.style16BlackNormal,
                                 )
                               ],
@@ -928,7 +969,7 @@ class Shopping_ListState extends State<Shopping_List> {
                                             .text("total_money")
                                             .toString() +
                                         " " +
-                                        total_money.toString() +
+                                        (estimate + fee_ship).toString() +
                                         " VND",
                                     style: StylesText.style13BrownBold,
                                   ),
@@ -983,8 +1024,16 @@ class Shopping_ListState extends State<Shopping_List> {
                                   onPressed: () async {
                                     LoadingDialog.showLoadingDialog(context,
                                         allTranslations.text("splash_screen"));
-                                    if ((await check_enough_point(
-                                                total_money)) ==
+                                    if ((await Validation
+                                            .isConnectedNetwork() ==
+                                        false)) {
+                                      LoadingDialog.hideLoadingDialog(context);
+                                      MsgDialog.showMsgDialog(
+                                          context,
+                                          allTranslations.text("Information"),
+                                          allTranslations.text("no_network"));
+                                    } else if ((await check_enough_point(
+                                                estimate)) ==
                                             true &&
                                         orderBloc.isValidInfo(
                                                 name.text.trim().toString(),
@@ -1029,7 +1078,7 @@ class Shopping_ListState extends State<Shopping_List> {
                                                   .text("order_suc")
                                                   .toString());
                                           setState(() {
-                                            total_money = 0;
+                                            estimate = 0;
                                             ListOrderProducts.clear();
                                           });
                                         }
@@ -1066,7 +1115,7 @@ class Shopping_ListState extends State<Shopping_List> {
     int total = ListOrderProducts.fold(0, (t, e) => t + e['Price']);
     setState(() {
       build(context);
-      total_money = total;
+      estimate = total;
     });
   }
 }

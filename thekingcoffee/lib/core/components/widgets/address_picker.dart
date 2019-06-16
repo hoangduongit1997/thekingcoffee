@@ -6,6 +6,7 @@ import 'package:thekingcoffee/core/components/lib/change_language/change_languag
 
 class AddressPicker extends StatefulWidget {
   final Function(Get_Place_Item, bool) onSelected;
+
   AddressPicker(this.onSelected);
 
   @override
@@ -40,9 +41,9 @@ class _AddressPickerState extends State<AddressPicker> {
                             (place, isFrom) {
                           widget.onSelected(place, isFrom);
                           fromAddress = place;
-                          setState(() {
-                            final_address = fromAddress.address;
-                          });
+                          // setState(() {
+                          //   final_address = fromAddress.address;
+                          // });
                         }, true)));
               },
               child: SizedBox(

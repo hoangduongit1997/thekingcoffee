@@ -21,7 +21,7 @@ class Home_Card_Coffee extends StatefulWidget {
   _Home_Card_Coffee_State createState() => _Home_Card_Coffee_State();
 }
 
-var data = [];
+var data_coffee = [];
 int lenght = 0;
 var selectedProduct = {};
 var ListOrderProducts = [];
@@ -33,8 +33,8 @@ class _Home_Card_Coffee_State extends State<Home_Card_Coffee> {
     final result = await Get_Coffee_Product();
     if (this.mounted) {
       setState(() {
-        data = result;
-        lenght = data.length;
+        data_coffee = result;
+        lenght = data_coffee.length;
       });
     }
   }
@@ -61,10 +61,10 @@ class _Home_Card_Coffee_State extends State<Home_Card_Coffee> {
                   itemCount: lenght,
                   itemBuilder: (BuildContext context, int index) {
                     promotion_list_coffee =
-                        data[index]['Promotion'] as List<dynamic>;
+                        data_coffee[index]['Promotion'] as List<dynamic>;
                     promotion_coffee = promotion_list_coffee.length;
 
-                    if (data == null) {
+                    if (data_coffee == null) {
                       return Center(
                         child: CircularProgressIndicator(),
                       );
@@ -103,7 +103,8 @@ class _Home_Card_Coffee_State extends State<Home_Card_Coffee> {
                                                     BorderRadius.circular(8.0),
                                                 child: CachedNetworkImage(
                                                   imageUrl: Config.ip +
-                                                      data[index]['File_Path'],
+                                                      data_coffee[index]
+                                                          ['File_Path'],
                                                   fit: BoxFit.fill,
                                                   placeholder: (context, url) =>
                                                       new SizedBox(
@@ -140,7 +141,7 @@ class _Home_Card_Coffee_State extends State<Home_Card_Coffee> {
                                             Container(
                                               width: Dimension.getWidth(0.51),
                                               child: Text(
-                                                data[index]['Name'],
+                                                data_coffee[index]['Name'],
                                                 overflow: TextOverflow.ellipsis,
                                                 style:
                                                     StylesText.style17BrownBold,
@@ -167,20 +168,22 @@ class _Home_Card_Coffee_State extends State<Home_Card_Coffee> {
                                                   StarRating(
                                                     size: 13.0,
                                                     rating: double.tryParse(
-                                                        data[index]['Start']
+                                                        data_coffee[index]
+                                                                ['Start']
                                                             .toString()),
                                                     color: Colors.orange,
                                                     borderColor: Colors.grey,
                                                     starCount: 5,
                                                   ),
                                                   Text(
-                                                      data[index]['Start']
+                                                      data_coffee[index]
+                                                              ['Start']
                                                           .toString(),
                                                       style: StylesText
                                                           .style13BrownNormal)
                                                 ],
                                               ),
-                                              data[index]['IsHot'] == 1
+                                              data_coffee[index]['IsHot'] == 1
                                                   ? Container(
                                                       width: Dimension.getWidth(
                                                           0.51),
@@ -242,7 +245,7 @@ class _Home_Card_Coffee_State extends State<Home_Card_Coffee> {
                                                     color: Colors.redAccent,
                                                   ),
                                                   Text(
-                                                    data[index]['Price']
+                                                    data_coffee[index]['Price']
                                                         .toString(),
                                                     style: StylesText
                                                         .style13BrownBold,
@@ -321,16 +324,16 @@ class _Home_Card_Coffee_State extends State<Home_Card_Coffee> {
                           onTap: () => {
                                 LoadingDialog_Order.showLoadingDialog(
                                     context,
-                                    data[index]['Id'],
-                                    data[index]['Name'],
-                                    data[index]['File_Path'],
-                                    data[index]['Description'],
-                                    data[index]['Price'],
-                                    data[index]['IsHot'],
-                                    data[index]['IsHot'],
-                                    data[index]['Toppings'],
-                                    data[index]['Size'],
-                                    data[index]['Promotion'],
+                                    data_coffee[index]['Id'],
+                                    data_coffee[index]['Name'],
+                                    data_coffee[index]['File_Path'],
+                                    data_coffee[index]['Description'],
+                                    data_coffee[index]['Price'],
+                                    data_coffee[index]['IsHot'],
+                                    data_coffee[index]['IsHot'],
+                                    data_coffee[index]['Toppings'],
+                                    data_coffee[index]['Size'],
+                                    data_coffee[index]['Promotion'],
                                     ListOrderProducts),
                               });
                     }

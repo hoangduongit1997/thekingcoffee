@@ -8,7 +8,7 @@ import 'package:thekingcoffee/app/data/repository/get_drinking_products.dart';
 import 'package:thekingcoffee/app/data/repository/get_food_products.dart';
 import 'package:thekingcoffee/app/data/repository/get_new_products.dart';
 import 'package:thekingcoffee/app/data/repository/get_tea_products.dart';
-import 'package:thekingcoffee/app/screens/dashboard.dart';
+
 import 'package:thekingcoffee/app/screens/find_food.dart';
 
 import 'package:thekingcoffee/app/screens/see_all_product.dart';
@@ -33,16 +33,13 @@ class PlaceholderMainWidget extends StatefulWidget {
   }
 }
 
-var list_new_products = [];
-var list_coffee = [];
-var list_tea = [];
-var list_food = [];
-var list_drinking = [];
-var list_all_product = [];
-
 class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
 
+  var list_coffee = [];
+  var list_tea = [];
+  var list_food = [];
+  var list_drinking = [];
   intDataHomeSlider() async {
     final result = await Get_New_Products();
     final coffee = await Is_Has_Coffee_Product();
@@ -51,7 +48,7 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
     final drinking = await Is_Have_Drinking_Products();
     if (this.mounted) {
       setState(() {
-        list_new_products = result;
+        list_new_product = result;
         list_coffee = coffee;
         list_tea = tea;
         list_food = food;
@@ -145,8 +142,8 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                         child: Container(
                             height: Dimension.getHeight(0.29),
                             child: Center(
-                              child: list_new_products == null ||
-                                      list_new_products.length == 0
+                              child: list_new_product == null ||
+                                      list_new_product.length == 0
                                   ? Container(
                                       child: Center(
                                         child: CircularProgressIndicator(
@@ -156,7 +153,7 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                                         ),
                                       ),
                                     )
-                                  : CarouselDemo(),
+                                  : CarouselWithIndicator(),
                             )),
                       ),
                       Padding(
@@ -399,10 +396,27 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
   }
 
   Future<void> refreshPage() async {
-    await Future.delayed(Duration(seconds: 2));
-    setState(() {
-      Navigator.of(context, rootNavigator: true).pushReplacement(
-          MaterialPageRoute(builder: (context) => DashBoard()));
-    });
+    await Future.delayed(Duration(seconds: 1));
+
+    final result_new_product = await Get_New_Products();
+    final result_coffee = await Get_Coffee_Product();
+    final result_tea = await Get_Tea_Products();
+    final result_drinking = await Get_Drinking_Products();
+    if (this.mounted) {
+      setState(() {
+        list_new_product.clear();
+      });
+    }
+    final result_food = await Get_Food_Products();
+
+    if (this.mounted) {
+      setState(() {
+        data_coffee = result_coffee;
+        data_tea = result_tea;
+        data_drinking = result_drinking;
+        data_food = result_food;
+        list_new_product = result_new_product;
+      });
+    }
   }
 }

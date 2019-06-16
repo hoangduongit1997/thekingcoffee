@@ -5,6 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:http/http.dart' as http;
+import 'package:thekingcoffee/app/data/repository/get_new_products.dart';
 import 'package:thekingcoffee/app/screens/helper/dashboard_helper/placeholder_home.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
@@ -23,6 +24,7 @@ class CarouselWithIndicator extends StatefulWidget {
 int promotion_new_product = 0;
 var promotion_list_new_product = [];
 BuildContext context_order;
+var list_new_product = [];
 
 class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
   int _current = 0;
@@ -52,7 +54,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: Map_Object.map_home_cart<Widget>(
-            list_new_products,
+            list_new_product,
             (index, url) {
               return Container(
                 width: Dimension.getWidth(0.01),
@@ -71,26 +73,26 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
   }
 
   final List child = Map_Object.map_home_cart<Widget>(
-    list_new_products,
+    list_new_product,
     (index, i) {
       promotion_list_new_product =
-          list_new_products[index]['Promotion'] as List<dynamic>;
+          list_new_product[index]['Promotion'] as List<dynamic>;
       promotion_new_product = promotion_list_new_product.length;
       return Container(
           child: GestureDetector(
         onTap: () {
           LoadingDialog_Order.showLoadingDialog(
               context_order,
-              list_new_products[index]['Id'],
-              list_new_products[index]['Name'],
-              list_new_products[index]['File_Path'],
-              list_new_products[index]['Description'],
-              list_new_products[index]['Price'],
-              list_new_products[index]['IsHot'],
-              list_new_products[index]['IsHot'],
-              list_new_products[index]['Toppings'],
-              list_new_products[index]['Size'],
-              list_new_products[index]['Promotion'],
+              list_new_product[index]['Id'],
+              list_new_product[index]['Name'],
+              list_new_product[index]['File_Path'],
+              list_new_product[index]['Description'],
+              list_new_product[index]['Price'],
+              list_new_product[index]['IsHot'],
+              list_new_product[index]['IsHot'],
+              list_new_product[index]['Toppings'],
+              list_new_product[index]['Size'],
+              list_new_product[index]['Promotion'],
               ListOrderProducts);
         },
         child: ClipRRect(
@@ -116,7 +118,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
                                       borderRadius: BorderRadius.circular(8.0),
                                       child: CachedNetworkImage(
                                           imageUrl: Config.ip +
-                                              list_new_products[index]
+                                              list_new_product[index]
                                                   ['File_Path'],
                                           fit: BoxFit.cover,
                                           height: Dimension.getHeight(0.3),
@@ -151,7 +153,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
                       child: Center(
                         child: Container(
                           width: Dimension.getWidth(0.48),
-                          child: Text(list_new_products[index]['Name'],
+                          child: Text(list_new_product[index]['Name'],
                               overflow: TextOverflow.ellipsis,
                               style: StylesText.style20BrownBold),
                         ),
@@ -164,12 +166,12 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
                           StarRating(
                             size: 13.0,
                             rating: double.tryParse(
-                                list_new_products[index]['Start'].toString()),
+                                list_new_product[index]['Start'].toString()),
                             color: Colors.orange,
                             borderColor: Colors.grey,
                             starCount: starCount,
                           ),
-                          Text(list_new_products[index]['Start'].toString(),
+                          Text(list_new_product[index]['Start'].toString(),
                               style: StylesText.style13BrownNormal)
                         ],
                       ),
@@ -247,13 +249,13 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
                                     padding:
                                         const EdgeInsets.fromLTRB(5, 0, 0, 0),
                                     child: Text(
-                                        list_new_products[index]['Price']
+                                        list_new_product[index]['Price']
                                             .toString(),
                                         style: StylesText.style16BrownBold),
                                   )
                                 ],
                               ),
-                              list_new_products[index]['IsHot'] == 1
+                              list_new_product[index]['IsHot'] == 1
                                   ? Container(
                                       width: Dimension.getWidth(0.45),
                                       child: Row(
@@ -284,25 +286,4 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
       ));
     },
   ).toList();
-}
-
-class CarouselDemo extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Center(
-        child: Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Container(
-                  child: CarouselWithIndicator(),
-                ),
-              ],
-            )),
-      ),
-    );
-  }
 }

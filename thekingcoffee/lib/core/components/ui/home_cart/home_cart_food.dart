@@ -21,7 +21,7 @@ class Home_Card_Food extends StatefulWidget {
 }
 
 var size = [];
-var data = [];
+var data_food = [];
 var topping = [];
 var sanpham;
 int lenght = 0;
@@ -34,8 +34,8 @@ class _Home_Card_Food_State extends State<Home_Card_Food> {
 
     if (this.mounted) {
       setState(() {
-        data = result;
-        lenght = data.length;
+        data_food = result;
+        lenght = data_food.length;
       });
     }
   }
@@ -62,10 +62,10 @@ class _Home_Card_Food_State extends State<Home_Card_Food> {
                   itemCount: lenght,
                   itemBuilder: (BuildContext context, int index) {
                     promotion_list_food =
-                        data[index]['Promotion'] as List<dynamic>;
+                        data_food[index]['Promotion'] as List<dynamic>;
                     promotion_food = promotion_list_food.length;
 
-                    if (data == null) {
+                    if (data_food == null) {
                       return Center(
                         child: CircularProgressIndicator(),
                       );
@@ -104,7 +104,8 @@ class _Home_Card_Food_State extends State<Home_Card_Food> {
                                                     BorderRadius.circular(8.0),
                                                 child: CachedNetworkImage(
                                                   imageUrl: Config.ip +
-                                                      data[index]['File_Path'],
+                                                      data_food[index]
+                                                          ['File_Path'],
                                                   fit: BoxFit.fill,
                                                   placeholder: (context, url) =>
                                                       new SizedBox(
@@ -141,7 +142,7 @@ class _Home_Card_Food_State extends State<Home_Card_Food> {
                                             Container(
                                               width: Dimension.getWidth(0.51),
                                               child: Text(
-                                                data[index]['Name'],
+                                                data_food[index]['Name'],
                                                 overflow: TextOverflow.ellipsis,
                                                 style:
                                                     StylesText.style17BrownBold,
@@ -168,20 +169,21 @@ class _Home_Card_Food_State extends State<Home_Card_Food> {
                                                   StarRating(
                                                     size: 13.0,
                                                     rating: double.tryParse(
-                                                        data[index]['Start']
+                                                        data_food[index]
+                                                                ['Start']
                                                             .toString()),
                                                     color: Colors.orange,
                                                     borderColor: Colors.grey,
                                                     starCount: 5,
                                                   ),
                                                   Text(
-                                                      data[index]['Start']
+                                                      data_food[index]['Start']
                                                           .toString(),
                                                       style: StylesText
                                                           .style13BrownNormal)
                                                 ],
                                               ),
-                                              data[index]['IsHot'] == 1
+                                              data_food[index]['IsHot'] == 1
                                                   ? Container(
                                                       width: Dimension.getWidth(
                                                           0.51),
@@ -242,7 +244,7 @@ class _Home_Card_Food_State extends State<Home_Card_Food> {
                                                     color: Colors.redAccent,
                                                   ),
                                                   Text(
-                                                    data[index]['Price']
+                                                    data_food[index]['Price']
                                                         .toString(),
                                                     style: StylesText
                                                         .style13BrownBold,
@@ -321,16 +323,16 @@ class _Home_Card_Food_State extends State<Home_Card_Food> {
                           onTap: () => {
                                 LoadingDialog_Order.showLoadingDialog(
                                     context,
-                                    data[index]['Id'],
-                                    data[index]['Name'],
-                                    data[index]['File_Path'],
-                                    data[index]['Description'],
-                                    data[index]['Price'],
-                                    data[index]['IsHot'],
-                                    data[index]['IsHot'],
-                                    data[index]['Toppings'],
-                                    data[index]['Size'],
-                                    data[index]['Promotion'],
+                                    data_food[index]['Id'],
+                                    data_food[index]['Name'],
+                                    data_food[index]['File_Path'],
+                                    data_food[index]['Description'],
+                                    data_food[index]['Price'],
+                                    data_food[index]['IsHot'],
+                                    data_food[index]['IsHot'],
+                                    data_food[index]['Toppings'],
+                                    data_food[index]['Size'],
+                                    data_food[index]['Promotion'],
                                     ListOrderProducts),
                               });
                     }

@@ -8,6 +8,8 @@ class Config {
   static String sendcodetogmail_API = ip + "api/Customer/SendCode_ResetPass";
   static String gmail_auth_API = ip + "api/Customer/ResetPassword";
   static String get_data_home_cart_API = ip + "api/Product/GetAll";
+  static String get_fee_ship = ip + "api/Order/MakeShipment";
+  static String check_coupon = ip + "api/Product/CheckCoupon";
   static String get_new_products_API =
       ip + "api/Product/GetAll?IsDesc=true&Rows=5";
   static String get_history_API = ip + "api/Order/FindOrderHistory?IdCustomer=";

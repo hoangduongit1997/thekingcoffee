@@ -20,7 +20,7 @@ class Home_Card_Tea extends StatefulWidget {
 }
 
 var size = [];
-var data = [];
+var data_tea = [];
 var topping = [];
 var sanpham;
 int lenght = 0;
@@ -32,8 +32,8 @@ class _Home_Card_Tea_State extends State<Home_Card_Tea> {
     final result = await Get_Tea_Products();
     if (this.mounted) {
       setState(() {
-        data = result;
-        lenght = data.length;
+        data_tea = result;
+        lenght = data_tea.length;
       });
     }
   }
@@ -60,10 +60,10 @@ class _Home_Card_Tea_State extends State<Home_Card_Tea> {
                   itemCount: lenght,
                   itemBuilder: (BuildContext context, int index) {
                     promotion_list_tea =
-                        data[index]['Promotion'] as List<dynamic>;
+                        data_tea[index]['Promotion'] as List<dynamic>;
                     promotion_tea = promotion_list_tea.length;
 
-                    if (data == null) {
+                    if (data_tea == null) {
                       return Center(
                         child: CircularProgressIndicator(),
                       );
@@ -102,7 +102,8 @@ class _Home_Card_Tea_State extends State<Home_Card_Tea> {
                                                     BorderRadius.circular(8.0),
                                                 child: CachedNetworkImage(
                                                   imageUrl: Config.ip +
-                                                      data[index]['File_Path'],
+                                                      data_tea[index]
+                                                          ['File_Path'],
                                                   fit: BoxFit.fill,
                                                   placeholder: (context, url) =>
                                                       new SizedBox(
@@ -139,7 +140,7 @@ class _Home_Card_Tea_State extends State<Home_Card_Tea> {
                                             Container(
                                               width: Dimension.getWidth(0.51),
                                               child: Text(
-                                                data[index]['Name'],
+                                                data_tea[index]['Name'],
                                                 overflow: TextOverflow.ellipsis,
                                                 style:
                                                     StylesText.style17BrownBold,
@@ -166,20 +167,20 @@ class _Home_Card_Tea_State extends State<Home_Card_Tea> {
                                                   StarRating(
                                                     size: 13.0,
                                                     rating: double.tryParse(
-                                                        data[index]['Start']
+                                                        data_tea[index]['Start']
                                                             .toString()),
                                                     color: Colors.orange,
                                                     borderColor: Colors.grey,
                                                     starCount: 5,
                                                   ),
                                                   Text(
-                                                      data[index]['Start']
+                                                      data_tea[index]['Start']
                                                           .toString(),
                                                       style: StylesText
                                                           .style13BrownNormal)
                                                 ],
                                               ),
-                                              data[index]['IsHot'] == 1
+                                              data_tea[index]['IsHot'] == 1
                                                   ? Container(
                                                       width: Dimension.getWidth(
                                                           0.51),
@@ -240,7 +241,7 @@ class _Home_Card_Tea_State extends State<Home_Card_Tea> {
                                                     color: Colors.redAccent,
                                                   ),
                                                   Text(
-                                                    data[index]['Price']
+                                                    data_tea[index]['Price']
                                                         .toString(),
                                                     style: StylesText
                                                         .style13BrownBold,
@@ -319,16 +320,16 @@ class _Home_Card_Tea_State extends State<Home_Card_Tea> {
                           onTap: () => {
                                 LoadingDialog_Order.showLoadingDialog(
                                     context,
-                                    data[index]['Id'],
-                                    data[index]['Name'],
-                                    data[index]['File_Path'],
-                                    data[index]['Description'],
-                                    data[index]['Price'],
-                                    data[index]['IsHot'],
-                                    data[index]['IsHot'],
-                                    data[index]['Toppings'],
-                                    data[index]['Size'],
-                                    data[index]['Promotion'],
+                                    data_tea[index]['Id'],
+                                    data_tea[index]['Name'],
+                                    data_tea[index]['File_Path'],
+                                    data_tea[index]['Description'],
+                                    data_tea[index]['Price'],
+                                    data_tea[index]['IsHot'],
+                                    data_tea[index]['IsHot'],
+                                    data_tea[index]['Toppings'],
+                                    data_tea[index]['Size'],
+                                    data_tea[index]['Promotion'],
                                     ListOrderProducts),
                               });
                     }

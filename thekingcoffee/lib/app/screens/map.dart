@@ -16,9 +16,9 @@ class MapPage extends StatefulWidget {
   _MapPageState createState() => _MapPageState();
 }
 
-String final_address;
-
 class _MapPageState extends State<MapPage> {
+  String final_address;
+  Get_Place_Item get_place_item_fee_ship = new Get_Place_Item("", "", 0.0, 0.0);
   LocationData _startLocation;
   StreamSubscription<LocationData> _locationSubscription;
   Location _locationService = new Location();
@@ -75,9 +75,10 @@ class _MapPageState extends State<MapPage> {
       location = null;
     }
 
-    setState(() {
+    setState(() async {
       _startLocation = location;
-      _search_name_location(_startLocation.latitude, _startLocation.longitude);
+      await _search_name_location(
+          _startLocation.latitude, _startLocation.longitude);
       _addMarker_Current_Position(
           _startLocation.latitude, _startLocation.longitude);
     });
@@ -180,7 +181,8 @@ class _MapPageState extends State<MapPage> {
                       icon: Icon(Icons.send),
                       color: Colors.redAccent,
                       onPressed: () {
-                        Navigator.of(context).pop(final_address);
+                        // Navigator.of(context).pop(final_address);
+                        Navigator.of(context).pop(get_place_item_fee_ship);
                       },
                     ))),
           ],
@@ -274,6 +276,9 @@ class _MapPageState extends State<MapPage> {
     final pref = await SharedPreferences.getInstance();
     pref.setDouble('Lat', place.lat);
     pref.setDouble('Lng', place.lng);
+    get_place_item_fee_ship.lat = place.lat;
+    get_place_item_fee_ship.lng = place.lng;
+    get_place_item_fee_ship.address = place.address;
 
     pref.commit();
   }
@@ -284,10 +289,8 @@ class _MapPageState extends State<MapPage> {
     pref.setDouble('Lng', lng);
 
     pref.commit();
-    print("Sharepreference: " +
-        pref.getDouble('Lat').toString() +
-        " " +
-        pref.getDouble('Lng').toString());
+    get_place_item_fee_ship.lat = lat;
+    get_place_item_fee_ship.lng = lng;
   }
 
   _search_name_location(double lat, double long) async {
@@ -297,6 +300,7 @@ class _MapPageState extends State<MapPage> {
     var first = addresses.first;
     setState(() {
       final_address = first.addressLine.toString();
+      get_place_item_fee_ship.address = first.addressLine.toString();
     });
 
     await _add_latlog_current_location(lat, long);

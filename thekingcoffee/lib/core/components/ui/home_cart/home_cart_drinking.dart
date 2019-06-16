@@ -21,7 +21,7 @@ class Home_Card_Drinking extends StatefulWidget {
 }
 
 var size = [];
-var data = [];
+var data_drinking = [];
 var topping = [];
 var sanpham;
 int lenght = 0;
@@ -33,8 +33,8 @@ class _Home_Card_Drinking_State extends State<Home_Card_Drinking> {
     final result = await Get_Drinking_Products();
     if (this.mounted) {
       setState(() {
-        data = result;
-        lenght = data.length;
+        data_drinking = result;
+        lenght = data_drinking.length;
       });
     }
   }
@@ -61,10 +61,10 @@ class _Home_Card_Drinking_State extends State<Home_Card_Drinking> {
                   itemCount: lenght,
                   itemBuilder: (BuildContext context, int index) {
                     promotion_list_drinking =
-                        data[index]['Promotion'] as List<dynamic>;
+                        data_drinking[index]['Promotion'] as List<dynamic>;
                     promotion_drinking = promotion_list_drinking.length;
 
-                    if (data == null) {
+                    if (data_drinking == null) {
                       return Center(
                         child: CircularProgressIndicator(),
                       );
@@ -103,7 +103,8 @@ class _Home_Card_Drinking_State extends State<Home_Card_Drinking> {
                                                     BorderRadius.circular(8.0),
                                                 child: CachedNetworkImage(
                                                   imageUrl: Config.ip +
-                                                      data[index]['File_Path'],
+                                                      data_drinking[index]
+                                                          ['File_Path'],
                                                   fit: BoxFit.fill,
                                                   placeholder: (context, url) =>
                                                       new SizedBox(
@@ -140,7 +141,7 @@ class _Home_Card_Drinking_State extends State<Home_Card_Drinking> {
                                             Container(
                                               width: Dimension.getWidth(0.51),
                                               child: Text(
-                                                data[index]['Name'],
+                                                data_drinking[index]['Name'],
                                                 overflow: TextOverflow.ellipsis,
                                                 style:
                                                     StylesText.style17BrownBold,
@@ -167,20 +168,22 @@ class _Home_Card_Drinking_State extends State<Home_Card_Drinking> {
                                                   StarRating(
                                                     size: 13.0,
                                                     rating: double.tryParse(
-                                                        data[index]['Start']
+                                                        data_drinking[index]
+                                                                ['Start']
                                                             .toString()),
                                                     color: Colors.orange,
                                                     borderColor: Colors.grey,
                                                     starCount: 5,
                                                   ),
                                                   Text(
-                                                      data[index]['Start']
+                                                      data_drinking[index]
+                                                              ['Start']
                                                           .toString(),
                                                       style: StylesText
                                                           .style13BrownNormal)
                                                 ],
                                               ),
-                                              data[index]['IsHot'] == 1
+                                              data_drinking[index]['IsHot'] == 1
                                                   ? Container(
                                                       width: Dimension.getWidth(
                                                           0.51),
@@ -241,7 +244,8 @@ class _Home_Card_Drinking_State extends State<Home_Card_Drinking> {
                                                     color: Colors.redAccent,
                                                   ),
                                                   Text(
-                                                    data[index]['Price']
+                                                    data_drinking[index]
+                                                            ['Price']
                                                         .toString(),
                                                     style: StylesText
                                                         .style13BrownBold,
@@ -320,16 +324,16 @@ class _Home_Card_Drinking_State extends State<Home_Card_Drinking> {
                           onTap: () => {
                                 LoadingDialog_Order.showLoadingDialog(
                                     context,
-                                    data[index]['Id'],
-                                    data[index]['Name'],
-                                    data[index]['File_Path'],
-                                    data[index]['Description'],
-                                    data[index]['Price'],
-                                    data[index]['IsHot'],
-                                    data[index]['IsHot'],
-                                    data[index]['Toppings'],
-                                    data[index]['Size'],
-                                    data[index]['Promotion'],
+                                    data_drinking[index]['Id'],
+                                    data_drinking[index]['Name'],
+                                    data_drinking[index]['File_Path'],
+                                    data_drinking[index]['Description'],
+                                    data_drinking[index]['Price'],
+                                    data_drinking[index]['IsHot'],
+                                    data_drinking[index]['IsHot'],
+                                    data_drinking[index]['Toppings'],
+                                    data_drinking[index]['Size'],
+                                    data_drinking[index]['Promotion'],
                                     ListOrderProducts),
                               });
                     }
