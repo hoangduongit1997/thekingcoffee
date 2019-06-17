@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:thekingcoffee/app/bloc/order_bloc.dart';
 import 'package:thekingcoffee/app/bloc/place_bloc.dart';
@@ -10,7 +11,6 @@ import 'package:thekingcoffee/app/data/model/get_place_item.dart';
 import 'package:thekingcoffee/app/data/repository/check_enought_point.dart';
 import 'package:thekingcoffee/app/data/repository/get_fee_ship.dart';
 import 'package:thekingcoffee/app/data/repository/order_repository.dart';
-import 'package:thekingcoffee/app/screens/map.dart';
 
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/app/validation/validation.dart';
@@ -34,14 +34,15 @@ class Shopping_List extends StatefulWidget {
 }
 
 enum SingingCharacter { lafayette, jefferson }
+int fee_ship = 0;
+TextEditingController address = new TextEditingController();
 
 class Shopping_ListState extends State<Shopping_List> {
   SingingCharacter _character = SingingCharacter.lafayette;
 
-  TextEditingController address = new TextEditingController();
   int multy_topping = 0;
   int estimate = 0;
-  int fee_ship = 0;
+
   int user_point = 0;
 
   flus_total_money() {
@@ -143,6 +144,9 @@ class Shopping_ListState extends State<Shopping_List> {
                                     onPressed: () {
                                       setState(() {
                                         estimate = 0;
+                                        fee_ship = 0;
+                                        address.clear();
+
                                         ListOrderProducts.clear();
                                       });
                                       Navigator.of(context).pop();
@@ -379,9 +383,18 @@ class Shopping_ListState extends State<Shopping_List> {
                                               List<Get_Place_Item> places =
                                                   snapshot.data;
                                               return Container(
-                                                width: double.infinity,
-                                                height:
-                                                    Dimension.getHeight(0.4),
+                                                  // width: double.infinity,
+                                                  // height:
+                                                  //     Dimension.getHeight(0.4),
+                                                  child: ConstrainedBox(
+                                                constraints: new BoxConstraints(
+                                                  minHeight:
+                                                      Dimension.getHeight(0.1),
+                                                  minWidth: double.infinity,
+                                                  maxHeight:
+                                                      Dimension.getHeight(0.3),
+                                                  maxWidth: double.infinity,
+                                                ),
                                                 child: ListView.separated(
                                                     shrinkWrap: true,
                                                     scrollDirection:
@@ -459,7 +472,7 @@ class Shopping_ListState extends State<Shopping_List> {
                                                               Color(0xfff5f5f5),
                                                         ),
                                                     itemCount: places.length),
-                                              );
+                                              ));
                                             } else {
                                               return Container();
                                             }
@@ -987,8 +1000,15 @@ class Shopping_ListState extends State<Shopping_List> {
                                   ),
                                   onPressed: () {
                                     showDialog(
-                                        context: context,
-                                        builder: (_) => Coupon_Dialog());
+                                            context: context,
+                                            builder: (_) => Coupon_Dialog())
+                                        .then((value) => setState(() {
+                                              if (value != null) {
+                                                estimate = 0;
+                                                flus_total_money();
+                                                build(context);
+                                              }
+                                            }));
                                   },
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.center,
@@ -1044,13 +1064,12 @@ class Shopping_ListState extends State<Shopping_List> {
                                             true) {
                                       LoadingDialog.hideLoadingDialog(context);
                                       showDialog(
-                                              context: context,
-                                              builder: (_) => Payment_Dialog(
-                                                  phone.text.trim().toString(),
-                                                  address.text
-                                                      .trim()
-                                                      .toString()))
-                                          .then((value) => setState(() {
+                                          context: context,
+                                          builder: (_) => Payment_Dialog(
+                                              phone.text.trim().toString(),
+                                              address.text.trim().toString(),
+                                              estimate)).then(
+                                          (value) => setState(() {
                                                 if (value != null) {
                                                   ListOrderProducts.clear();
                                                 } else {}
@@ -1063,9 +1082,8 @@ class Shopping_ListState extends State<Shopping_List> {
                                           true) {
                                         if (await PostOrder(
                                                 phone.text.trim().toString(),
-                                                address.text
-                                                    .trim()
-                                                    .toString()) ==
+                                                address.text.trim().toString(),
+                                                false) ==
                                             true) {
                                           LoadingDialog.hideLoadingDialog(
                                               context);

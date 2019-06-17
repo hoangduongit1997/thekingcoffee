@@ -776,7 +776,7 @@ class Order_DialogState extends State<Order_Dialog> {
                                       children: <Widget>[
                                         Padding(
                                           padding: const EdgeInsets.fromLTRB(
-                                              190, 0, 0, 0),
+                                              180, 0, 0, 0),
                                           child: IconButton(
                                             icon: Icon(Icons.arrow_back_ios,
                                                 color: Colors.brown),

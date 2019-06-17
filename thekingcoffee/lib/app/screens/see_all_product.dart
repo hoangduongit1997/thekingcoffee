@@ -29,10 +29,14 @@ class _See_All_ProductState extends State<See_All_Product> {
   var promotion_list_product = [];
   intDataScreen() async {
     final result = await Get_Data_All_Product(widget.catagory);
-    setState(() {
-      data = result;
-      lenght = data.length;
-    });
+    if (this.mounted) {
+      if (data != null) {
+        setState(() {
+          data = result;
+          lenght = data.length;
+        });
+      }
+    }
   }
 
   @override
@@ -344,7 +348,7 @@ class _See_All_ProductState extends State<See_All_Product> {
                                                                                 color: Colors.redAccent,
                                                                               ),
                                                                               Text(
-                                                                                promotion_product.toString() +" "+ allTranslations.text("discount").toString(),
+                                                                                promotion_product.toString() + " " + allTranslations.text("discount").toString(),
                                                                                 style: StylesText.style13BrownBold,
                                                                               )
                                                                             ],

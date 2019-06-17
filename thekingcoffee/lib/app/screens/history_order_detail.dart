@@ -541,12 +541,14 @@ class _History_oder_Detai_State extends State<History_Order_Detail> {
             }
           
             void send_rate()async {
-              print(widget.order_code.toString());
-               print(rating.toString());
-               print(_rate_comment.text.toString());
+            
               if((await Rate_Order(widget.order_code.toString(),rating,_rate_comment.text.toString())==true))
               {
                 MsgDialog.showMsgDialog(context,allTranslations.text("Information").toString(),allTranslations.text("thank_ordered").toString());
+              }
+              else{
+                MsgDialog.showMsgDialog(context,allTranslations.text("Information").toString(),allTranslations.text("error").toString());
+             
               }
   }
 }

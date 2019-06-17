@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:thekingcoffee/app/bloc/order_bloc.dart';
+import 'package:thekingcoffee/app/data/repository/check_enought_point.dart';
 import 'package:thekingcoffee/app/data/repository/order_repository.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
@@ -11,7 +12,8 @@ import 'loading_dialog.dart';
 class Payment_Dialog extends StatefulWidget {
   final String phone;
   final String address;
-  Payment_Dialog(this.phone, this.address);
+  final int estiamte;
+  Payment_Dialog(this.phone, this.address, this.estiamte);
   @override
   State<StatefulWidget> createState() {
     return Payment_Dialog_State();
@@ -120,7 +122,25 @@ class Payment_Dialog_State extends State<Payment_Dialog> {
             if (_character == SingingCharacter.Cast) {
               LoadingDialog.showLoadingDialog(
                   context, allTranslations.text("splash_screen").toString());
-              if (await PostOrder(widget.phone, widget.address) == true) {
+              if (await PostOrder(widget.phone, widget.address, false) ==
+                  true) {
+                LoadingDialog.hideLoadingDialog(context);
+                Navigator.of(context).pop(true);
+                MsgDialog.showMsgDialog(
+                    context,
+                    allTranslations.text("Information").toString(),
+                    allTranslations.text("order_suc").toString());
+              } else {
+                LoadingDialog.hideLoadingDialog(context);
+                MsgDialog.showMsgDialog(
+                    context,
+                    allTranslations.text("Information").toString(),
+                    allTranslations.text("error").toString());
+              }
+            } else if (_character == SingingCharacter.Change_Points) {
+              LoadingDialog.showLoadingDialog(
+                  context, allTranslations.text("splash_screen").toString());
+              if (await PostOrder(widget.phone, widget.address, true) == true) {
                 LoadingDialog.hideLoadingDialog(context);
                 Navigator.of(context).pop(true);
                 MsgDialog.showMsgDialog(

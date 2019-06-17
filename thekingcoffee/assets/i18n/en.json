@@ -34,6 +34,7 @@
   "Coupon_code": "Coupon code",
   "Information": "Information",
   "enter_coupon": "Enter coupon code",
+  "already_coupon": "You have already enter coupon code",
   "edit_note": "Edit note successfully",
   "add_note": "Add note successfully",
   "note_empty": "Note empty",

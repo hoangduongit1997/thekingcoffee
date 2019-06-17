@@ -8,7 +8,7 @@ import 'package:thekingcoffee/core/components/lib/change_language/change_languag
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
 import 'package:http/http.dart' as http;
 
-Future<bool> PostOrder(String phone, String address) async {
+Future<bool> PostOrder(String phone, String address, bool is_money) async {
   bool status_oder = false;
   final prefs = await SharedPreferences.getInstance();
   String token = prefs.getString('token');
@@ -58,7 +58,8 @@ Future<bool> PostOrder(String phone, String address) async {
     "Total": total,
     "OrdersData": orderData,
     "Lat": lat.toString(),
-    "Long": lng.toString()
+    "Long": lng.toString(),
+    "PaidByPoint": is_money
   };
   var body_order = json.encode(Order_Detail);
   Response response1 = await post(Config.order_API,
@@ -68,10 +69,8 @@ Future<bool> PostOrder(String phone, String address) async {
   prefs.setInt("points", data['Value']['Customer']['Point']);
   if (data['Status'] == 1) {
     status_oder = true;
-
   } else {
     status_oder = false;
-
   }
   return status_oder;
 }

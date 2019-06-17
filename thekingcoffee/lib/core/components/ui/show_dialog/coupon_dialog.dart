@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:thekingcoffee/app/bloc/coupon_bloc.dart';
+import 'package:thekingcoffee/app/data/repository/check_coupon.dart';
+import 'package:thekingcoffee/app/screens/shopping_list.dart';
 
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
@@ -108,7 +111,24 @@ class Coupon_Dialog_State extends State<Coupon_Dialog> {
     );
   }
 
-  void onApplyCode() {
-    if (coupon_bloc.isValidInfo(counpon_code.text.toString().trim())) {}
+  Future onApplyCode() async {
+    if (coupon_bloc.isValidInfo(counpon_code.text.toString().trim())) {
+      if (await Check_Coupon(counpon_code.text.toString().trim()) == 1) {
+        print("dung roi");
+
+        Navigator.of(context).pop(true);
+      } else {
+        Fluttertoast.showToast(
+            msg: allTranslations.text("error").toString(),
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIos: 1,
+            backgroundColor: Colors.redAccent,
+            textColor: Colors.white,
+            fontSize: 16.0);
+        print("loi roi");
+        Navigator.of(context).pop();
+      }
+    }
   }
 }

@@ -33,13 +33,14 @@ class PlaceholderMainWidget extends StatefulWidget {
   }
 }
 
+var list_coffee = [];
+var list_tea = [];
+var list_food = [];
+var list_drinking = [];
+
 class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  var list_coffee = [];
-  var list_tea = [];
-  var list_food = [];
-  var list_drinking = [];
   intDataHomeSlider() async {
     final result = await Get_New_Products();
     final coffee = await Is_Has_Coffee_Product();
@@ -77,6 +78,7 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
             title: Text(allTranslations.text("home_page").toString(),
                 style: StylesText.style20BrownBold),
             leading: FlatButton(
+                splashColor: Colors.grey[300],
                 onPressed: () {
                   _scaffoldKey.currentState.openDrawer();
                 },
@@ -396,7 +398,7 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
   }
 
   Future<void> refreshPage() async {
-    await Future.delayed(Duration(seconds: 1));
+    await Future.delayed(Duration(seconds: 2));
 
     final result_new_product = await Get_New_Products();
     final result_coffee = await Get_Coffee_Product();
