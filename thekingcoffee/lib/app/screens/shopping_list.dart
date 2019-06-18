@@ -430,6 +430,7 @@ class Shopping_ListState extends State<Shopping_List> {
                                                                       .elementAt(
                                                                           index)
                                                                       .lng);
+
                                                           SharedPreferences
                                                               pref =
                                                               await SharedPreferences
@@ -1062,6 +1063,8 @@ class Shopping_ListState extends State<Shopping_List> {
                                                     .trim()
                                                     .toString()) ==
                                             true) {
+
+
                                       LoadingDialog.hideLoadingDialog(context);
                                       showDialog(
                                           context: context,
@@ -1072,6 +1075,8 @@ class Shopping_ListState extends State<Shopping_List> {
                                           (value) => setState(() {
                                                 if (value != null) {
                                                   ListOrderProducts.clear();
+                                                  fee_ship=0;
+                                                  address.clear();
                                                 } else {}
                                               }));
                                     } else {

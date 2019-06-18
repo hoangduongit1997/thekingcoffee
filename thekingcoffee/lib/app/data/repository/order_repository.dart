@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:thekingcoffee/app/screens/shopping_list.dart';
 import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
 import 'package:http/http.dart' as http;
@@ -50,16 +51,18 @@ Future<bool> PostOrder(String phone, String address, bool is_money) async {
     }
     orderData.add(product);
   }
+  int x = fee_ship;
   Map Order_Detail = {
     "IsApp": true,
     "IdCustomer": id_user.toString(),
+    "Shipment": fee_ship,
     "Address": address.toString(),
     "Phone": phone.toString(),
     "Total": total,
     "OrdersData": orderData,
     "Lat": lat.toString(),
     "Long": lng.toString(),
-    "PaidByPoint": is_money
+    "PaidByPoint": is_money,
   };
   var body_order = json.encode(Order_Detail);
   Response response1 = await post(Config.order_API,

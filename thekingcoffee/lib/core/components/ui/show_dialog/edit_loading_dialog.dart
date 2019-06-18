@@ -74,12 +74,8 @@ class LoadingDialog_Order {
                       note,
                       quantity)),
               actions: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: FlatButton(
+
+                  FlatButton(
                         child: Container(
                           width: Dimension.getWidth(0.32),
                           height: Dimension.getHeight(0.06),
@@ -97,10 +93,8 @@ class LoadingDialog_Order {
                           Navigator.of(context).pop();
                         },
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(2.0),
-                      child: FlatButton(
+
+                   FlatButton(
                         child: Container(
                           width: Dimension.getWidth(0.32),
                           height: Dimension.getHeight(0.06),
@@ -122,9 +116,8 @@ class LoadingDialog_Order {
                           Navigator.pop(context);
                         },
                       ),
-                    ),
-                  ],
-                )
+
+
               ],
             ));
   }
