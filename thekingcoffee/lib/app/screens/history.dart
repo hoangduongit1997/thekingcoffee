@@ -29,6 +29,41 @@ class _HistoryState extends State<History> {
     }
   }
 
+  List<Widget> createStutusOrder(int index, int status) {
+    List<Widget> widgets = [];
+    if (status == 3) {
+      widgets.add(Text(
+        allTranslations.text("done").toString(),
+        style: StylesText.style15Red,
+      ));
+    }
+    if (status == -1) {
+      widgets.add(Text(
+        allTranslations.text("cancel").toString(),
+        style: StylesText.style15Red,
+      ));
+    }
+    if (status == 1) {
+      widgets.add(Text(
+        allTranslations.text("onprocess").toString(),
+        style: StylesText.style15Red,
+      ));
+    }
+    if (status == 2) {
+      widgets.add(Text(
+        allTranslations.text("shipping").toString(),
+        style: StylesText.style15Red,
+      ));
+    }
+    if (status == 0) {
+      widgets.add(Text(
+        allTranslations.text("no_process").toString(),
+        style: StylesText.style15Red,
+      ));
+    }
+    return widgets;
+  }
+
   @override
   void initState() {
     intData();
@@ -81,18 +116,20 @@ class _HistoryState extends State<History> {
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
-                        Navigator.of(context)
-                            .push(MaterialPageRoute(
-                                builder: (context) => History_Order_Detail(
-                                      data_history[index]['DetailedOrder'],
-                                      data_history[index]['Id'],
-                                      data_history[index]['Address'],
-                                      data_history[index]['Phone'],
-                                      data_history[index]['Total'],
-                                      data_history[index]['Time_Ordered'],
-                                      data_history[index]['Star'],
-                                    )))
-                            .then((value) => value ? onrefresh() : null);
+                        if (data_history[index]['Status'] == 3) {
+                          Navigator.of(context)
+                              .push(MaterialPageRoute(
+                                  builder: (context) => History_Order_Detail(
+                                        data_history[index]['DetailedOrder'],
+                                        data_history[index]['Id'],
+                                        data_history[index]['Address'],
+                                        data_history[index]['Phone'],
+                                        data_history[index]['Total'],
+                                        data_history[index]['Time_Ordered'],
+                                        data_history[index]['Star'],
+                                      )))
+                              .then((value) => value ? onrefresh() : null);
+                        }
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(2.0),
@@ -183,36 +220,49 @@ class _HistoryState extends State<History> {
                                                   MainAxisAlignment
                                                       .spaceBetween,
                                               children: <Widget>[
-                                                Padding(
-                                                    padding: const EdgeInsets
-                                                        .fromLTRB(0, 0, 0, 0),
-                                                    child: data_history[index]
-                                                                ['State'] ==
-                                                            "1"
-                                                        ? Text(
-                                                            allTranslations
-                                                                .text("done")
-                                                                .toString(),
-                                                            style: StylesText
-                                                                .style15Red,
-                                                          )
-                                                        : Text(
-                                                            allTranslations
-                                                                .text("process")
-                                                                .toString(),
-                                                            style: StylesText
-                                                                .style15Red,
-                                                          )),
-                                                Padding(
-                                                    padding: const EdgeInsets
-                                                        .fromLTRB(0, 0, 0, 0),
-                                                    child: Text(
-                                                      data_history[index]
-                                                              ['Total']
-                                                          .toString(),
-                                                      style:
-                                                          StylesText.style15Red,
-                                                    )),
+                                                Row(
+                                                    children: createStutusOrder(
+                                                        index,
+                                                        data_history[index]
+                                                            ['Status'])),
+                                                // Padding(
+                                                //     padding: const EdgeInsets
+                                                //         .fromLTRB(0, 0, 0, 0),
+                                                //     child:
+                                                // data_history[index]
+                                                //             ['State'] ==
+                                                //         "1"
+                                                //     ? Text(
+                                                //         allTranslations
+                                                //             .text("done")
+                                                //             .toString(),
+                                                //         style: StylesText
+                                                //             .style15Red,
+                                                //       )
+                                                //     : Text(
+                                                //         allTranslations
+                                                //             .text("process")
+                                                //             .toString(),
+                                                //         style: StylesText
+                                                //             .style15Red,
+                                                //       )
+                                                // ),
+                                                Row(
+                                                  children: <Widget>[
+                                                    Padding(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                    .fromLTRB(
+                                                                0, 0, 0, 0),
+                                                        child: Text(
+                                                          data_history[index]
+                                                                  ['Total']
+                                                              .toString(),
+                                                          style: StylesText
+                                                              .style15Red,
+                                                        )),
+                                                  ],
+                                                ),
                                               ],
                                             ),
                                           ),
