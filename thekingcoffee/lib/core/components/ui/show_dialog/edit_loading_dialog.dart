@@ -1,9 +1,6 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
-import 'package:thekingcoffee/app/bloc/bottom_navigation_bloc.dart';
-import 'package:thekingcoffee/app/screens/dashboard.dart';
-import 'package:thekingcoffee/app/screens/shopping_list.dart';
 
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
@@ -15,7 +12,6 @@ import 'package:thekingcoffee/core/utils/utils.dart';
 
 class LoadingDialog_Order {
   Map<String, Object> selectedProduct = new Map();
-  BottomNavBarBloc _bottomNavBarBloc = new BottomNavBarBloc();
 
   void setValueSelectedProduct(String key, Object value) {
     var map = {key: value};
@@ -74,50 +70,44 @@ class LoadingDialog_Order {
                       note,
                       quantity)),
               actions: <Widget>[
+                FlatButton(
+                  child: Container(
+                    width: Dimension.getWidth(0.32),
+                    height: Dimension.getHeight(0.06),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                        color: Colors.brown),
+                    child: Center(
+                        child: Text(
+                      allTranslations.text("cancel").toString(),
+                      style: StylesText.style14While,
+                    )),
+                  ),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+                FlatButton(
+                  child: Container(
+                    width: Dimension.getWidth(0.32),
+                    height: Dimension.getHeight(0.06),
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                        color: Colors.redAccent),
+                    child: Center(
+                        child: Text(
+                      allTranslations.text("Save_change").toString(),
+                      style: StylesText.style14While,
+                    )),
+                  ),
+                  onPressed: () {
+                    ListOrderProducts[index] = this.selectedProduct;
+                    selectedProduct = {};
+                    refreshListOrder();
 
-                  FlatButton(
-                        child: Container(
-                          width: Dimension.getWidth(0.32),
-                          height: Dimension.getHeight(0.06),
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15.0)),
-                              color: Colors.brown),
-                          child: Center(
-                              child: Text(
-                            allTranslations.text("cancel").toString(),
-                            style: StylesText.style14While,
-                          )),
-                        ),
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                      ),
-
-                   FlatButton(
-                        child: Container(
-                          width: Dimension.getWidth(0.32),
-                          height: Dimension.getHeight(0.06),
-                          decoration: BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(15.0)),
-                              color: Colors.redAccent),
-                          child: Center(
-                              child: Text(
-                            allTranslations.text("Save_change").toString(),
-                            style: StylesText.style14While,
-                          )),
-                        ),
-                        onPressed: () {
-                          ListOrderProducts[index] = this.selectedProduct;
-                          selectedProduct = {};
-                          refreshListOrder();
-                          _bottomNavBarBloc.pickItem(2);
-                          Navigator.pop(context);
-                        },
-                      ),
-
-
+                    Navigator.pop(context);
+                  },
+                ),
               ],
             ));
   }
