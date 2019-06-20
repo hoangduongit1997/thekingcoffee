@@ -321,21 +321,21 @@ class _Home_Card_Coffee_State extends State<Home_Card_Coffee> {
                                   )
                                 ],
                               )),
-                          onTap: () => {
-                                LoadingDialog_Order.showLoadingDialog(
-                                    context,
-                                    data_coffee[index]['Id'],
-                                    data_coffee[index]['Name'],
-                                    data_coffee[index]['File_Path'],
-                                    data_coffee[index]['Description'],
-                                    data_coffee[index]['Price'],
-                                    data_coffee[index]['IsHot'],
-                                    data_coffee[index]['IsHot'],
-                                    data_coffee[index]['Toppings'],
-                                    data_coffee[index]['Size'],
-                                    data_coffee[index]['Promotion'],
-                                    ListOrderProducts),
-                              });
+                          onTap: () {
+                            LoadingDialog_Order.showLoadingDialog(
+                                context,
+                                data_coffee[index]['Id'],
+                                data_coffee[index]['Name'],
+                                data_coffee[index]['File_Path'],
+                                data_coffee[index]['Description'],
+                                data_coffee[index]['Price'],
+                                data_coffee[index]['IsHot'],
+                                data_coffee[index]['IsHot'],
+                                data_coffee[index]['Toppings'],
+                                data_coffee[index]['Size'],
+                                data_coffee[index]['Promotion'],
+                                ListOrderProducts);
+                          });
                     }
                   }),
             ),

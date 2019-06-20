@@ -2,13 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:thekingcoffee/app/bloc/bottom_navigation_bloc.dart';
+import 'package:thekingcoffee/app/config/config.dart';
 
 import 'package:thekingcoffee/app/screens/favorite_page.dart';
 
 import 'package:thekingcoffee/app/screens/helper/dashboard_helper/placeholder_home.dart';
 import 'package:thekingcoffee/app/screens/setting.dart';
 import 'package:thekingcoffee/app/screens/shopping_list.dart';
-import 'package:thekingcoffee/app/styles/styles.dart';
+
 import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 
 class DashBoard extends StatefulWidget {
@@ -18,16 +19,18 @@ class DashBoard extends StatefulWidget {
   }
 }
 
-class _HomeState extends State<DashBoard> {
+class _HomeState extends State<DashBoard> with WidgetsBindingObserver {
   BottomNavBarBloc _bottomNavBarBloc;
   @override
   void initState() {
+    WidgetsBinding.instance.addObserver(this);
     _bottomNavBarBloc = new BottomNavBarBloc();
     super.initState();
   }
 
   @override
   void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
     _bottomNavBarBloc.close();
     super.dispose();
   }
@@ -82,7 +85,37 @@ class _HomeState extends State<DashBoard> {
                   BottomNavigationBarItem(
                     title:
                         Text(allTranslations.text("shopping_list").toString()),
-                    icon: Icon(Icons.shopping_cart),
+                    icon: Config.item_shopping_list != 0
+                        ? Stack(
+                            alignment: AlignmentDirectional.topEnd,
+                            children: <Widget>[
+                              Icon(Icons.shopping_cart),
+                              Positioned(
+                                bottom: 11,
+                                child: Container(
+                                  decoration: new BoxDecoration(
+                                    color: Colors.redAccent,
+                                    borderRadius: BorderRadius.circular(6),
+                                  ),
+                                  constraints: BoxConstraints(
+                                    minWidth: 12,
+                                    minHeight: 12,
+                                  ),
+                                  child: Center(
+                                    child: Text(
+                                      Config.item_shopping_list.toString(),
+                                      style: TextStyle(
+                                        fontSize: 10,
+                                        color: Colors.white,
+                                      ),
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          )
+                        : Icon(Icons.shopping_cart),
                   ),
                   BottomNavigationBarItem(
                     title: Text(allTranslations.text("setting").toString()),

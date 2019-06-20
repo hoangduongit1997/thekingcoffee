@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:thekingcoffee/app/bloc/login_bloc.dart';
 import 'package:thekingcoffee/app/config/config.dart';
@@ -62,8 +64,19 @@ class LoginState extends State<LoginWithPass> {
       child: Scaffold(
           resizeToAvoidBottomInset: true,
           body: GestureDetector(
-            onTap: () {
+            onTap: () async {
               FocusScope.of(context).requestFocus(new FocusNode());
+              //test
+              final pref = await SharedPreferences.getInstance();
+              String a = pref.getStringList("list").toString();
+              Fluttertoast.showToast(
+                  msg: a,
+                  toastLength: Toast.LENGTH_SHORT,
+                  gravity: ToastGravity.BOTTOM,
+                  timeInSecForIos: 1,
+                  backgroundColor: Colors.redAccent,
+                  textColor: Colors.white,
+                  fontSize: 16.0);
             },
             child: Container(
                 padding: EdgeInsets.fromLTRB(30, 50, 30, 0),

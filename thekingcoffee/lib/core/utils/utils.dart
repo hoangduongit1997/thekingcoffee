@@ -41,5 +41,3 @@ class Map_Object {
     return result;
   }
 }
-
-

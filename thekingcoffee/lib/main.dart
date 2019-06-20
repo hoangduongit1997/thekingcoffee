@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:thekingcoffee/app/screens/login.dart';
@@ -6,6 +8,7 @@ import 'package:thekingcoffee/app/screens/shopping_list.dart';
 import 'package:thekingcoffee/app/screens/splash_screen.dart';
 import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
 import 'app/validation/validation.dart';
 
 void main() async {
@@ -37,10 +40,32 @@ class MyApp extends StatefulWidget {
   _MyAppState createState() => _MyAppState();
 }
 
-class _MyAppState extends State<MyApp> {
+class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
+  @override
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    super.dispose();
+  }
+
+  // @override
+  // didChangeAppLifecycleState(AppLifecycleState state) async {
+  //   if (state == AppLifecycleState.paused) {
+  //     final pref = await SharedPreferences.getInstance();
+  //     await pref.setString("list_order", ListOrderProducts.toString());
+  //     print("AAAAAAAAAAAAAAAAAAAA" + pref.getString('list_order').toString());
+  //   }
+  //   if (state == AppLifecycleState.) {
+  //     final pref = await SharedPreferences.getInstance();
+  //     var a = pref.getString("list_order");
+  //     ListOrderProducts = a as List<dynamic>;
+  //     print("TTTTTTTTTTTT" + ListOrderProducts.toString());
+  //   }
+  // }
+
   @override
   void initState() {
     super.initState();
+    WidgetsBinding.instance.addObserver(this);
     allTranslations.onLocaleChangedCallback = _onLocaleChanged;
   }
 

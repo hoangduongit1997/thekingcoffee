@@ -31,7 +31,7 @@ class Order_Dialog extends StatefulWidget {
 class Order_DialogState extends State<Order_Dialog> {
   TextEditingController note = new TextEditingController();
   var product = selectedProduct;
-  int number = 1;
+  int number = Config.item_shopping_list = 1;
   int money;
   bool checked_hot = false;
   var selectedsize;
@@ -786,6 +786,8 @@ class Order_DialogState extends State<Order_Dialog> {
                                                   return;
                                                 }
                                                 number--;
+                                                Config.item_shopping_list =
+                                                    number;
                                                 money -= widget.price;
                                               });
                                               selectedProduct['Quantity'] =
@@ -811,6 +813,8 @@ class Order_DialogState extends State<Order_Dialog> {
                                             onPressed: () {
                                               setState(() {
                                                 number++;
+                                                Config.item_shopping_list =
+                                                    number;
                                                 money += widget.price;
                                               });
                                               selectedProduct['Quantity'] =

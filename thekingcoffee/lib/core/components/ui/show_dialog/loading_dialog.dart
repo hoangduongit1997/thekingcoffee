@@ -37,6 +37,6 @@ class LoadingDialog {
   }
 
   static hideLoadingDialog(BuildContext context) {
-    Navigator.of(context, rootNavigator: true).pop(LoadingDialog);
+    Navigator.of(context).pop(LoadingDialog);
   }
 }

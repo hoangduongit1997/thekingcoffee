@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:thekingcoffee/app/config/config.dart';
+import 'package:thekingcoffee/app/screens/dashboard.dart';
 
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
@@ -837,10 +838,11 @@ class Order_DialogState extends State<Order_Dialog> {
                                             onPressed: () {
                                               setState(() {
                                                 if (number == 1) {
+                                                  
                                                   return;
                                                 }
                                                 number--;
-
+                                                Config.item_shopping_list = number;
                                                 money = origin_price.toInt() *
                                                     number;
                                               });
@@ -868,7 +870,7 @@ class Order_DialogState extends State<Order_Dialog> {
                                             onPressed: () {
                                               setState(() {
                                                 number++;
-
+                                                Config.item_shopping_list = number;
                                                 money = origin_price.toInt() *
                                                     number;
                                               });
