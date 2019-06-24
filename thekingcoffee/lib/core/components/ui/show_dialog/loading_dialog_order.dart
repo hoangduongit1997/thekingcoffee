@@ -1,7 +1,11 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:thekingcoffee/app/bloc/bottom_navigation_bloc.dart';
+
 import 'package:thekingcoffee/app/config/config.dart';
+import 'package:thekingcoffee/app/screens/dashboard.dart';
 import 'package:thekingcoffee/app/screens/login.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/app/validation/validation.dart';
@@ -13,6 +17,7 @@ import 'package:thekingcoffee/core/components/ui/show_dialog/order_dialog.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 
 class LoadingDialog_Order {
+
   static showLoadingDialog(
     BuildContext context,
     int id,
@@ -201,8 +206,11 @@ class LoadingDialog_Order {
                         } else {
                           ListOrderProducts.add(selectedProduct);
                         }
+
                         print(ListOrderProducts.toString());
                         selectedProduct = {}; //reset sản phẩm chọn
+                        Config.item_shopping_list = ListOrderProducts.fold(0, (t, e) => t + e['Quantity']);
+                        
                         Navigator.of(context).pop(true);
                       }
                     },

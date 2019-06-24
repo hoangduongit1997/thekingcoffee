@@ -33,10 +33,11 @@ class _Home_Card_Food_State extends State<Home_Card_Food> {
     final result = await Get_Food_Products();
 
     if (this.mounted) {
-      setState(() {
-        data_food = result;
-        lenght = data_food.length;
-      });
+      if (result != null)
+        setState(() {
+          data_food = result;
+          lenght = data_food.length;
+        });
     }
   }
 

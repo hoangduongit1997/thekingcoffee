@@ -31,10 +31,12 @@ class _Home_Card_Tea_State extends State<Home_Card_Tea> {
   intDataTeaScreen() async {
     final result = await Get_Tea_Products();
     if (this.mounted) {
-      setState(() {
-        data_tea = result;
-        lenght = data_tea.length;
-      });
+      if (result != null) {
+        setState(() {
+          data_tea = result;
+          lenght = data_tea.length;
+        });
+      }
     }
   }
 

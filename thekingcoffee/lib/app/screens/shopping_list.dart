@@ -148,6 +148,8 @@ class Shopping_ListState extends State<Shopping_List> {
                                         address.clear();
 
                                         ListOrderProducts.clear();
+                                        Config.item_shopping_list= 0;
+
                                       });
                                       Navigator.of(context).pop();
                                     },
@@ -338,21 +340,25 @@ class Shopping_ListState extends State<Shopping_List> {
                                                     rootNavigator: true)
                                                 .pushNamed('/map');
                                             result.then((result) async {
-                                              item = result;
-                                              LoadingDialog.showLoadingDialog(
-                                                  context,
-                                                  allTranslations
-                                                      .text("splash_screen")
-                                                      .toString());
-                                              int temp = await Get_fee_ship(
-                                                  item.lat, item.lng);
-                                              setState(() {
-                                                fee_ship = temp;
+                                              if(result!=null)
+                                                {
+                                                  item = result;
+                                                  LoadingDialog.showLoadingDialog(
+                                                      context,
+                                                      allTranslations
+                                                          .text("splash_screen")
+                                                          .toString());
+                                                  int temp = await Get_fee_ship(
+                                                      item.lat, item.lng);
+                                                  setState(() {
+                                                    fee_ship = temp;
 
-                                                address.text = item.address;
-                                              });
-                                              LoadingDialog.hideLoadingDialog(
-                                                  context);
+                                                    address.text = item.address;
+                                                  });
+                                                  LoadingDialog.hideLoadingDialog(
+                                                      context);
+                                                }
+
                                             });
                                           },
                                         ),
@@ -546,8 +552,8 @@ class Shopping_ListState extends State<Shopping_List> {
                                                       "",
                                                       product['Original_Price'],
                                                       product['Price'],
-                                                      1,
-                                                      1,
+                                                      product['IsHot'],
+                                                      product['HasHot'],
                                                       product['ListTopping'],
                                                       product['ListSize'],
                                                       product['Promotion'],
@@ -851,6 +857,7 @@ class Shopping_ListState extends State<Shopping_List> {
                                                                   ListOrderProducts
                                                                       .removeAt(
                                                                           index);
+                                                                  Config.item_shopping_list= ListOrderProducts.fold(0, (t, e) => t + e['Quantity']);
                                                                 });
                                                                 Navigator.of(
                                                                         context)
@@ -1053,33 +1060,37 @@ class Shopping_ListState extends State<Shopping_List> {
                                           context,
                                           allTranslations.text("Information"),
                                           allTranslations.text("no_network"));
-                                    } else if ((await check_enough_point(
-                                                estimate)) ==
-                                            true &&
-                                        orderBloc.isValidInfo(
-                                                name.text.trim().toString(),
-                                                phone.text.trim().toString(),
-                                                address.text
-                                                    .trim()
-                                                    .toString()) ==
-                                            true) {
+
+                                     }
+                                      else if ((await check_enough_point(
+                                                 estimate)) ==
+                                             true &&
+                                         orderBloc.isValidInfo(
+                                                 name.text.trim().toString(),
+                                                 phone.text.trim().toString(),
+                                                 address.text
+                                                     .trim()
+                                                     .toString()) ==
+                                             true) {
 
 
-                                      LoadingDialog.hideLoadingDialog(context);
-                                      showDialog(
-                                          context: context,
-                                          builder: (_) => Payment_Dialog(
-                                              phone.text.trim().toString(),
-                                              address.text.trim().toString(),
-                                              estimate)).then(
-                                          (value) => setState(() {
-                                                if (value != null) {
-                                                  ListOrderProducts.clear();
-                                                  fee_ship=0;
-                                                  address.clear();
-                                                } else {}
-                                              }));
-                                    } else {
+                                       LoadingDialog.hideLoadingDialog(context);
+                                       showDialog(
+                                           context: context,
+                                           builder: (_) => Payment_Dialog(
+                                               phone.text.trim().toString(),
+                                               address.text.trim().toString(),
+                                               estimate)).then(
+                                           (value) => setState(() {
+                                                 if (value != null) {
+                                                   ListOrderProducts.clear();
+                                                   fee_ship=0;
+                                                   address.clear();
+
+                                                 } else {}
+                                               }));
+                                     }
+                                    else {
                                       if (orderBloc.isValidInfo(
                                               name.text.trim().toString(),
                                               phone.text.trim().toString(),

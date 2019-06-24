@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:http/http.dart' as http;
+import 'package:thekingcoffee/app/bloc/bottom_navigation_bloc.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/data/repository/get_coffee_products.dart';
 
 import 'package:thekingcoffee/app/data/repository/get_data_all_product.dart';
+import 'package:thekingcoffee/app/screens/dashboard.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog_order.dart';
@@ -29,20 +31,31 @@ var promotion_list_coffee = [];
 int promotion_coffee = 0;
 
 class _Home_Card_Coffee_State extends State<Home_Card_Coffee> {
+  BottomNavBarBloc _bottomNavBarBloc;
+
   intDataCoffeeScreen() async {
     final result = await Get_Coffee_Product();
     if (this.mounted) {
-      setState(() {
-        data_coffee = result;
-        lenght = data_coffee.length;
-      });
+      if (result != null) {
+        setState(() {
+          data_coffee = result;
+          lenght = data_coffee.length;
+        });
+      }
     }
   }
 
   @override
   void initState() {
+    _bottomNavBarBloc = new BottomNavBarBloc();
     this.intDataCoffeeScreen();
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    _bottomNavBarBloc.close();
+    super.dispose();
   }
 
   @override

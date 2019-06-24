@@ -11,16 +11,17 @@ import 'package:thekingcoffee/app/screens/setting.dart';
 import 'package:thekingcoffee/app/screens/shopping_list.dart';
 
 import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
+import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
 
 class DashBoard extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return _HomeState();
+    return HomeState();
   }
 }
-
-class _HomeState extends State<DashBoard> with WidgetsBindingObserver {
+class HomeState extends State<DashBoard> with WidgetsBindingObserver {
   BottomNavBarBloc _bottomNavBarBloc;
+
   @override
   void initState() {
     WidgetsBinding.instance.addObserver(this);
@@ -102,15 +103,14 @@ class _HomeState extends State<DashBoard> with WidgetsBindingObserver {
                                     minHeight: 12,
                                   ),
                                   child: Center(
-                                    child: Text(
-                                      Config.item_shopping_list.toString(),
-                                      style: TextStyle(
-                                        fontSize: 10,
-                                        color: Colors.white,
-                                      ),
-                                      textAlign: TextAlign.center,
+                                      child: Text(
+                                    Config.item_shopping_list.toString(),
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      color: Colors.white,
                                     ),
-                                  ),
+                                    textAlign: TextAlign.center,
+                                  )),
                                 ),
                               )
                             ],

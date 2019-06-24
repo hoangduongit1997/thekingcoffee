@@ -66,17 +66,6 @@ class LoginState extends State<LoginWithPass> {
           body: GestureDetector(
             onTap: () async {
               FocusScope.of(context).requestFocus(new FocusNode());
-              //test
-              final pref = await SharedPreferences.getInstance();
-              String a = pref.getStringList("list").toString();
-              Fluttertoast.showToast(
-                  msg: a,
-                  toastLength: Toast.LENGTH_SHORT,
-                  gravity: ToastGravity.BOTTOM,
-                  timeInSecForIos: 1,
-                  backgroundColor: Colors.redAccent,
-                  textColor: Colors.white,
-                  fontSize: 16.0);
             },
             child: Container(
                 padding: EdgeInsets.fromLTRB(30, 50, 30, 0),

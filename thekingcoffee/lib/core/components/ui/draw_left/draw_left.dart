@@ -9,6 +9,7 @@ import 'package:thekingcoffee/app/screens/earn_point.dart';
 
 import 'package:thekingcoffee/app/screens/history.dart';
 import 'package:thekingcoffee/app/screens/login.dart';
+import 'package:thekingcoffee/app/screens/shopping_list.dart';
 
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -209,6 +210,8 @@ class _HomeMenuState extends State<HomeMenu> {
                                     )),
                                 onPressed: () async {
                                   ListOrderProducts.clear();
+                                  fee_ship=0;
+                                  address.clear();
                                   SharedPreferences preferences =
                                       await SharedPreferences.getInstance();
                                   await preferences.clear();

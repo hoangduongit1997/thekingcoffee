@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:thekingcoffee/app/config/config.dart';
+import 'package:thekingcoffee/app/screens/dashboard.dart';
 
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
@@ -31,7 +32,7 @@ class Order_Dialog extends StatefulWidget {
 class Order_DialogState extends State<Order_Dialog> {
   TextEditingController note = new TextEditingController();
   var product = selectedProduct;
-  int number = Config.item_shopping_list = 1;
+  int number = 1;
   int money;
   bool checked_hot = false;
   var selectedsize;
@@ -330,6 +331,7 @@ class Order_DialogState extends State<Order_Dialog> {
   void initState() {
     super.initState();
     money = widget.price;
+  
     if (widget.size.length > 0) {
       money += widget.size[0]['PlusMonney'];
     }
@@ -786,8 +788,7 @@ class Order_DialogState extends State<Order_Dialog> {
                                                   return;
                                                 }
                                                 number--;
-                                                Config.item_shopping_list =
-                                                    number;
+
                                                 money -= widget.price;
                                               });
                                               selectedProduct['Quantity'] =
@@ -813,8 +814,7 @@ class Order_DialogState extends State<Order_Dialog> {
                                             onPressed: () {
                                               setState(() {
                                                 number++;
-                                                Config.item_shopping_list =
-                                                    number;
+
                                                 money += widget.price;
                                               });
                                               selectedProduct['Quantity'] =

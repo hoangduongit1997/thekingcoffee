@@ -69,8 +69,9 @@ Future<bool> PostOrder(String phone, String address, bool is_money) async {
       headers: {'Token': token, 'Content-Type': 'application/json'},
       body: body_order);
   var data = json.decode(response1.body);
-  prefs.setInt("points", data['Value']['Customer']['Point']);
+ 
   if (data['Status'] == 1) {
+     prefs.setInt("points", data['Value']['Customer']['Point']);
     status_oder = true;
   } else {
     status_oder = false;

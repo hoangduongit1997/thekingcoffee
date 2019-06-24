@@ -1,6 +1,8 @@
 import 'dart:core';
 
 import 'package:flutter/material.dart';
+import 'package:thekingcoffee/app/config/config.dart';
+import 'package:thekingcoffee/app/screens/dashboard.dart';
 
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
@@ -27,7 +29,7 @@ class LoadingDialog_Order {
       String descript,
       int original_price,
       int price,
-      int ishot,
+      bool ishot,
       int hashot,
       List<dynamic> topping,
       List<dynamic> size,
@@ -104,7 +106,8 @@ class LoadingDialog_Order {
                     ListOrderProducts[index] = this.selectedProduct;
                     selectedProduct = {};
                     refreshListOrder();
-
+                    Config.item_shopping_list= ListOrderProducts.fold(0, (t, e) => t + e['Quantity']);
+                    print(ListOrderProducts.toString());
                     Navigator.pop(context);
                   },
                 ),

@@ -20,7 +20,7 @@ class Order_Dialog extends StatefulWidget {
   final String desc;
   final int original_price;
   final int price;
-  final int ishot;
+   bool ishot;
   final int hashot;
   final List<dynamic> toppings;
   final List<dynamic> size;
@@ -607,7 +607,7 @@ class Order_DialogState extends State<Order_Dialog> {
                                     )
                                   ],
                                 )),
-                        widget.ishot == 1
+                        widget.hashot == 1
                             ? Padding(
                                 padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                                 child: Container(
@@ -616,7 +616,7 @@ class Order_DialogState extends State<Order_Dialog> {
                                           220.0, Colors.blueGrey, 0.5)),
                                 ))
                             : Container(),
-                        widget.ishot == 1
+                        widget.hashot == 1
                             ? Container(
                                 width: Dimension.getWidth(1.0),
                                 child: Padding(
@@ -646,14 +646,14 @@ class Order_DialogState extends State<Order_Dialog> {
                                                     .toString(),
                                                 style: StylesText.style16Brown,
                                               ),
-                                              value: checked_hot,
+                                              value: widget.ishot,
                                               onChanged: (bool value) {
                                                 setState(() {
-                                                  checked_hot = value;
+                                                  widget.ishot = value;
                                                   // selectedProduct['IsHot'] =
                                                   //     checked_hot;
                                                   widget.callback(
-                                                      'IsHot', checked_hot);
+                                                      'IsHot', widget.ishot);
                                                 });
                                               },
                                               activeColor: Colors.red,
@@ -838,11 +838,10 @@ class Order_DialogState extends State<Order_Dialog> {
                                             onPressed: () {
                                               setState(() {
                                                 if (number == 1) {
-                                                  
                                                   return;
                                                 }
                                                 number--;
-                                                Config.item_shopping_list = number;
+
                                                 money = origin_price.toInt() *
                                                     number;
                                               });
@@ -870,7 +869,7 @@ class Order_DialogState extends State<Order_Dialog> {
                                             onPressed: () {
                                               setState(() {
                                                 number++;
-                                                Config.item_shopping_list = number;
+
                                                 money = origin_price.toInt() *
                                                     number;
                                               });

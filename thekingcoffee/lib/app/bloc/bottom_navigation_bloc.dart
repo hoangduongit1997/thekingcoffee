@@ -3,7 +3,7 @@ import 'dart:async';
 enum NavBarItem { HOME, FAVORITE, SHOPPING_LIST, SETTING }
 
 class BottomNavBarBloc {
-  final StreamController<NavBarItem> _navBarController =
+  StreamController<NavBarItem> _navBarController =
       StreamController<NavBarItem>.broadcast();
 
   NavBarItem defaultItem = NavBarItem.HOME;
