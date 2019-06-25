@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/data/repository/get_data_all_product.dart';
 import 'package:thekingcoffee/app/screens/dashboard.dart';
@@ -14,14 +15,14 @@ import 'package:thekingcoffee/core/components/widgets/favorite.dart';
 import 'package:thekingcoffee/core/components/widgets/rating.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 
-class See_All_Product extends StatefulWidget {
+class See_All_Product_Type extends StatefulWidget {
   String title = "";
   int catagory = 0;
-  See_All_Product(this.title, this.catagory);
-  _See_All_ProductState createState() => _See_All_ProductState();
+  See_All_Product_Type(this.title, this.catagory);
+  _See_All_ProductTypeState createState() => _See_All_ProductTypeState();
 }
 
-class _See_All_ProductState extends State<See_All_Product> {
+class _See_All_ProductTypeState extends State<See_All_Product_Type> {
   int lenght = 0;
   var data = [];
   static int starCount = 5;
@@ -92,19 +93,32 @@ class _See_All_ProductState extends State<See_All_Product> {
                       promotion_product = promotion_list_product.length;
                       return GestureDetector(
                         onTap: () {
-                          LoadingDialog_Order.showLoadingDialog(
-                              context,
-                              data[index]['Id'],
-                              data[index]['Name'],
-                              data[index]['File_Path'],
-                              data[index]['Description'],
-                              data[index]['Price'],
-                              data[index]['IsHot'],
-                              data[index]['IsHot'],
-                              data[index]['Toppings'],
-                              data[index]['Size'],
-                              data[index]['Promotion'],
-                              ListOrderProducts);
+                          if (data[index]['IsAvailable'] == false) {
+                            Fluttertoast.showToast(
+                                msg: allTranslations
+                                    .text("out_of_stock")
+                                    .toString(),
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                timeInSecForIos: 1,
+                                backgroundColor: Colors.redAccent,
+                                textColor: Colors.white,
+                                fontSize: 16.0);
+                          } else {
+                            LoadingDialog_Order.showLoadingDialog(
+                                context,
+                                data[index]['Id'],
+                                data[index]['Name'],
+                                data[index]['File_Path'],
+                                data[index]['Description'],
+                                data[index]['Price'],
+                                data[index]['IsHot'],
+                                data[index]['IsHot'],
+                                data[index]['Toppings'],
+                                data[index]['Size'],
+                                data[index]['Promotion'],
+                                ListOrderProducts);
+                          }
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(2.0),
@@ -171,10 +185,20 @@ class _See_All_ProductState extends State<See_All_Product> {
                                                                               )),
                                                                             )),
                                                               ),
-                                                              Favorite(
-                                                                color:
-                                                                    Colors.red,
-                                                              ),
+                                                              data[index]['IsAvailable'] ==
+                                                                      true
+                                                                  ? Favorite(
+                                                                      color: Colors
+                                                                          .red,
+                                                                    )
+                                                                  : SvgPicture.asset(
+                                                                      "assets/icons/sold.svg",
+                                                                      width: Dimension
+                                                                          .getWidth(
+                                                                              0.05),
+                                                                      height: Dimension
+                                                                          .getHeight(
+                                                                              0.05)),
                                                             ],
                                                           )),
                                                     ],

@@ -5,12 +5,17 @@ import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
 
 Future<int> Get_fee_ship(double lat, double lng) async {
-  var order_data=ListOrderProducts;
+
+  Map data_order={
+      "OrdersData":ListOrderProducts,
+      "Lat":lat,
+      "Long":lng
+  };
+  var data_order_final=json.encode(data_order);
   Response response =
-      await get(Config.get_fee_ship + "?Lat=$lat" + "&Long=$lng");
+      await post(Config.get_fee_ship,headers: {'Content-Type': 'application/json'},body: data_order_final);
   var data = json.decode(response.body);
   if (data['Status'] == 1) {
-    print("Phi ship: " + data['Value'].toString());
     return data['Value'];
   }
   return 0;

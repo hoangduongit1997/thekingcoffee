@@ -6,6 +6,12 @@ import 'package:thekingcoffee/app/config/config.dart';
 Get_Data_All_Product(int i) async {
   try {
     switch (i) {
+      case 0:
+      {
+        final response = await http.get(Config.get_data_home_cart_API+"?IsDesc=true");
+          final res = json.decode(response.body)['Value'];
+          return res;
+      }
       case 1:
         {
           final response = await http.get(Config.get_all_drinking_products_API);

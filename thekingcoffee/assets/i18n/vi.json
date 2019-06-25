@@ -66,6 +66,8 @@
   "do_you": "Bạn có muốn xóa toàn bộ giỏ hàng?",
   "cancel": "Hủy",
   "onprocess": "Đang xử lý",
+  "out_of_stock":"Sản phẩm tạm hết hàng",
+  "all_product":"Tất cả sản phẩm",
   "shipping": "Đang giao",
   "no_process": "Đang chờ",
   "yes": "Đồng ý",

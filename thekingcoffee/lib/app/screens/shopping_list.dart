@@ -1086,6 +1086,7 @@ class Shopping_ListState extends State<Shopping_List> {
                                                    ListOrderProducts.clear();
                                                    fee_ship=0;
                                                    address.clear();
+                                                   Config.item_shopping_list=0;
 
                                                  } else {}
                                                }));

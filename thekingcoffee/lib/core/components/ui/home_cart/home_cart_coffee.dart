@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:thekingcoffee/app/bloc/bottom_navigation_bloc.dart';
 import 'package:thekingcoffee/app/config/config.dart';
@@ -135,9 +136,12 @@ class _Home_Card_Coffee_State extends State<Home_Card_Coffee> {
                                               ),
                                             ),
                                           ),
-                                          Favorite(
+                                         data_coffee[index]['IsAvailable']==true? Favorite(
                                             color: Colors.red,
-                                          ),
+                                          ):SvgPicture.asset(
+                                            "assets/icons/sold.svg",
+                                            width: Dimension.getWidth(0.05),
+                                            height: Dimension.getHeight(0.05)),
                                         ],
                                       ),
                                     ],
@@ -335,19 +339,32 @@ class _Home_Card_Coffee_State extends State<Home_Card_Coffee> {
                                 ],
                               )),
                           onTap: () {
-                            LoadingDialog_Order.showLoadingDialog(
-                                context,
-                                data_coffee[index]['Id'],
-                                data_coffee[index]['Name'],
-                                data_coffee[index]['File_Path'],
-                                data_coffee[index]['Description'],
-                                data_coffee[index]['Price'],
-                                data_coffee[index]['IsHot'],
-                                data_coffee[index]['IsHot'],
-                                data_coffee[index]['Toppings'],
-                                data_coffee[index]['Size'],
-                                data_coffee[index]['Promotion'],
-                                ListOrderProducts);
+                            if (data_coffee[index]['IsAvailable'] == false) {
+                              Fluttertoast.showToast(
+                                  msg: allTranslations
+                                      .text("out_of_stock")
+                                      .toString(),
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.BOTTOM,
+                                  timeInSecForIos: 1,
+                                  backgroundColor: Colors.redAccent,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0);
+                            } else {
+                              LoadingDialog_Order.showLoadingDialog(
+                                  context,
+                                  data_coffee[index]['Id'],
+                                  data_coffee[index]['Name'],
+                                  data_coffee[index]['File_Path'],
+                                  data_coffee[index]['Description'],
+                                  data_coffee[index]['Price'],
+                                  data_coffee[index]['IsHot'],
+                                  data_coffee[index]['IsHot'],
+                                  data_coffee[index]['Toppings'],
+                                  data_coffee[index]['Size'],
+                                  data_coffee[index]['Promotion'],
+                                  ListOrderProducts);
+                            }
                           });
                     }
                   }),

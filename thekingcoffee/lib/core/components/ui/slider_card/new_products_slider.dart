@@ -1,12 +1,12 @@
-import 'dart:convert';
+
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:http/http.dart' as http;
-import 'package:thekingcoffee/app/data/repository/get_new_products.dart';
-import 'package:thekingcoffee/app/screens/helper/dashboard_helper/placeholder_home.dart';
+
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
@@ -14,6 +14,7 @@ import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog_orde
 import 'package:thekingcoffee/core/components/widgets/drawline.dart';
 import 'package:thekingcoffee/core/components/widgets/favorite.dart';
 import 'package:thekingcoffee/core/components/widgets/rating.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 
 class CarouselWithIndicator extends StatefulWidget {
@@ -81,19 +82,30 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
       return Container(
           child: GestureDetector(
         onTap: () {
-          LoadingDialog_Order.showLoadingDialog(
-              context_order,
-              list_new_product[index]['Id'],
-              list_new_product[index]['Name'],
-              list_new_product[index]['File_Path'],
-              list_new_product[index]['Description'],
-              list_new_product[index]['Price'],
-              list_new_product[index]['IsHot'],
-              list_new_product[index]['IsHot'],
-              list_new_product[index]['Toppings'],
-              list_new_product[index]['Size'],
-              list_new_product[index]['Promotion'],
-              ListOrderProducts);
+          if (list_new_product[index]['IsAvailable'] == false) {
+            Fluttertoast.showToast(
+                msg: allTranslations.text("out_of_stock").toString(),
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIos: 1,
+                backgroundColor: Colors.redAccent,
+                textColor: Colors.white,
+                fontSize: 16.0);
+          } else {
+            LoadingDialog_Order.showLoadingDialog(
+                context_order,
+                list_new_product[index]['Id'],
+                list_new_product[index]['Name'],
+                list_new_product[index]['File_Path'],
+                list_new_product[index]['Description'],
+                list_new_product[index]['Price'],
+                list_new_product[index]['IsHot'],
+                list_new_product[index]['IsHot'],
+                list_new_product[index]['Toppings'],
+                list_new_product[index]['Size'],
+                list_new_product[index]['Promotion'],
+                ListOrderProducts);
+          }
         },
         child: ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(8.0)),
@@ -135,9 +147,15 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
                                                 )),
                                               )),
                                     ),
-                                    Favorite(
-                                      color: Colors.red,
-                                    ),
+                                    list_new_product[index]['IsAvailable'] ==
+                                            true
+                                        ? Favorite(
+                                            color: Colors.red,
+                                          )
+                                        : SvgPicture.asset(
+                                            "assets/icons/sold.svg",
+                                            width: Dimension.getWidth(0.05),
+                                            height: Dimension.getHeight(0.05)),
                                   ],
                                 )),
                           ],

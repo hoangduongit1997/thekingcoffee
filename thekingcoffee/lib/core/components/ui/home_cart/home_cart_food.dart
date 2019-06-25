@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:thekingcoffee/app/config/config.dart';
 
@@ -124,9 +125,17 @@ class _Home_Card_Food_State extends State<Home_Card_Food> {
                                               ),
                                             ),
                                           ),
-                                          Favorite(
-                                            color: Colors.red,
-                                          ),
+                                          data_food[index]['IsAvailable'] ==
+                                                  true
+                                              ? Favorite(
+                                                  color: Colors.red,
+                                                )
+                                              : SvgPicture.asset(
+                                                  "assets/icons/sold.svg",
+                                                  width:
+                                                      Dimension.getWidth(0.05),
+                                                  height: Dimension.getHeight(
+                                                      0.05)),
                                         ],
                                       ),
                                     ],
@@ -321,21 +330,34 @@ class _Home_Card_Food_State extends State<Home_Card_Food> {
                                   )
                                 ],
                               )),
-                          onTap: () => {
-                                LoadingDialog_Order.showLoadingDialog(
-                                    context,
-                                    data_food[index]['Id'],
-                                    data_food[index]['Name'],
-                                    data_food[index]['File_Path'],
-                                    data_food[index]['Description'],
-                                    data_food[index]['Price'],
-                                    data_food[index]['IsHot'],
-                                    data_food[index]['IsHot'],
-                                    data_food[index]['Toppings'],
-                                    data_food[index]['Size'],
-                                    data_food[index]['Promotion'],
-                                    ListOrderProducts),
-                              });
+                          onTap: () {
+                            if (data_food[index]['IsAvailable'] == false) {
+                              Fluttertoast.showToast(
+                                  msg: allTranslations
+                                      .text("out_of_stock")
+                                      .toString(),
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.BOTTOM,
+                                  timeInSecForIos: 1,
+                                  backgroundColor: Colors.redAccent,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0);
+                            } else {
+                              LoadingDialog_Order.showLoadingDialog(
+                                  context,
+                                  data_food[index]['Id'],
+                                  data_food[index]['Name'],
+                                  data_food[index]['File_Path'],
+                                  data_food[index]['Description'],
+                                  data_food[index]['Price'],
+                                  data_food[index]['IsHot'],
+                                  data_food[index]['IsHot'],
+                                  data_food[index]['Toppings'],
+                                  data_food[index]['Size'],
+                                  data_food[index]['Promotion'],
+                                  ListOrderProducts);
+                            }
+                          });
                     }
                   }),
             ),

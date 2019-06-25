@@ -116,7 +116,7 @@ class _HistoryState extends State<History> {
                   itemBuilder: (context, index) {
                     return GestureDetector(
                       onTap: () {
-                        if (data_history[index]['Status'] == 3) {
+                        
                           Navigator.of(context)
                               .push(MaterialPageRoute(
                                   builder: (context) => History_Order_Detail(
@@ -127,9 +127,10 @@ class _HistoryState extends State<History> {
                                         data_history[index]['Total'],
                                         data_history[index]['Time_Ordered'],
                                         data_history[index]['Star'],
+                                        data_history[index]['Status'],
                                       )))
-                              .then((value) => value ? onrefresh() : null);
-                        }
+                              .then((value) => onrefresh());
+                        
                       },
                       child: Padding(
                         padding: const EdgeInsets.all(2.0),

@@ -11,7 +11,7 @@ import 'package:thekingcoffee/app/data/repository/get_tea_products.dart';
 
 import 'package:thekingcoffee/app/screens/find_food.dart';
 
-import 'package:thekingcoffee/app/screens/see_all_product.dart';
+import 'package:thekingcoffee/app/screens/see_all_product_type.dart';
 
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
@@ -136,6 +136,21 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                                         .text("new_product")
                                         .toString(),
                                     style: StylesText.style17BrownBoldlRaleway),
+                                GestureDetector(
+                                  onTap: (){
+                                     Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  See_All_Product_Type(
+                                                      allTranslations
+                                                          .text("all_product")
+                                                          .toString(),
+                                                      0)));
+                                  },
+                                  child: Text(allTranslations.text("all_product").toString(),
+                                    style: StylesText.style15RedAccentBold),
+                                )
+                                
                               ],
                             ),
                           )),
@@ -181,7 +196,7 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  See_All_Product(
+                                                  See_All_Product_Type(
                                                       allTranslations
                                                           .text("all_coffee")
                                                           .toString(),
@@ -244,7 +259,7 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  See_All_Product(
+                                                  See_All_Product_Type(
                                                       allTranslations
                                                           .text("all_tea")
                                                           .toString(),
@@ -299,7 +314,7 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  See_All_Product(
+                                                  See_All_Product_Type(
                                                       allTranslations
                                                           .text("all_drinking")
                                                           .toString(),
@@ -354,7 +369,7 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  See_All_Product(
+                                                  See_All_Product_Type(
                                                       allTranslations
                                                           .text("all_food")
                                                           .toString(),

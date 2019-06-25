@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
 import 'package:thekingcoffee/app/config/config.dart';
 
@@ -124,9 +125,17 @@ class _Home_Card_Drinking_State extends State<Home_Card_Drinking> {
                                               ),
                                             ),
                                           ),
-                                          Favorite(
-                                            color: Colors.red,
-                                          ),
+                                          data_drinking[index]['IsAvailable'] ==
+                                                  true
+                                              ? Favorite(
+                                                  color: Colors.red,
+                                                )
+                                              : SvgPicture.asset(
+                                                  "assets/icons/sold.svg",
+                                                  width:
+                                                      Dimension.getWidth(0.05),
+                                                  height: Dimension.getHeight(
+                                                      0.05)),
                                         ],
                                       ),
                                     ],
@@ -323,21 +332,34 @@ class _Home_Card_Drinking_State extends State<Home_Card_Drinking> {
                                   )
                                 ],
                               )),
-                          onTap: () => {
-                                LoadingDialog_Order.showLoadingDialog(
-                                    context,
-                                    data_drinking[index]['Id'],
-                                    data_drinking[index]['Name'],
-                                    data_drinking[index]['File_Path'],
-                                    data_drinking[index]['Description'],
-                                    data_drinking[index]['Price'],
-                                    data_drinking[index]['IsHot'],
-                                    data_drinking[index]['IsHot'],
-                                    data_drinking[index]['Toppings'],
-                                    data_drinking[index]['Size'],
-                                    data_drinking[index]['Promotion'],
-                                    ListOrderProducts),
-                              });
+                          onTap: () {
+                            if (data_drinking[index]['IsAvailable'] == false) {
+                              Fluttertoast.showToast(
+                                  msg: allTranslations
+                                      .text("out_of_stock")
+                                      .toString(),
+                                  toastLength: Toast.LENGTH_SHORT,
+                                  gravity: ToastGravity.BOTTOM,
+                                  timeInSecForIos: 1,
+                                  backgroundColor: Colors.redAccent,
+                                  textColor: Colors.white,
+                                  fontSize: 16.0);
+                            } else {
+                              LoadingDialog_Order.showLoadingDialog(
+                                  context,
+                                  data_drinking[index]['Id'],
+                                  data_drinking[index]['Name'],
+                                  data_drinking[index]['File_Path'],
+                                  data_drinking[index]['Description'],
+                                  data_drinking[index]['Price'],
+                                  data_drinking[index]['IsHot'],
+                                  data_drinking[index]['IsHot'],
+                                  data_drinking[index]['Toppings'],
+                                  data_drinking[index]['Size'],
+                                  data_drinking[index]['Promotion'],
+                                  ListOrderProducts);
+                            }
+                          });
                     }
                   }),
             ),
