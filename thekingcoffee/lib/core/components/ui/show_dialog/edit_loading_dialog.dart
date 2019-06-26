@@ -11,6 +11,7 @@ import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart
     as prefix0;
 import 'package:thekingcoffee/core/components/ui/show_dialog/edit_order_dialog.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
+import 'package:thekingcoffee/main.dart';
 
 class LoadingDialog_Order {
   Map<String, Object> selectedProduct = new Map();
@@ -106,7 +107,7 @@ class LoadingDialog_Order {
                     ListOrderProducts[index] = this.selectedProduct;
                     selectedProduct = {};
                     refreshListOrder();
-                    Config.item_shopping_list= ListOrderProducts.fold(0, (t, e) => t + e['Quantity']);
+                    number_bloc.Check_Number();
                     print(ListOrderProducts.toString());
                     Navigator.pop(context);
                   },

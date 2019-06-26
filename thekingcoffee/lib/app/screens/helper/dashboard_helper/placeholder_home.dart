@@ -8,6 +8,7 @@ import 'package:thekingcoffee/app/data/repository/get_drinking_products.dart';
 import 'package:thekingcoffee/app/data/repository/get_food_products.dart';
 import 'package:thekingcoffee/app/data/repository/get_new_products.dart';
 import 'package:thekingcoffee/app/data/repository/get_tea_products.dart';
+import 'package:thekingcoffee/app/screens/dashboard.dart';
 
 import 'package:thekingcoffee/app/screens/find_food.dart';
 
@@ -24,6 +25,7 @@ import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_tea.dart';
 import 'package:thekingcoffee/core/components/ui/slider_card/new_products_slider.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 import 'package:http/http.dart' as http;
+import 'package:thekingcoffee/main.dart';
 
 class PlaceholderMainWidget extends StatefulWidget {
   const PlaceholderMainWidget();
@@ -65,6 +67,7 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
   @override
   void initState() {
     intDataHomeSlider();
+    
     super.initState();
   }
 
@@ -96,7 +99,7 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                 splashColor: Colors.brown,
                 onPressed: () {
                   Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => FindFood()));
+                      MaterialPageRoute(builder: (context) => FindFood())).then((value){ number_bloc.Check_Number();});
                 },
               )
             ],
@@ -149,7 +152,7 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                                                       allTranslations
                                                           .text("all_product")
                                                           .toString(),
-                                                      0)));
+                                                      0))).then((value){ number_bloc.Check_Number();});
                                   },
                                   child: Text(allTranslations.text("all_product").toString(),
                                     style: StylesText.style15RedAccentBold),
@@ -204,7 +207,7 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                                                       allTranslations
                                                           .text("all_coffee")
                                                           .toString(),
-                                                      2)));
+                                                      2))).then((value)=>{ number_bloc.Check_Number()});
                                     },
                                     child: Text(
                                         allTranslations
@@ -267,7 +270,7 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                                                       allTranslations
                                                           .text("all_tea")
                                                           .toString(),
-                                                      4)));
+                                                      4))).then((value){ number_bloc.Check_Number();});
                                     },
                                     child: Text(
                                         allTranslations
@@ -322,7 +325,7 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                                                       allTranslations
                                                           .text("all_drinking")
                                                           .toString(),
-                                                      1)));
+                                                      1))).then((value){ number_bloc.Check_Number();});
                                     },
                                     child: Text(
                                         allTranslations
@@ -377,7 +380,7 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                                                       allTranslations
                                                           .text("all_food")
                                                           .toString(),
-                                                      3)));
+                                                      3))).then((value){ number_bloc.Check_Number();});
                                     },
                                     child: Text(
                                         allTranslations
@@ -425,7 +428,7 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
     final result_drinking = await Get_Drinking_Products();
     if (this.mounted) {
       setState(() {
-        list_new_product.clear();
+        list_new_product=[];
       });
     }
     final result_food = await Get_Food_Products();

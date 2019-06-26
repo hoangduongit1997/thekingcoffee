@@ -1,7 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 import 'package:thekingcoffee/app/bloc/bottom_navigation_bloc.dart';
+import 'package:thekingcoffee/app/bloc/number_bloc.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 
 import 'package:thekingcoffee/app/screens/favorite_page.dart';
@@ -12,6 +14,7 @@ import 'package:thekingcoffee/app/screens/shopping_list.dart';
 
 import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
+import 'package:thekingcoffee/main.dart';
 
 class DashBoard extends StatefulWidget {
   @override
@@ -19,6 +22,9 @@ class DashBoard extends StatefulWidget {
     return HomeState();
   }
 }
+
+
+
 class HomeState extends State<DashBoard> with WidgetsBindingObserver {
   BottomNavBarBloc _bottomNavBarBloc;
 
@@ -26,6 +32,7 @@ class HomeState extends State<DashBoard> with WidgetsBindingObserver {
   void initState() {
     WidgetsBinding.instance.addObserver(this);
     _bottomNavBarBloc = new BottomNavBarBloc();
+   
     super.initState();
   }
 
@@ -33,11 +40,13 @@ class HomeState extends State<DashBoard> with WidgetsBindingObserver {
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     _bottomNavBarBloc.close();
+   
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
+   
     SystemChrome.setEnabledSystemUIOverlays([]);
     return GestureDetector(
         onTap: () {
@@ -86,14 +95,17 @@ class HomeState extends State<DashBoard> with WidgetsBindingObserver {
                   BottomNavigationBarItem(
                     title:
                         Text(allTranslations.text("shopping_list").toString()),
-                    icon: Config.item_shopping_list != 0
-                        ? Stack(
-                            alignment: AlignmentDirectional.topEnd,
-                            children: <Widget>[
-                              Icon(Icons.shopping_cart),
-                              Positioned(
-                                bottom: 11,
-                                child: Container(
+                    icon: Stack(
+                      alignment: AlignmentDirectional.topEnd,
+                      children: <Widget>[
+                        Icon(Icons.shopping_cart),
+                        Positioned(
+                          bottom: 11,
+                          child: StreamBuilder<Object>(
+                                  initialData: 0,
+                              stream: number_bloc.numberStream,
+                              builder: (context, snapshot) {
+                                return snapshot.data==0?Container(): Container(
                                   decoration: new BoxDecoration(
                                     color: Colors.redAccent,
                                     borderRadius: BorderRadius.circular(6),
@@ -104,18 +116,18 @@ class HomeState extends State<DashBoard> with WidgetsBindingObserver {
                                   ),
                                   child: Center(
                                       child: Text(
-                                    Config.item_shopping_list.toString(),
+                                    snapshot.data.toString(),
                                     style: TextStyle(
                                       fontSize: 10,
                                       color: Colors.white,
                                     ),
                                     textAlign: TextAlign.center,
                                   )),
-                                ),
-                              )
-                            ],
-                          )
-                        : Icon(Icons.shopping_cart),
+                                );
+                              }),
+                        )
+                      ],
+                    ),
                   ),
                   BottomNavigationBarItem(
                     title: Text(allTranslations.text("setting").toString()),

@@ -43,8 +43,7 @@ class _FindFoodState extends State<FindFood> {
             color: Colors.brown,
           ),
           onPressed: () {
-            Navigator.of(context, rootNavigator: true)
-                .push(MaterialPageRoute(builder: (context) => DashBoard()));
+           Navigator.of(context).pop();
           },
         ),
         backgroundColor: Colors.transparent,

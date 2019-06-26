@@ -316,7 +316,8 @@ class _HistoryState extends State<History> {
   Future<void> onrefresh() async {
     await Future.delayed(Duration(seconds: 1));
     setState(() {
-      initState();
+      intData();
+      build(context);
     });
   }
 }

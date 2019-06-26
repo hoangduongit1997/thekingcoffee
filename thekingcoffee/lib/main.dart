@@ -4,6 +4,8 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:thekingcoffee/app/bloc/number_bloc.dart';
+import 'package:thekingcoffee/app/screens/dashboard.dart';
 import 'package:thekingcoffee/app/screens/login.dart';
 import 'package:thekingcoffee/app/screens/map.dart';
 import 'package:thekingcoffee/app/screens/shopping_list.dart';
@@ -13,7 +15,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
 import 'app/validation/validation.dart';
 import 'package:connectivity/connectivity.dart';
-
+Number_Bloc number_bloc = new Number_Bloc();
 void main() async {
   SharedPreferences pref = await SharedPreferences.getInstance();
   int value = await Validation.check_language();
@@ -36,6 +38,7 @@ void main() async {
     if(save_list_order!=null)
     {
       ListOrderProducts = json.decode(save_list_order);
+       number_bloc.Check_Number();
     }
    
   } catch (e) {}
@@ -161,6 +164,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
     _connectivitySubscription.cancel();
+    number_bloc.dispose();
     super.dispose();
   }
 

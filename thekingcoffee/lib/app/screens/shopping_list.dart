@@ -11,6 +11,7 @@ import 'package:thekingcoffee/app/data/model/get_place_item.dart';
 import 'package:thekingcoffee/app/data/repository/check_enought_point.dart';
 import 'package:thekingcoffee/app/data/repository/get_fee_ship.dart';
 import 'package:thekingcoffee/app/data/repository/order_repository.dart';
+import 'package:thekingcoffee/app/screens/dashboard.dart';
 
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/app/validation/validation.dart';
@@ -28,6 +29,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:thekingcoffee/core/components/widgets/drawline.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:thekingcoffee/main.dart';
 
 class Shopping_List extends StatefulWidget {
   Shopping_ListState createState() => Shopping_ListState();
@@ -141,14 +143,16 @@ class Shopping_ListState extends State<Shopping_List> {
                                                   .toString(),
                                               style: StylesText.style14While),
                                         )),
-                                    onPressed: () {
+                                    onPressed: () async {
+                                     
+                                      
                                       setState(() {
                                         estimate = 0;
                                         fee_ship = 0;
                                         address.clear();
 
-                                        ListOrderProducts.clear();
-                                        Config.item_shopping_list= 0;
+                                        ListOrderProducts=[];
+                                        number_bloc.Check_Number();
 
                                       });
                                       Navigator.of(context).pop();
@@ -857,7 +861,8 @@ class Shopping_ListState extends State<Shopping_List> {
                                                                   ListOrderProducts
                                                                       .removeAt(
                                                                           index);
-                                                                  Config.item_shopping_list= ListOrderProducts.fold(0, (t, e) => t + e['Quantity']);
+                                                                  number_bloc.Check_Number();
+
                                                                 });
                                                                 Navigator.of(
                                                                         context)
@@ -1050,7 +1055,7 @@ class Shopping_ListState extends State<Shopping_List> {
                             Expanded(
                               child: MaterialButton(
                                   onPressed: () async {
-                                    SharedPreferences pref=await SharedPreferences.getInstance();
+                                   
                                     LoadingDialog.showLoadingDialog(context,
                                         allTranslations.text("splash_screen"));
                                     if ((await Validation
@@ -1084,11 +1089,12 @@ class Shopping_ListState extends State<Shopping_List> {
                                                estimate)).then(
                                            (value) => setState(() {
                                                  if (value != null) {
-                                                 pref.setString("list_order", "");
-                                                   ListOrderProducts.clear();
+                                                
+                                                   ListOrderProducts=[];
                                                    fee_ship=0;
                                                    address.clear();
-                                                   Config.item_shopping_list=0;
+                                                   number_bloc.Check_Number();
+
                                                    
 
                                                  } else {}
@@ -1117,7 +1123,7 @@ class Shopping_ListState extends State<Shopping_List> {
                                                   .toString());
                                           setState(() {
                                             estimate = 0;
-                                            ListOrderProducts.clear();
+                                            ListOrderProducts=[];
                                           });
                                         }
                                       } else {
