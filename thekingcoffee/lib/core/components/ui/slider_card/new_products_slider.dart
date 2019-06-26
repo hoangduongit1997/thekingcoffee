@@ -5,7 +5,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:thekingcoffee/app/config/config.dart';
-import 'package:http/http.dart' as http;
+
 
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
@@ -14,7 +14,7 @@ import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog_orde
 import 'package:thekingcoffee/core/components/widgets/drawline.dart';
 import 'package:thekingcoffee/core/components/widgets/favorite.dart';
 import 'package:thekingcoffee/core/components/widgets/rating.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+
 import 'package:thekingcoffee/core/utils/utils.dart';
 
 class CarouselWithIndicator extends StatefulWidget {
@@ -150,6 +150,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
                                     list_new_product[index]['IsAvailable'] ==
                                             true
                                         ? Favorite(
+                                          
                                             color: Colors.red,
                                           )
                                         : SvgPicture.asset(

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:thekingcoffee/app/config/config.dart';
+
 import 'package:thekingcoffee/app/data/repository/get_history.dart';
 import 'package:thekingcoffee/app/screens/history_order_detail.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
@@ -18,7 +18,8 @@ class _HistoryState extends State<History> {
   int length = 0;
 
   intData() async {
-    final result = await Get_History();
+    try{
+      final result = await Get_History();
     if (this.mounted) {
       setState(() {
         if (result != null) {
@@ -27,6 +28,9 @@ class _HistoryState extends State<History> {
         }
       });
     }
+    }
+    catch(e){}
+    
   }
 
   List<Widget> createStutusOrder(int index, int status) {

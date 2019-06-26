@@ -10,6 +10,7 @@ import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart'
     as prefix0;
 import 'package:thekingcoffee/core/components/ui/show_dialog/show_message_dialog.dart';
+import 'package:thekingcoffee/core/components/ui/slider_card/promotion_product_slider.dart';
 import 'package:thekingcoffee/core/components/widgets/drawline.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 
@@ -24,8 +25,10 @@ class Order_Dialog extends StatefulWidget {
   final List<dynamic> toppings;
   final List<dynamic> size;
   final List<dynamic> promotion;
+
   Order_Dialog(this.id, this.img, this.name, this.desc, this.price, this.ishot,
       this.hashot, this.size, this.toppings, this.promotion);
+
   Order_DialogState createState() => Order_DialogState();
 }
 
@@ -131,9 +134,16 @@ class Order_DialogState extends State<Order_Dialog> {
             promotion['Sale']['Description'],
             style: StylesText.style13BrownBold,
           ),
+          subtitle: Text(
+            promotion['Sale']['SubTitle'],
+            style: StylesText.style11BrownNormal,
+          ),
           onChanged: (value) {
             list_promotion_product = [];
             list_promotion_product = promotion['SaleForProducts'];
+            //test slider
+
+            //
             int oldMoney = 0, newMoney = 0;
             if (selectedPromotion != null) {
               oldMoney = ((widget.price -
@@ -169,11 +179,23 @@ class Order_DialogState extends State<Order_Dialog> {
   List<Widget> createCheckBoxListPromotionProDuct() {
     List<Widget> widgets_promotion_product = [];
     for (var promotion_product in list_promotion_product) {
-      final_price_promotion_product =
-          promotion_product['DetailedSaleForProduct']['Price'] -
-              promotion_product['MoneyDiscount'] -
-              promotion_product['PriceDiscount'];
-      widgets_promotion_product.add(Container(
+      //tinh tien sell
+      if (promotion_product['PriceDiscount'] > 0) {
+        final_price_promotion_product = 0;
+        final_price_promotion_product =
+            promotion_product['DetailedSaleForProduct']['Price'] -
+                promotion_product['PriceDiscount'];
+      } else if (promotion_product['PercentDiscount'] > 0) {
+        final_price_promotion_product = 0;
+        double temp = promotion_product['DetailedSaleForProduct']['Price'] *
+            promotion_product['PercentDiscount'];
+        final_price_promotion_product =
+            promotion_product['DetailedSaleForProduct']['Price'] - temp.toInt();
+      }
+
+      //
+      widgets_promotion_product.add(
+          Container(
           child: CheckboxListTile(
         controlAffinity: ListTileControlAffinity.leading,
         title: Padding(
@@ -322,7 +344,9 @@ class Order_DialogState extends State<Order_Dialog> {
               check_promotion_product;
         },
         activeColor: Colors.redAccent,
-      )));
+      )
+      )
+      );
     }
     return widgets_promotion_product;
   }
@@ -331,7 +355,7 @@ class Order_DialogState extends State<Order_Dialog> {
   void initState() {
     super.initState();
     money = widget.price;
-  
+
     if (widget.size.length > 0) {
       money += widget.size[0]['PlusMonney'];
     }
@@ -719,6 +743,7 @@ class Order_DialogState extends State<Order_Dialog> {
                                           child: Column(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.start,
+                                            mainAxisSize: MainAxisSize.min,
                                             children:
                                                 createCheckBoxListPromotionProDuct(),
                                           ),

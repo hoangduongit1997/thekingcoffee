@@ -1050,6 +1050,7 @@ class Shopping_ListState extends State<Shopping_List> {
                             Expanded(
                               child: MaterialButton(
                                   onPressed: () async {
+                                    SharedPreferences pref=await SharedPreferences.getInstance();
                                     LoadingDialog.showLoadingDialog(context,
                                         allTranslations.text("splash_screen"));
                                     if ((await Validation
@@ -1083,10 +1084,12 @@ class Shopping_ListState extends State<Shopping_List> {
                                                estimate)).then(
                                            (value) => setState(() {
                                                  if (value != null) {
+                                                 pref.setString("list_order", "");
                                                    ListOrderProducts.clear();
                                                    fee_ship=0;
                                                    address.clear();
                                                    Config.item_shopping_list=0;
+                                                   
 
                                                  } else {}
                                                }));

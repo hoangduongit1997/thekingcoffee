@@ -35,15 +35,17 @@ class _Home_Card_Coffee_State extends State<Home_Card_Coffee> {
   BottomNavBarBloc _bottomNavBarBloc;
 
   intDataCoffeeScreen() async {
-    final result = await Get_Coffee_Product();
-    if (this.mounted) {
-      if (result != null) {
-        setState(() {
-          data_coffee = result;
-          lenght = data_coffee.length;
-        });
+    try {
+      final result = await Get_Coffee_Product();
+      if (this.mounted) {
+        if (result != null) {
+          setState(() {
+            data_coffee = result;
+            lenght = data_coffee.length;
+          });
+        }
       }
-    }
+    } catch (e) {}
   }
 
   @override
@@ -136,12 +138,17 @@ class _Home_Card_Coffee_State extends State<Home_Card_Coffee> {
                                               ),
                                             ),
                                           ),
-                                         data_coffee[index]['IsAvailable']==true? Favorite(
-                                            color: Colors.red,
-                                          ):SvgPicture.asset(
-                                            "assets/icons/sold.svg",
-                                            width: Dimension.getWidth(0.05),
-                                            height: Dimension.getHeight(0.05)),
+                                          data_coffee[index]['IsAvailable'] ==
+                                                  true
+                                              ? Favorite(
+                                                  color: Colors.red,
+                                                )
+                                              : SvgPicture.asset(
+                                                  "assets/icons/sold.svg",
+                                                  width:
+                                                      Dimension.getWidth(0.05),
+                                                  height: Dimension.getHeight(
+                                                      0.05)),
                                         ],
                                       ),
                                     ],

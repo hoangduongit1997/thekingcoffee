@@ -31,7 +31,8 @@ var promotion_list_food = [];
 
 class _Home_Card_Food_State extends State<Home_Card_Food> {
   intDataFoodScreen() async {
-    final result = await Get_Food_Products();
+    try{
+ final result = await Get_Food_Products();
 
     if (this.mounted) {
       if (result != null)
@@ -40,6 +41,9 @@ class _Home_Card_Food_State extends State<Home_Card_Food> {
           lenght = data_food.length;
         });
     }
+    }
+    catch(e){}
+   
   }
 
   @override

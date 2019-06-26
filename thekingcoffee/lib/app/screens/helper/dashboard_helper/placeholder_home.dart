@@ -42,7 +42,8 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
 
   intDataHomeSlider() async {
-    final result = await Get_New_Products();
+    try{
+      final result = await Get_New_Products();
     final coffee = await Is_Has_Coffee_Product();
     final tea = await Is_Have_Tea_Products();
     final food = await Is_Have_Food_Products();
@@ -56,6 +57,9 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
         list_drinking = drinking;
       });
     }
+    }
+    catch(e){}
+    
   }
 
   @override

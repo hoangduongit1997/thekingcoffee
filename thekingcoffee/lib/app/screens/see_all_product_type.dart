@@ -29,21 +29,25 @@ class _See_All_ProductTypeState extends State<See_All_Product_Type> {
   int promotion_product = 0;
   var promotion_list_product = [];
   intDataScreen() async {
-    final result = await Get_Data_All_Product(widget.catagory);
-    if (this.mounted) {
-      if (data != null) {
-        setState(() {
-          data = result;
-          lenght = data.length;
-        });
+    try {
+      final result = await Get_Data_All_Product(widget.catagory);
+      if (this.mounted) {
+        if (data != null) {
+          setState(() {
+            data = result;
+            lenght = data.length;
+          });
+        }
       }
-    }
+    } catch (e) {}
   }
 
   @override
   void initState() {
-    intDataScreen();
     super.initState();
+    setState(() {
+      intDataScreen();
+    });
   }
 
   var _scaffoldKey = new GlobalKey<ScaffoldState>();

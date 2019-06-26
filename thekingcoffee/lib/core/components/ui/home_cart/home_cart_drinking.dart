@@ -31,15 +31,17 @@ var promotion_list_drinking = [];
 
 class _Home_Card_Drinking_State extends State<Home_Card_Drinking> {
   intDataDrinkingScreen() async {
-    final result = await Get_Drinking_Products();
-    if (this.mounted) {
-      if (result != null) {
-        setState(() {
-          data_drinking = result;
-          lenght = data_drinking.length;
-        });
+    try {
+      final result = await Get_Drinking_Products();
+      if (this.mounted) {
+        if (result != null) {
+          setState(() {
+            data_drinking = result;
+            lenght = data_drinking.length;
+          });
+        }
       }
-    }
+    } catch (e) {}
   }
 
   @override
