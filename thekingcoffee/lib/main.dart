@@ -194,7 +194,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     language.setString('language', '${allTranslations.currentLanguage}');
     print('Language has been changed to: ${allTranslations.currentLanguage}');
   }
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

@@ -7,7 +7,6 @@ class Favorite extends StatefulWidget {
   @override
   _HeartState createState() => _HeartState();
 }
-
 class _HeartState extends State<Favorite> {
   bool isClick = false;
 

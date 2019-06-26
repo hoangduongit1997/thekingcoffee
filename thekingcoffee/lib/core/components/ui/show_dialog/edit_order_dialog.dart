@@ -160,6 +160,10 @@ class Order_DialogState extends State<Order_Dialog> {
             promotion['Sale']['Description'],
             style: StylesText.style13BrownBold,
           ),
+           subtitle: Text(
+            promotion['Sale']['SubTitle'],
+            style: StylesText.style11BrownNormal,
+          ),
           onChanged: (value) {
             list_promotion_product = [];
             list_promotion_product = promotion['SaleForProducts'];
@@ -200,11 +204,24 @@ class Order_DialogState extends State<Order_Dialog> {
   List<Widget> createCheckBoxListPromotionProDuct() {
     List<Widget> widgets_promotion_product = [];
     for (var promotion_product in list_promotion_product) {
-      final_price_promotion_product =
-          promotion_product['DetailedSaleForProduct']['Price'] -
-              promotion_product['MoneyDiscount'] -
-              promotion_product['PriceDiscount'];
+     
+       if (promotion_product['PriceDiscount'] > 0) {
+        final_price_promotion_product = 0;
+        final_price_promotion_product =
+            promotion_product['DetailedSaleForProduct']['Price'] -
+                promotion_product['PriceDiscount'];
+      } else if (promotion_product['PercentDiscount'] > 0) {
+        final_price_promotion_product = 0;
+        double temp = promotion_product['DetailedSaleForProduct']['Price'] *
+            promotion_product['PercentDiscount'];
+        final_price_promotion_product =
+            promotion_product['DetailedSaleForProduct']['Price'] - temp.toInt();
+      }
+
+      
       widgets_promotion_product.add(Container(
+        width: Dimension.getWidth(1.0),
+        height: Dimension.getHeight(0.1),
           child: CheckboxListTile(
         controlAffinity: ListTileControlAffinity.leading,
         title: Padding(
@@ -224,8 +241,8 @@ class Order_DialogState extends State<Order_Dialog> {
                               promotion_product['DetailedSaleForProduct']
                                   ['File_Path'],
                           fit: BoxFit.cover,
-                          height: Dimension.getHeight(0.1),
-                          width: Dimension.getWidth(0.18),
+                             height: Dimension.getHeight(0.08),
+                          width: Dimension.getWidth(0.15),
                           placeholder: (context, url) => new SizedBox(
                                 child: Center(
                                     child: CircularProgressIndicator(
@@ -253,7 +270,7 @@ class Order_DialogState extends State<Order_Dialog> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(2, 10, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(2, 5, 0, 0),
                       child: Container(
                           width: Dimension.getWidth(0.35),
                           child: promotion_product['DetailedSaleForProduct']
@@ -289,7 +306,7 @@ class Order_DialogState extends State<Order_Dialog> {
                                 )),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(2, 10, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(2, 5, 0, 0),
                       child: Container(
                           width: Dimension.getWidth(0.35),
                           child: promotion_product['DetailedSaleForProduct']

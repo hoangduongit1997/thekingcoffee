@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:thekingcoffee/app/config/config.dart';
-import 'package:thekingcoffee/app/screens/dashboard.dart';
+
 
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
@@ -10,7 +10,7 @@ import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart'
     as prefix0;
 import 'package:thekingcoffee/core/components/ui/show_dialog/show_message_dialog.dart';
-import 'package:thekingcoffee/core/components/ui/slider_card/promotion_product_slider.dart';
+
 import 'package:thekingcoffee/core/components/widgets/drawline.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 
@@ -139,11 +139,9 @@ class Order_DialogState extends State<Order_Dialog> {
             style: StylesText.style11BrownNormal,
           ),
           onChanged: (value) {
-            list_promotion_product = [];
+            list_promotion_product=[];
             list_promotion_product = promotion['SaleForProducts'];
-            //test slider
-
-            //
+           
             int oldMoney = 0, newMoney = 0;
             if (selectedPromotion != null) {
               oldMoney = ((widget.price -
@@ -179,7 +177,7 @@ class Order_DialogState extends State<Order_Dialog> {
   List<Widget> createCheckBoxListPromotionProDuct() {
     List<Widget> widgets_promotion_product = [];
     for (var promotion_product in list_promotion_product) {
-      //tinh tien sell
+    
       if (promotion_product['PriceDiscount'] > 0) {
         final_price_promotion_product = 0;
         final_price_promotion_product =
@@ -193,16 +191,18 @@ class Order_DialogState extends State<Order_Dialog> {
             promotion_product['DetailedSaleForProduct']['Price'] - temp.toInt();
       }
 
-      //
+      
       widgets_promotion_product.add(
           Container(
+          width: Dimension.getWidth(1.0),
+          height: Dimension.getHeight(0.1),
           child: CheckboxListTile(
         controlAffinity: ListTileControlAffinity.leading,
         title: Padding(
           padding: const EdgeInsets.fromLTRB(2, 0, 0, 0),
           child: Container(
             width: Dimension.getWidth(1.0),
-            height: Dimension.getHeight(0.16),
+            height: Dimension.getHeight(0.115),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
@@ -215,8 +215,8 @@ class Order_DialogState extends State<Order_Dialog> {
                               promotion_product['DetailedSaleForProduct']
                                   ['File_Path'],
                           fit: BoxFit.cover,
-                          height: Dimension.getHeight(0.1),
-                          width: Dimension.getWidth(0.18),
+                          height: Dimension.getHeight(0.08),
+                          width: Dimension.getWidth(0.15),
                           placeholder: (context, url) => new SizedBox(
                                 child: Center(
                                     child: CircularProgressIndicator(
@@ -244,7 +244,7 @@ class Order_DialogState extends State<Order_Dialog> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(2, 10, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(2, 5, 0, 0),
                       child: Container(
                           width: Dimension.getWidth(0.35),
                           child: promotion_product['DetailedSaleForProduct']
@@ -280,7 +280,7 @@ class Order_DialogState extends State<Order_Dialog> {
                                 )),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(2, 10, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(2, 5, 0, 0),
                       child: Container(
                           width: Dimension.getWidth(0.35),
                           child: promotion_product['DetailedSaleForProduct']
@@ -746,6 +746,8 @@ class Order_DialogState extends State<Order_Dialog> {
                                             mainAxisSize: MainAxisSize.min,
                                             children:
                                                 createCheckBoxListPromotionProDuct(),
+                                          
+                                            
                                           ),
                                         ),
                                       ),
@@ -754,7 +756,7 @@ class Order_DialogState extends State<Order_Dialog> {
                                 ),
                               ),
                         Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                             child: Container(
                               child: CustomPaint(
                                   painter: Drawhorizontalline(false, 180.0,
