@@ -14,7 +14,7 @@ import 'package:thekingcoffee/core/components/lib/change_language/change_languag
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
 import 'app/validation/validation.dart';
-import 'package:connectivity/connectivity.dart';
+
 Number_Bloc number_bloc = new Number_Bloc();
 void main() async {
   SharedPreferences pref = await SharedPreferences.getInstance();
@@ -57,113 +57,14 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
-  Future<void> _updateConnectionStatus(ConnectivityResult result) async {
-    switch (result) {
-      case ConnectivityResult.wifi:
-        Fluttertoast.showToast(
-            msg: "Wifi",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            timeInSecForIos: 1,
-            backgroundColor: Colors.redAccent,
-            textColor: Colors.white,
-            fontSize: 16.0);
-        String wifiName, wifiBSSID, wifiIP;
 
-        try {
-          wifiName = await _connectivity.getWifiName();
 
-        } catch (e) {
-          print(e.toString());
-          wifiName = "Failed to get Wifi Name";
-        }
 
-        try {
-          wifiBSSID = await _connectivity.getWifiBSSID();
-        } catch (e) {
-          print(e.toString());
-          wifiBSSID = "Failed to get Wifi BSSID";
-        }
 
-        try {
-          wifiIP = await _connectivity.getWifiIP();
-        }  catch (e) {
-          print(e.toString());
-          wifiIP = "Failed to get Wifi IP";
-        }
-
-        setState(() {
-          _connectionStatus = '$result\n'
-              'Wifi Name: $wifiName\n'
-              'Wifi BSSID: $wifiBSSID\n'
-              'Wifi IP: $wifiIP\n';
-        });
-        break;
-      case ConnectivityResult.mobile:
-        {
-          Fluttertoast.showToast(
-              msg: "Mobile",
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIos: 1,
-              backgroundColor: Colors.redAccent,
-              textColor: Colors.white,
-              fontSize: 16.0);
-          break;
-        }
-      case ConnectivityResult.none:
-        Fluttertoast.showToast(
-            msg: "None",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            timeInSecForIos: 1,
-            backgroundColor: Colors.redAccent,
-            textColor: Colors.white,
-            fontSize: 16.0);
-        setState(() => _connectionStatus = result.toString());
-        break;
-      default:
-        Fluttertoast.showToast(
-            msg: "Failed to get connectivity",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            timeInSecForIos: 1,
-            backgroundColor: Colors.redAccent,
-            textColor: Colors.white,
-            fontSize: 16.0);
-        setState(() => _connectionStatus = 'Failed to get connectivity.');
-        break;
-    }
-  }
-  Future<void> initConnectivity() async {
-    ConnectivityResult result;
-
-    try {
-      result = await _connectivity.checkConnectivity();
-      Fluttertoast.showToast(
-          msg: result.toString(),
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIos: 1,
-          backgroundColor: Colors.redAccent,
-          textColor: Colors.white,
-          fontSize: 16.0);
-    } catch (e) {
-      print(e.toString());
-    }
-    if (!mounted) {
-      return;
-    }
-
-    _updateConnectionStatus(result);
-  }
-  StreamSubscription<ConnectivityResult> _connectivitySubscription;
-  String _connectionStatus = 'Unknown';
-  final Connectivity _connectivity = Connectivity();
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
-    _connectivitySubscription.cancel();
+
     number_bloc.dispose();
     super.dispose();
   }
@@ -188,9 +89,7 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     allTranslations.onLocaleChangedCallback = _onLocaleChanged;
-    initConnectivity();
-    _connectivitySubscription =
-        _connectivity.onConnectivityChanged.listen(_updateConnectionStatus);
+
   }
 
   _onLocaleChanged() async {

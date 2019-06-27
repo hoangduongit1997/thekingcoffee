@@ -1,4 +1,3 @@
-
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -6,8 +5,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 
-
 import 'package:thekingcoffee/app/styles/styles.dart';
+import 'package:thekingcoffee/app/validation/validation.dart';
 import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog_order.dart';
@@ -30,6 +29,7 @@ var list_new_product = [];
 class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
   int _current = 0;
   static int starCount = 5;
+ 
 
   @override
   Widget build(context) {
@@ -75,7 +75,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
 
   final List child = Map_Object.map_home_cart<Widget>(
     list_new_product,
-    (index, i) {
+    (index, i)  {
       promotion_list_new_product =
           list_new_product[index]['Promotion'] as List<dynamic>;
       promotion_new_product = promotion_list_new_product.length;
@@ -147,16 +147,22 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
                                                 )),
                                               )),
                                     ),
+                                   
+                                  Config.isLogin==true?
                                     list_new_product[index]['IsAvailable'] ==
                                             true
-                                        ? Favorite(
-                                          
-                                            color: Colors.red,
-                                          )
+                                        ? Favorite(Colors.red,
+                                            list_new_product[index]['Loved'],list_new_product[index]['Id'])
                                         : SvgPicture.asset(
                                             "assets/icons/sold.svg",
                                             width: Dimension.getWidth(0.05),
-                                            height: Dimension.getHeight(0.05)),
+                                            height: Dimension.getHeight(0.05)):Container(
+                                              child: list_new_product[index]['IsAvailable'] ==
+                                            false?SvgPicture.asset(
+                                            "assets/icons/sold.svg",
+                                            width: Dimension.getWidth(0.05),
+                                            height: Dimension.getHeight(0.05)):Container(),
+                                            ),
                                   ],
                                 )),
                           ],
@@ -185,12 +191,12 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
                           StarRating(
                             size: 13.0,
                             rating: double.tryParse(
-                                list_new_product[index]['Start'].toString()),
+                                list_new_product[index]['Star'].toString()),
                             color: Colors.orange,
                             borderColor: Colors.grey,
                             starCount: starCount,
                           ),
-                          Text(list_new_product[index]['Start'].toString(),
+                          Text(list_new_product[index]['Star'].toString(),
                               style: StylesText.style13BrownNormal)
                         ],
                       ),

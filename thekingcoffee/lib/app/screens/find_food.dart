@@ -43,7 +43,7 @@ class _FindFoodState extends State<FindFood> {
             color: Colors.brown,
           ),
           onPressed: () {
-           Navigator.of(context).pop();
+            Navigator.of(context).pop();
           },
         ),
         backgroundColor: Colors.transparent,
@@ -151,19 +151,33 @@ class _FindFoodState extends State<FindFood> {
 
                                 return GestureDetector(
                                   onTap: () {
-                                    LoadingDialog_Order.showLoadingDialog(
-                                        context,
-                                        search_result[index]['Id'],
-                                        search_result[index]['Name'],
-                                        search_result[index]['File_Path'],
-                                        search_result[index]['Description'],
-                                        search_result[index]['Price'],
-                                        search_result[index]['IsHot'],
-                                        search_result[index]['IsHot'],
-                                        search_result[index]['Toppings'],
-                                        search_result[index]['Size'],
-                                        search_result[index]['Sale'],
-                                        ListOrderProducts);
+                                    if (search_result[index]['IsAvailable'] ==
+                                        false) {
+                                      Fluttertoast.showToast(
+                                          msg: allTranslations
+                                              .text("out_of_stock")
+                                              .toString(),
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.BOTTOM,
+                                          timeInSecForIos: 1,
+                                          backgroundColor: Colors.redAccent,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0);
+                                    } else {
+                                      LoadingDialog_Order.showLoadingDialog(
+                                          context,
+                                          search_result[index]['Id'],
+                                          search_result[index]['Name'],
+                                          search_result[index]['File_Path'],
+                                          search_result[index]['Description'],
+                                          search_result[index]['Price'],
+                                          search_result[index]['IsHot'],
+                                          search_result[index]['IsHot'],
+                                          search_result[index]['Toppings'],
+                                          search_result[index]['Size'],
+                                          search_result[index]['Sale'],
+                                          ListOrderProducts);
+                                    }
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.all(2.0),
@@ -225,10 +239,14 @@ class _FindFoodState extends State<FindFood> {
                                                                                   )),
                                                                                 )),
                                                                       ),
-                                                                      Favorite(
-                                                                        color: Colors
-                                                                            .red,
-                                                                      ),
+                                                                      Config.isLogin ==
+                                                                              true
+                                                                          ? search_result[index]['IsAvailable'] == true
+                                                                              ? Favorite(Colors.red, search_result[index]['Loved'],search_result[index]['Id'])
+                                                                              : SvgPicture.asset("assets/icons/sold.svg", width: Dimension.getWidth(0.05), height: Dimension.getHeight(0.05))
+                                                                          : Container(
+                                                                              child: search_result[index]['IsAvailable'] == false ? SvgPicture.asset("assets/icons/sold.svg", width: Dimension.getWidth(0.05), height: Dimension.getHeight(0.05)) : Container(),
+                                                                            )
                                                                     ],
                                                                   )),
                                                             ],
@@ -289,7 +307,7 @@ class _FindFoodState extends State<FindFood> {
                                                                         size:
                                                                             13.0,
                                                                         rating:
-                                                                            double.tryParse(search_result[index]['Start'].toString()),
+                                                                            double.tryParse(search_result[index]['Star'].toString()),
                                                                         color: Colors
                                                                             .orange,
                                                                         borderColor:
@@ -298,7 +316,7 @@ class _FindFoodState extends State<FindFood> {
                                                                             5,
                                                                       ),
                                                                       Text(
-                                                                          search_result[index]['Start']
+                                                                          search_result[index]['Star']
                                                                               .toString(),
                                                                           style:
                                                                               StylesText.style13BrownNormal)
@@ -339,14 +357,15 @@ class _FindFoodState extends State<FindFood> {
                                                                   0, 5, 0, 0),
                                                           child: Container(
                                                             child: CustomPaint(
-                                                                painter:
-                                                                    Drawhorizontalline(
-                                                                        false,
-                                                                        0.0,
-                                                                        300.0,
-                                                                        Colors
-                                                                            .blueGrey,
-                                                                        0.5)),
+                                                                painter: Drawhorizontalline(
+                                                                    false,
+                                                                    0.0,
+                                                                    Dimension
+                                                                        .getWidth(
+                                                                            1.0),
+                                                                    Colors
+                                                                        .blueGrey,
+                                                                    0.5)),
                                                           )),
                                                       Padding(
                                                         padding:
@@ -459,16 +478,21 @@ class _FindFoodState extends State<FindFood> {
   }
 
   Future<void> refreshPage() async {
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 1));
+    
+        search_result=[];
+    
 
     final resutl = await Find_Food(food.text);
-    setState(() {
-      if (resutl != null) {
-        search_result = resutl;
-        length = search_result.length;
-      } else {
-        length = 0;
-      }
-    });
+    if (this.mounted) {
+      setState(() {
+        if (resutl != null) {
+          search_result = resutl;
+          length = search_result.length;
+        } else {
+          length = 0;
+        }
+      });
+    }
   }
 }

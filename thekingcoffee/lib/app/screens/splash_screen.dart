@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:thekingcoffee/app/config/config.dart';
 
 import 'package:thekingcoffee/app/screens/dashboard.dart';
 
@@ -32,9 +33,11 @@ class SplashScreenState extends State<SplashScreen> {
 
   onDoneLoading() async {
     if ((await Validation.IsLogin()) == true) {
+      Config.isLogin=true;
       return Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => DashBoard()));
     }
+    Config.isLogin=false;
     return Navigator.of(context)
         .pushReplacement(MaterialPageRoute(builder: (context) => Tutorial()));
   }

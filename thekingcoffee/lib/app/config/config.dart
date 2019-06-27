@@ -1,7 +1,7 @@
 class Config {
   static String find_food_API = ip + "api/Product/FindProduct?Name=";
   static String ip = "http://207.148.71.41/";
-
+  static bool isLogin=false;
   static String check_point = ip + "api/Order/TestPaidByPoint";
   static String login_Api = ip + "api/Customer/Login";
   static String rate_order = ip + "api/Order/RateOrder";
@@ -10,6 +10,7 @@ class Config {
   static String gmail_auth_API = ip + "api/Customer/ResetPassword";
   static String get_data_home_cart_API = ip + "api/Product/GetAll";
   static String get_fee_ship = ip + "api/Order/MakeShipment";
+  static String set_love=ip+"api/Product/SetLoveProduct";
   static String check_coupon = ip + "api/Product/CheckCoupon";
   static String get_new_products_API =
       ip + "api/Product/GetAll?IsDesc=true&Rows=5";

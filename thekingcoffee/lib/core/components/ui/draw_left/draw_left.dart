@@ -209,6 +209,7 @@ class _HomeMenuState extends State<HomeMenu> {
                                           )),
                                     )),
                                 onPressed: () async {
+                                  Config.isLogin=false;
                                   ListOrderProducts.clear();
                                   fee_ship=0;
                                   address.clear();

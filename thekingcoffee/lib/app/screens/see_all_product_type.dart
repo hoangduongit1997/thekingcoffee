@@ -189,20 +189,34 @@ class _See_All_ProductTypeState extends State<See_All_Product_Type> {
                                                                               )),
                                                                             )),
                                                               ),
-                                                              data[index]['IsAvailable'] ==
+                                                              Config.isLogin ==
                                                                       true
-                                                                  ? Favorite(
-                                                                      color: Colors
-                                                                          .red,
-                                                                    )
-                                                                  : SvgPicture.asset(
-                                                                      "assets/icons/sold.svg",
-                                                                      width: Dimension
-                                                                          .getWidth(
+                                                                  ? data[index]
+                                                                              [
+                                                                              'IsAvailable'] ==
+                                                                          true
+                                                                      ? Favorite(
+                                                                          Colors
+                                                                              .red,
+                                                                          data[index]
+                                                                              [
+                                                                              'Loved'],
+                                                              data[index]['Id'])
+                                                                      : SvgPicture.asset(
+                                                                          "assets/icons/sold.svg",
+                                                                          width: Dimension.getWidth(
                                                                               0.05),
-                                                                      height: Dimension
-                                                                          .getHeight(
-                                                                              0.05)),
+                                                                          height:
+                                                                              Dimension.getHeight(0.05))
+                                                                  : Container(
+                                                                      child: data[index]['IsAvailable'] ==
+                                                                              false
+                                                                          ? SvgPicture.asset(
+                                                                              "assets/icons/sold.svg",
+                                                                              width: Dimension.getWidth(0.05),
+                                                                              height: Dimension.getHeight(0.05))
+                                                                          : Container(),
+                                                                    )
                                                             ],
                                                           )),
                                                     ],
@@ -255,8 +269,7 @@ class _See_All_ProductTypeState extends State<See_All_Product_Type> {
                                                                 size: 13.0,
                                                                 rating: double.tryParse(data[
                                                                             index]
-                                                                        [
-                                                                        'Start']
+                                                                        ['Star']
                                                                     .toString()),
                                                                 color: Colors
                                                                     .orange,
@@ -266,7 +279,7 @@ class _See_All_ProductTypeState extends State<See_All_Product_Type> {
                                                               ),
                                                               Text(
                                                                   data[index][
-                                                                          'Start']
+                                                                          'Star']
                                                                       .toString(),
                                                                   style: StylesText
                                                                       .style13BrownNormal)
@@ -314,7 +327,7 @@ class _See_All_ProductTypeState extends State<See_All_Product_Type> {
                                                             Drawhorizontalline(
                                                                 false,
                                                                 0.0,
-                                                                300.0,
+                                                                Dimension.getWidth(1.0),
                                                                 Colors.blueGrey,
                                                                 0.5)),
                                                   )),

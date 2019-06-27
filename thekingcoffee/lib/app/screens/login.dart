@@ -334,6 +334,7 @@ class LoginState extends State<LoginWithPass> {
       if (await PostLogin(
               _user.text.trim().toString(), _pass.text.trim().toString()) ==
           true) {
+           Config.isLogin=true;
         Navigator.of(context, rootNavigator: true).pushReplacement(
             MaterialPageRoute(builder: (context) => DashBoard()));
       }

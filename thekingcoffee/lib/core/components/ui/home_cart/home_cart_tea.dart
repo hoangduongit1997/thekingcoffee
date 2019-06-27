@@ -59,307 +59,313 @@ class _Home_Card_Tea_State extends State<Home_Card_Tea> {
           children: <Widget>[
             Container(
               height: Dimension.getHeight(0.33),
-              child: ListView.builder(
-                  scrollDirection: Axis.horizontal,
-                  shrinkWrap: true,
-                  physics: const ClampingScrollPhysics(),
-                  itemCount: lenght,
-                  itemBuilder: (BuildContext context, int index) {
-                    promotion_list_tea =
-                        data_tea[index]['Promotion'] as List<dynamic>;
-                    promotion_tea = promotion_list_tea.length;
+              child: Center(
+                child:data_tea==null||data_tea.length==0?CircularProgressIndicator(valueColor: AlwaysStoppedAnimation(Colors.redAccent),) :ListView.builder(
+                    scrollDirection: Axis.horizontal,
+                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
+                    itemCount: lenght,
+                    itemBuilder: (BuildContext context, int index) {
+                      promotion_list_tea =
+                          data_tea[index]['Promotion'] as List<dynamic>;
+                      promotion_tea = promotion_list_tea.length;
 
-                    if (data_tea == null) {
-                      return Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    } else {
-                      return new GestureDetector(
-                          child: Container(
-                              decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  border: Border.all(color: Colors.grey[300]),
-                                  borderRadius:
-                                      BorderRadius.all(Radius.circular(8.0))),
-                              margin: EdgeInsets.only(right: 12),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: <Widget>[
-                                  Row(
-                                    children: <Widget>[
-                                      Stack(
-                                        alignment: AlignmentDirectional.topEnd,
-                                        children: <Widget>[
-                                          Padding(
-                                            padding: const EdgeInsets.fromLTRB(
-                                                0, 0, 0, 0),
-                                            child: Container(
-                                              height: Dimension.getHeight(0.18),
-                                              width: Dimension.getWidth(0.51),
-                                              decoration: new BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
-                                                border: new Border.all(
-                                                    color: Colors.grey),
-                                              ),
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(8.0),
-                                                child: CachedNetworkImage(
-                                                  imageUrl: Config.ip +
-                                                      data_tea[index]
-                                                          ['File_Path'],
-                                                  fit: BoxFit.fill,
-                                                  placeholder: (context, url) =>
-                                                      new SizedBox(
-                                                        child: Center(
-                                                          child:
-                                                              CircularProgressIndicator(
-                                                            valueColor:
-                                                                new AlwaysStoppedAnimation(
-                                                                    Colors
-                                                                        .redAccent),
+                      if (data_tea == null) {
+                        return Center(
+                          child: CircularProgressIndicator(),
+                        );
+                      } else {
+                        return new GestureDetector(
+                            child: Container(
+                                decoration: BoxDecoration(
+                                    color: Colors.white,
+                                    border: Border.all(color: Colors.grey[300]),
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(8.0))),
+                                margin: EdgeInsets.only(right: 12),
+                                child: Column(
+                                  mainAxisAlignment: MainAxisAlignment.start,
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: <Widget>[
+                                    Row(
+                                      children: <Widget>[
+                                        Stack(
+                                          alignment: AlignmentDirectional.topEnd,
+                                          children: <Widget>[
+                                            Padding(
+                                              padding: const EdgeInsets.fromLTRB(
+                                                  0, 0, 0, 0),
+                                              child: Container(
+                                                height: Dimension.getHeight(0.18),
+                                                width: Dimension.getWidth(0.51),
+                                                decoration: new BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(8.0),
+                                                  border: new Border.all(
+                                                      color: Colors.grey),
+                                                ),
+                                                child: ClipRRect(
+                                                  borderRadius:
+                                                      BorderRadius.circular(8.0),
+                                                  child: CachedNetworkImage(
+                                                    imageUrl: Config.ip +
+                                                        data_tea[index]
+                                                            ['File_Path'],
+                                                    fit: BoxFit.fill,
+                                                    placeholder: (context, url) =>
+                                                        new SizedBox(
+                                                          child: Center(
+                                                            child:
+                                                                CircularProgressIndicator(
+                                                              valueColor:
+                                                                  new AlwaysStoppedAnimation(
+                                                                      Colors
+                                                                          .redAccent),
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
+                                                  ),
                                                 ),
                                               ),
                                             ),
+                                            Config.isLogin==true?
+                                      data_tea[index]['IsAvailable'] ==
+                                              true
+                                          ? Favorite(Colors.red,
+                                              data_tea[index]['Loved'],data_tea[index]['Id'])
+                                          : SvgPicture.asset(
+                                              "assets/icons/sold.svg",
+                                              width: Dimension.getWidth(0.05),
+                                              height: Dimension.getHeight(0.05)):Container(
+                                                child:data_tea[index]['IsAvailable'] ==
+                                              false?SvgPicture.asset(
+                                              "assets/icons/sold.svg",
+                                              width: Dimension.getWidth(0.05),
+                                              height: Dimension.getHeight(0.05)):Container(),)
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                    Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            0, 10, 0, 0),
+                                        child: Container(
+                                          width: Dimension.getWidth(0.51),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                            children: <Widget>[
+                                              Container(
+                                                width: Dimension.getWidth(0.51),
+                                                child: Text(
+                                                  data_tea[index]['Name'],
+                                                  overflow: TextOverflow.ellipsis,
+                                                  style:
+                                                      StylesText.style17BrownBold,
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                          data_tea[index]['IsAvailable'] == true
-                                              ? Favorite(
-                                                  color: Colors.red,
-                                                )
-                                              : SvgPicture.asset(
-                                                  "assets/icons/sold.svg",
-                                                  width:
-                                                      Dimension.getWidth(0.05),
-                                                  height: Dimension.getHeight(
-                                                      0.05)),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                  Padding(
-                                      padding: const EdgeInsets.fromLTRB(
-                                          0, 10, 0, 0),
+                                        )),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.fromLTRB(0, 10, 0, 0),
                                       child: Container(
                                         width: Dimension.getWidth(0.51),
                                         child: Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
                                           children: <Widget>[
-                                            Container(
-                                              width: Dimension.getWidth(0.51),
-                                              child: Text(
-                                                data_tea[index]['Name'],
-                                                overflow: TextOverflow.ellipsis,
-                                                style:
-                                                    StylesText.style17BrownBold,
-                                              ),
-                                            ),
+                                            Stack(
+                                              alignment: AlignmentDirectional
+                                                  .centerStart,
+                                              children: <Widget>[
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  children: <Widget>[
+                                                    StarRating(
+                                                      size: 13.0,
+                                                      rating: double.tryParse(
+                                                          data_tea[index]['Star']
+                                                              .toString()),
+                                                      color: Colors.orange,
+                                                      borderColor: Colors.grey,
+                                                      starCount: 5,
+                                                    ),
+                                                    Text(
+                                                        data_tea[index]['Star']
+                                                            .toString(),
+                                                        style: StylesText
+                                                            .style13BrownNormal)
+                                                  ],
+                                                ),
+                                                data_tea[index]['IsHot'] == 1
+                                                    ? Container(
+                                                        width: Dimension.getWidth(
+                                                            0.51),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .end,
+                                                          children: <Widget>[
+                                                            SvgPicture.asset(
+                                                              'assets/icons/hot_tea.svg',
+                                                              height: Dimension
+                                                                  .getHeight(
+                                                                      0.035),
+                                                              width: Dimension
+                                                                  .getHeight(0.1),
+                                                              color: Colors
+                                                                  .redAccent,
+                                                            )
+                                                          ],
+                                                        ),
+                                                      )
+                                                    : Container()
+                                              ],
+                                            )
                                           ],
                                         ),
-                                      )),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                                    child: Container(
-                                      width: Dimension.getWidth(0.51),
-                                      child: Row(
-                                        children: <Widget>[
-                                          Stack(
-                                            alignment: AlignmentDirectional
-                                                .centerStart,
-                                            children: <Widget>[
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: <Widget>[
-                                                  StarRating(
-                                                    size: 13.0,
-                                                    rating: double.tryParse(
-                                                        data_tea[index]['Start']
-                                                            .toString()),
-                                                    color: Colors.orange,
-                                                    borderColor: Colors.grey,
-                                                    starCount: 5,
-                                                  ),
-                                                  Text(
-                                                      data_tea[index]['Start']
+                                      ),
+                                    ),
+                                    Padding(
+                                        padding:
+                                            const EdgeInsets.fromLTRB(0, 2, 0, 0),
+                                        child: Container(
+                                          child: CustomPaint(
+                                              painter: Drawhorizontalline(
+                                                  false,
+                                                  0.0,
+                                                  Dimension.getWidth(0.51),
+                                                  Colors.blueGrey[300],
+                                                  0.5)),
+                                        )),
+                                    Padding(
+                                      padding:
+                                          const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                                      child: Container(
+                                        width: Dimension.getWidth(0.51),
+                                        child: Row(
+                                          children: <Widget>[
+                                            Stack(
+                                              alignment: AlignmentDirectional
+                                                  .centerStart,
+                                              children: <Widget>[
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.start,
+                                                  children: <Widget>[
+                                                    Icon(
+                                                      Icons.monetization_on,
+                                                      color: Colors.redAccent,
+                                                    ),
+                                                    Text(
+                                                      data_tea[index]['Price']
                                                           .toString(),
                                                       style: StylesText
-                                                          .style13BrownNormal)
-                                                ],
-                                              ),
-                                              data_tea[index]['IsHot'] == 1
-                                                  ? Container(
-                                                      width: Dimension.getWidth(
-                                                          0.51),
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .end,
-                                                        children: <Widget>[
-                                                          SvgPicture.asset(
-                                                            'assets/icons/hot_tea.svg',
-                                                            height: Dimension
-                                                                .getHeight(
-                                                                    0.035),
-                                                            width: Dimension
-                                                                .getHeight(0.1),
-                                                            color: Colors
-                                                                .redAccent,
-                                                          )
-                                                        ],
-                                                      ),
+                                                          .style13BrownBold,
                                                     )
-                                                  : Container()
-                                            ],
-                                          )
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
-                                      padding:
-                                          const EdgeInsets.fromLTRB(0, 2, 0, 0),
-                                      child: Container(
-                                        child: CustomPaint(
-                                            painter: Drawhorizontalline(
-                                                false,
-                                                0.0,
-                                                Dimension.getWidth(0.51),
-                                                Colors.blueGrey[300],
-                                                0.5)),
-                                      )),
-                                  Padding(
-                                    padding:
-                                        const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                                    child: Container(
-                                      width: Dimension.getWidth(0.51),
-                                      child: Row(
-                                        children: <Widget>[
-                                          Stack(
-                                            alignment: AlignmentDirectional
-                                                .centerStart,
-                                            children: <Widget>[
-                                              Row(
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.start,
-                                                children: <Widget>[
-                                                  Icon(
-                                                    Icons.monetization_on,
-                                                    color: Colors.redAccent,
-                                                  ),
-                                                  Text(
-                                                    data_tea[index]['Price']
-                                                        .toString(),
-                                                    style: StylesText
-                                                        .style13BrownBold,
-                                                  )
-                                                ],
-                                              ),
-                                              promotion_list_tea == null ||
-                                                      promotion_list_tea
-                                                              .length ==
-                                                          0
-                                                  ? IgnorePointer(
-                                                      ignoring: true,
-                                                      child: Opacity(
-                                                          opacity: 0.0,
-                                                          child: Container(
-                                                            width: Dimension
-                                                                .getWidth(0.51),
-                                                            child: Row(
-                                                              mainAxisAlignment:
-                                                                  MainAxisAlignment
-                                                                      .end,
-                                                              children: <
-                                                                  Widget>[
-                                                                Icon(
-                                                                  Icons
-                                                                      .fastfood,
-                                                                  color: Colors
-                                                                      .redAccent,
-                                                                ),
-                                                                Text(
-                                                                  promotion_tea
-                                                                          .toString() +
-                                                                      " " +
-                                                                      allTranslations
-                                                                          .text(
-                                                                              "discount")
-                                                                          .toString(),
-                                                                  style: StylesText
-                                                                      .style13BrownBold,
-                                                                )
-                                                              ],
+                                                  ],
+                                                ),
+                                                promotion_list_tea == null ||
+                                                        promotion_list_tea
+                                                                .length ==
+                                                            0
+                                                    ? IgnorePointer(
+                                                        ignoring: true,
+                                                        child: Opacity(
+                                                            opacity: 0.0,
+                                                            child: Container(
+                                                              width: Dimension
+                                                                  .getWidth(0.51),
+                                                              child: Row(
+                                                                mainAxisAlignment:
+                                                                    MainAxisAlignment
+                                                                        .end,
+                                                                children: <
+                                                                    Widget>[
+                                                                  Icon(
+                                                                    Icons
+                                                                        .fastfood,
+                                                                    color: Colors
+                                                                        .redAccent,
+                                                                  ),
+                                                                  Text(
+                                                                    promotion_tea
+                                                                            .toString() +
+                                                                        " " +
+                                                                        allTranslations
+                                                                            .text(
+                                                                                "discount")
+                                                                            .toString(),
+                                                                    style: StylesText
+                                                                        .style13BrownBold,
+                                                                  )
+                                                                ],
+                                                              ),
+                                                            )),
+                                                      )
+                                                    : Container(
+                                                        width: Dimension.getWidth(
+                                                            0.51),
+                                                        child: Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .end,
+                                                          children: <Widget>[
+                                                            Icon(
+                                                              Icons.fastfood,
+                                                              color: Colors
+                                                                  .redAccent,
                                                             ),
-                                                          )),
-                                                    )
-                                                  : Container(
-                                                      width: Dimension.getWidth(
-                                                          0.51),
-                                                      child: Row(
-                                                        mainAxisAlignment:
-                                                            MainAxisAlignment
-                                                                .end,
-                                                        children: <Widget>[
-                                                          Icon(
-                                                            Icons.fastfood,
-                                                            color: Colors
-                                                                .redAccent,
-                                                          ),
-                                                          Text(
-                                                            promotion_tea
-                                                                    .toString() +
-                                                                " discount",
-                                                            style: StylesText
-                                                                .style13BrownBold,
-                                                          )
-                                                        ],
-                                                      ),
-                                                    )
-                                            ],
-                                          )
-                                        ],
+                                                            Text(
+                                                              promotion_tea
+                                                                      .toString() +
+                                                                  " discount",
+                                                              style: StylesText
+                                                                  .style13BrownBold,
+                                                            )
+                                                          ],
+                                                        ),
+                                                      )
+                                              ],
+                                            )
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                  )
-                                ],
-                              )),
-                          onTap: () {
-                            if (data_tea[index]['IsAvailable'] == false) {
-                              Fluttertoast.showToast(
-                                  msg: allTranslations
-                                      .text("out_of_stock")
-                                      .toString(),
-                                  toastLength: Toast.LENGTH_SHORT,
-                                  gravity: ToastGravity.BOTTOM,
-                                  timeInSecForIos: 1,
-                                  backgroundColor: Colors.redAccent,
-                                  textColor: Colors.white,
-                                  fontSize: 16.0);
-                            } else {
-                              LoadingDialog_Order.showLoadingDialog(
-                                  context,
-                                  data_tea[index]['Id'],
-                                  data_tea[index]['Name'],
-                                  data_tea[index]['File_Path'],
-                                  data_tea[index]['Description'],
-                                  data_tea[index]['Price'],
-                                  data_tea[index]['IsHot'],
-                                  data_tea[index]['IsHot'],
-                                  data_tea[index]['Toppings'],
-                                  data_tea[index]['Size'],
-                                  data_tea[index]['Promotion'],
-                                  ListOrderProducts);
-                            }
-                          });
-                    }
-                  }),
+                                    )
+                                  ],
+                                )),
+                            onTap: () {
+                              if (data_tea[index]['IsAvailable'] == false) {
+                                Fluttertoast.showToast(
+                                    msg: allTranslations
+                                        .text("out_of_stock")
+                                        .toString(),
+                                    toastLength: Toast.LENGTH_SHORT,
+                                    gravity: ToastGravity.BOTTOM,
+                                    timeInSecForIos: 1,
+                                    backgroundColor: Colors.redAccent,
+                                    textColor: Colors.white,
+                                    fontSize: 16.0);
+                              } else {
+                                LoadingDialog_Order.showLoadingDialog(
+                                    context,
+                                    data_tea[index]['Id'],
+                                    data_tea[index]['Name'],
+                                    data_tea[index]['File_Path'],
+                                    data_tea[index]['Description'],
+                                    data_tea[index]['Price'],
+                                    data_tea[index]['IsHot'],
+                                    data_tea[index]['IsHot'],
+                                    data_tea[index]['Toppings'],
+                                    data_tea[index]['Size'],
+                                    data_tea[index]['Promotion'],
+                                    ListOrderProducts);
+                              }
+                            });
+                      }
+                    }),
+              ),
             ),
           ],
         ),

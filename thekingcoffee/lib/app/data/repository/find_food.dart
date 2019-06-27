@@ -2,13 +2,23 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 
 Find_Food(String food) async {
   try {
-    final response = await http.get(Config.find_food_API + food);
-    final res = json.decode(response.body)['Value'];
+    var res;
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String token = prefs.getString("token");
+    if (token != null) {
+      http.Response response = await http
+          .get(Config.find_food_API + food, headers: {'Token': token});
+      res = json.decode(response.body)['Value'];
+    } else {
+      http.Response response = await http.get(Config.find_food_API + food);
+      res = json.decode(response.body)['Value'];
+    }
     if (res == null) {
       Fluttertoast.showToast(
           msg: allTranslations.text("no_food").toString(),
