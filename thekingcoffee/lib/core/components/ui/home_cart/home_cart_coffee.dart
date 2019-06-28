@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:http/http.dart' as http;
+
 import 'package:thekingcoffee/app/bloc/bottom_navigation_bloc.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/data/repository/get_coffee_products.dart';
 
-import 'package:thekingcoffee/app/data/repository/get_data_all_product.dart';
-import 'package:thekingcoffee/app/screens/dashboard.dart';
+
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog_order.dart';

@@ -164,12 +164,12 @@ class LoginState extends State<LoginWithPass> {
                           Padding(
                               padding: const EdgeInsets.fromLTRB(0, 0, 0, 20),
                               child: GestureDetector(
-                                onTap: () => {
+                                onTap: (){
                                       Navigator.push(
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  GmailAuth()))
+                                                  GmailAuth()));
                                     },
                                 child: Text(
                                     allTranslations
@@ -222,11 +222,11 @@ class LoginState extends State<LoginWithPass> {
                                 style: StylesText.style16Brown,
                               ),
                               GestureDetector(
-                                  onTap: () => {
+                                  onTap: (){
                                         Navigator.push(
                                             context,
                                             MaterialPageRoute(
-                                                builder: (context) => SignUp()))
+                                                builder: (context) => SignUp()));
                                       },
                                   child: Text(
                                     allTranslations.text("sign_up").toString(),

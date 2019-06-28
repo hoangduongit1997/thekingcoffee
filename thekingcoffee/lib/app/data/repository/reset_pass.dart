@@ -25,7 +25,6 @@ Future<bool> ReSetPass_Res(
     status = true;
     final pref = await SharedPreferences.getInstance();
     pref.clear();
-    pref.commit();
     Fluttertoast.showToast(
         msg: allTranslations.text("reset_pass_suc").toString(),
         toastLength: Toast.LENGTH_SHORT,

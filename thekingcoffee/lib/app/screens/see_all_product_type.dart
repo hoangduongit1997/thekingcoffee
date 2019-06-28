@@ -45,9 +45,9 @@ class _See_All_ProductTypeState extends State<See_All_Product_Type> {
   @override
   void initState() {
     super.initState();
-    setState(() {
+
       intDataScreen();
-    });
+
   }
 
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -447,10 +447,16 @@ class _See_All_ProductTypeState extends State<See_All_Product_Type> {
   }
 
   Future<void> refreshPage() async {
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 1));
+    final result=  intDataScreen();
 
-    setState(() {
-      initState();
-    });
+      if(this.mounted)
+      {
+        setState(() {
+          data=result;
+          build(context);
+        });
+      }
+
   }
 }

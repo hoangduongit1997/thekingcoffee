@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:thekingcoffee/app/config/config.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
 import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 
 Future<bool> PostSignUp(String name, String pass, String phone, String date,
@@ -23,12 +23,8 @@ Future<bool> PostSignUp(String name, String pass, String phone, String date,
   var data = json.decode(body);
   if (data['Status'] == 1) {
     status = true;
-    var token = data['Value']['Token'];
-    var id_user = data['Value']['Id'];
-    final prefs = await SharedPreferences.getInstance();
-    prefs.setString('token', token);
-    prefs.setInt('id_user', id_user);
-    prefs.commit();
+
+
     Fluttertoast.showToast(
         msg: allTranslations.text("sign_up_suc").toString(),
         toastLength: Toast.LENGTH_SHORT,

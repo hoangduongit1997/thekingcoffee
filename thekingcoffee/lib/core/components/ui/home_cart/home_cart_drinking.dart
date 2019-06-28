@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:http/http.dart' as http;
+
 import 'package:thekingcoffee/app/config/config.dart';
 
 import 'package:thekingcoffee/app/data/repository/get_drinking_products.dart';

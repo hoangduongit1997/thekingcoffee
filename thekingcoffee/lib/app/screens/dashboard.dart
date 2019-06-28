@@ -54,7 +54,7 @@ class HomeState extends State<DashBoard> with WidgetsBindingObserver {
         },
         child: Scaffold(
           resizeToAvoidBottomInset: false,
-          body: StreamBuilder<NavBarItem>(
+          body:Config.isLogin==true? StreamBuilder<NavBarItem>(
             stream: _bottomNavBarBloc.itemStream,
             initialData: _bottomNavBarBloc.defaultItem,
             builder:
@@ -70,8 +70,24 @@ class HomeState extends State<DashBoard> with WidgetsBindingObserver {
                   return Setting();
               }
             },
+          ):StreamBuilder<NavBarItem>(
+            stream: _bottomNavBarBloc.itemStream,
+            initialData: _bottomNavBarBloc.defaultItem,
+            builder:
+                (BuildContext context, AsyncSnapshot<NavBarItem> snapshot) {
+              switch (snapshot.data) {
+                case NavBarItem.HOME:
+                  return PlaceholderMainWidget();
+                case NavBarItem.FAVORITE:
+                  return Setting();
+                case NavBarItem.SHOPPING_LIST:
+                  return Setting();
+                case NavBarItem.SETTING:
+                  return Setting();
+              }
+            },
           ),
-          bottomNavigationBar: StreamBuilder(
+          bottomNavigationBar:Config.isLogin==true? StreamBuilder(
             stream: _bottomNavBarBloc.itemStream,
             initialData: _bottomNavBarBloc.defaultItem,
             builder:
@@ -129,6 +145,31 @@ class HomeState extends State<DashBoard> with WidgetsBindingObserver {
                       ],
                     ),
                   ),
+                  BottomNavigationBarItem(
+                    title: Text(allTranslations.text("setting").toString()),
+                    icon: Icon(Icons.settings),
+                  ),
+                ],
+              );
+            },
+          ):StreamBuilder(
+            stream: _bottomNavBarBloc.itemStream,
+            initialData: _bottomNavBarBloc.defaultItem,
+            builder:
+                (BuildContext context, AsyncSnapshot<NavBarItem> snapshot) {
+              return BottomNavigationBar(
+                type: BottomNavigationBarType.fixed,
+                fixedColor: Colors.redAccent,
+                currentIndex: snapshot.data.index,
+                onTap: _bottomNavBarBloc.pickItem,
+                items: [
+                  BottomNavigationBarItem(
+                    title: Text(
+                      allTranslations.text("home_page").toString(),
+                    ),
+                    icon: Icon(Icons.home),
+                  ),
+
                   BottomNavigationBarItem(
                     title: Text(allTranslations.text("setting").toString()),
                     icon: Icon(Icons.settings),
