@@ -85,8 +85,6 @@ class Favorite_Page_State extends State<Favorite_Page> {
                     shrinkWrap: true,
                     scrollDirection: Axis.vertical,
                     itemBuilder: (context, index) {
-
-
                       promotion_list_product =
                       data[index]['Promotion'] as List<dynamic>;
                       promotion_product = promotion_list_product.length;

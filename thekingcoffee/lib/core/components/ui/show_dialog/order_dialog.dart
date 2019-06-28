@@ -92,6 +92,10 @@ class Order_DialogState extends State<Order_Dialog> {
           topping['Name'].toString(),
           style: StylesText.style13BrownBold,
         ),
+        subtitle: Text(
+          "+ "+topping['Price'].toString()+" VNĐ",
+          style: StylesText.style11BrownNormal,
+        ),
         value: lstSelectedTopping.firstWhere((t) => t['Id'] == topping['Id'],
                 orElse: () => null) !=
             null,
