@@ -151,7 +151,7 @@ class Order_DialogState extends State<Order_Dialog> {
     }
     return widgets;
   }
-
+double oldMoney=0;
   List<Widget> createRadioListPromotion() {
     List<Widget> widgets_promotion = [];
     for (var promotion in widget.promotion) {
@@ -171,25 +171,44 @@ class Order_DialogState extends State<Order_Dialog> {
           onChanged: (value) {
             list_promotion_product = [];
             list_promotion_product = promotion['SaleForProducts'];
-            int oldMoney = 0, newMoney = 0;
-            if (selectedPromotion != null) {
-              oldMoney = ((widget.price -
-                      (widget.price *
-                          (selectedPromotion['PercentDiscount']) /
-                          100) -
-                      selectedPromotion['MoneyDiscount']))
-                  .toInt();
+            // int oldMoney = 0, newMoney = 0;
+            // if (selectedPromotion != null) {
+            //   oldMoney = ((widget.price -
+            //           (widget.price *
+            //               (selectedPromotion['PercentDiscount']) /
+            //               100) -
+            //           selectedPromotion['MoneyDiscount']))
+            //       .toInt();
+            // }
+
+            // newMoney = ((widget.price -
+            //         (widget.price * (value['PercentDiscount']) / 100) -
+            //         value['MoneyDiscount']))
+            //     .toInt();
+            // setState(() {
+            //   selectedPromotion = value;
+            //   money = money + oldMoney - newMoney;
+            // });
+            // them từ KHa
+            double tempMoney=0;
+            if(value['SaleForProducts']==null){
+              money=money+oldMoney.toInt();
+              tempMoney=money.toDouble()-value['MoneyDiscount']*1.0-value['PercentDiscount']*money.toDouble()*1.0;
+
+              setState(() {
+                money=tempMoney.toInt();
+                selectedPromotion=value;
+              });
+              oldMoney=tempMoney;
+            }else{
+              setState(() {
+                money=widget.price;
+                selectedPromotion=value;
+              });
             }
 
-            newMoney = ((widget.price -
-                    (widget.price * (value['PercentDiscount']) / 100) -
-                    value['MoneyDiscount']))
-                .toInt();
-            setState(() {
-              selectedPromotion = value;
-              money = money + oldMoney - newMoney;
-            });
 
+            //dong tu Kha
             selectedsize = value;
 
             // selectedProduct['Price'] = money;
@@ -204,7 +223,7 @@ class Order_DialogState extends State<Order_Dialog> {
     }
     return widgets_promotion;
   }
-
+  double old_sale_product_money=0;
   List<Widget> createCheckBoxListPromotionProDuct() {
     List<Widget> widgets_promotion_product = [];
     for (var promotion_product in list_promotion_product) {
@@ -351,28 +370,39 @@ class Order_DialogState extends State<Order_Dialog> {
             null,
         onChanged: (value) {
           var lstVal = [];
-          int tempMoney = money;
-
+          // int tempMoney = money;
+           double tempMoney=0;
+             tempMoney += promotion_product['DetailedSaleForProduct']['Price']-promotion_product['DetailedSaleForProduct']['Price']*promotion_product['PercentDiscount']
+              -promotion_product['PriceDiscount'];
           if (value) {
             lstVal.add(promotion_product);
-            //tang tien
-            tempMoney += final_price_promotion_product;
+            setState(() {
+              check_promotion_product = lstVal;
+              money = tempMoney.toInt()+widget.price;
+            });
           } else {
             var temp = check_promotion_product
                 .firstWhere((t) => t == promotion_product, orElse: () => null);
             lstVal.remove(temp);
-            //tru bot tien
-            tempMoney -= final_price_promotion_product;
+             setState(() {
+              check_promotion_product = lstVal;
+              money = tempMoney.toInt()-widget.price;
+            });
+             if(lstVal.length<1) {
+              setState(() {
+                money = widget.price;
+              });
+            }
           }
-          setState(() {
-            check_promotion_product = lstVal;
-            money = tempMoney;
-          });
+          // setState(() {
+          //   check_promotion_product = lstVal;
+          //   money = tempMoney;
+          // });
           // selectedProduct['check_promotion_product'] = check_promotion_product;
           // selectedProduct['Price'] = money;
           // selectedProduct['selectedDetailedSaleForProduct'] =
           //     check_promotion_product;
-
+           old_sale_product_money=tempMoney;
           widget.callback('check_promotion_product', check_promotion_product);
           widget.callback('Price', money);
           widget.callback(

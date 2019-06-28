@@ -126,6 +126,7 @@ class Order_DialogState extends State<Order_Dialog> {
     return widgets;
   }
 
+  double oldMoney=0;
   List<Widget> createRadioListPromotion() {
     List<Widget> widgets_promotion = [];
     for (var promotion in widget.promotion) {
@@ -165,12 +166,20 @@ class Order_DialogState extends State<Order_Dialog> {
 //              money = money + oldMoney - newMoney;
 //            });
 
-            double tempMoney;
-            if(value['SaleForProduct']==null){
+            double tempMoney=0;
+            if(value['SaleForProducts']==null){
+              money=money+oldMoney.toInt();
               tempMoney=money.toDouble()-value['MoneyDiscount']*1.0-value['PercentDiscount']*money.toDouble()*1.0;
 
               setState(() {
                 money=tempMoney.toInt();
+                selectedPromotion=value;
+              });
+              oldMoney=tempMoney;
+            }else{
+              setState(() {
+                money=widget.price;
+                selectedPromotion=value;
               });
             }
             selectedsize = value;
@@ -186,6 +195,7 @@ class Order_DialogState extends State<Order_Dialog> {
     return widgets_promotion;
   }
 
+  double old_sale_product_money=0;
   List<Widget> createCheckBoxListPromotionProDuct() {
     List<Widget> widgets_promotion_product = [];
     for (var promotion_product in list_promotion_product) {
@@ -333,23 +343,32 @@ class Order_DialogState extends State<Order_Dialog> {
             null,
         onChanged: (value) {
           var lstVal = [];
-          int tempMoney = money;
-
+//          int tempMoney = money;
+          double tempMoney=0;
+          tempMoney += promotion_product['DetailedSaleForProduct']['Price']-promotion_product['DetailedSaleForProduct']['Price']*promotion_product['PercentDiscount']
+              -promotion_product['PriceDiscount'];
           if (value) {
             lstVal.add(promotion_product);
-            //tang tien
-            tempMoney += final_price_promotion_product;
+            setState(() {
+              check_promotion_product = lstVal;
+              money = tempMoney.toInt()+widget.price;
+            });
           } else {
             var temp = check_promotion_product
                 .firstWhere((t) => t == promotion_product, orElse: () => null);
             lstVal.remove(temp);
-            //tru bot tien
-            tempMoney -= final_price_promotion_product;
+            setState(() {
+              check_promotion_product = lstVal;
+              money = tempMoney.toInt()-widget.price;
+            });
+            if(lstVal.length<1) {
+              setState(() {
+                money = widget.price;
+              });
+            }
           }
-          setState(() {
-            check_promotion_product = lstVal;
-            money = tempMoney;
-          });
+
+          old_sale_product_money=tempMoney;
           selectedProduct['check_promotion_product'] = check_promotion_product;
           selectedProduct['Price'] = money;
           selectedProduct['selectedDetailedSaleForProduct'] =
@@ -822,13 +841,14 @@ class Order_DialogState extends State<Order_Dialog> {
                                             icon: Icon(Icons.arrow_back_ios,
                                                 color: Colors.brown),
                                             onPressed: () {
+                                              double temp=(money*1.0/number);
                                               setState(() {
                                                 if (number == 1) {
                                                   return;
                                                 }
                                                 number--;
 
-                                                money -= widget.price;
+                                                money -=temp.toInt();
                                               });
                                               selectedProduct['Quantity'] =
                                                   number;
@@ -851,10 +871,10 @@ class Order_DialogState extends State<Order_Dialog> {
                                             icon: Icon(Icons.arrow_forward_ios,
                                                 color: Colors.brown),
                                             onPressed: () {
+                                              double temp=(money*1.0/number);
                                               setState(() {
                                                 number++;
-
-                                                money += widget.price;
+                                                money +=temp.toInt();
                                               });
                                               selectedProduct['Quantity'] =
                                                   number;
