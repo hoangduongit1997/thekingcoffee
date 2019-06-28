@@ -146,25 +146,33 @@ class Order_DialogState extends State<Order_Dialog> {
             list_promotion_product=[];
             list_promotion_product = promotion['SaleForProducts'];
            
-            int oldMoney = 0, newMoney = 0;
-            if (selectedPromotion != null) {
-              oldMoney = ((widget.price -
-                      (widget.price *
-                          (selectedPromotion['PercentDiscount']) /
-                          100) -
-                      selectedPromotion['MoneyDiscount']))
-                  .toInt();
+//            int oldMoney = 0, newMoney = 0;
+//            if (selectedPromotion != null) {
+//              oldMoney = ((widget.price -
+//                      (widget.price *
+//                          (selectedPromotion['PercentDiscount']) /
+//                          100) -
+//                      selectedPromotion['MoneyDiscount']))
+//                  .toInt();
+//            }
+//
+//            newMoney = ((widget.price -
+//                    (widget.price * (value['PercentDiscount']) / 100) -
+//                    value['MoneyDiscount']))
+//                .toInt();
+//            setState(() {
+//              selectedPromotion = value;
+//              money = money + oldMoney - newMoney;
+//            });
+
+            double tempMoney;
+            if(value['SaleForProduct']==null){
+              tempMoney=money.toDouble()-value['MoneyDiscount']*1.0-value['PercentDiscount']*money.toDouble()*1.0;
+
+              setState(() {
+                money=tempMoney.toInt();
+              });
             }
-
-            newMoney = ((widget.price -
-                    (widget.price * (value['PercentDiscount']) / 100) -
-                    value['MoneyDiscount']))
-                .toInt();
-            setState(() {
-              selectedPromotion = value;
-              money = money + oldMoney - newMoney;
-            });
-
             selectedsize = value;
 
             selectedProduct['Price'] = money;
