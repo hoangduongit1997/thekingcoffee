@@ -277,7 +277,7 @@ class Order_DialogState extends State<Order_Dialog> {
                                                 ['Price']
                                             .toString(),
                                         style: StylesText
-                                            .style13BrownNormalUnderline,
+                                            .style13RedNormalUnderline,
                                       ),
                                     ),
                                   ],

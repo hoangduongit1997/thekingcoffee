@@ -155,9 +155,9 @@ class StylesText {
     color: Colors.brown,
     fontWeight: FontWeight.normal,
   );
-  static TextStyle style13BrownNormalUnderline = TextStyle(
+  static TextStyle style13RedNormalUnderline = TextStyle(
       fontSize: SizeText.size13,
-      color: Colors.brown,
+      color: Colors.redAccent,
       fontWeight: FontWeight.normal,
       decoration: TextDecoration.lineThrough);
   static TextStyle style14BrownBold = TextStyle(

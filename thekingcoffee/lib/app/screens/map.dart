@@ -74,14 +74,17 @@ class _MapPageState extends State<MapPage> {
       }
       location = null;
     }
-
-    setState(() async {
+    if(this.mounted)
+    {
+  setState(() async {
       _startLocation = location;
       await _search_name_location(
           _startLocation.latitude, _startLocation.longitude);
       _addMarker_Current_Position(
           _startLocation.latitude, _startLocation.longitude);
     });
+    }
+  
   }
 
   @override

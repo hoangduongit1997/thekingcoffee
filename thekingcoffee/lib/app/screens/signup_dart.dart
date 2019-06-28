@@ -279,6 +279,13 @@ class SignUpState extends State<SignUp> {
   void onSignupClick() async {
     LoadingDialog.showLoadingDialog(
         context, allTranslations.text("splash_screen").toString());
+         if ((await Validation.isConnectedNetwork()) == false) {
+      Navigator.pop(context);
+      MsgDialog.showMsgDialog(
+          context,
+          allTranslations.text("title_no_netword").toString(),
+          allTranslations.text("no_network").toString());
+    }
     if ((await Validation.isConnectedNetwork()) == true &&
         signupBloc.isValidInfo(
               _name.text.trim(),
@@ -291,6 +298,7 @@ class SignUpState extends State<SignUp> {
               _gmail.text.trim(),
             ) ==
             true) {
+              LoadingDialog.hideLoadingDialog(context);
       if ((await PostSignUp(
               _name.text.trim().toString(),
               _pass.text.trim().toString(),
@@ -299,7 +307,7 @@ class SignUpState extends State<SignUp> {
               _fullname.text.trim().toString(),
               _gmail.text.trim().toString())) ==
           true) {
-        LoadingDialog.hideLoadingDialog(context);
+   
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => LoginWithPass()));
       }
@@ -317,12 +325,6 @@ class SignUpState extends State<SignUp> {
             false) {
       LoadingDialog.hideLoadingDialog(context);
     }
-    if ((await Validation.isConnectedNetwork()) == false) {
-      LoadingDialog.hideLoadingDialog(context);
-      MsgDialog.showMsgDialog(
-          context,
-          allTranslations.text("title_no_netword").toString(),
-          allTranslations.text("no_network").toString());
-    }
+   
   }
 }

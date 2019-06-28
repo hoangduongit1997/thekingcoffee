@@ -362,6 +362,7 @@ class Shopping_ListState extends State<Shopping_List> {
                                                   LoadingDialog.hideLoadingDialog(
                                                       context);
                                                 }
+                                               
 
                                             });
                                           },
@@ -743,7 +744,7 @@ class Shopping_ListState extends State<Shopping_List> {
                                                                               0),
                                                                           child:
                                                                               Text(
-                                                                            ListOrderProducts[index]['Price'].toString(),
+                                                                            ListOrderProducts[index]['Price'].toString()+" VNĐ",
                                                                             style:
                                                                                 TextStyle(color: Colors.red),
                                                                           ),
@@ -895,7 +896,7 @@ class Shopping_ListState extends State<Shopping_List> {
                                   style: StylesText.style14Black,
                                 ),
                                 Text(
-                                  estimate.toString(),
+                                  estimate.toString()+" VNĐ",
                                   style: StylesText.style14Black,
                                 )
                               ],
@@ -916,7 +917,7 @@ class Shopping_ListState extends State<Shopping_List> {
                                   style: StylesText.style14Black,
                                 ),
                                 Text(
-                                  fee_ship.toString(),
+                                  fee_ship.toString()+" VNĐ",
                                   style: StylesText.style14Black,
                                 )
                               ],
@@ -948,7 +949,7 @@ class Shopping_ListState extends State<Shopping_List> {
                                   style: StylesText.style16BlackNormal,
                                 ),
                                 Text(
-                                  (fee_ship + estimate).toString(),
+                                  (fee_ship + estimate).toString()+" VNĐ",
                                   style: StylesText.style16BlackNormal,
                                 )
                               ],

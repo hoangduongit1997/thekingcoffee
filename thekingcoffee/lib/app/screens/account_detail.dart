@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
+import 'package:thekingcoffee/core/components/ui/menu_popup/menu_popup.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 import 'package:circular_profile_avatar/circular_profile_avatar.dart';
 
@@ -12,7 +13,12 @@ class Account extends StatefulWidget {
   _AccountState createState() => _AccountState();
 }
 
+
+
 class _AccountState extends State<Account> {
+  
+
+  
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
@@ -50,7 +56,7 @@ class _AccountState extends State<Account> {
                       color: Colors.grey[300],
                       padding: const EdgeInsets.all(5.0),
                       width: double.infinity,
-                      height: Dimension.getHeight(0.35),
+                      height: Dimension.getHeight(0.32),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: <Widget>[
@@ -67,7 +73,9 @@ class _AccountState extends State<Account> {
                                       GestureDetector(
                                         child: Icon(Icons.more_horiz,
                                             color: Colors.brown),
-                                        onTap: () {},
+                                        onTap: () {
+                                         
+                                        },
                                       )
                                     ],
                                   ),
@@ -86,8 +94,8 @@ class _AccountState extends State<Account> {
                                           ),
                                         ),
                                     placeHolder: (context, url) => Container(
-                                          width: 50,
-                                          height: 50,
+                                          width: 40,
+                                          height: 40,
                                           child: CircularProgressIndicator(
                                             valueColor:
                                                 new AlwaysStoppedAnimation(
@@ -106,7 +114,7 @@ class _AccountState extends State<Account> {
                             ],
                           ),
                           Padding(
-                            padding: const EdgeInsets.all(0.0),
+                            padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
                             child: Container(
                               width: double.infinity,
                               child: Row(
@@ -115,7 +123,7 @@ class _AccountState extends State<Account> {
                                 children: <Widget>[
                                   Text(
                                     "Hoàng Dương",
-                                    style: StylesText.style16Brown,
+                                    style: StylesText.style20BrownNomorlRaleway,
                                   ),
                                 ],
                               ),

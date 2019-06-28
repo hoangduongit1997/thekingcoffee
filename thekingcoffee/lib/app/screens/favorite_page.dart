@@ -68,7 +68,7 @@ class Favorite_Page_State extends State<Favorite_Page> {
             child: Center(
                 child: Text(
                   allTranslations.text("no_info").toString(),
-                  style: StylesText.style13Black,
+                  style: StylesText.style16Brown,
                 )),
           )
               : Container(
