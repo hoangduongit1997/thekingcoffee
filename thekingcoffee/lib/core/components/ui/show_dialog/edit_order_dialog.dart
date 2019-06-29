@@ -833,7 +833,7 @@ double oldMoney=0;
                                 ),
                               ),
                         Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                             child: Container(
                               child: CustomPaint(
                                   painter: Drawhorizontalline(false, 180.0,

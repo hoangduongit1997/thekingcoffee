@@ -27,17 +27,26 @@ class Favorite_Page_State extends State<Favorite_Page> {
   static int starCount = 5;
   int promotion_product = 0;
   var promotion_list_product = [];
+  
   initData()
   async {
+    var temp=[];
     final result = await Get_Favorite_Product();
     if(result!=null)
       {
-        if(this.mounted)
+        for(var item in result)
+        {
+          if(item['Loved']==true)
           {
-            setState(() {
-              data=result;
-            });
+            temp.add(item);
           }
+        }
+       if(this.mounted)
+       {
+         setState(() {
+          data=temp; 
+         });
+       }
       }
   }
 @override
@@ -441,12 +450,12 @@ class Favorite_Page_State extends State<Favorite_Page> {
 
   Future<void> refreshPage() async {
     await Future.delayed(Duration(seconds: 1));
-    final result=  initData();
+    await initData();
 
     if(this.mounted)
     {
       setState(() {
-        data=result;
+        
         build(context);
       });
     }

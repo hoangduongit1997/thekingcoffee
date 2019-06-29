@@ -361,11 +361,11 @@ class Order_DialogState extends State<Order_Dialog> {
               check_promotion_product = lstVal;
               money = tempMoney.toInt()-widget.price;
             });
-            if(lstVal.length<1) {
-              setState(() {
-                money = widget.price;
-              });
-            }
+             if(lstVal.length<1) {
+               setState(() {
+                 money = widget.price;
+               });
+             }
           }
 
           old_sale_product_money=tempMoney;
@@ -787,11 +787,11 @@ class Order_DialogState extends State<Order_Dialog> {
                                 ),
                               ),
                         Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                             child: Container(
                               child: CustomPaint(
                                   painter: Drawhorizontalline(false, 180.0,
-                                      220.0, Colors.blueGrey, 0.5)),
+                                      Dimension.getWidth(1.0), Colors.blueGrey, 0.5)),
                             )),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
