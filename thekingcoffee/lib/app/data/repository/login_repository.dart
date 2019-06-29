@@ -17,11 +17,16 @@ Future<bool> PostLogin(String username, String password) async {
     var token = data['Value']['Token'];
     var id_user = data['Value']['Id'];
     var point = data['Value']['Point'];
+    var fullname=data['Value']['Name'];
+    var phone_number=data['Value']['Phone'];
     final prefs = await SharedPreferences.getInstance();
     prefs.setString('token', token);
     prefs.setInt('id_user', id_user);
     prefs.setInt('points', point);
-
+    prefs.setString('name', fullname);
+    prefs.setString('phone', phone_number);
+    Config.phone_number=phone_number.toString();
+    Config.fullname=fullname.toString();
     Fluttertoast.showToast(
         msg: allTranslations.text("login_suc").toString(),
         toastLength: Toast.LENGTH_SHORT,

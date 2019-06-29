@@ -58,7 +58,7 @@ Future<bool> PostOrder(String phone, String address, bool is_money) async {
     "Shipment": fee_ship,
     "Address": address.toString(),
     "Phone": phone.toString(),
-    "Total": total,
+    "Total": total+fee_ship.toDouble(),
     "OrdersData": orderData,
     "Lat": lat.toString(),
     "Long": lng.toString(),

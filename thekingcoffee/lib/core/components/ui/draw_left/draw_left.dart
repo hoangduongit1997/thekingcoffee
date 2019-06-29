@@ -25,7 +25,13 @@ class HomeMenu extends StatefulWidget {
 }
 
 class _HomeMenuState extends State<HomeMenu> {
+  String name;
   Future<void> _launched;
+  _getname()
+  async {
+    SharedPreferences preferences=await SharedPreferences.getInstance();
+    name =preferences.getString('name');
+  }
   Future<void> _makePhoneCall(String url) async {
     if (await canLaunch(url)) {
       await launch(url);
@@ -57,6 +63,7 @@ class _HomeMenuState extends State<HomeMenu> {
   @override
   void initState() {
     super.initState();
+    _getname();
     CheckLogin();
   }
 
@@ -67,7 +74,7 @@ class _HomeMenuState extends State<HomeMenu> {
             children: <Widget>[
               new UserAccountsDrawerHeader(
                   accountName: Text(
-                    'Hoàng Dương',
+                    name.toString(),
                     style: StylesText.style15BlackBold,
                   ),
                   accountEmail: Row(

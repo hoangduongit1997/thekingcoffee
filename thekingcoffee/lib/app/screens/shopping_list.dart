@@ -42,6 +42,7 @@ TextEditingController address = new TextEditingController();
 class Shopping_ListState extends State<Shopping_List> {
   SingingCharacter _character = SingingCharacter.lafayette;
 
+
   int multy_topping = 0;
   int estimate = 0;
 
@@ -58,13 +59,14 @@ class Shopping_ListState extends State<Shopping_List> {
   @override
   void initState() {
     super.initState();
+  
     flus_total_money();
   }
 
   var placeBloc = PlaceBloc();
   OrderBloc orderBloc = new OrderBloc();
-  TextEditingController name = new TextEditingController(text: "Hoàng Dương");
-  TextEditingController phone = new TextEditingController(text: "0798353751");
+  TextEditingController name = new TextEditingController(text: Config.fullname.toString());
+  TextEditingController phone = new TextEditingController(text: Config.phone_number.toString());
   bool ischecked_address = false;
   @override
   void dispose() {
@@ -344,8 +346,7 @@ class Shopping_ListState extends State<Shopping_List> {
                                                     rootNavigator: true)
                                                 .pushNamed('/map');
                                             result.then((result) async {
-                                              if(result!=null)
-                                                {
+                                             
                                                   item = result;
                                                   LoadingDialog.showLoadingDialog(
                                                       context,
@@ -361,7 +362,7 @@ class Shopping_ListState extends State<Shopping_List> {
                                                   });
                                                   LoadingDialog.hideLoadingDialog(
                                                       context);
-                                                }
+                                                
                                                
 
                                             });
