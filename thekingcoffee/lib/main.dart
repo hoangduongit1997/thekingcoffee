@@ -35,12 +35,10 @@ void main() async {
 
   try {
     var save_list_order = pref.getString("list_order");
-    if(save_list_order!=null)
-    {
+    if (save_list_order != null) {
       ListOrderProducts = json.decode(save_list_order);
-       number_bloc.Check_Number();
+      number_bloc.Check_Number();
     }
-   
   } catch (e) {}
   runApp(MyApp());
 }
@@ -56,11 +54,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
-
-
-
-
-
   @override
   void dispose() {
     WidgetsBinding.instance.removeObserver(this);
@@ -75,7 +68,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       final pref = await SharedPreferences.getInstance();
       var save_list_order = json.encode(ListOrderProducts);
       await pref.setString("list_order", save_list_order);
-     
     }
     if (state == AppLifecycleState.resumed) {
       final pref = await SharedPreferences.getInstance();
@@ -89,7 +81,6 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
     allTranslations.onLocaleChangedCallback = _onLocaleChanged;
-
   }
 
   _onLocaleChanged() async {
@@ -97,9 +88,11 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     language.setString('language', '${allTranslations.currentLanguage}');
     print('Language has been changed to: ${allTranslations.currentLanguage}');
   }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: "The King Coffee",
       theme: ThemeData(primaryColor: Colors.redAccent),
       debugShowCheckedModeBanner: false,
       localizationsDelegates: [

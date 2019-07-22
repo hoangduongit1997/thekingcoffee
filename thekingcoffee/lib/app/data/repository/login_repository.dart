@@ -25,8 +25,7 @@ Future<bool> PostLogin(String username, String password) async {
     prefs.setInt('points', point);
     prefs.setString('name', fullname);
     prefs.setString('phone', phone_number);
-    Config.phone_number=phone_number.toString();
-    Config.fullname=fullname.toString();
+ 
     Fluttertoast.showToast(
         msg: allTranslations.text("login_suc").toString(),
         toastLength: Toast.LENGTH_SHORT,

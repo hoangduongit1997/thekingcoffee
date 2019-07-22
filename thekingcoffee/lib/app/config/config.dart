@@ -14,8 +14,6 @@ class Config {
   static String check_coupon = ip + "api/Product/CheckCoupon";
   static String get_new_products_API =
       ip + "api/Product/GetAll?IsDesc=true&Rows=5";
-       static String fullname="";
- static String phone_number="";
   static String get_history_API = ip + "api/Order/FindOrderHistory?IdCustomer=";
   static String get_coffee_products_API =
       ip + "api/Product/GetAll?IsDesc=true&Rows=10&IdCatalogue=2";

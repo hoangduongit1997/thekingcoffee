@@ -41,12 +41,20 @@ TextEditingController address = new TextEditingController();
 
 class Shopping_ListState extends State<Shopping_List> {
   SingingCharacter _character = SingingCharacter.lafayette;
-
-
   int multy_topping = 0;
   int estimate = 0;
-
   int user_point = 0;
+  String fullname = "";
+  String phone_number = "";
+  get_info() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    if (this.mounted) {
+      setState(() {
+        fullname = pref.getString('name');
+        phone_number = pref.getString('phone');
+      });
+    }
+  }
 
   flus_total_money() {
     for (var item in ListOrderProducts) {
@@ -59,14 +67,16 @@ class Shopping_ListState extends State<Shopping_List> {
   @override
   void initState() {
     super.initState();
-  
+    get_info();
     flus_total_money();
+    name = new TextEditingController(text: fullname.toString());
+    phone = new TextEditingController(text: phone_number.toString());
   }
 
   var placeBloc = PlaceBloc();
   OrderBloc orderBloc = new OrderBloc();
-  TextEditingController name = new TextEditingController(text: Config.fullname.toString());
-  TextEditingController phone = new TextEditingController(text: Config.phone_number.toString());
+  TextEditingController name;
+  TextEditingController phone;
   bool ischecked_address = false;
   @override
   void dispose() {
@@ -146,16 +156,13 @@ class Shopping_ListState extends State<Shopping_List> {
                                               style: StylesText.style14While),
                                         )),
                                     onPressed: () async {
-                                     
-                                      
                                       setState(() {
                                         estimate = 0;
                                         fee_ship = 0;
                                         address.clear();
 
-                                        ListOrderProducts=[];
+                                        ListOrderProducts = [];
                                         number_bloc.Check_Number();
-
                                       });
                                       Navigator.of(context).pop();
                                     },
@@ -346,25 +353,21 @@ class Shopping_ListState extends State<Shopping_List> {
                                                     rootNavigator: true)
                                                 .pushNamed('/map');
                                             result.then((result) async {
-                                             
-                                                  item = result;
-                                                  LoadingDialog.showLoadingDialog(
-                                                      context,
-                                                      allTranslations
-                                                          .text("splash_screen")
-                                                          .toString());
-                                                  int temp = await Get_fee_ship(
-                                                      item.lat, item.lng);
-                                                  setState(() {
-                                                    fee_ship = temp;
+                                              item = result;
+                                              LoadingDialog.showLoadingDialog(
+                                                  context,
+                                                  allTranslations
+                                                      .text("splash_screen")
+                                                      .toString());
+                                              int temp = await Get_fee_ship(
+                                                  item.lat, item.lng);
+                                              setState(() {
+                                                fee_ship = temp;
 
-                                                    address.text = item.address;
-                                                  });
-                                                  LoadingDialog.hideLoadingDialog(
-                                                      context);
-                                                
-                                               
-
+                                                address.text = item.address;
+                                              });
+                                              LoadingDialog.hideLoadingDialog(
+                                                  context);
                                             });
                                           },
                                         ),
@@ -745,7 +748,8 @@ class Shopping_ListState extends State<Shopping_List> {
                                                                               0),
                                                                           child:
                                                                               Text(
-                                                                            ListOrderProducts[index]['Price'].toString()+" VNĐ",
+                                                                            ListOrderProducts[index]['Price'].toString() +
+                                                                                " VNĐ",
                                                                             style:
                                                                                 TextStyle(color: Colors.red),
                                                                           ),
@@ -863,8 +867,8 @@ class Shopping_ListState extends State<Shopping_List> {
                                                                   ListOrderProducts
                                                                       .removeAt(
                                                                           index);
-                                                                  number_bloc.Check_Number();
-
+                                                                  number_bloc
+                                                                      .Check_Number();
                                                                 });
                                                                 Navigator.of(
                                                                         context)
@@ -897,7 +901,7 @@ class Shopping_ListState extends State<Shopping_List> {
                                   style: StylesText.style14Black,
                                 ),
                                 Text(
-                                  estimate.toString()+" VNĐ",
+                                  estimate.toString() + " VNĐ",
                                   style: StylesText.style14Black,
                                 )
                               ],
@@ -918,7 +922,7 @@ class Shopping_ListState extends State<Shopping_List> {
                                   style: StylesText.style14Black,
                                 ),
                                 Text(
-                                  fee_ship.toString()+" VNĐ",
+                                  fee_ship.toString() + " VNĐ",
                                   style: StylesText.style14Black,
                                 )
                               ],
@@ -950,7 +954,7 @@ class Shopping_ListState extends State<Shopping_List> {
                                   style: StylesText.style16BlackNormal,
                                 ),
                                 Text(
-                                  (fee_ship + estimate).toString()+" VNĐ",
+                                  (fee_ship + estimate).toString() + " VNĐ",
                                   style: StylesText.style16BlackNormal,
                                 )
                               ],
@@ -1057,7 +1061,6 @@ class Shopping_ListState extends State<Shopping_List> {
                             Expanded(
                               child: MaterialButton(
                                   onPressed: () async {
-                                   
                                     LoadingDialog.showLoadingDialog(context,
                                         allTranslations.text("splash_screen"));
                                     if ((await Validation
@@ -1068,41 +1071,32 @@ class Shopping_ListState extends State<Shopping_List> {
                                           context,
                                           allTranslations.text("Information"),
                                           allTranslations.text("no_network"));
-
-                                     }
-                                      else if ((await check_enough_point(
-                                                 estimate)) ==
-                                             true &&
-                                         orderBloc.isValidInfo(
-                                                 name.text.trim().toString(),
-                                                 phone.text.trim().toString(),
-                                                 address.text
-                                                     .trim()
-                                                     .toString()) ==
-                                             true) {
-
-
-                                       LoadingDialog.hideLoadingDialog(context);
-                                       showDialog(
-                                           context: context,
-                                           builder: (_) => Payment_Dialog(
-                                               phone.text.trim().toString(),
-                                               address.text.trim().toString(),
-                                               estimate)).then(
-                                           (value) => setState(() {
-                                                 if (value != null) {
-                                                
-                                                   ListOrderProducts=[];
-                                                   fee_ship=0;
-                                                   address.clear();
-                                                   number_bloc.Check_Number();
-
-                                                   
-
-                                                 } else {}
-                                               }));
-                                     }
-                                    else {
+                                    } else if ((await check_enough_point(
+                                                estimate)) ==
+                                            true &&
+                                        orderBloc.isValidInfo(
+                                                name.text.trim().toString(),
+                                                phone.text.trim().toString(),
+                                                address.text
+                                                    .trim()
+                                                    .toString()) ==
+                                            true) {
+                                      LoadingDialog.hideLoadingDialog(context);
+                                      showDialog(
+                                          context: context,
+                                          builder: (_) => Payment_Dialog(
+                                              phone.text.trim().toString(),
+                                              address.text.trim().toString(),
+                                              estimate)).then(
+                                          (value) => setState(() {
+                                                if (value != null) {
+                                                  ListOrderProducts = [];
+                                                  fee_ship = 0;
+                                                  address.clear();
+                                                  number_bloc.Check_Number();
+                                                } else {}
+                                              }));
+                                    } else {
                                       if (orderBloc.isValidInfo(
                                               name.text.trim().toString(),
                                               phone.text.trim().toString(),
@@ -1125,7 +1119,7 @@ class Shopping_ListState extends State<Shopping_List> {
                                                   .toString());
                                           setState(() {
                                             estimate = 0;
-                                            ListOrderProducts=[];
+                                            ListOrderProducts = [];
                                           });
                                         }
                                       } else {

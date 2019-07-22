@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ColorApp {
-  static Color mainColor = Color.fromRGBO(11, 188, 238, 1.0);
-}
+
 
 class SizeText {
   static double queryData = 0.0;
@@ -18,10 +16,6 @@ class SizeText {
   static double size22 = 22.0 / queryData;
   static double size24 = 24.0 / queryData;
   static double size30 = 30.0 / queryData;
-}
-
-class Sizes {
-  //static const sizeIconBottom = 24.0;
 }
 
 class StylesText {
