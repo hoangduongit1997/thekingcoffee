@@ -18,7 +18,7 @@ class Validation {
   }
 
   static bool isValidPass(String pass) {
-    return pass.length > 0;
+    return pass.length >=6;
   }
 
   static bool isValidPhoneNumber(String phonenumber) {
@@ -38,7 +38,7 @@ class Validation {
   }
 
   static bool isValidGmail(String gmail) {
-    return gmail.length > 0 && gmail.contains("@");
+    return RegExp(r"^[a-zA-Z0-9.]+@[a-zA-Z0-9]+\.[a-zA-Z]+").hasMatch(gmail);
   }
 
   static bool isValidAddress(String address) {
@@ -57,5 +57,14 @@ class Validation {
       status = false;
     }
     return status;
+  }
+
+  static check_language() async {
+    SharedPreferences check = await SharedPreferences.getInstance();
+    if (check.getString('language') == 'vi')
+      return 1;
+    else if (check.getString('language') == 'en') {
+      return 0;
+    }
   }
 }

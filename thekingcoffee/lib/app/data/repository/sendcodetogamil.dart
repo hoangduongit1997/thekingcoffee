@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/show_message_dialog.dart';
 
 Future<bool> SendCodeToGmail(String gmail) async {
@@ -25,7 +26,7 @@ Future<bool> SendCodeToGmail(String gmail) async {
     prefs.setInt('id_user', id_user);
     prefs.commit();
     Fluttertoast.showToast(
-        msg: data['Message'].toString(),
+        msg: allTranslations.text("gmail_auth").toString(),
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIos: 1,
@@ -34,7 +35,7 @@ Future<bool> SendCodeToGmail(String gmail) async {
         fontSize: 16.0);
   } else {
     Fluttertoast.showToast(
-        msg: data['Message'].toString(),
+        msg: allTranslations.text("invalid_send_code_to_gmail").toString(),
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIos: 1,

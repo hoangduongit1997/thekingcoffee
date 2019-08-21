@@ -6,18 +6,19 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:location/location.dart';
 import 'package:thekingcoffee/app/data/model/get_place_item.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 import 'package:thekingcoffee/core/components/widgets/address_picker.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 import 'package:geocoder/geocoder.dart';
 
 class MapPage extends StatefulWidget {
   @override
-  _HomePageState createState() => _HomePageState();
+  _MapPageState createState() => _MapPageState();
 }
 
-String final_address;
-
-class _HomePageState extends State<MapPage> {
+class _MapPageState extends State<MapPage> {
+  String final_address;
+  Get_Place_Item get_place_item_fee_ship = new Get_Place_Item("", "", 0.0, 0.0);
   LocationData _startLocation;
   StreamSubscription<LocationData> _locationSubscription;
   Location _locationService = new Location();
@@ -73,13 +74,17 @@ class _HomePageState extends State<MapPage> {
       }
       location = null;
     }
-
-    setState(() {
+    if(this.mounted)
+    {
+  setState(() async {
       _startLocation = location;
-      _search_name_location(_startLocation.latitude, _startLocation.longitude);
+      await _search_name_location(
+          _startLocation.latitude, _startLocation.longitude);
       _addMarker_Current_Position(
           _startLocation.latitude, _startLocation.longitude);
     });
+    }
+  
   }
 
   @override
@@ -151,7 +156,7 @@ class _HomePageState extends State<MapPage> {
               child: FloatingActionButton(
                 backgroundColor: Colors.white,
                 onPressed: _onMapTypeButtonPressed,
-                tooltip: 'Change style map',
+                tooltip: allTranslations.text("Change_style_map").toString(),
                 child: Icon(
                   Icons.map,
                   color: Colors.redAccent,
@@ -175,11 +180,11 @@ class _HomePageState extends State<MapPage> {
                       )
                     ], shape: BoxShape.circle, color: Colors.white),
                     child: IconButton(
-                      tooltip: "Send to this address",
+                      tooltip: allTranslations.text("send_address").toString(),
                       icon: Icon(Icons.send),
                       color: Colors.redAccent,
                       onPressed: () {
-                        Navigator.of(context).pop(final_address);
+                        Navigator.of(context).pop(get_place_item_fee_ship);
                       },
                     ))),
           ],
@@ -245,7 +250,7 @@ class _HomePageState extends State<MapPage> {
     final Marker marker = Marker(
       markerId: markerId,
       position: LatLng(lat, long),
-      infoWindow: InfoWindow(title: final_address),
+      infoWindow: InfoWindow(title: final_address.toString()),
       onTap: () {
         _onMarkerTapped(markerId);
       },
@@ -273,12 +278,11 @@ class _HomePageState extends State<MapPage> {
     final pref = await SharedPreferences.getInstance();
     pref.setDouble('Lat', place.lat);
     pref.setDouble('Lng', place.lng);
+    get_place_item_fee_ship.lat = place.lat;
+    get_place_item_fee_ship.lng = place.lng;
+    get_place_item_fee_ship.address = place.address;
 
     pref.commit();
-    print("Sharepreferference: " +
-        pref.getDouble('Lat').toString() +
-        " " +
-        pref.getDouble('Lng').toString());
   }
 
   Future _add_latlog_current_location(double lat, double lng) async {
@@ -287,10 +291,8 @@ class _HomePageState extends State<MapPage> {
     pref.setDouble('Lng', lng);
 
     pref.commit();
-    print("Sharepreference: " +
-        pref.getDouble('Lat').toString() +
-        " " +
-        pref.getDouble('Lng').toString());
+    get_place_item_fee_ship.lat = lat;
+    get_place_item_fee_ship.lng = lng;
   }
 
   _search_name_location(double lat, double long) async {
@@ -298,7 +300,11 @@ class _HomePageState extends State<MapPage> {
     var addresses =
         await Geocoder.local.findAddressesFromCoordinates(coordinates);
     var first = addresses.first;
-    final_address = first.addressLine.toString();
+    setState(() {
+      final_address = first.addressLine.toString();
+      get_place_item_fee_ship.address = first.addressLine.toString();
+    });
+
     await _add_latlog_current_location(lat, long);
   }
 }

@@ -1,7 +1,3 @@
-import 'package:flutter/services.dart';
-
-const LOG_ENABLED = true;
-
 class Dimension {
   static double height = 0.0;
   static double witdh = 0.0;
@@ -12,15 +8,6 @@ class Dimension {
 
   static double getHeight(double size) {
     return height * size;
-  }
-}
-
-class Utils {
-  // Hàm này dùng để thay cho print('')
-  static void printLog(String data) {
-    if (LOG_ENABLED) {
-      print(data);
-    }
   }
 }
 
@@ -40,6 +27,12 @@ class Map_Object {
     }
     return result;
   }
+
+  static List<T> map_promotion_slider<T>(List list, Function handler) {
+    List<T> result = [];
+    for (var i = 0; i < list.length; i++) {
+      result.add(handler(i, list[i]));
+    }
+    return result;
+  }
 }
-
-

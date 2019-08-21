@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-class ColorApp {
-  static Color mainColor = Color.fromRGBO(11, 188, 238, 1.0);
-}
+
 
 class SizeText {
   static double queryData = 0.0;
@@ -18,10 +16,6 @@ class SizeText {
   static double size22 = 22.0 / queryData;
   static double size24 = 24.0 / queryData;
   static double size30 = 30.0 / queryData;
-}
-
-class Sizes {
-  //static const sizeIconBottom = 24.0;
 }
 
 class StylesText {
@@ -83,6 +77,10 @@ class StylesText {
       fontSize: SizeText.size16,
       color: Colors.brown,
       fontWeight: FontWeight.bold);
+  static TextStyle style16BlackNormal = TextStyle(
+      fontSize: SizeText.size16,
+      color: Colors.black,
+      fontWeight: FontWeight.normal);
   static TextStyle style30WhileBoldRobotoMono = TextStyle(
       fontSize: SizeText.size30,
       color: Colors.white,
@@ -151,9 +149,9 @@ class StylesText {
     color: Colors.brown,
     fontWeight: FontWeight.normal,
   );
-  static TextStyle style13BrownNormalUnderline = TextStyle(
+  static TextStyle style13RedNormalUnderline = TextStyle(
       fontSize: SizeText.size13,
-      color: Colors.brown,
+      color: Colors.redAccent,
       fontWeight: FontWeight.normal,
       decoration: TextDecoration.lineThrough);
   static TextStyle style14BrownBold = TextStyle(
@@ -177,6 +175,11 @@ class StylesText {
   static TextStyle style13BlackBold = TextStyle(
     fontSize: SizeText.size13,
     color: Colors.black,
+    fontWeight: FontWeight.bold,
+  );
+  static TextStyle style13White = TextStyle(
+    fontSize: SizeText.size13,
+    color: Colors.white,
     fontWeight: FontWeight.bold,
   );
   static TextStyle style13Black = TextStyle(

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:barcode_flutter/barcode_flutter.dart';
-import 'package:thekingcoffee/app/config/config.dart';
 
 import 'package:thekingcoffee/app/styles/styles.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 
@@ -31,7 +31,8 @@ class _EarnPointState extends State<EarnPoint> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Your code", style: StylesText.style20BrownBold),
+        title: Text(allTranslations.text("your_code").toString(),
+            style: StylesText.style20BrownBold),
         elevation: 0.5,
         backgroundColor: Colors.white,
         leading: FlatButton(

@@ -5,6 +5,7 @@ import 'package:thekingcoffee/app/screens/veryfy_gmail.dart';
 
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/app/validation/validation.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/show_message_dialog.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
@@ -20,6 +21,12 @@ class VerifyPhonePageSate extends State<GmailAuth> {
   bool _loading = false;
   GmailAuthBloc resetPassBloc = new GmailAuthBloc();
   TextEditingController _gmail = new TextEditingController();
+  @override
+  void dispose() {
+    resetPassBloc.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -39,12 +46,14 @@ class VerifyPhonePageSate extends State<GmailAuth> {
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 120, 0, 0),
-                      child: Text("Forget password?",
+                      child: Text(
+                          allTranslations.text("forget_pass").toString(),
                           style: StylesText.style24BrownBold),
                     ),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
-                      child: Text("Enter your email to continute",
+                      child: Text(
+                          allTranslations.text("title_forget_pass").toString(),
                           style: StylesText.style16BrownBold),
                     ),
                     Padding(
@@ -56,6 +65,10 @@ class VerifyPhonePageSate extends State<GmailAuth> {
                                 controller: _gmail,
                                 style: StylesText.style18Black,
                                 decoration: InputDecoration(
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.redAccent),
+                                    ),
                                     labelText: "Email",
                                     errorText: snapshot.hasError
                                         ? snapshot.error
@@ -71,7 +84,7 @@ class VerifyPhonePageSate extends State<GmailAuth> {
                         child: RaisedButton(
                           color: Colors.red[300],
                           child: Text(
-                            "Submit",
+                            allTranslations.text("submit").toString(),
                             style: StylesText.style16While,
                           ),
                           shape: RoundedRectangleBorder(
@@ -88,11 +101,14 @@ class VerifyPhonePageSate extends State<GmailAuth> {
   }
 
   void onSubmitClick() async {
-    LoadingDialog.showLoadingDialog(context, "Loading...");
+    LoadingDialog.showLoadingDialog(
+        context, allTranslations.text("splash_screen").toString());
     if ((await Validation.isConnectedNetwork()) == false) {
       Navigator.pop(context);
       MsgDialog.showMsgDialog(
-          context, "No network!", "No network connection found");
+          context,
+          allTranslations.text("title_no_netword").toString(),
+          allTranslations.text("no_network").toString());
     }
     if ((await Validation.isConnectedNetwork()) == true &&
         resetPassBloc.isValidInfo(_gmail.text.trim().toString()) == true) {

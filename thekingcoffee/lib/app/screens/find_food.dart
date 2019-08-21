@@ -6,8 +6,9 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/data/repository/find_food.dart';
 import 'package:thekingcoffee/app/screens/dashboard.dart';
-import 'package:thekingcoffee/app/screens/helper/dashboard_helper/placeholder_home.dart';
+
 import 'package:thekingcoffee/app/styles/styles.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog_order.dart';
@@ -42,8 +43,7 @@ class _FindFoodState extends State<FindFood> {
             color: Colors.brown,
           ),
           onPressed: () {
-            Navigator.of(context, rootNavigator: true)
-                .push(MaterialPageRoute(builder: (context) => DashBoard()));
+            Navigator.of(context).pop();
           },
         ),
         backgroundColor: Colors.transparent,
@@ -79,11 +79,17 @@ class _FindFoodState extends State<FindFood> {
               Padding(
                 padding: EdgeInsets.only(left: 0, right: 50),
                 child: TextField(
-                  decoration: InputDecoration(hintText: "Search"),
+                  decoration: InputDecoration(
+                    hintText: allTranslations.text("search").toString(),
+                    focusedBorder: UnderlineInputBorder(
+                      borderSide: BorderSide(color: Colors.redAccent),
+                    ),
+                  ),
                   controller: food,
                   textInputAction: TextInputAction.search,
                   onSubmitted: (str) async {
-                    LoadingDialog.showLoadingDialog(context, "Loading");
+                    LoadingDialog.showLoadingDialog(context,
+                        allTranslations.text("splash_screen").toString());
                     if (str.length > 0) {
                       final resutl = await Find_Food(str);
                       setState(() {
@@ -99,7 +105,7 @@ class _FindFoodState extends State<FindFood> {
                     } else {
                       LoadingDialog.hideLoadingDialog(context);
                       Fluttertoast.showToast(
-                          msg: "No information found",
+                          msg: allTranslations.text("no_info").toString(),
                           toastLength: Toast.LENGTH_SHORT,
                           gravity: ToastGravity.BOTTOM,
                           timeInSecForIos: 1,
@@ -145,19 +151,33 @@ class _FindFoodState extends State<FindFood> {
 
                                 return GestureDetector(
                                   onTap: () {
-                                    LoadingDialog_Order.showLoadingDialog(
-                                        context,
-                                        search_result[index]['Id'],
-                                        search_result[index]['Name'],
-                                        search_result[index]['File_Path'],
-                                        search_result[index]['Description'],
-                                        search_result[index]['Price'],
-                                        search_result[index]['IsHot'],
-                                        search_result[index]['IsHot'],
-                                        search_result[index]['Toppings'],
-                                        search_result[index]['Size'],
-                                        search_result[index]['Sale'],
-                                        ListOrderProducts);
+                                    if (search_result[index]['IsAvailable'] ==
+                                        false) {
+                                      Fluttertoast.showToast(
+                                          msg: allTranslations
+                                              .text("out_of_stock")
+                                              .toString(),
+                                          toastLength: Toast.LENGTH_SHORT,
+                                          gravity: ToastGravity.BOTTOM,
+                                          timeInSecForIos: 1,
+                                          backgroundColor: Colors.redAccent,
+                                          textColor: Colors.white,
+                                          fontSize: 16.0);
+                                    } else {
+                                      LoadingDialog_Order.showLoadingDialog(
+                                          context,
+                                          search_result[index]['Id'],
+                                          search_result[index]['Name'],
+                                          search_result[index]['File_Path'],
+                                          search_result[index]['Description'],
+                                          search_result[index]['Price'],
+                                          search_result[index]['IsHot'],
+                                          search_result[index]['IsHot'],
+                                          search_result[index]['Toppings'],
+                                          search_result[index]['Size'],
+                                          search_result[index]['Sale'],
+                                          ListOrderProducts);
+                                    }
                                   },
                                   child: Padding(
                                     padding: const EdgeInsets.all(2.0),
@@ -219,10 +239,14 @@ class _FindFoodState extends State<FindFood> {
                                                                                   )),
                                                                                 )),
                                                                       ),
-                                                                      Favorite(
-                                                                        color: Colors
-                                                                            .red,
-                                                                      ),
+                                                                      Config.isLogin ==
+                                                                              true
+                                                                          ? search_result[index]['IsAvailable'] == true
+                                                                              ? Favorite(Colors.red, search_result[index]['Loved'],search_result[index]['Id'])
+                                                                              : SvgPicture.asset("assets/icons/sold.svg", width: Dimension.getWidth(0.05), height: Dimension.getHeight(0.05))
+                                                                          : Container(
+                                                                              child: search_result[index]['IsAvailable'] == false ? SvgPicture.asset("assets/icons/sold.svg", width: Dimension.getWidth(0.05), height: Dimension.getHeight(0.05)) : Container(),
+                                                                            )
                                                                     ],
                                                                   )),
                                                             ],
@@ -283,7 +307,7 @@ class _FindFoodState extends State<FindFood> {
                                                                         size:
                                                                             13.0,
                                                                         rating:
-                                                                            double.tryParse(search_result[index]['Start'].toString()),
+                                                                            double.tryParse(search_result[index]['Star'].toString()),
                                                                         color: Colors
                                                                             .orange,
                                                                         borderColor:
@@ -292,7 +316,7 @@ class _FindFoodState extends State<FindFood> {
                                                                             5,
                                                                       ),
                                                                       Text(
-                                                                          search_result[index]['Start']
+                                                                          search_result[index]['Star']
                                                                               .toString(),
                                                                           style:
                                                                               StylesText.style13BrownNormal)
@@ -333,14 +357,15 @@ class _FindFoodState extends State<FindFood> {
                                                                   0, 5, 0, 0),
                                                           child: Container(
                                                             child: CustomPaint(
-                                                                painter:
-                                                                    Drawhorizontalline(
-                                                                        false,
-                                                                        0.0,
-                                                                        300.0,
-                                                                        Colors
-                                                                            .blueGrey,
-                                                                        0.5)),
+                                                                painter: Drawhorizontalline(
+                                                                    false,
+                                                                    0.0,
+                                                                    Dimension
+                                                                        .getWidth(
+                                                                            1.0),
+                                                                    Colors
+                                                                        .blueGrey,
+                                                                    0.5)),
                                                           )),
                                                       Padding(
                                                         padding:
@@ -453,16 +478,21 @@ class _FindFoodState extends State<FindFood> {
   }
 
   Future<void> refreshPage() async {
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 1));
+    
+        search_result=[];
+    
 
     final resutl = await Find_Food(food.text);
-    setState(() {
-      if (resutl != null) {
-        search_result = resutl;
-        length = search_result.length;
-      } else {
-        length = 0;
-      }
-    });
+    if (this.mounted) {
+      setState(() {
+        if (resutl != null) {
+          search_result = resutl;
+          length = search_result.length;
+        } else {
+          length = 0;
+        }
+      });
+    }
   }
 }

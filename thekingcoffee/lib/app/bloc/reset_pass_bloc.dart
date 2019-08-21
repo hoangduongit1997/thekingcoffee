@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:thekingcoffee/app/validation/validation.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 
 class ResetPassBloc {
   StreamController _passcontroller = new StreamController();
@@ -12,7 +13,8 @@ class ResetPassBloc {
     bool status = true;
     if (!Validation.isValidPass(pass)) {
       status = false;
-      _passcontroller.sink.addError("Pass invalide");
+      _passcontroller.sink
+          .addError(allTranslations.text("password_invalid").toString());
     }
     if (Validation.isValidPass(pass)) {
       status = true;
@@ -20,7 +22,8 @@ class ResetPassBloc {
     }
     if (!Validation.isValidConfirmPass(pass, confirm)) {
       status = false;
-      _confirmcontroller.sink.addError("Confirm invalid");
+      _confirmcontroller.sink
+          .addError(allTranslations.text("confirm_password").toString());
     }
     if (Validation.isValidConfirmPass(pass, confirm)) {
       status = true;

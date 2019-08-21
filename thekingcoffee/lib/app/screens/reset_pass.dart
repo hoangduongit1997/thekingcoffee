@@ -5,6 +5,7 @@ import 'package:thekingcoffee/app/data/repository/reset_pass.dart';
 import 'package:thekingcoffee/app/screens/login.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/app/validation/validation.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/show_message_dialog.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
@@ -20,6 +21,12 @@ class _ResetPassState extends State<ResetPass> {
   TextEditingController _pass = new TextEditingController();
   TextEditingController _confirm = new TextEditingController();
   @override
+  void dispose() {
+    resetpass.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
         resizeToAvoidBottomInset: false,
@@ -33,12 +40,14 @@ class _ResetPassState extends State<ResetPass> {
               color: Colors.white,
               child: SingleChildScrollView(
                 child: Column(
+                  mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.end,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: <Widget>[
                     Padding(
                       padding: const EdgeInsets.fromLTRB(0, 50, 0, 0),
-                      child: Text("Reset Your Password",
+                      child: Text(
+                          allTranslations.text("reset_your_pass").toString(),
                           style: StylesText.style20Brown),
                     ),
                     Padding(
@@ -51,7 +60,11 @@ class _ResetPassState extends State<ResetPass> {
                               obscureText: true,
                               style: StylesText.style18Black,
                               decoration: InputDecoration(
-                                  labelText: "Password",
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.redAccent),
+                                  ),
+                                  labelText: allTranslations.text("password"),
                                   errorText:
                                       snapshot.hasError ? snapshot.error : null,
                                   labelStyle: StylesText.style12Bluegray),
@@ -71,7 +84,13 @@ class _ResetPassState extends State<ResetPass> {
                                   controller: _confirm,
                                   obscureText: true,
                                   decoration: InputDecoration(
-                                      labelText: "Retype Password",
+                                      focusedBorder: UnderlineInputBorder(
+                                        borderSide:
+                                            BorderSide(color: Colors.redAccent),
+                                      ),
+                                      labelText: allTranslations
+                                          .text("retype_pass")
+                                          .toString(),
                                       errorText: snapshot.hasError
                                           ? snapshot.error
                                           : null,
@@ -88,7 +107,8 @@ class _ResetPassState extends State<ResetPass> {
                         height: Dimension.getHeight(0.063),
                         child: RaisedButton(
                           color: Colors.red[300],
-                          child: Text("Submit", style: StylesText.style16While),
+                          child: Text(allTranslations.text("submit").toString(),
+                              style: StylesText.style16While),
                           shape: RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(8))),
@@ -103,7 +123,8 @@ class _ResetPassState extends State<ResetPass> {
   }
 
   void onSubmitClick() async {
-    LoadingDialog.showLoadingDialog(context, "Loading...");
+    LoadingDialog.showLoadingDialog(
+        context, allTranslations.text("splash_screen").toString());
     final prefs = await SharedPreferences.getInstance()
         .timeout(const Duration(seconds: 4));
     String code = prefs.getString('code');
@@ -129,7 +150,9 @@ class _ResetPassState extends State<ResetPass> {
     if ((await Validation.isConnectedNetwork()) == false) {
       LoadingDialog.hideLoadingDialog(context);
       MsgDialog.showMsgDialog(
-          context, "No network!", "No network connection found");
+          context,
+          allTranslations.text("title_no_netword").toString(),
+          allTranslations.text("no_network").toString());
     }
   }
 }

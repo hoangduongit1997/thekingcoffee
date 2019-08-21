@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+
 import 'package:intl/intl.dart';
 import 'package:thekingcoffee/app/bloc/signup_bloc.dart';
-import 'package:thekingcoffee/app/data/repository/login_repository.dart';
 import 'package:thekingcoffee/app/data/repository/signup_reposotory.dart';
-import 'package:thekingcoffee/app/screens/dashboard.dart';
 import 'package:thekingcoffee/app/screens/login.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/app/validation/validation.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/show_message_dialog.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
@@ -17,12 +16,13 @@ import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 class SignUp extends StatefulWidget {
   @override
   State<StatefulWidget> createState() {
-    return MyAppState();
+    return SignUpState();
   }
 }
 
-class MyAppState extends State<SignUp> {
+class SignUpState extends State<SignUp> {
   SignupBloc signupBloc = new SignupBloc();
+
   bool _showpass = false;
   bool checked = false;
   TextEditingController _name = new TextEditingController();
@@ -31,11 +31,17 @@ class MyAppState extends State<SignUp> {
   TextEditingController _confirmpass = new TextEditingController();
   TextEditingController _date = new TextEditingController();
   TextEditingController _fullname = new TextEditingController();
+  TextEditingController _gmail = new TextEditingController();
   final formats = {
     InputType.date: DateFormat('dd/MM/yyyy'),
   };
   InputType inputType = InputType.date;
   DateTime date;
+  @override
+  void dispose() {
+    signupBloc.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +51,7 @@ class MyAppState extends State<SignUp> {
           backgroundColor: Colors.white,
           elevation: 0.0,
           title: Text(
-            "Register",
+            allTranslations.text("register").toString(),
             style: StylesText.style20BrownBold,
           ),
           leading: IconButton(
@@ -55,8 +61,8 @@ class MyAppState extends State<SignUp> {
           actions: <Widget>[
             IconButton(
                 icon: SvgPicture.asset('assets/images/danger.svg',
-                    width: Dimension.getWidth(0.064),
-                    height: Dimension.getWidth(0.031)),
+                    width: Dimension.getWidth(0.04),
+                    height: Dimension.getWidth(0.04)),
                 onPressed: null)
           ],
         ),
@@ -82,24 +88,13 @@ class MyAppState extends State<SignUp> {
                               controller: _name,
                               style: StylesText.style18Black,
                               decoration: InputDecoration(
-                                  labelText: "Username",
-                                  errorText:
-                                      snapshot.hasError ? snapshot.error : null,
-                                  labelStyle: StylesText.style12Bluegray),
-                            );
-                          }),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-                      child: StreamBuilder<Object>(
-                          stream: signupBloc.phoneStream,
-                          builder: (context, snapshot) {
-                            return TextField(
-                              controller: _phone,
-                              style: StylesText.style18Black,
-                              keyboardType: TextInputType.phone,
-                              decoration: InputDecoration(
-                                  labelText: "Phone number",
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.redAccent),
+                                  ),
+                                  labelText: allTranslations
+                                      .text("user_name")
+                                      .toString(),
                                   errorText:
                                       snapshot.hasError ? snapshot.error : null,
                                   labelStyle: StylesText.style12Bluegray),
@@ -116,7 +111,13 @@ class MyAppState extends State<SignUp> {
                               controller: _pass,
                               obscureText: !_showpass,
                               decoration: InputDecoration(
-                                  labelText: "Password",
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.redAccent),
+                                  ),
+                                  labelText: allTranslations
+                                      .text("password")
+                                      .toString(),
                                   errorText:
                                       snapshot.hasError ? snapshot.error : null,
                                   labelStyle: StylesText.style12Bluegray),
@@ -133,7 +134,56 @@ class MyAppState extends State<SignUp> {
                               controller: _confirmpass,
                               obscureText: !_showpass,
                               decoration: InputDecoration(
-                                  labelText: "Confirm Password",
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.redAccent),
+                                  ),
+                                  labelText: allTranslations
+                                      .text("retype_pass")
+                                      .toString(),
+                                  errorText:
+                                      snapshot.hasError ? snapshot.error : null,
+                                  labelStyle: StylesText.style12Bluegray),
+                            );
+                          }),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                      child: StreamBuilder<Object>(
+                          stream: signupBloc.phoneStream,
+                          builder: (context, snapshot) {
+                            return TextField(
+                              controller: _phone,
+                              style: StylesText.style18Black,
+                              keyboardType: TextInputType.phone,
+                              decoration: InputDecoration(
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.redAccent),
+                                  ),
+                                  labelText: allTranslations
+                                      .text("phone_number")
+                                      .toString(),
+                                  errorText:
+                                      snapshot.hasError ? snapshot.error : null,
+                                  labelStyle: StylesText.style12Bluegray),
+                            );
+                          }),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                      child: StreamBuilder<Object>(
+                          stream: signupBloc.gmailStream,
+                          builder: (context, snapshot) {
+                            return TextField(
+                              controller: _gmail,
+                              style: StylesText.style18Black,
+                              decoration: InputDecoration(
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.redAccent),
+                                  ),
+                                  labelText: "Email",
                                   errorText:
                                       snapshot.hasError ? snapshot.error : null,
                                   labelStyle: StylesText.style12Bluegray),
@@ -149,7 +199,13 @@ class MyAppState extends State<SignUp> {
                               controller: _fullname,
                               style: StylesText.style18Black,
                               decoration: InputDecoration(
-                                  labelText: "Fullname",
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide:
+                                        BorderSide(color: Colors.redAccent),
+                                  ),
+                                  labelText: allTranslations
+                                      .text("full_name")
+                                      .toString(),
                                   errorText:
                                       snapshot.hasError ? snapshot.error : null,
                                   labelStyle: StylesText.style12Bluegray),
@@ -167,7 +223,13 @@ class MyAppState extends State<SignUp> {
                               format: formats[inputType],
                               editable: false,
                               decoration: InputDecoration(
-                                labelText: 'Date of birth',
+                                focusedBorder: UnderlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Colors.redAccent),
+                                ),
+                                labelText: allTranslations
+                                    .text("date_of_birth")
+                                    .toString(),
                                 errorText:
                                     snapshot.hasError ? snapshot.error : null,
                                 labelStyle: StylesText.style12Bluegray,
@@ -180,7 +242,8 @@ class MyAppState extends State<SignUp> {
                     Padding(
                         padding: const EdgeInsets.fromLTRB(0, 20, 0, 10),
                         child: CheckboxListTile(
-                          title: Text("Accept terms & conditions"),
+                          title: Text(
+                              allTranslations.text("accept_terms").toString()),
                           value: checked,
                           activeColor: Colors.red[300],
                           onChanged: (bool value) {
@@ -197,8 +260,9 @@ class MyAppState extends State<SignUp> {
                         height: Dimension.getHeight(0.063),
                         child: RaisedButton(
                           color: Colors.red[300],
-                          child:
-                              Text("Sign up", style: StylesText.style16While),
+                          child: Text(
+                              allTranslations.text("sign_up").toString(),
+                              style: StylesText.style16While),
                           shape: RoundedRectangleBorder(
                               borderRadius:
                                   BorderRadius.all(Radius.circular(8))),
@@ -213,7 +277,15 @@ class MyAppState extends State<SignUp> {
   }
 
   void onSignupClick() async {
-    LoadingDialog.showLoadingDialog(context, "Loading...");
+    LoadingDialog.showLoadingDialog(
+        context, allTranslations.text("splash_screen").toString());
+         if ((await Validation.isConnectedNetwork()) == false) {
+      Navigator.pop(context);
+      MsgDialog.showMsgDialog(
+          context,
+          allTranslations.text("title_no_netword").toString(),
+          allTranslations.text("no_network").toString());
+    }
     if ((await Validation.isConnectedNetwork()) == true &&
         signupBloc.isValidInfo(
               _name.text.trim(),
@@ -223,37 +295,36 @@ class MyAppState extends State<SignUp> {
               _date.text.trim(),
               checked,
               _fullname.text.trim(),
+              _gmail.text.trim(),
             ) ==
             true) {
+              LoadingDialog.hideLoadingDialog(context);
       if ((await PostSignUp(
               _name.text.trim().toString(),
               _pass.text.trim().toString(),
               _phone.text.trim().toString(),
               _date.text.toString(),
-              _fullname.text.toString())) ==
+              _fullname.text.trim().toString(),
+              _gmail.text.trim().toString())) ==
           true) {
-        LoadingDialog.hideLoadingDialog(context);
+   
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => LoginWithPass()));
       }
     }
     if ((await Validation.isConnectedNetwork()) == true &&
         signupBloc.isValidInfo(
-              _name.text.trim(),
-              _phone.text.trim(),
-              _pass.text.trim(),
-              _confirmpass.text.trim(),
-              _date.text.trim(),
-              checked,
-              _fullname.text.trim(),
-            ) ==
+                _name.text.trim(),
+                _phone.text.trim(),
+                _pass.text.trim(),
+                _confirmpass.text.trim(),
+                _date.text.trim(),
+                checked,
+                _fullname.text.trim(),
+                _gmail.text.trim()) ==
             false) {
       LoadingDialog.hideLoadingDialog(context);
     }
-    if ((await Validation.isConnectedNetwork()) == false) {
-      LoadingDialog.hideLoadingDialog(context);
-      MsgDialog.showMsgDialog(
-          context, "No network!", "No network connection found");
-    }
+   
   }
 }

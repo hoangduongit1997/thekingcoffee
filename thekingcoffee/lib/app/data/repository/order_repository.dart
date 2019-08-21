@@ -4,10 +4,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:thekingcoffee/app/screens/shopping_list.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
 import 'package:http/http.dart' as http;
 
-Future<bool> PostOrder(String phone, String address) async {
+Future<bool> PostOrder(String phone, String address, bool is_money) async {
   bool status_oder = false;
   final prefs = await SharedPreferences.getInstance();
   String token = prefs.getString('token');
@@ -49,41 +51,30 @@ Future<bool> PostOrder(String phone, String address) async {
     }
     orderData.add(product);
   }
+  int x = fee_ship;
   Map Order_Detail = {
     "IsApp": true,
     "IdCustomer": id_user.toString(),
+    "Shipment": fee_ship,
     "Address": address.toString(),
     "Phone": phone.toString(),
-    "Total": total,
+    "Total": total+fee_ship.toDouble(),
     "OrdersData": orderData,
     "Lat": lat.toString(),
-    "Long": lng.toString()
+    "Long": lng.toString(),
+    "PaidByPoint": is_money,
   };
   var body_order = json.encode(Order_Detail);
   Response response1 = await post(Config.order_API,
       headers: {'Token': token, 'Content-Type': 'application/json'},
       body: body_order);
   var data = json.decode(response1.body);
+ 
   if (data['Status'] == 1) {
+     prefs.setInt("points", data['Value']['Customer']['Point']);
     status_oder = true;
-    Fluttertoast.showToast(
-        msg: data['Message'],
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIos: 1,
-        backgroundColor: Colors.redAccent,
-        textColor: Colors.white,
-        fontSize: 16.0);
   } else {
     status_oder = false;
-    Fluttertoast.showToast(
-        msg: data['Message'],
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIos: 1,
-        backgroundColor: Colors.redAccent,
-        textColor: Colors.white,
-        fontSize: 16.0);
   }
   return status_oder;
 }

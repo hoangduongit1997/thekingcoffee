@@ -1,17 +1,19 @@
-import 'dart:convert';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:thekingcoffee/app/config/config.dart';
-import 'package:http/http.dart' as http;
-import 'package:thekingcoffee/app/screens/helper/dashboard_helper/placeholder_home.dart';
+
 import 'package:thekingcoffee/app/styles/styles.dart';
+import 'package:thekingcoffee/app/validation/validation.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog_order.dart';
 import 'package:thekingcoffee/core/components/widgets/drawline.dart';
 import 'package:thekingcoffee/core/components/widgets/favorite.dart';
 import 'package:thekingcoffee/core/components/widgets/rating.dart';
+
 import 'package:thekingcoffee/core/utils/utils.dart';
 
 class CarouselWithIndicator extends StatefulWidget {
@@ -22,10 +24,12 @@ class CarouselWithIndicator extends StatefulWidget {
 int promotion_new_product = 0;
 var promotion_list_new_product = [];
 BuildContext context_order;
+var list_new_product = [];
 
 class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
   int _current = 0;
   static int starCount = 5;
+ 
 
   @override
   Widget build(context) {
@@ -51,7 +55,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: Map_Object.map_home_cart<Widget>(
-            list_new_products,
+            list_new_product,
             (index, url) {
               return Container(
                 width: Dimension.getWidth(0.01),
@@ -70,27 +74,38 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
   }
 
   final List child = Map_Object.map_home_cart<Widget>(
-    list_new_products,
-    (index, i) {
+    list_new_product,
+    (index, i)  {
       promotion_list_new_product =
-          list_new_products[index]['Promotion'] as List<dynamic>;
+          list_new_product[index]['Promotion'] as List<dynamic>;
       promotion_new_product = promotion_list_new_product.length;
       return Container(
           child: GestureDetector(
         onTap: () {
-          LoadingDialog_Order.showLoadingDialog(
-              context_order,
-              list_new_products[index]['Id'],
-              list_new_products[index]['Name'],
-              list_new_products[index]['File_Path'],
-              list_new_products[index]['Description'],
-              list_new_products[index]['Price'],
-              list_new_products[index]['IsHot'],
-              list_new_products[index]['IsHot'],
-              list_new_products[index]['Toppings'],
-              list_new_products[index]['Size'],
-              list_new_products[index]['Promotion'],
-              ListOrderProducts);
+          if (list_new_product[index]['IsAvailable'] == false) {
+            Fluttertoast.showToast(
+                msg: allTranslations.text("out_of_stock").toString(),
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIos: 1,
+                backgroundColor: Colors.redAccent,
+                textColor: Colors.white,
+                fontSize: 16.0);
+          } else {
+            LoadingDialog_Order.showLoadingDialog(
+                context_order,
+                list_new_product[index]['Id'],
+                list_new_product[index]['Name'],
+                list_new_product[index]['File_Path'],
+                list_new_product[index]['Description'],
+                list_new_product[index]['Price'],
+                list_new_product[index]['IsHot'],
+                list_new_product[index]['IsHot'],
+                list_new_product[index]['Toppings'],
+                list_new_product[index]['Size'],
+                list_new_product[index]['Promotion'],
+                ListOrderProducts);
+          }
         },
         child: ClipRRect(
           borderRadius: BorderRadius.all(Radius.circular(8.0)),
@@ -115,7 +130,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
                                       borderRadius: BorderRadius.circular(8.0),
                                       child: CachedNetworkImage(
                                           imageUrl: Config.ip +
-                                              list_new_products[index]
+                                              list_new_product[index]
                                                   ['File_Path'],
                                           fit: BoxFit.cover,
                                           height: Dimension.getHeight(0.3),
@@ -132,9 +147,22 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
                                                 )),
                                               )),
                                     ),
-                                    Favorite(
-                                      color: Colors.red,
-                                    ),
+                                   
+                                  Config.isLogin==true?
+                                    list_new_product[index]['IsAvailable'] ==
+                                            true
+                                        ? Favorite(Colors.red,
+                                            list_new_product[index]['Loved'],list_new_product[index]['Id'])
+                                        : SvgPicture.asset(
+                                            "assets/icons/sold.svg",
+                                            width: Dimension.getWidth(0.05),
+                                            height: Dimension.getHeight(0.05)):Container(
+                                              child: list_new_product[index]['IsAvailable'] ==
+                                            false?SvgPicture.asset(
+                                            "assets/icons/sold.svg",
+                                            width: Dimension.getWidth(0.05),
+                                            height: Dimension.getHeight(0.05)):Container(),
+                                            ),
                                   ],
                                 )),
                           ],
@@ -150,7 +178,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
                       child: Center(
                         child: Container(
                           width: Dimension.getWidth(0.48),
-                          child: Text(list_new_products[index]['Name'],
+                          child: Text(list_new_product[index]['Name'],
                               overflow: TextOverflow.ellipsis,
                               style: StylesText.style20BrownBold),
                         ),
@@ -163,12 +191,12 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
                           StarRating(
                             size: 13.0,
                             rating: double.tryParse(
-                                list_new_products[index]['Start'].toString()),
+                                list_new_product[index]['Star'].toString()),
                             color: Colors.orange,
                             borderColor: Colors.grey,
                             starCount: starCount,
                           ),
-                          Text(list_new_products[index]['Start'].toString(),
+                          Text(list_new_product[index]['Star'].toString(),
                               style: StylesText.style13BrownNormal)
                         ],
                       ),
@@ -201,7 +229,10 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
                                 Icon(Icons.fastfood, color: Colors.redAccent),
                                 Text(
                                     promotion_new_product.toString() +
-                                        " discount",
+                                        " " +
+                                        allTranslations
+                                            .text("discount")
+                                            .toString(),
                                     style: StylesText.style13BrownNormal)
                               ],
                             ),
@@ -211,7 +242,11 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
                         child: Container(
                           child: CustomPaint(
                               painter: Drawhorizontalline(
-                                  false, 0.0, 200.0, Colors.blueGrey, 0.2)),
+                                  false,
+                                  0.0,
+                                  Dimension.getWidth(0.55),
+                                  Colors.blueGrey,
+                                  0.2)),
                         )),
                     Padding(
                       padding: const EdgeInsets.fromLTRB(5, 10, 0, 0),
@@ -239,13 +274,13 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
                                     padding:
                                         const EdgeInsets.fromLTRB(5, 0, 0, 0),
                                     child: Text(
-                                        list_new_products[index]['Price']
+                                        list_new_product[index]['Price']
                                             .toString(),
                                         style: StylesText.style16BrownBold),
                                   )
                                 ],
                               ),
-                              list_new_products[index]['IsHot'] == 1
+                              list_new_product[index]['IsHot'] == 1
                                   ? Container(
                                       width: Dimension.getWidth(0.45),
                                       child: Row(
@@ -276,25 +311,4 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
       ));
     },
   ).toList();
-}
-
-class CarouselDemo extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      resizeToAvoidBottomInset: false,
-      body: Center(
-        child: Padding(
-            padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: <Widget>[
-                Container(
-                  child: CarouselWithIndicator(),
-                ),
-              ],
-            )),
-      ),
-    );
-  }
 }

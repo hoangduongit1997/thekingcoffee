@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:thekingcoffee/app/bloc/place_bloc.dart';
 import 'package:thekingcoffee/app/data/model/get_place_item.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 
 class RidePickerPage extends StatefulWidget {
@@ -47,7 +48,7 @@ class _RidePickerPageState extends State<RidePickerPage> {
           ),
           backgroundColor: Colors.white,
           title: Text(
-            "Enter your address",
+            allTranslations.text("enter_address").toString(),
             style: StylesText.style20BrownBold,
           ),
         ),
@@ -98,6 +99,15 @@ class _RidePickerPageState extends State<RidePickerPage> {
                               Padding(
                                 padding: EdgeInsets.only(left: 40, right: 50),
                                 child: TextField(
+                                  decoration: InputDecoration(
+                                    hintText: allTranslations
+                                        .text("enter_address")
+                                        .toString(),
+                                    focusedBorder: UnderlineInputBorder(
+                                      borderSide:
+                                          BorderSide(color: Colors.redAccent),
+                                    ),
+                                  ),
                                   controller: _addressController,
                                   textInputAction: TextInputAction.search,
                                   onSubmitted: (str) {
@@ -138,6 +148,8 @@ class _RidePickerPageState extends State<RidePickerPage> {
                                   scrollDirection: Axis.vertical,
                                   itemBuilder: (context, index) {
                                     return ListTile(
+                                      leading: Icon(Icons.location_city,
+                                          color: Colors.grey),
                                       title: Text(places.elementAt(index).name),
                                       subtitle:
                                           Text(places.elementAt(index).address),
@@ -167,7 +179,7 @@ class _RidePickerPageState extends State<RidePickerPage> {
   }
 
   Future<void> onrefresh() async {
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 1));
     setState(() {
       placeBloc.searchPlace(_addressController.text);
     });

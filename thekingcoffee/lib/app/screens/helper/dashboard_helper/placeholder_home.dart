@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter/widgets.dart';
 
-import 'package:thekingcoffee/app/data/model/radiomodel.dart';
-
 import 'package:thekingcoffee/app/data/repository/get_coffee_products.dart';
 
 import 'package:thekingcoffee/app/data/repository/get_drinking_products.dart';
@@ -11,11 +9,13 @@ import 'package:thekingcoffee/app/data/repository/get_food_products.dart';
 import 'package:thekingcoffee/app/data/repository/get_new_products.dart';
 import 'package:thekingcoffee/app/data/repository/get_tea_products.dart';
 import 'package:thekingcoffee/app/screens/dashboard.dart';
+
 import 'package:thekingcoffee/app/screens/find_food.dart';
 
-import 'package:thekingcoffee/app/screens/see_all_product.dart';
+import 'package:thekingcoffee/app/screens/see_all_product_type.dart';
 
 import 'package:thekingcoffee/app/styles/styles.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 
 import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
@@ -25,6 +25,7 @@ import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_tea.dart';
 import 'package:thekingcoffee/core/components/ui/slider_card/new_products_slider.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 import 'package:http/http.dart' as http;
+import 'package:thekingcoffee/main.dart';
 
 class PlaceholderMainWidget extends StatefulWidget {
   const PlaceholderMainWidget();
@@ -34,38 +35,39 @@ class PlaceholderMainWidget extends StatefulWidget {
   }
 }
 
-var list_new_products = [];
 var list_coffee = [];
 var list_tea = [];
 var list_food = [];
 var list_drinking = [];
-var list_all_product = [];
 
 class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
 
-  List<RadioModel> _langList = new List<RadioModel>();
-  int _index = 0;
   intDataHomeSlider() async {
-    final result = await Get_New_Products();
+    try{
+      final result = await Get_New_Products();
     final coffee = await Is_Has_Coffee_Product();
     final tea = await Is_Have_Tea_Products();
     final food = await Is_Have_Food_Products();
     final drinking = await Is_Have_Drinking_Products();
     if (this.mounted) {
       setState(() {
-        list_new_products = result;
+        list_new_product = result;
         list_coffee = coffee;
         list_tea = tea;
         list_food = food;
         list_drinking = drinking;
       });
     }
+    }
+    catch(e){}
+    
   }
 
   @override
   void initState() {
     intDataHomeSlider();
+    
     super.initState();
   }
 
@@ -80,8 +82,10 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
           key: _scaffoldKey,
           appBar: AppBar(
             centerTitle: true,
-            title: Text("Home", style: StylesText.style20BrownBold),
+            title: Text(allTranslations.text("home_page").toString(),
+                style: StylesText.style20BrownBold),
             leading: FlatButton(
+                splashColor: Colors.grey[300],
                 onPressed: () {
                   _scaffoldKey.currentState.openDrawer();
                 },
@@ -95,7 +99,7 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                 splashColor: Colors.brown,
                 onPressed: () {
                   Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => FindFood()));
+                      MaterialPageRoute(builder: (context) => FindFood())).then((value){ number_bloc.Check_Number();});
                 },
               )
             ],
@@ -115,7 +119,7 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                     children: <Widget>[
                       Padding(
                         padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
-                        child: Text("All catalogues",
+                        child: Text(allTranslations.text("all_cato").toString(),
                             style: StylesText.style20BrownNomorlRaleway),
                       ),
                       Padding(
@@ -134,8 +138,26 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                Text("New product",
+                                Text(
+                                    allTranslations
+                                        .text("new_product")
+                                        .toString(),
                                     style: StylesText.style17BrownBoldlRaleway),
+                                GestureDetector(
+                                  onTap: (){
+                                     Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  See_All_Product_Type(
+                                                      allTranslations
+                                                          .text("all_product")
+                                                          .toString(),
+                                                      0))).then((value){ number_bloc.Check_Number();});
+                                  },
+                                  child: Text(allTranslations.text("all_product").toString(),
+                                    style: StylesText.style15RedAccentBold),
+                                )
+                                
                               ],
                             ),
                           )),
@@ -144,8 +166,8 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                         child: Container(
                             height: Dimension.getHeight(0.29),
                             child: Center(
-                              child: list_new_products == null ||
-                                      list_new_products.length == 0
+                              child: list_new_product == null ||
+                                      list_new_product.length == 0
                                   ? Container(
                                       child: Center(
                                         child: CircularProgressIndicator(
@@ -155,7 +177,7 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                                         ),
                                       ),
                                     )
-                                  : CarouselDemo(),
+                                  : CarouselWithIndicator(),
                             )),
                       ),
                       Padding(
@@ -174,17 +196,23 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                Text("Coffee",
+                                Text(allTranslations.text("coffee").toString(),
                                     style: StylesText.style17BrownBoldlRaleway),
                                 GestureDetector(
                                     onTap: () {
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  See_All_Product(
-                                                      "All Coffee", 2)));
+                                                  See_All_Product_Type(
+                                                      allTranslations
+                                                          .text("all_coffee")
+                                                          .toString(),
+                                                      2))).then((value)=>{ number_bloc.Check_Number()});
                                     },
-                                    child: Text("See all",
+                                    child: Text(
+                                        allTranslations
+                                            .text("see_all")
+                                            .toString(),
                                         style: StylesText.style15RedAccentBold))
                               ],
                             ),
@@ -231,17 +259,23 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                Text("Tea",
+                                Text(allTranslations.text("tea").toString(),
                                     style: StylesText.style17BrownBoldlRaleway),
                                 GestureDetector(
                                     onTap: () {
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  See_All_Product(
-                                                      "All Tea", 4)));
+                                                  See_All_Product_Type(
+                                                      allTranslations
+                                                          .text("all_tea")
+                                                          .toString(),
+                                                      4))).then((value){ number_bloc.Check_Number();});
                                     },
-                                    child: Text("See all",
+                                    child: Text(
+                                        allTranslations
+                                            .text("see_all")
+                                            .toString(),
                                         style: StylesText.style15RedAccentBold))
                               ],
                             ),
@@ -279,17 +313,24 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                Text("Drinking",
+                                Text(
+                                    allTranslations.text("drinking").toString(),
                                     style: StylesText.style17BrownBoldlRaleway),
                                 GestureDetector(
                                     onTap: () {
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  See_All_Product(
-                                                      "All Drinking", 1)));
+                                                  See_All_Product_Type(
+                                                      allTranslations
+                                                          .text("all_drinking")
+                                                          .toString(),
+                                                      1))).then((value){ number_bloc.Check_Number();});
                                     },
-                                    child: Text("See all",
+                                    child: Text(
+                                        allTranslations
+                                            .text("see_all")
+                                            .toString(),
                                         style: StylesText.style15RedAccentBold))
                               ],
                             ),
@@ -328,17 +369,23 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: <Widget>[
-                                Text("Food",
+                                Text(allTranslations.text("food").toString(),
                                     style: StylesText.style17BrownBoldlRaleway),
                                 GestureDetector(
                                     onTap: () {
                                       Navigator.of(context).push(
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  See_All_Product(
-                                                      "All Food", 3)));
+                                                  See_All_Product_Type(
+                                                      allTranslations
+                                                          .text("all_food")
+                                                          .toString(),
+                                                      3))).then((value){ number_bloc.Check_Number();});
                                     },
-                                    child: Text("See all",
+                                    child: Text(
+                                        allTranslations
+                                            .text("see_all")
+                                            .toString(),
                                         style: StylesText.style15RedAccentBold))
                               ],
                             ),
@@ -374,9 +421,26 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
 
   Future<void> refreshPage() async {
     await Future.delayed(Duration(seconds: 2));
-    setState(() {
-      Navigator.of(context, rootNavigator: true).pushReplacement(
-          MaterialPageRoute(builder: (context) => DashBoard()));
-    });
+
+    final result_new_product = await Get_New_Products();
+    final result_coffee = await Get_Coffee_Product();
+    final result_tea = await Get_Tea_Products();
+    final result_drinking = await Get_Drinking_Products();
+    if (this.mounted) {
+      setState(() {
+        list_new_product=[];
+      });
+    }
+    final result_food = await Get_Food_Products();
+
+    if (this.mounted) {
+      setState(() {
+        data_coffee = result_coffee;
+        data_tea = result_tea;
+        data_drinking = result_drinking;
+        data_food = result_food;
+        list_new_product = result_new_product;
+      });
+    }
   }
 }

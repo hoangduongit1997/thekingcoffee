@@ -1,10 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/data/repository/get_data_all_product.dart';
 import 'package:thekingcoffee/app/screens/dashboard.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog_order.dart';
@@ -13,31 +15,39 @@ import 'package:thekingcoffee/core/components/widgets/favorite.dart';
 import 'package:thekingcoffee/core/components/widgets/rating.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 
-class See_All_Product extends StatefulWidget {
+class See_All_Product_Type extends StatefulWidget {
   String title = "";
   int catagory = 0;
-  See_All_Product(this.title, this.catagory);
-  _See_All_ProductState createState() => _See_All_ProductState();
+  See_All_Product_Type(this.title, this.catagory);
+  _See_All_ProductTypeState createState() => _See_All_ProductTypeState();
 }
 
-class _See_All_ProductState extends State<See_All_Product> {
+class _See_All_ProductTypeState extends State<See_All_Product_Type> {
   int lenght = 0;
   var data = [];
   static int starCount = 5;
   int promotion_product = 0;
   var promotion_list_product = [];
   intDataScreen() async {
-    final result = await Get_Data_All_Product(widget.catagory);
-    setState(() {
-      data = result;
-      lenght = data.length;
-    });
+    try {
+      final result = await Get_Data_All_Product(widget.catagory);
+      if (this.mounted) {
+        if (data != null) {
+          setState(() {
+            data = result;
+            lenght = data.length;
+          });
+        }
+      }
+    } catch (e) {}
   }
 
   @override
   void initState() {
-    intDataScreen();
     super.initState();
+
+      intDataScreen();
+
   }
 
   var _scaffoldKey = new GlobalKey<ScaffoldState>();
@@ -62,7 +72,11 @@ class _See_All_ProductState extends State<See_All_Product> {
       resizeToAvoidBottomInset: false,
       body: data.length == 0 || data.isEmpty == true
           ? Container(
-              child: Center(child: Text("No information")),
+              child: Center(
+                  child: Text(
+                allTranslations.text("no_info").toString(),
+                style: StylesText.style13Black,
+              )),
             )
           : Container(
               padding: const EdgeInsets.all(5.0),
@@ -83,19 +97,32 @@ class _See_All_ProductState extends State<See_All_Product> {
                       promotion_product = promotion_list_product.length;
                       return GestureDetector(
                         onTap: () {
-                          LoadingDialog_Order.showLoadingDialog(
-                              context,
-                              data[index]['Id'],
-                              data[index]['Name'],
-                              data[index]['File_Path'],
-                              data[index]['Description'],
-                              data[index]['Price'],
-                              data[index]['IsHot'],
-                              data[index]['IsHot'],
-                              data[index]['Toppings'],
-                              data[index]['Size'],
-                              data[index]['Promotion'],
-                              ListOrderProducts);
+                          if (data[index]['IsAvailable'] == false) {
+                            Fluttertoast.showToast(
+                                msg: allTranslations
+                                    .text("out_of_stock")
+                                    .toString(),
+                                toastLength: Toast.LENGTH_SHORT,
+                                gravity: ToastGravity.BOTTOM,
+                                timeInSecForIos: 1,
+                                backgroundColor: Colors.redAccent,
+                                textColor: Colors.white,
+                                fontSize: 16.0);
+                          } else {
+                            LoadingDialog_Order.showLoadingDialog(
+                                context,
+                                data[index]['Id'],
+                                data[index]['Name'],
+                                data[index]['File_Path'],
+                                data[index]['Description'],
+                                data[index]['Price'],
+                                data[index]['IsHot'],
+                                data[index]['IsHot'],
+                                data[index]['Toppings'],
+                                data[index]['Size'],
+                                data[index]['Promotion'],
+                                ListOrderProducts);
+                          }
                         },
                         child: Padding(
                           padding: const EdgeInsets.all(2.0),
@@ -162,10 +189,34 @@ class _See_All_ProductState extends State<See_All_Product> {
                                                                               )),
                                                                             )),
                                                               ),
-                                                              Favorite(
-                                                                color:
-                                                                    Colors.red,
-                                                              ),
+                                                              Config.isLogin ==
+                                                                      true
+                                                                  ? data[index]
+                                                                              [
+                                                                              'IsAvailable'] ==
+                                                                          true
+                                                                      ? Favorite(
+                                                                          Colors
+                                                                              .red,
+                                                                          data[index]
+                                                                              [
+                                                                              'Loved'],
+                                                              data[index]['Id'])
+                                                                      : SvgPicture.asset(
+                                                                          "assets/icons/sold.svg",
+                                                                          width: Dimension.getWidth(
+                                                                              0.05),
+                                                                          height:
+                                                                              Dimension.getHeight(0.05))
+                                                                  : Container(
+                                                                      child: data[index]['IsAvailable'] ==
+                                                                              false
+                                                                          ? SvgPicture.asset(
+                                                                              "assets/icons/sold.svg",
+                                                                              width: Dimension.getWidth(0.05),
+                                                                              height: Dimension.getHeight(0.05))
+                                                                          : Container(),
+                                                                    )
                                                             ],
                                                           )),
                                                     ],
@@ -218,8 +269,7 @@ class _See_All_ProductState extends State<See_All_Product> {
                                                                 size: 13.0,
                                                                 rating: double.tryParse(data[
                                                                             index]
-                                                                        [
-                                                                        'Start']
+                                                                        ['Star']
                                                                     .toString()),
                                                                 color: Colors
                                                                     .orange,
@@ -229,7 +279,7 @@ class _See_All_ProductState extends State<See_All_Product> {
                                                               ),
                                                               Text(
                                                                   data[index][
-                                                                          'Start']
+                                                                          'Star']
                                                                       .toString(),
                                                                   style: StylesText
                                                                       .style13BrownNormal)
@@ -277,7 +327,7 @@ class _See_All_ProductState extends State<See_All_Product> {
                                                             Drawhorizontalline(
                                                                 false,
                                                                 0.0,
-                                                                300.0,
+                                                                Dimension.getWidth(1.0),
                                                                 Colors.blueGrey,
                                                                 0.5)),
                                                   )),
@@ -339,7 +389,7 @@ class _See_All_ProductState extends State<See_All_Product> {
                                                                                 color: Colors.redAccent,
                                                                               ),
                                                                               Text(
-                                                                                promotion_product.toString() + " discount",
+                                                                                promotion_product.toString() + " " + allTranslations.text("discount").toString(),
                                                                                 style: StylesText.style13BrownBold,
                                                                               )
                                                                             ],
@@ -397,10 +447,16 @@ class _See_All_ProductState extends State<See_All_Product> {
   }
 
   Future<void> refreshPage() async {
-    await Future.delayed(Duration(seconds: 2));
+    await Future.delayed(Duration(seconds: 1));
+    final result=  intDataScreen();
 
-    setState(() {
-      initState();
-    });
+      if(this.mounted)
+      {
+        setState(() {
+          data=result;
+          build(context);
+        });
+      }
+
   }
 }

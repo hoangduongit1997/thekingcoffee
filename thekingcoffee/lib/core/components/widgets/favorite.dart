@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
+import 'package:thekingcoffee/app/data/repository/set_loved_respository.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 
 class Favorite extends StatefulWidget {
-  final Color color;
-  Favorite({this.color = Colors.blueGrey});
+  Color color;
+  bool is_like;
+  int id_product;
+
+  Favorite(this.color, this.is_like, this.id_product);
 
   @override
   _HeartState createState() => _HeartState();
@@ -13,11 +19,27 @@ class _HeartState extends State<Favorite> {
 
   @override
   Widget build(BuildContext context) {
+    isClick = widget.is_like;
     return InkWell(
-      onTap: () {
-        setState(() {
-          isClick = !isClick;
-        });
+      onTap: () async {
+        if(await IsLove(widget.id_product)==1)
+          {
+            setState(() {
+              widget.is_like = !widget.is_like;
+            });
+          }
+        else
+          {
+            Fluttertoast.showToast(
+                msg: allTranslations.text("error").toString(),
+                toastLength: Toast.LENGTH_SHORT,
+                gravity: ToastGravity.BOTTOM,
+                timeInSecForIos: 1,
+                backgroundColor: Colors.redAccent,
+                textColor: Colors.white,
+                fontSize: 16.0);
+          }
+
       },
       child: Container(
         decoration: BoxDecoration(

@@ -1,18 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_svg/svg.dart';
 
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/screens/account_detail.dart';
-import 'package:thekingcoffee/app/screens/dashboard.dart';
 
 import 'package:thekingcoffee/app/screens/earn_point.dart';
 
 import 'package:thekingcoffee/app/screens/history.dart';
 import 'package:thekingcoffee/app/screens/login.dart';
+import 'package:thekingcoffee/app/screens/shopping_list.dart';
 
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:thekingcoffee/app/validation/validation.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -23,12 +25,18 @@ class HomeMenu extends StatefulWidget {
 }
 
 class _HomeMenuState extends State<HomeMenu> {
+  String name;
   Future<void> _launched;
+  _getname()
+  async {
+    SharedPreferences preferences=await SharedPreferences.getInstance();
+    name =preferences.getString('name');
+  }
   Future<void> _makePhoneCall(String url) async {
     if (await canLaunch(url)) {
       await launch(url);
     } else {
-      throw 'Could not launch $url';
+      throw allTranslations.text("could_not_run ") + '$url';
     }
   }
 
@@ -55,6 +63,7 @@ class _HomeMenuState extends State<HomeMenu> {
   @override
   void initState() {
     super.initState();
+    _getname();
     CheckLogin();
   }
 
@@ -65,17 +74,21 @@ class _HomeMenuState extends State<HomeMenu> {
             children: <Widget>[
               new UserAccountsDrawerHeader(
                   accountName: Text(
-                    'Hoàng Dương',
+                    name.toString(),
                     style: StylesText.style15BlackBold,
                   ),
                   accountEmail: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: <Widget>[
+                      SvgPicture.asset(
+                        'assets/icons/point.svg',
+                        width: Dimension.getWidth(0.03),
+                        height: Dimension.getHeight(0.03),
+                      ),
                       Text(
-                        point,
+                        "  " + point,
                         style: StylesText.style13BlackBold,
                       ),
-                      Icon(Icons.star, color: Colors.yellowAccent)
                     ],
                   ),
                   currentAccountPicture: GestureDetector(
@@ -99,7 +112,7 @@ class _HomeMenuState extends State<HomeMenu> {
                 },
                 child: ListTile(
                   title: Text(
-                    'My account',
+                    allTranslations.text("my_account").toString(),
                     style: StylesText.style13BlackBold,
                   ),
                   leading: Icon(
@@ -115,7 +128,7 @@ class _HomeMenuState extends State<HomeMenu> {
                 },
                 child: ListTile(
                   title: Text(
-                    'Earn points',
+                    allTranslations.text("earn_point").toString(),
                     style: StylesText.style13BlackBold,
                   ),
                   leading: Icon(
@@ -131,7 +144,7 @@ class _HomeMenuState extends State<HomeMenu> {
                 },
                 child: ListTile(
                   title: Text(
-                    'History',
+                    allTranslations.text("history").toString(),
                     style: StylesText.style13BlackBold,
                   ),
                   leading: Icon(Icons.history, color: Colors.redAccent),
@@ -140,7 +153,7 @@ class _HomeMenuState extends State<HomeMenu> {
               InkWell(
                 child: ListTile(
                   title: Text(
-                    'Log out',
+                    allTranslations.text("log_out").toString(),
                     style: StylesText.style13BlackBold,
                   ),
                   leading: Icon(Icons.error_outline, color: Colors.redAccent),
@@ -152,10 +165,11 @@ class _HomeMenuState extends State<HomeMenu> {
                             shape: RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(15.0))),
-                            title: new Text("Confirm",
+                            title: new Text(
+                                allTranslations.text("confirm").toString(),
                                 style: StylesText.style18RedaccentBold),
                             content: new Text(
-                              "Do you want to log out ?",
+                              allTranslations.text("do_log_out").toString(),
                               style: StylesText.style15Black,
                             ),
                             actions: <Widget>[
@@ -169,7 +183,7 @@ class _HomeMenuState extends State<HomeMenu> {
                                       color: Colors.brown),
                                   child: Center(
                                       child: Text(
-                                    "Cancel",
+                                    allTranslations.text("cancel").toString(),
                                     style: StylesText.style14While,
                                   )),
                                 ),
@@ -186,11 +200,26 @@ class _HomeMenuState extends State<HomeMenu> {
                                             Radius.circular(15.0)),
                                         color: Colors.redAccent),
                                     child: Center(
-                                      child: Text("Yes",
-                                          style: StylesText.style14While),
+                                      child: Container(
+                                          width: Dimension.getWidth(0.28),
+                                          height: Dimension.getHeight(0.04),
+                                          decoration: BoxDecoration(
+                                              borderRadius: BorderRadius.all(
+                                                  Radius.circular(15.0)),
+                                              color: Colors.redAccent),
+                                          child: Center(
+                                            child: Text(
+                                                allTranslations
+                                                    .text("yes")
+                                                    .toString(),
+                                                style: StylesText.style14While),
+                                          )),
                                     )),
                                 onPressed: () async {
+                                  Config.isLogin=false;
                                   ListOrderProducts.clear();
+                                  fee_ship=0;
+                                  address.clear();
                                   SharedPreferences preferences =
                                       await SharedPreferences.getInstance();
                                   await preferences.clear();
@@ -214,7 +243,7 @@ class _HomeMenuState extends State<HomeMenu> {
                 },
                 child: ListTile(
                   title: Text(
-                    'Help',
+                    allTranslations.text("help_draw_left").toString(),
                     style: StylesText.style13BlackBold,
                   ),
                   leading: Icon(Icons.help_outline, color: Colors.redAccent),
@@ -234,21 +263,47 @@ class _HomeMenuState extends State<HomeMenu> {
                             shape: RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(15.0))),
-                            title: new Text("Confirm",
+                            title: new Text(
+                                allTranslations.text("confirm").toString(),
                                 style: StylesText.style18RedaccentBold),
                             content: new Text(
-                              "Do you want to exit ?",
+                              allTranslations.text("do_exit").toString(),
                               style: StylesText.style15Black,
                             ),
                             actions: <Widget>[
                               FlatButton(
-                                child: Text("No"),
+                                child: Container(
+                                  width: Dimension.getWidth(0.28),
+                                  height: Dimension.getHeight(0.04),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(15.0)),
+                                      color: Colors.brown),
+                                  child: Center(
+                                      child: Text(
+                                    allTranslations.text("cancel").toString(),
+                                    style: StylesText.style14While,
+                                  )),
+                                ),
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },
                               ),
                               FlatButton(
-                                child: Text("Yes"),
+                                child: Container(
+                                    width: Dimension.getWidth(0.28),
+                                    height: Dimension.getHeight(0.04),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(15.0)),
+                                        color: Colors.redAccent),
+                                    child: Center(
+                                      child: Text(
+                                          allTranslations
+                                              .text("yes")
+                                              .toString(),
+                                          style: StylesText.style14While),
+                                    )),
                                 onPressed: () {
                                   SystemChannels.platform
                                       .invokeMethod('SystemNavigator.pop');
@@ -259,7 +314,7 @@ class _HomeMenuState extends State<HomeMenu> {
                         });
                   },
                   title: Text(
-                    'Exit',
+                    allTranslations.text("exit_draw_left").toString(),
                     style: StylesText.style13BlackBold,
                   ),
                   leading: Icon(Icons.exit_to_app, color: Colors.redAccent),
@@ -283,7 +338,7 @@ class _HomeMenuState extends State<HomeMenu> {
               InkWell(
                 child: ListTile(
                   title: Text(
-                    'Log in',
+                    allTranslations.text("login").toString(),
                     style: StylesText.style13BlackBold,
                   ),
                   leading: Icon(Icons.open_in_browser, color: Colors.redAccent),
@@ -304,21 +359,47 @@ class _HomeMenuState extends State<HomeMenu> {
                             shape: RoundedRectangleBorder(
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(15.0))),
-                            title: new Text("Confirm",
+                            title: new Text(
+                                allTranslations.text("confirm").toString(),
                                 style: StylesText.style18RedaccentBold),
                             content: new Text(
-                              "Do you want to exit ?",
+                              allTranslations.text("do_exit").toString(),
                               style: StylesText.style15Black,
                             ),
                             actions: <Widget>[
                               FlatButton(
-                                child: Text("No"),
+                                child: Container(
+                                  width: Dimension.getWidth(0.28),
+                                  height: Dimension.getHeight(0.04),
+                                  decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(15.0)),
+                                      color: Colors.brown),
+                                  child: Center(
+                                      child: Text(
+                                    allTranslations.text("cancel").toString(),
+                                    style: StylesText.style14While,
+                                  )),
+                                ),
                                 onPressed: () {
                                   Navigator.of(context).pop();
                                 },
                               ),
                               FlatButton(
-                                child: Text("Yes"),
+                                child: Container(
+                                    width: Dimension.getWidth(0.28),
+                                    height: Dimension.getHeight(0.04),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.all(
+                                            Radius.circular(15.0)),
+                                        color: Colors.redAccent),
+                                    child: Center(
+                                      child: Text(
+                                          allTranslations
+                                              .text("yes")
+                                              .toString(),
+                                          style: StylesText.style14While),
+                                    )),
                                 onPressed: () {
                                   SystemChannels.platform
                                       .invokeMethod('SystemNavigator.pop');
@@ -329,7 +410,7 @@ class _HomeMenuState extends State<HomeMenu> {
                         });
                   },
                   title: Text(
-                    'Exit',
+                    allTranslations.text("exit_draw_left").toString(),
                     style: StylesText.style13BlackBold,
                   ),
                   leading: Icon(Icons.exit_to_app, color: Colors.redAccent),

@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 
+
 import 'package:thekingcoffee/app/styles/styles.dart';
+import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
 import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart'
     as prefix0;
-import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog.dart';
 import 'package:thekingcoffee/core/components/ui/show_dialog/show_message_dialog.dart';
+
 import 'package:thekingcoffee/core/components/widgets/drawline.dart';
 import 'package:thekingcoffee/core/utils/utils.dart';
 
@@ -23,8 +25,10 @@ class Order_Dialog extends StatefulWidget {
   final List<dynamic> toppings;
   final List<dynamic> size;
   final List<dynamic> promotion;
+
   Order_Dialog(this.id, this.img, this.name, this.desc, this.price, this.ishot,
       this.hashot, this.size, this.toppings, this.promotion);
+
   Order_DialogState createState() => Order_DialogState();
 }
 
@@ -88,6 +92,10 @@ class Order_DialogState extends State<Order_Dialog> {
           topping['Name'].toString(),
           style: StylesText.style13BrownBold,
         ),
+        subtitle: Text(
+          "+ "+topping['Price'].toString()+" VNĐ",
+          style: StylesText.style11BrownNormal,
+        ),
         value: lstSelectedTopping.firstWhere((t) => t['Id'] == topping['Id'],
                 orElse: () => null) !=
             null,
@@ -118,6 +126,7 @@ class Order_DialogState extends State<Order_Dialog> {
     return widgets;
   }
 
+  double oldMoney=0;
   List<Widget> createRadioListPromotion() {
     List<Widget> widgets_promotion = [];
     for (var promotion in widget.promotion) {
@@ -130,28 +139,49 @@ class Order_DialogState extends State<Order_Dialog> {
             promotion['Sale']['Description'],
             style: StylesText.style13BrownBold,
           ),
+          subtitle: Text(
+            promotion['Sale']['SubTitle'],
+            style: StylesText.style11BrownNormal,
+          ),
           onChanged: (value) {
-            list_promotion_product = [];
+            list_promotion_product=[];
             list_promotion_product = promotion['SaleForProducts'];
-            int oldMoney = 0, newMoney = 0;
-            if (selectedPromotion != null) {
-              oldMoney = ((widget.price -
-                      (widget.price *
-                          (selectedPromotion['PercentDiscount']) /
-                          100) -
-                      selectedPromotion['MoneyDiscount']))
-                  .toInt();
+           
+//            int oldMoney = 0, newMoney = 0;
+//            if (selectedPromotion != null) {
+//              oldMoney = ((widget.price -
+//                      (widget.price *
+//                          (selectedPromotion['PercentDiscount']) /
+//                          100) -
+//                      selectedPromotion['MoneyDiscount']))
+//                  .toInt();
+//            }
+//
+//            newMoney = ((widget.price -
+//                    (widget.price * (value['PercentDiscount']) / 100) -
+//                    value['MoneyDiscount']))
+//                .toInt();
+//            setState(() {
+//              selectedPromotion = value;
+//              money = money + oldMoney - newMoney;
+//            });
+
+            double tempMoney=0;
+            if(value['SaleForProducts']==null){
+              money=money+oldMoney.toInt();
+              tempMoney=money.toDouble()-value['MoneyDiscount']*1.0-value['PercentDiscount']*money.toDouble()*1.0;
+
+              setState(() {
+                money=tempMoney.toInt();
+                selectedPromotion=value;
+              });
+              oldMoney=tempMoney;
+            }else{
+              setState(() {
+                money=widget.price;
+                selectedPromotion=value;
+              });
             }
-
-            newMoney = ((widget.price -
-                    (widget.price * (value['PercentDiscount']) / 100) -
-                    value['MoneyDiscount']))
-                .toInt();
-            setState(() {
-              selectedPromotion = value;
-              money = money + oldMoney - newMoney;
-            });
-
             selectedsize = value;
 
             selectedProduct['Price'] = money;
@@ -165,21 +195,36 @@ class Order_DialogState extends State<Order_Dialog> {
     return widgets_promotion;
   }
 
+  double old_sale_product_money=0;
   List<Widget> createCheckBoxListPromotionProDuct() {
     List<Widget> widgets_promotion_product = [];
     for (var promotion_product in list_promotion_product) {
-      final_price_promotion_product =
-          promotion_product['DetailedSaleForProduct']['Price'] -
-              promotion_product['MoneyDiscount'] -
-              promotion_product['PriceDiscount'];
-      widgets_promotion_product.add(Container(
+    
+      if (promotion_product['PriceDiscount'] > 0) {
+        final_price_promotion_product = 0;
+        final_price_promotion_product =
+            promotion_product['DetailedSaleForProduct']['Price'] -
+                promotion_product['PriceDiscount'];
+      } else if (promotion_product['PercentDiscount'] > 0) {
+        final_price_promotion_product = 0;
+        double temp = promotion_product['DetailedSaleForProduct']['Price'] *
+            promotion_product['PercentDiscount'];
+        final_price_promotion_product =
+            promotion_product['DetailedSaleForProduct']['Price'] - temp.toInt();
+      }
+
+      
+      widgets_promotion_product.add(
+          Container(
+          width: Dimension.getWidth(1.0),
+          height: Dimension.getHeight(0.1),
           child: CheckboxListTile(
         controlAffinity: ListTileControlAffinity.leading,
         title: Padding(
           padding: const EdgeInsets.fromLTRB(2, 0, 0, 0),
           child: Container(
             width: Dimension.getWidth(1.0),
-            height: Dimension.getHeight(0.16),
+            height: Dimension.getHeight(0.115),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
@@ -192,8 +237,8 @@ class Order_DialogState extends State<Order_Dialog> {
                               promotion_product['DetailedSaleForProduct']
                                   ['File_Path'],
                           fit: BoxFit.cover,
-                          height: Dimension.getHeight(0.1),
-                          width: Dimension.getWidth(0.18),
+                          height: Dimension.getHeight(0.08),
+                          width: Dimension.getWidth(0.15),
                           placeholder: (context, url) => new SizedBox(
                                 child: Center(
                                     child: CircularProgressIndicator(
@@ -221,7 +266,7 @@ class Order_DialogState extends State<Order_Dialog> {
                       ),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(2, 10, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(2, 5, 0, 0),
                       child: Container(
                           width: Dimension.getWidth(0.35),
                           child: promotion_product['DetailedSaleForProduct']
@@ -235,7 +280,9 @@ class Order_DialogState extends State<Order_Dialog> {
                                       padding:
                                           const EdgeInsets.fromLTRB(2, 0, 0, 0),
                                       child: Text(
-                                        "Price",
+                                        allTranslations
+                                            .text("Price")
+                                            .toString(),
                                         style: StylesText.style13BrownNormal,
                                       ),
                                     ),
@@ -248,14 +295,14 @@ class Order_DialogState extends State<Order_Dialog> {
                                                 ['Price']
                                             .toString(),
                                         style: StylesText
-                                            .style13BrownNormalUnderline,
+                                            .style13RedNormalUnderline,
                                       ),
                                     ),
                                   ],
                                 )),
                     ),
                     Padding(
-                      padding: const EdgeInsets.fromLTRB(2, 10, 0, 0),
+                      padding: const EdgeInsets.fromLTRB(2, 5, 0, 0),
                       child: Container(
                           width: Dimension.getWidth(0.35),
                           child: promotion_product['DetailedSaleForProduct']
@@ -269,7 +316,7 @@ class Order_DialogState extends State<Order_Dialog> {
                                       padding:
                                           const EdgeInsets.fromLTRB(2, 0, 0, 0),
                                       child: Text(
-                                        "Sell",
+                                        allTranslations.text("Sell").toString(),
                                         style: StylesText.style13BrownBold,
                                       ),
                                     ),
@@ -296,30 +343,41 @@ class Order_DialogState extends State<Order_Dialog> {
             null,
         onChanged: (value) {
           var lstVal = [];
-          int tempMoney = money;
-
+//          int tempMoney = money;
+          double tempMoney=0;
+          tempMoney += promotion_product['DetailedSaleForProduct']['Price']-promotion_product['DetailedSaleForProduct']['Price']*promotion_product['PercentDiscount']
+              -promotion_product['PriceDiscount'];
           if (value) {
             lstVal.add(promotion_product);
-            //tang tien
-            tempMoney += final_price_promotion_product;
+            setState(() {
+              check_promotion_product = lstVal;
+              money = tempMoney.toInt()+widget.price;
+            });
           } else {
             var temp = check_promotion_product
                 .firstWhere((t) => t == promotion_product, orElse: () => null);
             lstVal.remove(temp);
-            //tru bot tien
-            tempMoney -= final_price_promotion_product;
+            setState(() {
+              check_promotion_product = lstVal;
+              money = tempMoney.toInt()-widget.price;
+            });
+             if(lstVal.length<1) {
+               setState(() {
+                 money = widget.price;
+               });
+             }
           }
-          setState(() {
-            check_promotion_product = lstVal;
-            money = tempMoney;
-          });
+
+          old_sale_product_money=tempMoney;
           selectedProduct['check_promotion_product'] = check_promotion_product;
           selectedProduct['Price'] = money;
           selectedProduct['selectedDetailedSaleForProduct'] =
               check_promotion_product;
         },
         activeColor: Colors.redAccent,
-      )));
+      )
+      )
+      );
     }
     return widgets_promotion_product;
   }
@@ -328,6 +386,7 @@ class Order_DialogState extends State<Order_Dialog> {
   void initState() {
     super.initState();
     money = widget.price;
+
     if (widget.size.length > 0) {
       money += widget.size[0]['PlusMonney'];
     }
@@ -487,22 +546,39 @@ class Order_DialogState extends State<Order_Dialog> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: <Widget>[
                               Text(
-                                "Note",
+                                allTranslations.text("Note").toString(),
                                 style: StylesText.style16Brown,
                               ),
                               Padding(
-                                padding: const EdgeInsets.fromLTRB(10, 0, 0, 0),
+                                padding: const EdgeInsets.fromLTRB(5, 0, 0, 0),
                                 child: Container(
-                                  width: Dimension.getWidth(0.62),
+                                  width: Dimension.getWidth(0.6),
                                   child: TextField(
                                     textInputAction: TextInputAction.done,
                                     controller: note,
                                     onEditingComplete: () {
-                                      selectedProduct['Note'] = note.text;
-                                      MsgDialog.showMsgDialog(
+                                      if (note.text.toString().length > 0) {
+                                        selectedProduct['Note'] = note.text;
+                                        MsgDialog.showMsgDialog(
                                           context,
-                                          "Information",
-                                          "Add note successfully");
+                                          allTranslations
+                                              .text("Information")
+                                              .toString(),
+                                          allTranslations
+                                              .text("add_note")
+                                              .toString(),
+                                        );
+                                      } else {
+                                        MsgDialog.showMsgDialog(
+                                          context,
+                                          allTranslations
+                                              .text("Information")
+                                              .toString(),
+                                          allTranslations
+                                              .text("note_empty")
+                                              .toString(),
+                                        );
+                                      }
                                     },
                                     keyboardType: TextInputType.multiline,
                                     maxLines: null,
@@ -554,7 +630,10 @@ class Order_DialogState extends State<Order_Dialog> {
                                       mainAxisAlignment:
                                           MainAxisAlignment.start,
                                       children: <Widget>[
-                                        Text("Kind",
+                                        Text(
+                                            allTranslations
+                                                .text("Kind")
+                                                .toString(),
                                             style: StylesText.style16Brown),
                                         Padding(
                                           padding: const EdgeInsets.fromLTRB(
@@ -565,7 +644,12 @@ class Order_DialogState extends State<Order_Dialog> {
                                               controlAffinity:
                                                   ListTileControlAffinity
                                                       .leading,
-                                              title: Text("Hot"),
+                                              title: Text(
+                                                allTranslations
+                                                    .text("Hot")
+                                                    .toString(),
+                                                style: StylesText.style16Brown,
+                                              ),
                                               value: checked_hot,
                                               onChanged: (bool value) {
                                                 setState(() {
@@ -639,7 +723,9 @@ class Order_DialogState extends State<Order_Dialog> {
                                           MainAxisAlignment.start,
                                       children: <Widget>[
                                         Text(
-                                          "Discount",
+                                          allTranslations
+                                              .text("discount_order")
+                                              .toString(),
                                           style: StylesText.style16Brown,
                                         ),
                                       ],
@@ -672,7 +758,9 @@ class Order_DialogState extends State<Order_Dialog> {
                                           MainAxisAlignment.start,
                                       children: <Widget>[
                                         Text(
-                                          "Promotion Products",
+                                          allTranslations
+                                              .text("Promotion_Products")
+                                              .toString(),
                                           style: StylesText.style16Brown,
                                         ),
                                       ],
@@ -686,8 +774,11 @@ class Order_DialogState extends State<Order_Dialog> {
                                           child: Column(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.start,
+                                            mainAxisSize: MainAxisSize.min,
                                             children:
                                                 createCheckBoxListPromotionProDuct(),
+                                          
+                                            
                                           ),
                                         ),
                                       ),
@@ -696,11 +787,11 @@ class Order_DialogState extends State<Order_Dialog> {
                                 ),
                               ),
                         Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 20, 0, 0),
+                            padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                             child: Container(
                               child: CustomPaint(
                                   painter: Drawhorizontalline(false, 180.0,
-                                      220.0, Colors.blueGrey, 0.5)),
+                                      Dimension.getWidth(1.0), Colors.blueGrey, 0.5)),
                             )),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
@@ -710,7 +801,7 @@ class Order_DialogState extends State<Order_Dialog> {
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                                 child: Text(
-                                  "Money",
+                                  allTranslations.text("Money").toString(),
                                   style: StylesText.style16Brown,
                                 ),
                               ),
@@ -745,17 +836,19 @@ class Order_DialogState extends State<Order_Dialog> {
                                       children: <Widget>[
                                         Padding(
                                           padding: const EdgeInsets.fromLTRB(
-                                              190, 0, 0, 0),
+                                              180, 0, 0, 0),
                                           child: IconButton(
                                             icon: Icon(Icons.arrow_back_ios,
                                                 color: Colors.brown),
                                             onPressed: () {
+                                              double temp=(money*1.0/number);
                                               setState(() {
                                                 if (number == 1) {
                                                   return;
                                                 }
                                                 number--;
-                                                money -= widget.price;
+
+                                                money -=temp.toInt();
                                               });
                                               selectedProduct['Quantity'] =
                                                   number;
@@ -778,9 +871,10 @@ class Order_DialogState extends State<Order_Dialog> {
                                             icon: Icon(Icons.arrow_forward_ios,
                                                 color: Colors.brown),
                                             onPressed: () {
+                                              double temp=(money*1.0/number);
                                               setState(() {
                                                 number++;
-                                                money += widget.price;
+                                                money +=temp.toInt();
                                               });
                                               selectedProduct['Quantity'] =
                                                   number;
