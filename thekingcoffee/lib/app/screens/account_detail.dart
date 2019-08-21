@@ -3,9 +3,9 @@ import 'package:flutter/widgets.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
-import 'package:thekingcoffee/core/components/ui/menu_popup/menu_popup.dart';
+
 import 'package:thekingcoffee/core/utils/utils.dart';
-import 'package:circular_profile_avatar/circular_profile_avatar.dart';
+
 
 class Account extends StatefulWidget {
   Account({Key key}) : super(key: key);
@@ -84,31 +84,32 @@ class _AccountState extends State<Account> {
                               Padding(
                                 padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
                                 child: Container(
-                                  child: CircularProfileAvatar(
-                                    "http://207.148.71.41/storage/images/kingcoffee/congan.png",
-                                    errorWidget: (context, url, error) =>
-                                        Container(
-                                          child: Icon(
-                                            Icons.error,
-                                            color: Colors.redAccent,
-                                          ),
-                                        ),
-                                    placeHolder: (context, url) => Container(
-                                          width: 40,
-                                          height: 40,
-                                          child: CircularProgressIndicator(
-                                            valueColor:
-                                                new AlwaysStoppedAnimation(
-                                                    Colors.redAccent),
-                                          ),
-                                        ),
-                                    radius: 90,
-                                    backgroundColor: Colors.white,
-                                    borderWidth: 2,
-                                    borderColor: Colors.redAccent,
-                                    elevation: 5.0,
-                                    cacheImage: true,
-                                  ),
+                                  // child:
+                                  //  CircularProfileAvatar(
+                                  //   "http://207.148.71.41/storage/images/kingcoffee/congan.png",
+                                  //   errorWidget: (context, url, error) =>
+                                  //       Container(
+                                  //         child: Icon(
+                                  //           Icons.error,
+                                  //           color: Colors.redAccent,
+                                  //         ),
+                                  //       ),
+                                  //   placeHolder: (context, url) => Container(
+                                  //         width: 40,
+                                  //         height: 40,
+                                  //         child: CircularProgressIndicator(
+                                  //           valueColor:
+                                  //               new AlwaysStoppedAnimation(
+                                  //                   Colors.redAccent),
+                                  //         ),
+                                  //       ),
+                                  //   radius: 90,
+                                  //   backgroundColor: Colors.white,
+                                  //   borderWidth: 2,
+                                  //   borderColor: Colors.redAccent,
+                                  //   elevation: 5.0,
+                                  //   cacheImage: true,
+                                  // ),
                                 ),
                               ),
                             ],
