@@ -2,11 +2,11 @@ import 'dart:convert';
 import 'package:http/http.dart';
 import 'package:oktoast/oktoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:thekingcoffee/src/app/core/components/widgets/home_cart/home_cart_coffee.dart';
 import 'package:thekingcoffee/src/app/core/config.dart';
+import 'package:thekingcoffee/src/app/core/widgets/home_cart/home_cart_coffee.dart';
 import 'package:thekingcoffee/src/app/model/get_place_item.dart';
 import 'package:thekingcoffee/src/app/model/images.dart';
-import 'package:thekingcoffee/src/app/core/components/lib/change_language/change_language.dart';
+import 'package:thekingcoffee/src/app/core/change_language.dart';
 import 'package:thekingcoffee/src/app/model/intro_slider.dart';
 import 'package:thekingcoffee/src/app/screens/shopping_list.dart';
 

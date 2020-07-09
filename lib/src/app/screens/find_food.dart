@@ -3,15 +3,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:thekingcoffee/src/app/core/components/lib/change_language/change_language.dart';
-import 'package:thekingcoffee/src/app/core/components/widgets/drawline.dart';
-import 'package:thekingcoffee/src/app/core/components/widgets/favorite.dart';
-import 'package:thekingcoffee/src/app/core/components/widgets/home_cart/home_cart_coffee.dart';
-import 'package:thekingcoffee/src/app/core/components/widgets/rating.dart';
-import 'package:thekingcoffee/src/app/core/components/widgets/show_dialog/loading_dialog.dart';
-import 'package:thekingcoffee/src/app/core/components/widgets/show_dialog/loading_dialog_order.dart';
+import 'package:thekingcoffee/src/app/core/change_language.dart';
 import 'package:thekingcoffee/src/app/core/config.dart';
 import 'package:thekingcoffee/src/app/core/utils.dart';
+import 'package:thekingcoffee/src/app/core/widgets/drawline.dart';
+import 'package:thekingcoffee/src/app/core/widgets/favorite.dart';
+import 'package:thekingcoffee/src/app/core/widgets/home_cart/home_cart_coffee.dart';
+import 'package:thekingcoffee/src/app/core/widgets/rating.dart';
+import 'package:thekingcoffee/src/app/core/widgets/show_dialog/loading_dialog.dart';
+import 'package:thekingcoffee/src/app/core/widgets/show_dialog/loading_dialog_order.dart';
 import 'package:thekingcoffee/src/app/theme/styles.dart';
 
 class FindFood extends StatefulWidget {

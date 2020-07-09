@@ -25,11 +25,31 @@ class GlobalTranslations {
   ///
   /// Returns the translation that corresponds to the [key]
   ///
-  String text(String key) {
-    // Return the requested string
-    return (_localizedValues == null || _localizedValues[key] == null)
-        ? '** $key not found'
-        : _localizedValues[key];
+  String text(String key, {List<String> args}) {
+    String res = this._resolve(key, this._localizedValues);
+    if (args != null) {
+      args.forEach((String str) {
+        res = res.replaceFirst(RegExp(r'{}'), str);
+      });
+    }
+    return res;
+  }
+
+  String _resolve(String path, dynamic obj) {
+    List<String> keys = path.split('.');
+    if (keys.length > 1) {
+      for (int index = 0; index <= keys.length; index++) {
+        if (obj.containsKey(keys[index]) && obj[keys[index]] is! String) {
+          return _resolve(
+              keys.sublist(index + 1, keys.length).join('.'), obj[keys[index]]);
+        }
+
+        return obj[path] ?? path;
+      }
+    }
+
+    // return obj[path] ?? path;
+    return path ?? "";
   }
 
   ///
@@ -46,6 +66,8 @@ class GlobalTranslations {
   /// One-time initialization
   ///
   Future<Null> init([String language]) async {
+    String lang = await allTranslations.getPreferredLanguage();
+    if (lang != null && lang != '') language = lang;
     if (_locale == null) {
       await setNewLanguage(language);
     }

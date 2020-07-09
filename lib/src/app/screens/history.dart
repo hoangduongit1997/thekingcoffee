@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:thekingcoffee/src/app/core/components/lib/change_language/change_language.dart';
-import 'package:thekingcoffee/src/app/core/components/widgets/draw_left/draw_left.dart';
+import 'package:thekingcoffee/src/app/core/change_language.dart';
 import 'package:thekingcoffee/src/app/core/config.dart';
 import 'package:thekingcoffee/src/app/core/utils.dart';
+import 'package:thekingcoffee/src/app/core/widgets/draw_left/draw_left.dart';
 import 'package:thekingcoffee/src/app/screens/history_order_detail.dart';
 import 'package:thekingcoffee/src/app/theme/styles.dart';
 

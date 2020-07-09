@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:thekingcoffee/src/app/core/components/lib/change_language/change_language.dart';
+import 'package:thekingcoffee/src/app/core/change_language.dart';
 import 'package:thekingcoffee/src/app/model/get_place_item.dart';
 import 'package:thekingcoffee/src/app/screens/address_picker_page.dart';
 

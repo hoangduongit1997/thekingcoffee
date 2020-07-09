@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:thekingcoffee/src/app/core/components/lib/change_language/change_language.dart';
+import 'package:thekingcoffee/src/app/core/change_language.dart';
 import 'package:thekingcoffee/src/app/core/config.dart';
 
 class Favorite extends StatefulWidget {

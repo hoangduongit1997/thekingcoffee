@@ -1,11 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:thekingcoffee/src/app/core/components/lib/change_language/change_language.dart';
-import 'package:thekingcoffee/src/app/core/components/widgets/drawline.dart';
-import 'package:thekingcoffee/src/app/core/components/widgets/show_dialog/show_message_dialog.dart';
+import 'package:thekingcoffee/src/app/core/change_language.dart';
 import 'package:thekingcoffee/src/app/core/config.dart';
 import 'package:thekingcoffee/src/app/core/utils.dart';
+import 'package:thekingcoffee/src/app/core/widgets/drawline.dart';
+import 'package:thekingcoffee/src/app/core/widgets/show_dialog/show_message_dialog.dart';
 import 'package:thekingcoffee/src/app/theme/styles.dart';
 
 class OrderDialog extends StatefulWidget {

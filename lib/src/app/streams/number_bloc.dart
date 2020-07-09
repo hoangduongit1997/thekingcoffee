@@ -1,6 +1,5 @@
 import 'dart:async';
-
-import 'package:thekingcoffee/src/app/core/components/widgets/home_cart/home_cart_coffee.dart';
+import 'package:thekingcoffee/src/app/core/widgets/home_cart/home_cart_coffee.dart';
 
 class NumberBloc {
   StreamController<int> _number = new StreamController<int>.broadcast();

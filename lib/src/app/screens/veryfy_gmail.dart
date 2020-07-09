@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:thekingcoffee/src/app/core/components/lib/change_language/change_language.dart';
-import 'package:thekingcoffee/src/app/core/components/lib/verifyphone/verification_code_input.dart';
-import 'package:thekingcoffee/src/app/core/components/widgets/show_dialog/loading_dialog.dart';
-import 'package:thekingcoffee/src/app/core/components/widgets/show_dialog/show_message_dialog.dart';
+import 'package:thekingcoffee/src/app/core/change_language.dart';
 import 'package:thekingcoffee/src/app/core/config.dart';
 import 'package:thekingcoffee/src/app/core/validation.dart';
+import 'package:thekingcoffee/src/app/core/widgets/show_dialog/loading_dialog.dart';
+import 'package:thekingcoffee/src/app/core/widgets/show_dialog/show_message_dialog.dart';
+import 'package:thekingcoffee/src/app/core/widgets/verification_code_input.dart';
 import 'package:thekingcoffee/src/app/screens/reset_pass.dart';
 import 'package:thekingcoffee/src/app/theme/styles.dart';
 

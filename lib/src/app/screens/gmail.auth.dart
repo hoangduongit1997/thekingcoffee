@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:thekingcoffee/src/app/core/components/lib/change_language/change_language.dart';
-import 'package:thekingcoffee/src/app/core/components/widgets/show_dialog/loading_dialog.dart';
-import 'package:thekingcoffee/src/app/core/components/widgets/show_dialog/show_message_dialog.dart';
+import 'package:thekingcoffee/src/app/core/change_language.dart';
 import 'package:thekingcoffee/src/app/core/config.dart';
 import 'package:thekingcoffee/src/app/core/utils.dart';
 import 'package:thekingcoffee/src/app/core/validation.dart';
+import 'package:thekingcoffee/src/app/core/widgets/show_dialog/loading_dialog.dart';
+import 'package:thekingcoffee/src/app/core/widgets/show_dialog/show_message_dialog.dart';
 import 'package:thekingcoffee/src/app/screens/veryfy_gmail.dart';
 import 'package:thekingcoffee/src/app/streams/gmail_auth_bloc.dart';
 import 'package:thekingcoffee/src/app/theme/styles.dart';

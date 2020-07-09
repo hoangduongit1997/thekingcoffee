@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
-import 'package:thekingcoffee/src/app/core/components/widgets/tutorial/tutorial_helper.dart';
+import 'package:thekingcoffee/src/app/core/widgets/slider_card/new_products_slider.dart';
 import 'package:thekingcoffee/src/app/screens/login.dart';
 import 'package:thekingcoffee/src/app/theme/styles.dart';
 

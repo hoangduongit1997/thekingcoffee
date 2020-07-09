@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:thekingcoffee/src/app/core/components/lib/change_language/change_language.dart';
+import 'package:thekingcoffee/src/app/core/change_language.dart';
 import 'package:thekingcoffee/src/app/core/utils.dart';
 import 'package:thekingcoffee/src/app/model/get_place_item.dart';
 import 'package:thekingcoffee/src/app/streams/place_bloc.dart';

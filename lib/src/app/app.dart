@@ -4,11 +4,10 @@ import 'package:oktoast/oktoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:thekingcoffee/main.dart';
-import 'package:thekingcoffee/src/app/core/components/lib/change_language/change_language.dart';
-import 'package:thekingcoffee/src/app/core/components/widgets/home_cart/home_cart_coffee.dart';
-import 'package:thekingcoffee/src/app/screens/map.dart';
-import 'package:thekingcoffee/src/app/screens/shopping_list.dart';
-import 'package:thekingcoffee/src/app/screens/splash_screen.dart';
+import 'package:thekingcoffee/src/app/core/change_language.dart';
+import 'package:thekingcoffee/src/app/core/widgets/home_cart/home_cart_coffee.dart';
+import 'package:thekingcoffee/src/app/routes.dart';
+import 'package:thekingcoffee/src/app/theme/theme_primary.dart';
 
 class MyApp extends StatefulWidget {
   @override
@@ -61,21 +60,21 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
       textAlign: TextAlign.center,
       child: MaterialApp(
         title: "The King Coffee",
-        theme: ThemeData(primaryColor: Colors.redAccent),
+        theme: ThemePrimary.theme(),
         debugShowCheckedModeBanner: false,
         localizationsDelegates: [
           GlobalMaterialLocalizations.delegate,
           GlobalWidgetsLocalizations.delegate,
           GlobalCupertinoLocalizations.delegate
         ],
+        initialRoute: '/',
+        onGenerateRoute: RouteGenerator.buildRoutes,
         supportedLocales: allTranslations.supportedLocales(),
-        home: Scaffold(
-          resizeToAvoidBottomInset: false,
-          body: SplashScreen(),
-        ),
-        routes: {
-          '/map': (BuildContext context) => new MapPage(),
-          '/shop': (BuildContext context) => new ShoppingList(),
+        builder: (context, child) {
+          return MediaQuery(
+            child: child,
+            data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+          );
         },
       ),
     );

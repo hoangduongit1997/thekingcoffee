@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:thekingcoffee/main.dart';
-import 'package:thekingcoffee/src/app/core/components/lib/change_language/change_language.dart';
+import 'package:thekingcoffee/src/app/core/change_language.dart';
 import 'package:thekingcoffee/src/app/core/config.dart';
 import 'package:thekingcoffee/src/app/screens/favorite_page.dart';
 import 'package:thekingcoffee/src/app/screens/helper/dashboard_helper/placeholder_home.dart';
