@@ -1,60 +1,36 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:thekingcoffee/app/config/config.dart';
-import 'package:thekingcoffee/app/styles/styles.dart';
-import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
-import 'package:thekingcoffee/core/components/ui/show_dialog/show_message_dialog.dart';
-import 'package:thekingcoffee/core/components/widgets/drawline.dart';
-import 'package:thekingcoffee/core/utils/utils.dart';
+import 'package:thekingcoffee/src/app/core/components/lib/change_language/change_language.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/drawline.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/home_cart/home_cart_coffee.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/show_dialog/show_message_dialog.dart';
+import 'package:thekingcoffee/src/app/core/config.dart';
+import 'package:thekingcoffee/src/app/core/utils.dart';
+import 'package:thekingcoffee/src/app/theme/styles.dart';
 
 class OrderDialog extends StatefulWidget {
-  Function(String, Object) callback;
-
   final int id;
   final String img;
   final String name;
   final String desc;
-  final int checkedHot;
   final int price;
-  bool ishot;
+  final int ishot;
   final int hashot;
   final List<dynamic> toppings;
   final List<dynamic> size;
   final List<dynamic> promotion;
-  final Map<String, dynamic> selectedSize;
-  final List<dynamic> selectedToppings;
-  final Map<String, dynamic> selectedPromotion;
-  final List<dynamic> checkPromotionProduct;
-  final String noteItem;
-  int quantity;
-  OrderDialog(
-      this.callback,
-      this.id,
-      this.img,
-      this.name,
-      this.desc,
-      this.checkedHot,
-      this.price,
-      this.ishot,
-      this.hashot,
-      this.size,
-      this.toppings,
-      this.promotion,
-      this.selectedSize,
-      this.selectedToppings,
-      this.selectedPromotion,
-      this.checkPromotionProduct,
-      this.noteItem,
-      this.quantity);
+
+  OrderDialog(this.id, this.img, this.name, this.desc, this.price, this.ishot,
+      this.hashot, this.size, this.toppings, this.promotion);
+
   OrderDialogState createState() => OrderDialogState();
 }
 
 class OrderDialogState extends State<OrderDialog> {
   TextEditingController note = new TextEditingController();
-
-  int number;
-  double originPrice;
+  var product = selectedProduct;
+  int number = 1;
   int money;
   bool checkedHot = false;
   var selectedsize;
@@ -89,11 +65,9 @@ class OrderDialogState extends State<OrderDialog> {
             setState(() {
               money += value['PlusMonney'];
             });
-            // selectedProduct['Price'] = money;
-            widget.callback('Price', money);
+            selectedProduct['Price'] = money;
             selectedsize = value;
-            // selectedProduct['Size'] = selectedsize;
-            widget.callback('Size', selectedsize);
+            selectedProduct['Size'] = selectedsize;
           },
           selected: selectedsize == item,
           activeColor: Colors.redAccent,
@@ -137,10 +111,8 @@ class OrderDialogState extends State<OrderDialog> {
             money = tempMoney;
             lstSelectedTopping = temp;
           });
-          // selectedProduct['Toppings'] = lstSelectedTopping;
-          // selectedProduct['Price'] = money;
-          widget.callback('Toppings', lstSelectedTopping);
-          widget.callback('Price', money);
+          selectedProduct['Toppings'] = lstSelectedTopping;
+          selectedProduct['Price'] = money;
         },
         selected: selecttopping == topping,
         activeColor: Colors.redAccent,
@@ -169,25 +141,26 @@ class OrderDialogState extends State<OrderDialog> {
           onChanged: (value) {
             listPromotionProduct = [];
             listPromotionProduct = promotion['SaleForProducts'];
-            // int oldMoney = 0, newMoney = 0;
-            // if (selectedPromotion != null) {
-            //   oldMoney = ((widget.price -
-            //           (widget.price *
-            //               (selectedPromotion['PercentDiscount']) /
-            //               100) -
-            //           selectedPromotion['MoneyDiscount']))
-            //       .toInt();
-            // }
 
-            // newMoney = ((widget.price -
-            //         (widget.price * (value['PercentDiscount']) / 100) -
-            //         value['MoneyDiscount']))
-            //     .toInt();
-            // setState(() {
-            //   selectedPromotion = value;
-            //   money = money + oldMoney - newMoney;
-            // });
-            // them từ KHa
+//            int oldMoney = 0, newMoney = 0;
+//            if (selectedPromotion != null) {
+//              oldMoney = ((widget.price -
+//                      (widget.price *
+//                          (selectedPromotion['PercentDiscount']) /
+//                          100) -
+//                      selectedPromotion['MoneyDiscount']))
+//                  .toInt();
+//            }
+//
+//            newMoney = ((widget.price -
+//                    (widget.price * (value['PercentDiscount']) / 100) -
+//                    value['MoneyDiscount']))
+//                .toInt();
+//            setState(() {
+//              selectedPromotion = value;
+//              money = money + oldMoney - newMoney;
+//            });
+
             double tempMoney = 0;
             if (value['SaleForProducts'] == null) {
               money = money + oldMoney.toInt();
@@ -206,14 +179,10 @@ class OrderDialogState extends State<OrderDialog> {
                 selectedPromotion = value;
               });
             }
-
-            //dong tu Kha
             selectedsize = value;
 
-            // selectedProduct['Price'] = money;
-            // selectedProduct['SelectedPromotion'] = selectedPromotion;
-            widget.callback('Price', money);
-            widget.callback('SelectedPromotion', selectedPromotion);
+            selectedProduct['Price'] = money;
+            selectedProduct['SelectedPromotion'] = selectedPromotion;
           },
           selected: selectedPromotion == promotion,
           activeColor: Colors.redAccent,
@@ -258,7 +227,7 @@ class OrderDialogState extends State<OrderDialog> {
                         ClipRRect(
                           borderRadius: BorderRadius.circular(8.0),
                           child: CachedNetworkImage(
-                              imageUrl: Config.ip +
+                              imageUrl: domainAPI +
                                   promotion_product['DetailedSaleForProduct']
                                       ['File_Path'],
                               fit: BoxFit.cover,
@@ -375,7 +344,7 @@ class OrderDialogState extends State<OrderDialog> {
                 null,
             onChanged: (value) {
               var lstVal = [];
-              // int tempMoney = money;
+//          int tempMoney = money;
               double tempMoney = 0;
               tempMoney += promotion_product['DetailedSaleForProduct']
                       ['Price'] -
@@ -403,19 +372,12 @@ class OrderDialogState extends State<OrderDialog> {
                   });
                 }
               }
-              // setState(() {
-              //   checkPromotionProduct = lstVal;
-              //   money = tempMoney;
-              // });
-              // selectedProduct['checkPromotionProduct'] = checkPromotionProduct;
-              // selectedProduct['Price'] = money;
-              // selectedProduct['selectedDetailedSaleForProduct'] =
-              //     checkPromotionProduct;
+
               oldSaleProductMoney = tempMoney;
-              widget.callback('checkPromotionProduct', checkPromotionProduct);
-              widget.callback('Price', money);
-              widget.callback(
-                  'selectedDetailedSaleForProduct', checkPromotionProduct);
+              selectedProduct['checkPromotionProduct'] = checkPromotionProduct;
+              selectedProduct['Price'] = money;
+              selectedProduct['selectedDetailedSaleForProduct'] =
+                  checkPromotionProduct;
             },
             activeColor: Colors.redAccent,
           )));
@@ -426,63 +388,28 @@ class OrderDialogState extends State<OrderDialog> {
   @override
   void initState() {
     super.initState();
-    note.text = widget.noteItem.trim();
-    number = widget.quantity;
     money = widget.price;
+
     if (widget.size.length > 0) {
       money += widget.size[0]['PlusMonney'];
     }
-    originPrice = widget.price / widget.quantity;
-    // if (widget.size != null && widget.size.length > 0) {
-    //   selectedsize = widget.size[0];
-    // }
-    if (widget.selectedSize != null) {
-      selectedsize = widget.selectedSize;
+    if (widget.size != null && widget.size.length > 0) {
+      selectedsize = widget.size[0];
     }
-    if (widget.selectedToppings != null) {
-      lstSelectedTopping = widget.selectedToppings;
-    }
-    if (widget.selectedPromotion != null) {
-      selectedPromotion = widget.selectedPromotion;
-      listPromotionProduct = selectedPromotion['SaleForProducts'];
-    }
-    if (widget.checkPromotionProduct != null) {
-      checkPromotionProduct = widget.checkPromotionProduct;
-    }
-
-    // selectedProduct['Price'] = money;
-    widget.callback('Price', money);
-    // selectedProduct['Id'] = widget.id;
-    widget.callback('Id', widget.id);
-    // selectedProduct['Img'] = widget.img;
-    widget.callback('Img', widget.img);
-    // selectedProduct['Name'] = widget.name;
-    widget.callback('Name', widget.name);
-    // selectedProduct['Size'] = selectedsize;
-    widget.callback('Size', selectedsize);
-    // selectedProduct['Quantity'] = number;
-    widget.callback('Quantity', number);
-
-    // //lay de list cart
-    // selectedProduct['ListSize'] = widget.size;
-    widget.callback('ListSize', widget.size);
-
-    // selectedProduct['ListTopping'] = widget.toppings;
-    widget.callback('ListTopping', widget.toppings);
-
-    // selectedProduct['IsHot'] = false;
-    widget.callback('IsHot', false);
-
-    // selectedProduct['HasHot'] = widget.hashot;
-    widget.callback('HasHot', widget.hashot);
-
-    // selectedProduct['Original_Price'] = widget.price;
-    widget.callback('Original_Price', widget.price);
-
-    // selectedProduct['Note'] = "";
-    widget.callback('Note', "");
-    // selectedProduct['Promotion']=widget.promotion;
-    widget.callback('Promotion', widget.promotion);
+    selectedProduct['Price'] = money;
+    selectedProduct['Id'] = widget.id;
+    selectedProduct['Img'] = widget.img;
+    selectedProduct['Name'] = widget.name;
+    selectedProduct['Size'] = selectedsize;
+    selectedProduct['Quantity'] = number;
+    //lay de list cart
+    selectedProduct['ListSize'] = widget.size;
+    selectedProduct['ListTopping'] = widget.toppings;
+    selectedProduct['IsHot'] = false;
+    selectedProduct['HasHot'] = widget.hashot;
+    selectedProduct['Original_Price'] = widget.price;
+    selectedProduct['Note'] = "";
+    selectedProduct['Promotion'] = widget.promotion;
   }
 
   @override
@@ -521,7 +448,7 @@ class OrderDialogState extends State<OrderDialog> {
                                           borderRadius:
                                               BorderRadius.circular(8.0),
                                           child: CachedNetworkImage(
-                                              imageUrl: Config.ip + widget.img,
+                                              imageUrl: domainAPI + widget.img,
                                               fit: BoxFit.cover,
                                               height: Dimension.getHeight(0.3),
                                               width: Dimension.getWidth(0.5),
@@ -579,8 +506,7 @@ class OrderDialogState extends State<OrderDialog> {
                                       Padding(
                                         padding: const EdgeInsets.fromLTRB(
                                             5, 0, 0, 0),
-                                        child: Text(
-                                            widget.checkedHot.toString(),
+                                        child: Text(widget.price.toString(),
                                             style: StylesText.style16BrownBold),
                                       )
                                     ],
@@ -591,6 +517,25 @@ class OrderDialogState extends State<OrderDialog> {
                           ],
                         ),
                         Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                            child: Container(
+                              child: CustomPaint(
+                                  painter: Drawhorizontalline(false, 180.0,
+                                      220.0, Colors.blueGrey, 0.5)),
+                            )),
+                        Padding(
+                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            children: <Widget>[
+                              Expanded(
+                                child: Text(widget.desc,
+                                    style: StylesText.style13Black),
+                              )
+                            ],
+                          ),
+                        ),
+                        Padding(
                             padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                             child: Container(
                               child: CustomPaint(
@@ -598,7 +543,7 @@ class OrderDialogState extends State<OrderDialog> {
                                       220.0, Colors.blueGrey, 0.5)),
                             )),
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 0, 0, 0),
+                          padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
                             crossAxisAlignment: CrossAxisAlignment.center,
@@ -616,24 +561,26 @@ class OrderDialogState extends State<OrderDialog> {
                                     controller: note,
                                     onEditingComplete: () {
                                       if (note.text.toString().length > 0) {
-                                        widget.callback('Note', note.text);
+                                        selectedProduct['Note'] = note.text;
                                         MsgDialog.showMsgDialog(
-                                            context,
-                                            allTranslations
-                                                .text("Information")
-                                                .toString(),
-                                            allTranslations
-                                                .text("edit_note")
-                                                .toString());
+                                          context,
+                                          allTranslations
+                                              .text("Information")
+                                              .toString(),
+                                          allTranslations
+                                              .text("add_note")
+                                              .toString(),
+                                        );
                                       } else {
                                         MsgDialog.showMsgDialog(
-                                            context,
-                                            allTranslations
-                                                .text("Information")
-                                                .toString(),
-                                            allTranslations
-                                                .text("note_empty")
-                                                .toString());
+                                          context,
+                                          allTranslations
+                                              .text("Information")
+                                              .toString(),
+                                          allTranslations
+                                              .text("note_empty")
+                                              .toString(),
+                                        );
                                       }
                                     },
                                     keyboardType: TextInputType.multiline,
@@ -667,7 +614,7 @@ class OrderDialogState extends State<OrderDialog> {
                                     )
                                   ],
                                 )),
-                        widget.hashot == 1
+                        widget.ishot == 1
                             ? Padding(
                                 padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                                 child: Container(
@@ -676,7 +623,7 @@ class OrderDialogState extends State<OrderDialog> {
                                           220.0, Colors.blueGrey, 0.5)),
                                 ))
                             : Container(),
-                        widget.hashot == 1
+                        widget.ishot == 1
                             ? Container(
                                 width: Dimension.getWidth(1.0),
                                 child: Padding(
@@ -706,14 +653,12 @@ class OrderDialogState extends State<OrderDialog> {
                                                     .toString(),
                                                 style: StylesText.style16Brown,
                                               ),
-                                              value: widget.ishot,
+                                              value: checkedHot,
                                               onChanged: (bool value) {
                                                 setState(() {
-                                                  widget.ishot = value;
-                                                  // selectedProduct['IsHot'] =
-                                                  //     checkedHot;
-                                                  widget.callback(
-                                                      'IsHot', widget.ishot);
+                                                  checkedHot = value;
+                                                  selectedProduct['IsHot'] =
+                                                      checkedHot;
                                                 });
                                               },
                                               activeColor: Colors.red,
@@ -832,6 +777,7 @@ class OrderDialogState extends State<OrderDialog> {
                                           child: Column(
                                             mainAxisAlignment:
                                                 MainAxisAlignment.start,
+                                            mainAxisSize: MainAxisSize.min,
                                             children:
                                                 createCheckBoxListPromotionProDuct(),
                                           ),
@@ -845,8 +791,12 @@ class OrderDialogState extends State<OrderDialog> {
                             padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                             child: Container(
                               child: CustomPaint(
-                                  painter: Drawhorizontalline(false, 180.0,
-                                      220.0, Colors.blueGrey, 0.5)),
+                                  painter: Drawhorizontalline(
+                                      false,
+                                      180.0,
+                                      Dimension.getWidth(1.0),
+                                      Colors.blueGrey,
+                                      0.5)),
                             )),
                         Padding(
                           padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
@@ -896,19 +846,19 @@ class OrderDialogState extends State<OrderDialog> {
                                             icon: Icon(Icons.arrow_back_ios,
                                                 color: Colors.brown),
                                             onPressed: () {
+                                              double temp =
+                                                  (money * 1.0 / number);
                                               setState(() {
                                                 if (number == 1) {
                                                   return;
                                                 }
                                                 number--;
 
-                                                money = originPrice.toInt() *
-                                                    number;
+                                                money -= temp.toInt();
                                               });
-
-                                              widget.callback(
-                                                  'Quantity', number);
-                                              widget.callback('Price', money);
+                                              selectedProduct['Quantity'] =
+                                                  number;
+                                              selectedProduct['Price'] = money;
                                             },
                                           ),
                                         ),
@@ -927,16 +877,15 @@ class OrderDialogState extends State<OrderDialog> {
                                             icon: Icon(Icons.arrow_forward_ios,
                                                 color: Colors.brown),
                                             onPressed: () {
+                                              double temp =
+                                                  (money * 1.0 / number);
                                               setState(() {
                                                 number++;
-
-                                                money = originPrice.toInt() *
-                                                    number;
+                                                money += temp.toInt();
                                               });
-
-                                              widget.callback(
-                                                  'Quantity', number);
-                                              widget.callback('Price', money);
+                                              selectedProduct['Quantity'] =
+                                                  number;
+                                              selectedProduct['Price'] = money;
                                             },
                                           ),
                                         ),

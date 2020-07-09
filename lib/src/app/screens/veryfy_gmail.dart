@@ -2,7 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:thekingcoffee/src/app/core/components/lib/change_language/change_language.dart';
 import 'package:thekingcoffee/src/app/core/components/lib/verifyphone/verification_code_input.dart';
-import 'package:thekingcoffee/src/app/core/components/ui/show_dialog/loading_dialog.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/show_dialog/loading_dialog.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/show_dialog/show_message_dialog.dart';
+import 'package:thekingcoffee/src/app/core/config.dart';
+import 'package:thekingcoffee/src/app/core/validation.dart';
+import 'package:thekingcoffee/src/app/screens/reset_pass.dart';
 import 'package:thekingcoffee/src/app/theme/styles.dart';
 
 class VerifyGmail extends StatefulWidget {
@@ -57,7 +61,7 @@ class VerifyPhonePageSate extends State<VerifyGmail> {
                             prefs.setString('code', value);
                             int idUser = prefs.getInt('idUser');
                             String idRequest = prefs.getString('idRequest');
-                            if ((await gmailAuthCode(
+                            if ((await api.gmailAuthCode(
                                         value, idUser, idRequest)) ==
                                     true &&
                                 (await Validation.isConnectedNetwork()) ==
@@ -67,7 +71,7 @@ class VerifyPhonePageSate extends State<VerifyGmail> {
                                   MaterialPageRoute(
                                       builder: (context) => ResetPass()));
                             }
-                            if ((await gmailAuthCode(
+                            if ((await api.gmailAuthCode(
                                         value, idUser, idRequest)) ==
                                     false &&
                                 (await Validation.isConnectedNetwork()) ==

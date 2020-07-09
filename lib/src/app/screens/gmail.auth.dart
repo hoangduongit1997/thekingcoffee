@@ -1,14 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:thekingcoffee/app/bloc/gmail_auth_bloc.dart';
-import 'package:thekingcoffee/app/data/repository/sendcodetogamil.dart';
-import 'package:thekingcoffee/app/screens/veryfy_gmail.dart';
-
-import 'package:thekingcoffee/app/styles/styles.dart';
-import 'package:thekingcoffee/app/validation/validation.dart';
-import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
-import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog.dart';
-import 'package:thekingcoffee/core/components/ui/show_dialog/show_message_dialog.dart';
-import 'package:thekingcoffee/core/utils/utils.dart';
+import 'package:thekingcoffee/src/app/core/components/lib/change_language/change_language.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/show_dialog/loading_dialog.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/show_dialog/show_message_dialog.dart';
+import 'package:thekingcoffee/src/app/core/config.dart';
+import 'package:thekingcoffee/src/app/core/utils.dart';
+import 'package:thekingcoffee/src/app/core/validation.dart';
+import 'package:thekingcoffee/src/app/screens/veryfy_gmail.dart';
+import 'package:thekingcoffee/src/app/streams/gmail_auth_bloc.dart';
+import 'package:thekingcoffee/src/app/theme/styles.dart';
 
 class GmailAuth extends StatefulWidget {
   @override
@@ -112,7 +111,7 @@ class VerifyPhonePageSate extends State<GmailAuth> {
     if ((await Validation.isConnectedNetwork()) == true &&
         resetPassBloc.isValidInfo(_gmail.text.trim().toString()) == true) {
       LoadingDialog.hideLoadingDialog(context);
-      if ((await sendCodeToGmail(_gmail.text.trim().toString())) == true) {
+      if ((await api.sendCodeToGmail(_gmail.text.trim().toString())) == true) {
         Navigator.push(
             context, MaterialPageRoute(builder: (context) => VerifyGmail()));
       }

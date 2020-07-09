@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:barcode_flutter/barcode_flutter.dart';
-
-import 'package:thekingcoffee/app/styles/styles.dart';
-import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
-import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
-import 'package:thekingcoffee/core/utils/utils.dart';
+import 'package:thekingcoffee/src/app/core/components/lib/change_language/change_language.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/draw_left/draw_left.dart';
+import 'package:thekingcoffee/src/app/core/utils.dart';
+import 'package:thekingcoffee/src/app/theme/styles.dart';
 
 class EarnPoint extends StatefulWidget {
   _EarnPointState createState() => _EarnPointState();

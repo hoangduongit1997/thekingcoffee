@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:thekingcoffee/main.dart';
 import 'package:thekingcoffee/src/app/core/components/lib/change_language/change_language.dart';
-import 'package:thekingcoffee/src/app/core/components/ui/home_cart/home_cart_coffee.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/home_cart/home_cart_coffee.dart';
 import 'package:thekingcoffee/src/app/screens/map.dart';
 import 'package:thekingcoffee/src/app/screens/shopping_list.dart';
 import 'package:thekingcoffee/src/app/screens/splash_screen.dart';

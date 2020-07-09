@@ -2,19 +2,18 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
-import 'package:thekingcoffee/app/bloc/login_bloc.dart';
-import 'package:thekingcoffee/app/config/config.dart';
-import 'package:thekingcoffee/app/data/repository/login_repository.dart';
-import 'package:thekingcoffee/app/screens/customWebView.dart';
-import 'package:thekingcoffee/app/screens/dashboard.dart';
-import 'package:thekingcoffee/app/screens/gmail.auth.dart';
-import 'package:thekingcoffee/app/screens/signup_dart.dart';
-import 'package:thekingcoffee/app/styles/styles.dart';
-import 'package:thekingcoffee/app/validation/validation.dart';
-import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
-import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog.dart';
-import 'package:thekingcoffee/core/components/ui/show_dialog/show_message_dialog.dart';
-import 'package:thekingcoffee/core/utils/utils.dart';
+import 'package:thekingcoffee/src/app/core/components/lib/change_language/change_language.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/show_dialog/loading_dialog.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/show_dialog/show_message_dialog.dart';
+import 'package:thekingcoffee/src/app/core/config.dart';
+import 'package:thekingcoffee/src/app/core/utils.dart';
+import 'package:thekingcoffee/src/app/core/validation.dart';
+import 'package:thekingcoffee/src/app/screens/customWebView.dart';
+import 'package:thekingcoffee/src/app/screens/dashboard.dart';
+import 'package:thekingcoffee/src/app/screens/gmail.auth.dart';
+import 'package:thekingcoffee/src/app/screens/signup_dart.dart';
+import 'package:thekingcoffee/src/app/streams/login_bloc.dart';
+import 'package:thekingcoffee/src/app/theme/styles.dart';
 
 class LoginWithPass extends StatefulWidget {
   @override
@@ -336,10 +335,10 @@ class LoginState extends State<LoginWithPass> {
     if ((await Validation.isConnectedNetwork()) == true &&
         loginBloc.isValidInfo(_user.text.trim(), _pass.text.trim()) == true) {
       LoadingDialog.hideLoadingDialog(context);
-      if (await postLogin(
+      if (await api.postLogin(
               _user.text.trim().toString(), _pass.text.trim().toString()) ==
           true) {
-        Config.isLogin = true;
+        isLogin = true;
         Navigator.of(context, rootNavigator: true).pushReplacement(
             MaterialPageRoute(builder: (context) => DashBoard()));
       }

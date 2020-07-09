@@ -3,17 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:thekingcoffee/app/config/config.dart';
-import 'package:thekingcoffee/app/data/repository/find_food.dart';
-import 'package:thekingcoffee/app/styles/styles.dart';
-import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
-import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
-import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog.dart';
-import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog_order.dart';
-import 'package:thekingcoffee/core/components/widgets/drawline.dart';
-import 'package:thekingcoffee/core/components/widgets/favorite.dart';
-import 'package:thekingcoffee/core/components/widgets/rating.dart';
-import 'package:thekingcoffee/core/utils/utils.dart';
+import 'package:thekingcoffee/src/app/core/components/lib/change_language/change_language.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/drawline.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/favorite.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/home_cart/home_cart_coffee.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/rating.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/show_dialog/loading_dialog.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/show_dialog/loading_dialog_order.dart';
+import 'package:thekingcoffee/src/app/core/config.dart';
+import 'package:thekingcoffee/src/app/core/utils.dart';
+import 'package:thekingcoffee/src/app/theme/styles.dart';
 
 class FindFood extends StatefulWidget {
   FindFood({Key key}) : super(key: key);
@@ -89,7 +88,7 @@ class _FindFoodState extends State<FindFood> {
                     LoadingDialog.showLoadingDialog(context,
                         allTranslations.text("splash_screen").toString());
                     if (str.length > 0) {
-                      final resutl = await findFood(str);
+                      final resutl = await api.findFood(str);
                       setState(() {
                         if (resutl != null) {
                           searchResult = resutl;
@@ -215,7 +214,7 @@ class _FindFoodState extends State<FindFood> {
                                                                         borderRadius:
                                                                             BorderRadius.circular(8.0),
                                                                         child: CachedNetworkImage(
-                                                                            imageUrl: Config.ip + searchResult[index]['File_Path'],
+                                                                            imageUrl: domainAPI + searchResult[index]['File_Path'],
                                                                             fit: BoxFit.cover,
                                                                             height: Dimension.getHeight(0.3),
                                                                             width: Dimension.getWidth(0.5),
@@ -226,7 +225,7 @@ class _FindFoodState extends State<FindFood> {
                                                                                   )),
                                                                                 )),
                                                                       ),
-                                                                      Config.isLogin ==
+                                                                      isLogin ==
                                                                               true
                                                                           ? searchResult[index]['IsAvailable'] == true
                                                                               ? Favorite(Colors.red, searchResult[index]['Loved'], searchResult[index]['Id'])
@@ -466,10 +465,8 @@ class _FindFoodState extends State<FindFood> {
 
   Future<void> refreshPage() async {
     await Future.delayed(Duration(seconds: 1));
-
     searchResult = [];
-
-    final resutl = await findFood(food.text);
+    final resutl = await api.findFood(food.text);
     if (this.mounted) {
       setState(() {
         if (resutl != null) {

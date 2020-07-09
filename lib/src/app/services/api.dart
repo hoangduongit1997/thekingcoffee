@@ -1,5 +1,14 @@
 import 'dart:convert';
 import 'package:http/http.dart';
+import 'package:oktoast/oktoast.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/home_cart/home_cart_coffee.dart';
+import 'package:thekingcoffee/src/app/core/config.dart';
+import 'package:thekingcoffee/src/app/model/get_place_item.dart';
+import 'package:thekingcoffee/src/app/model/images.dart';
+import 'package:thekingcoffee/src/app/core/components/lib/change_language/change_language.dart';
+import 'package:thekingcoffee/src/app/model/intro_slider.dart';
+import 'package:thekingcoffee/src/app/screens/shopping_list.dart';
 
 class Api {
   Api();
@@ -27,7 +36,7 @@ class Api {
 
     final check = {"CouponCode": coupon, "ListProduct": orderData};
     var dataFinish = json.encode(check);
-    Response response = await post(Config.checkCoupon,
+    Response response = await post(checkCoupon,
         headers: {'Content-Type': 'application/json'}, body: dataFinish);
     var data = json.decode(response.body);
     if (data['Status'] == 1) {
@@ -51,7 +60,7 @@ class Api {
     int idUser = pref.getInt("idUser");
     String token = pref.getString("token");
     final response = await get(
-        Config.checkPoint +
+        checkPoint +
             "?IdCustomer=" +
             idUser.toString() +
             "&Total=" +
@@ -74,11 +83,11 @@ class Api {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String token = prefs.getString("token");
       if (token != null) {
-        http.Response response = await http
-            .get(Config.findFoodAPI + food, headers: {'Token': token});
+        Response response =
+            await get(findFoodAPI + food, headers: {'Token': token});
         res = json.decode(response.body)['Value'];
       } else {
-        http.Response response = await http.get(Config.findFoodAPI + food);
+        Response response = await get(findFoodAPI + food);
         res = json.decode(response.body)['Value'];
       }
       if (res == null) {
@@ -98,12 +107,12 @@ class Api {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String token = prefs.getString("token");
       if (token != null) {
-        final response = await http
-            .get(Config.getCoffeeProductsAPI, headers: {'Token': token});
+        final response =
+            await get(getCoffeeProductsAPI, headers: {'Token': token});
         final res = json.decode(response.body)['Value'];
         return res;
       } else {
-        final response = await http.get(Config.getCoffeeProductsAPI);
+        final response = await get(getCoffeeProductsAPI);
         final res = json.decode(response.body)['Value'];
         return res;
       }
@@ -115,7 +124,7 @@ class Api {
 
   Future isHasCoffeeProduct() async {
     try {
-      final response = await http.get(Config.isHaveCoffeeProductsAPI);
+      final response = await get(isHaveCoffeeProductsAPI);
       final res = json.decode(response.body)['Value'];
       return res;
     } catch (e) {
@@ -132,63 +141,61 @@ class Api {
         case 0:
           {
             if (token != null) {
-              final response = await http.get(
-                  Config.getDataHomeCartAPI + "?IsDesc=true",
+              final response = await get(getDataHomeCartAPI + "?IsDesc=true",
                   headers: {'Token': token});
               final res = json.decode(response.body)['Value'];
               return res;
             }
 
-            final response =
-                await http.get(Config.getDataHomeCartAPI + "?IsDesc=true");
+            final response = await get(getDataHomeCartAPI + "?IsDesc=true");
             final res = json.decode(response.body)['Value'];
             return res;
           }
         case 1:
           {
             if (token != null) {
-              final response = await http.get(Config.getAllDrinkingProductsAPI,
+              final response = await get(getAllDrinkingProductsAPI,
                   headers: {'Token': token});
               final res = json.decode(response.body)['Value'];
               return res;
             }
-            final response = await http.get(Config.getAllDrinkingProductsAPI);
+            final response = await get(getAllDrinkingProductsAPI);
             final res = json.decode(response.body)['Value'];
             return res;
           }
         case 2:
           {
             if (token != null) {
-              final response = await http.get(Config.getAllCoffeeProductsAPI,
-                  headers: {'Token': token});
+              final response =
+                  await get(getAllCoffeeProductsAPI, headers: {'Token': token});
               final res = json.decode(response.body)['Value'];
               return res;
             }
-            final response = await http.get(Config.getAllCoffeeProductsAPI);
+            final response = await get(getAllCoffeeProductsAPI);
             final res = json.decode(response.body)['Value'];
             return res;
           }
         case 3:
           {
             if (token != null) {
-              final response = await http
-                  .get(Config.getAllFoodProductsAPI, headers: {'Token': token});
+              final response =
+                  await get(getAllFoodProductsAPI, headers: {'Token': token});
               final res = json.decode(response.body)['Value'];
               return res;
             }
-            final response = await http.get(Config.getAllFoodProductsAPI);
+            final response = await get(getAllFoodProductsAPI);
             final res = json.decode(response.body)['Value'];
             return res;
           }
         case 4:
           {
             if (token != null) {
-              final response = await http
-                  .get(Config.getAllTeaProductsAPI, headers: {'Token': token});
+              final response =
+                  await get(getAllTeaProductsAPI, headers: {'Token': token});
               final res = json.decode(response.body)['Value'];
               return res;
             }
-            final response = await http.get(Config.getAllTeaProductsAPI);
+            final response = await get(getAllTeaProductsAPI);
             final res = json.decode(response.body)['Value'];
             return res;
           }
@@ -204,12 +211,12 @@ class Api {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String token = prefs.getString("token");
       if (token != null) {
-        final response = await http
-            .get(Config.getDrinkingProductsAPI, headers: {'Token': token});
+        final response =
+            await get(getDrinkingProductsAPI, headers: {'Token': token});
         final res = json.decode(response.body)['Value'];
         return res;
       } else {
-        final response = await http.get(Config.getDrinkingProductsAPI);
+        final response = await get(getDrinkingProductsAPI);
         final res = json.decode(response.body)['Value'];
         return res;
       }
@@ -221,7 +228,7 @@ class Api {
 
   Future isHaveDrinkingProducts() async {
     try {
-      final response = await http.get(Config.isHaveDrinkingProductsAPI);
+      final response = await get(isHaveDrinkingProductsAPI);
       final res = json.decode(response.body)['Value'];
       return res;
     } catch (e) {
@@ -235,7 +242,7 @@ class Api {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String token = prefs.getString("token");
       Response response =
-          await get(Config.getDataHomeCartAPI, headers: {'Token': token});
+          await get(getDataHomeCartAPI, headers: {'Token': token});
       var res = json.decode(response.body)['Value'];
       return res;
     } catch (e) {
@@ -247,7 +254,7 @@ class Api {
   Future<int> getFeeShip(double lat, double lng) async {
     Map dataOrder = {"OrdersData": listOrderProducts, "Lat": lat, "Long": lng};
     var dataOrderFinal = json.encode(dataOrder);
-    Response response = await post(Config.getFeeShip,
+    Response response = await post(getFeeShip,
         headers: {'Content-Type': 'application/json'}, body: dataOrderFinal);
     var data = json.decode(response.body);
     if (data['Status'] == 1) {
@@ -261,12 +268,12 @@ class Api {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String token = prefs.getString("token");
       if (token != null) {
-        final response = await http
-            .get(Config.getFoodProductsAPI, headers: {'Token': token});
+        final response =
+            await get(getFoodProductsAPI, headers: {'Token': token});
         final res = json.decode(response.body)['Value'];
         return res;
       } else {
-        final response = await http.get(Config.getFoodProductsAPI);
+        final response = await get(getFoodProductsAPI);
         final res = json.decode(response.body)['Value'];
         return res;
       }
@@ -278,7 +285,7 @@ class Api {
 
   Future isHaveFoodProducts() async {
     try {
-      final response = await http.get(Config.isHaveFoodProductsAPI);
+      final response = await get(isHaveFoodProductsAPI);
       final res = json.decode(response.body)['Value'];
       return res;
     } catch (e) {
@@ -292,8 +299,8 @@ class Api {
       final prefs = await SharedPreferences.getInstance();
       String token = prefs.getString('token');
       int idUser = prefs.getInt('idUser');
-      final response = await http.get(
-        Config.getHistoryAPI + idUser.toString(),
+      final response = await get(
+        getHistoryAPI + idUser.toString(),
         headers: {'Token': token.toString()},
       );
       final res = json.decode(response.body)['Value'];
@@ -310,11 +317,11 @@ class Api {
       String token = prefs.getString("token");
       if (token != null) {
         final response =
-            await http.get(Config.getNewProductsAPI, headers: {'Token': token});
+            await get(getNewProductsAPI, headers: {'Token': token});
         final res = json.decode(response.body)['Value'];
         return res;
       } else {
-        final response = await http.get(Config.getNewProductsAPI);
+        final response = await get(getNewProductsAPI);
         final res = json.decode(response.body)['Value'];
         return res;
       }
@@ -325,8 +332,7 @@ class Api {
   }
 
   Future<List<GetPlaceItem>> searchPlace(String keyword) async {
-    var res = await http
-        .get(Config.searchPlaceApi + Uri.encodeQueryComponent(keyword));
+    var res = await get(searchPlaceApi + Uri.encodeQueryComponent(keyword));
     if (res.statusCode == 200) {
       return GetPlaceItem.fromJson(json.decode(res.body));
     } else {
@@ -340,11 +346,11 @@ class Api {
       String token = prefs.getString("token");
       if (token != null) {
         final response =
-            await http.get(Config.getTeaProductsAPI, headers: {'Token': token});
+            await get(getTeaProductsAPI, headers: {'Token': token});
         final res = json.decode(response.body)['Value'];
         return res;
       } else {
-        final response = await http.get(Config.getTeaProductsAPI);
+        final response = await get(getTeaProductsAPI);
         final res = json.decode(response.body)['Value'];
         return res;
       }
@@ -356,7 +362,7 @@ class Api {
 
   Future isHaveTeaProducts() async {
     try {
-      final response = await http.get(Config.isHaveTeaProductsAPI);
+      final response = await get(isHaveTeaProductsAPI);
       final res = json.decode(response.body)['Value'];
       return res;
     } catch (e) {
@@ -374,7 +380,7 @@ class Api {
       "IdRequest": idRequest,
       "Password": idUserString
     };
-    Response response = await post(Config.gmailAuthAPI, body: gmailAuthJson)
+    Response response = await post(gmailAuthAPI, body: gmailAuthJson)
         .timeout(const Duration(seconds: 4));
     String body = response.body;
     var data = json.decode(body);
@@ -401,7 +407,7 @@ class Api {
   Future<bool> postLogin(String username, String password) async {
     bool status = false;
     final loginJson = {"Username": username, "Password": password};
-    Response response = await post(Config.loginApi, body: loginJson);
+    Response response = await post(loginApi, body: loginJson);
     String body = response.body;
     var data = json.decode(body);
     if (data['Status'] == 1) {
@@ -485,7 +491,7 @@ class Api {
       "PaidByPoint": isMoney,
     };
     var bodyOrder = json.encode(orderDetail);
-    Response response1 = await post(Config.orderAPI,
+    Response response1 = await post(orderAPI,
         headers: {'Token': token, 'Content-Type': 'application/json'},
         body: bodyOrder);
     var data = json.decode(response1.body);
@@ -508,8 +514,8 @@ class Api {
     };
     final prefs = await SharedPreferences.getInstance();
     String token = prefs.getString('token');
-    Response response = await post(Config.rateOrder,
-        headers: {'Token': token}, body: rateOrder);
+    Response response =
+        await post(rateOrder, headers: {'Token': token}, body: rateOrder);
     var data = json.decode(response.body);
     if (data['Status'] == 1) {
       status = true;
@@ -529,7 +535,7 @@ class Api {
       "IdRequest": idRequest,
       "Password": pass
     };
-    Response response = await post(Config.gmailAuthAPI, body: gmailAuthJson)
+    Response response = await post(gmailAuthAPI, body: gmailAuthJson)
         .timeout(const Duration(seconds: 4));
     String body = response.body;
     var data = json.decode(body);
@@ -554,7 +560,7 @@ class Api {
   Future<bool> sendCodeToGmail(String gmail) async {
     bool status = false;
     final gmailJson = {"email": gmail};
-    Response response = await post(Config.sendCodeToGmailAPI, body: gmailJson);
+    Response response = await post(sendCodeToGmailAPI, body: gmailJson);
     String body = response.body;
 
     var data = json.decode(body);
@@ -586,7 +592,7 @@ class Api {
     var res;
     final data = {"IdProduct": idProduct.toString()};
 
-    Response response = await post(Config.setLove,
+    Response response = await post(setLove,
         headers: {
           'Token': tokenUser,
         },
@@ -611,7 +617,7 @@ class Api {
       "Age": date,
       "Email": gmail
     };
-    Response response = await post(Config.signupAPI, body: signUpJson);
+    Response response = await post(signupAPI, body: signUpJson);
     String body = response.body;
     var data = json.decode(body);
     if (data['Status'] == 1) {

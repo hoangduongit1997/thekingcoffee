@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:thekingcoffee/app/bloc/order_bloc.dart';
-import 'package:thekingcoffee/app/data/repository/order_repository.dart';
-import 'package:thekingcoffee/app/styles/styles.dart';
-import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
-import 'package:thekingcoffee/core/components/ui/show_dialog/show_message_dialog.dart';
-import 'package:thekingcoffee/core/utils/utils.dart';
-
+import 'package:thekingcoffee/src/app/core/components/lib/change_language/change_language.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/show_dialog/show_message_dialog.dart';
+import 'package:thekingcoffee/src/app/core/config.dart';
+import 'package:thekingcoffee/src/app/core/utils.dart';
+import 'package:thekingcoffee/src/app/streams/order_bloc.dart';
+import 'package:thekingcoffee/src/app/theme/styles.dart';
 import 'loading_dialog.dart';
 
 class PaymentDialog extends StatefulWidget {
@@ -121,7 +120,7 @@ class PaymentDialogState extends State<PaymentDialog> {
             if (_character == SingingCharacter.Cast) {
               LoadingDialog.showLoadingDialog(
                   context, allTranslations.text("splash_screen").toString());
-              if (await postOrder(widget.phone, widget.address, false) ==
+              if (await api.postOrder(widget.phone, widget.address, false) ==
                   true) {
                 LoadingDialog.hideLoadingDialog(context);
                 Navigator.of(context).pop(true);
@@ -139,7 +138,8 @@ class PaymentDialogState extends State<PaymentDialog> {
             } else if (_character == SingingCharacter.Change_Points) {
               LoadingDialog.showLoadingDialog(
                   context, allTranslations.text("splash_screen").toString());
-              if (await postOrder(widget.phone, widget.address, true) == true) {
+              if (await api.postOrder(widget.phone, widget.address, true) ==
+                  true) {
                 LoadingDialog.hideLoadingDialog(context);
                 Navigator.of(context).pop(true);
                 MsgDialog.showMsgDialog(

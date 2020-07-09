@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:thekingcoffee/app/screens/login.dart';
-
-import 'package:thekingcoffee/app/styles/styles.dart';
-import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
-
-import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:thekingcoffee/core/utils/utils.dart';
+import 'package:thekingcoffee/src/app/core/components/lib/change_language/change_language.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/draw_left/draw_left.dart';
+import 'package:thekingcoffee/src/app/core/utils.dart';
+import 'package:thekingcoffee/src/app/screens/login.dart';
+import 'package:thekingcoffee/src/app/theme/styles.dart';
+
 
 class ChangeLanguage extends StatefulWidget {
   int tapEn = 0;

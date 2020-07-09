@@ -1,3 +1,5 @@
+import 'package:thekingcoffee/src/app/services/api.dart';
+
 String domainAPI = "http://207.148.71.41/";
 String findFoodAPI = domainAPI + "api/Product/FindProduct?Name=";
 bool isLogin = false;
@@ -43,3 +45,4 @@ String searchPlaceApi =
         appKey +
         "&language=vi&region=VN&query=";
 String orderAPI = domainAPI + "api/Order/OrderOnline";
+Api api = new Api();

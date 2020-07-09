@@ -1,12 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:thekingcoffee/app/config/config.dart';
-import 'package:thekingcoffee/app/data/repository/rate_order_repository.dart';
-import 'package:thekingcoffee/app/styles/styles.dart';
-import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
-import 'package:thekingcoffee/core/components/ui/show_dialog/show_message_dialog.dart';
-import 'package:thekingcoffee/core/components/widgets/rating.dart';
-import 'package:thekingcoffee/core/utils/utils.dart';
+import 'package:thekingcoffee/src/app/core/components/lib/change_language/change_language.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/rating.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/show_dialog/show_message_dialog.dart';
+import 'package:thekingcoffee/src/app/core/config.dart';
+import 'package:thekingcoffee/src/app/core/utils.dart';
+import 'package:thekingcoffee/src/app/theme/styles.dart';
 
 class HistoryOrderDetail extends StatefulWidget {
   int orderCode;
@@ -401,8 +400,7 @@ class _HistoryOrderDetailState extends State<HistoryOrderDetail> {
                                                                         8.0),
                                                             child:
                                                                 CachedNetworkImage(
-                                                              imageUrl: Config
-                                                                      .ip +
+                                                              imageUrl: domainAPI +
                                                                   widget
                                                                       .listDetailedProduct[
                                                                           index]
@@ -576,7 +574,7 @@ class _HistoryOrderDetailState extends State<HistoryOrderDetail> {
   }
 
   void sendRate() async {
-    if ((await rateOrder(widget.orderCode.toString(), rating,
+    if ((await api.rateOrder(widget.orderCode.toString(), rating,
             _rateComment.text.toString()) ==
         true)) {
       Navigator.of(context).pop(true);

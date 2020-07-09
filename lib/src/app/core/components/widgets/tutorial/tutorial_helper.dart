@@ -1,8 +1,8 @@
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:thekingcoffee/app/data/repository/fake_data_intro.dart';
-import 'package:thekingcoffee/app/styles/styles.dart';
-import 'package:thekingcoffee/core/utils/utils.dart';
+import 'package:thekingcoffee/src/app/core/config.dart';
+import 'package:thekingcoffee/src/app/core/utils.dart';
+import 'package:thekingcoffee/src/app/theme/styles.dart';
 
 void main() => runApp(CarouselDemo());
 
@@ -14,7 +14,7 @@ class CarouselWithIndicator extends StatefulWidget {
 class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
   int _current = 0;
   final List child = MapObject.map<Widget>(
-    introSlide,
+    api.introSlide,
     (index, i) {
       return Container(
           child: Row(
@@ -50,21 +50,21 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
                           Padding(
                               padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                               child: Text(
-                                introSlide[index].titles.toString(),
+                                api.introSlide[index].titles.toString(),
                                 style: StylesText.style20BrownBold,
                               )),
                           Padding(
                               padding: const EdgeInsets.fromLTRB(10, 20, 10, 0),
                               child: Center(
                                   child: Text(
-                                introSlide[index].subtitles.toString(),
+                                api.introSlide[index].subtitles.toString(),
                                 style: StylesText.style12Brown300,
                               ))),
                           Padding(
                             padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                             child: Center(
                               child: Image.asset(
-                                introSlide[0].icons,
+                                api.introSlide[0].icons,
                                 width: Dimension.getWidth(0.15),
                                 height: Dimension.getHeight(0.15),
                               ),
@@ -102,7 +102,7 @@ class _CarouselWithIndicatorState extends State<CarouselWithIndicator> {
       Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: MapObject.map<Widget>(
-          introSlide,
+          api.introSlide,
           (index, url) {
             return Container(
               width: Dimension.getWidth(0.015),

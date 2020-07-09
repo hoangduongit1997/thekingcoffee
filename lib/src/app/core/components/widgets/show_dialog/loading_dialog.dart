@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:thekingcoffee/app/styles/styles.dart';
-import 'package:thekingcoffee/core/utils/utils.dart';
+import 'package:thekingcoffee/src/app/core/utils.dart';
+import 'package:thekingcoffee/src/app/theme/styles.dart';
 
 class LoadingDialog {
   static void showLoadingDialog(BuildContext context, String msg) {

@@ -3,28 +3,25 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:thekingcoffee/app/bloc/order_bloc.dart';
-import 'package:thekingcoffee/app/bloc/place_bloc.dart';
-import 'package:thekingcoffee/app/config/config.dart';
-import 'package:thekingcoffee/app/data/model/get_place_item.dart';
-import 'package:thekingcoffee/app/data/repository/check_enought_point.dart';
-import 'package:thekingcoffee/app/data/repository/get_fee_ship.dart';
-import 'package:thekingcoffee/app/data/repository/order_repository.dart';
-import 'package:thekingcoffee/app/styles/styles.dart';
-import 'package:thekingcoffee/app/validation/validation.dart';
-import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
-import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
-import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
-import 'package:thekingcoffee/core/components/ui/show_dialog/coupon_dialog.dart';
-import 'package:thekingcoffee/core/components/ui/show_dialog/edit_loading_dialog.dart';
-import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog.dart';
-import 'package:thekingcoffee/core/components/ui/show_dialog/payment_dialog.dart';
-import 'package:thekingcoffee/core/components/ui/show_dialog/show_message_dialog.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:thekingcoffee/core/components/widgets/drawline.dart';
-import 'package:thekingcoffee/core/utils/utils.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:thekingcoffee/main.dart';
+import 'package:thekingcoffee/src/app/core/components/lib/change_language/change_language.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/draw_left/draw_left.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/drawline.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/home_cart/home_cart_coffee.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/show_dialog/coupon_dialog.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/show_dialog/edit_loading_dialog.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/show_dialog/loading_dialog.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/show_dialog/payment_dialog.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/show_dialog/show_message_dialog.dart';
+import 'package:thekingcoffee/src/app/core/config.dart';
+import 'package:thekingcoffee/src/app/core/utils.dart';
+import 'package:thekingcoffee/src/app/core/validation.dart';
+import 'package:thekingcoffee/src/app/model/get_place_item.dart';
+import 'package:thekingcoffee/src/app/streams/order_bloc.dart';
+import 'package:thekingcoffee/src/app/streams/place_bloc.dart';
+import 'package:thekingcoffee/src/app/theme/styles.dart';
 
 class ShoppingList extends StatefulWidget {
   ShoppingListState createState() => ShoppingListState();
@@ -353,7 +350,7 @@ class ShoppingListState extends State<ShoppingList> {
                                                   allTranslations
                                                       .text("splash_screen")
                                                       .toString());
-                                              int temp = await getFeeShip(
+                                              int temp = await api.getFeeShip(
                                                   item.lat, item.lng);
                                               setState(() {
                                                 feeShip = temp;
@@ -429,8 +426,8 @@ class ShoppingListState extends State<ShoppingList> {
                                                                           "splash_screen")
                                                                       .toString());
                                                           feeShip = 0;
-                                                          int temp =
-                                                              await getFeeShip(
+                                                          int temp = await api
+                                                              .getFeeShip(
                                                                   places
                                                                       .elementAt(
                                                                           index)
@@ -634,7 +631,7 @@ class ShoppingListState extends State<ShoppingList> {
                                                                         child:
                                                                             CachedNetworkImage(
                                                                           imageUrl:
-                                                                              Config.ip + listOrderProducts[index]['Img'],
+                                                                              domainAPI + listOrderProducts[index]['Img'],
                                                                           fit: BoxFit
                                                                               .fill,
                                                                           placeholder: (context, url) =>
@@ -1066,8 +1063,8 @@ class ShoppingListState extends State<ShoppingList> {
                                           context,
                                           allTranslations.text("Information"),
                                           allTranslations.text("no_network"));
-                                    } else if ((await checkEnoughPoint(
-                                                estimate)) ==
+                                    } else if ((await api
+                                                .checkEnoughPoint(estimate)) ==
                                             true &&
                                         orderBloc.isValidInfo(
                                                 name.text.trim().toString(),
@@ -1097,7 +1094,7 @@ class ShoppingListState extends State<ShoppingList> {
                                               phone.text.trim().toString(),
                                               address.text.trim().toString()) ==
                                           true) {
-                                        if (await postOrder(
+                                        if (await api.postOrder(
                                                 phone.text.trim().toString(),
                                                 address.text.trim().toString(),
                                                 false) ==

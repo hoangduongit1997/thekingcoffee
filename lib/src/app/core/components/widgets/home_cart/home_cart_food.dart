@@ -1,60 +1,49 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
-import 'package:oktoast/oktoast.dart';
-import 'package:thekingcoffee/app/bloc/bottom_navigation_bloc.dart';
-import 'package:thekingcoffee/app/config/config.dart';
-import 'package:thekingcoffee/app/data/repository/get_coffee_products.dart';
-import 'package:thekingcoffee/app/styles/styles.dart';
-import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
-import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog_order.dart';
-import 'package:thekingcoffee/core/components/widgets/drawline.dart';
-import 'package:thekingcoffee/core/components/widgets/favorite.dart';
-import 'package:thekingcoffee/core/components/widgets/rating.dart';
-import 'package:thekingcoffee/core/utils/utils.dart';
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:oktoast/oktoast.dart';
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:thekingcoffee/src/app/core/components/lib/change_language/change_language.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/drawline.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/favorite.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/home_cart/home_cart_coffee.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/rating.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/show_dialog/loading_dialog_order.dart';
+import 'package:thekingcoffee/src/app/core/config.dart';
+import 'package:thekingcoffee/src/app/core/utils.dart';
+import 'package:thekingcoffee/src/app/theme/styles.dart';
 
-class HomeCardCoffee extends StatefulWidget {
-  HomeCardCoffee({Key key}) : super(key: key);
-
-  _HomeCardCoffeeState createState() => _HomeCardCoffeeState();
+class HomeCardFood extends StatefulWidget {
+  HomeCardFood({Key key}) : super(key: key);
+  _HomeCardFoodState createState() => _HomeCardFoodState();
 }
 
-var dataCoffee = [];
+var size = [];
+var dataFood = [];
+var topping = [];
+var sanpham;
 int lenght = 0;
-var selectedProduct = {};
-var listOrderProducts = [];
-var promotionListCoffee = [];
-int promotionCoffee = 0;
+int promotionFood = 0;
+var promotionListFood = [];
 
-class _HomeCardCoffeeState extends State<HomeCardCoffee> {
-  BottomNavBarBloc _bottomNavBarBloc;
-
-  intDataCoffeeScreen() async {
+class _HomeCardFoodState extends State<HomeCardFood> {
+  intDataFoodScreen() async {
     try {
-      final result = await getCoffeeProduct();
+      final result = await api.getFoodProducts();
+
       if (this.mounted) {
-        if (result != null) {
+        if (result != null)
           setState(() {
-            dataCoffee = result;
-            lenght = dataCoffee.length;
+            dataFood = result;
+            lenght = dataFood.length;
           });
-        }
       }
     } catch (e) {}
   }
 
   @override
   void initState() {
-    _bottomNavBarBloc = new BottomNavBarBloc();
-    this.intDataCoffeeScreen();
+    this.intDataFoodScreen();
     super.initState();
-  }
-
-  @override
-  void dispose() {
-    _bottomNavBarBloc.close();
-    super.dispose();
   }
 
   @override
@@ -67,7 +56,7 @@ class _HomeCardCoffeeState extends State<HomeCardCoffee> {
             Container(
               height: Dimension.getHeight(0.33),
               child: Center(
-                child: dataCoffee == null || dataCoffee.length == 0
+                child: dataFood == null || dataFood.length == 0
                     ? CircularProgressIndicator(
                         valueColor: AlwaysStoppedAnimation(Colors.redAccent),
                       )
@@ -77,11 +66,11 @@ class _HomeCardCoffeeState extends State<HomeCardCoffee> {
                         physics: const ClampingScrollPhysics(),
                         itemCount: lenght,
                         itemBuilder: (BuildContext context, int index) {
-                          promotionListCoffee =
-                              dataCoffee[index]['Promotion'] as List<dynamic>;
-                          promotionCoffee = promotionListCoffee.length;
+                          promotionListFood =
+                              dataFood[index]['Promotion'] as List<dynamic>;
+                          promotionFood = promotionListFood.length;
 
-                          if (dataCoffee == null) {
+                          if (dataFood == null) {
                             return Center(
                               child: CircularProgressIndicator(),
                             );
@@ -129,8 +118,8 @@ class _HomeCardCoffeeState extends State<HomeCardCoffee> {
                                                           BorderRadius.circular(
                                                               8.0),
                                                       child: CachedNetworkImage(
-                                                        imageUrl: Config.ip +
-                                                            dataCoffee[index]
+                                                        imageUrl: domainAPI +
+                                                            dataFood[index]
                                                                 ['File_Path'],
                                                         fit: BoxFit.fill,
                                                         placeholder:
@@ -150,15 +139,16 @@ class _HomeCardCoffeeState extends State<HomeCardCoffee> {
                                                     ),
                                                   ),
                                                 ),
-                                                Config.isLogin == true
-                                                    ? dataCoffee[index][
+                                              isLogin == true
+                                                    ? dataFood[index]
+                                                                [
                                                                 'IsAvailable'] ==
                                                             true
                                                         ? Favorite(
                                                             Colors.red,
-                                                            dataCoffee[index]
+                                                            dataFood[index]
                                                                 ['Loved'],
-                                                            dataCoffee[index]
+                                                            dataFood[index]
                                                                 ['Id'])
                                                         : SvgPicture.asset(
                                                             "assets/icons/sold.svg",
@@ -168,8 +158,7 @@ class _HomeCardCoffeeState extends State<HomeCardCoffee> {
                                                                 .getHeight(
                                                                     0.05))
                                                     : Container(
-                                                        child: dataCoffee[index]
-                                                                    [
+                                                        child: dataFood[index][
                                                                     'IsAvailable'] ==
                                                                 false
                                                             ? SvgPicture.asset(
@@ -199,7 +188,7 @@ class _HomeCardCoffeeState extends State<HomeCardCoffee> {
                                                     width: Dimension.getWidth(
                                                         0.51),
                                                     child: Text(
-                                                      dataCoffee[index]['Name'],
+                                                      dataFood[index]['Name'],
                                                       overflow:
                                                           TextOverflow.ellipsis,
                                                       style: StylesText
@@ -228,8 +217,9 @@ class _HomeCardCoffeeState extends State<HomeCardCoffee> {
                                                       children: <Widget>[
                                                         StarRating(
                                                           size: 13.0,
-                                                          rating: double.tryParse(
-                                                              dataCoffee[index]
+                                                          rating: double
+                                                              .tryParse(dataFood[
+                                                                          index]
                                                                       ['Star']
                                                                   .toString()),
                                                           color: Colors.orange,
@@ -238,15 +228,14 @@ class _HomeCardCoffeeState extends State<HomeCardCoffee> {
                                                           starCount: 5,
                                                         ),
                                                         Text(
-                                                            dataCoffee[index]
+                                                            dataFood[index]
                                                                     ['Star']
                                                                 .toString(),
                                                             style: StylesText
                                                                 .style13BrownNormal)
                                                       ],
                                                     ),
-                                                    dataCoffee[index]
-                                                                ['IsHot'] ==
+                                                    dataFood[index]['IsHot'] ==
                                                             1
                                                         ? Container(
                                                             width: Dimension
@@ -265,7 +254,7 @@ class _HomeCardCoffeeState extends State<HomeCardCoffee> {
                                                                           0.035),
                                                                   width: Dimension
                                                                       .getHeight(
-                                                                          0.05),
+                                                                          0.1),
                                                                   color: Colors
                                                                       .redAccent,
                                                                 )
@@ -314,7 +303,7 @@ class _HomeCardCoffeeState extends State<HomeCardCoffee> {
                                                               Colors.redAccent,
                                                         ),
                                                         Text(
-                                                          dataCoffee[index]
+                                                          dataFood[index]
                                                                   ['Price']
                                                               .toString(),
                                                           style: StylesText
@@ -322,9 +311,8 @@ class _HomeCardCoffeeState extends State<HomeCardCoffee> {
                                                         )
                                                       ],
                                                     ),
-                                                    promotionListCoffee ==
-                                                                null ||
-                                                            promotionListCoffee
+                                                    promotionListFood == null ||
+                                                            promotionListFood
                                                                     .length ==
                                                                 0
                                                         ? IgnorePointer(
@@ -349,7 +337,7 @@ class _HomeCardCoffeeState extends State<HomeCardCoffee> {
                                                                             .redAccent,
                                                                       ),
                                                                       Text(
-                                                                        promotionCoffee.toString() +
+                                                                        promotionFood.toString() +
                                                                             " " +
                                                                             allTranslations.text("discount").toString(),
                                                                         style: StylesText
@@ -375,7 +363,7 @@ class _HomeCardCoffeeState extends State<HomeCardCoffee> {
                                                                       .redAccent,
                                                                 ),
                                                                 Text(
-                                                                  promotionCoffee
+                                                                  promotionFood
                                                                           .toString() +
                                                                       " discount",
                                                                   style: StylesText
@@ -393,8 +381,7 @@ class _HomeCardCoffeeState extends State<HomeCardCoffee> {
                                       ],
                                     )),
                                 onTap: () {
-                                  if (dataCoffee[index]['IsAvailable'] ==
-                                      false) {
+                                  if (dataFood[index]['IsAvailable'] == false) {
                                     showToast(
                                       allTranslations
                                           .text("out_of_stock")
@@ -403,16 +390,16 @@ class _HomeCardCoffeeState extends State<HomeCardCoffee> {
                                   } else {
                                     LoadingDialogOrder.showLoadingDialog(
                                         context,
-                                        dataCoffee[index]['Id'],
-                                        dataCoffee[index]['Name'],
-                                        dataCoffee[index]['File_Path'],
-                                        dataCoffee[index]['Description'],
-                                        dataCoffee[index]['Price'],
-                                        dataCoffee[index]['IsHot'],
-                                        dataCoffee[index]['IsHot'],
-                                        dataCoffee[index]['Toppings'],
-                                        dataCoffee[index]['Size'],
-                                        dataCoffee[index]['Promotion'],
+                                        dataFood[index]['Id'],
+                                        dataFood[index]['Name'],
+                                        dataFood[index]['File_Path'],
+                                        dataFood[index]['Description'],
+                                        dataFood[index]['Price'],
+                                        dataFood[index]['IsHot'],
+                                        dataFood[index]['IsHot'],
+                                        dataFood[index]['Toppings'],
+                                        dataFood[index]['Size'],
+                                        dataFood[index]['Promotion'],
                                         listOrderProducts);
                                   }
                                 });

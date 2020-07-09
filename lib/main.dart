@@ -3,10 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:thekingcoffee/src/app/app.dart';
 import 'package:thekingcoffee/src/app/core/components/lib/change_language/change_language.dart';
-import 'package:thekingcoffee/src/app/core/components/ui/home_cart/home_cart_coffee.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/home_cart/home_cart_coffee.dart';
 import 'package:thekingcoffee/src/app/screens/login.dart';
 import 'package:thekingcoffee/src/app/core/validation.dart';
-import 'package:thekingcoffee/src/app/stream/number_bloc.dart';
+import 'package:thekingcoffee/src/app/streams/number_bloc.dart';
 
 NumberBloc numberBloc = new NumberBloc();
 void main() async {

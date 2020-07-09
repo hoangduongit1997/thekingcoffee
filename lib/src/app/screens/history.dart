@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-
-import 'package:thekingcoffee/app/data/repository/get_history.dart';
-import 'package:thekingcoffee/app/screens/history_order_detail.dart';
-import 'package:thekingcoffee/app/styles/styles.dart';
-import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
-import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
-import 'package:thekingcoffee/core/utils/utils.dart';
+import 'package:thekingcoffee/src/app/core/components/lib/change_language/change_language.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/draw_left/draw_left.dart';
+import 'package:thekingcoffee/src/app/core/config.dart';
+import 'package:thekingcoffee/src/app/core/utils.dart';
+import 'package:thekingcoffee/src/app/screens/history_order_detail.dart';
+import 'package:thekingcoffee/src/app/theme/styles.dart';
 
 class History extends StatefulWidget {
   History({Key key}) : super(key: key);
@@ -19,7 +18,7 @@ class _HistoryState extends State<History> {
 
   intData() async {
     try {
-      final result = await getHistory();
+      final result = await api.getHistory();
       if (this.mounted) {
         setState(() {
           if (result != null) {

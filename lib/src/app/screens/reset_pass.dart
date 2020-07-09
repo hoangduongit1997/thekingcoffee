@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:thekingcoffee/app/bloc/reset_pass_bloc.dart';
-import 'package:thekingcoffee/app/data/repository/reset_pass.dart';
-import 'package:thekingcoffee/app/screens/login.dart';
-import 'package:thekingcoffee/app/styles/styles.dart';
-import 'package:thekingcoffee/app/validation/validation.dart';
-import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
-import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog.dart';
-import 'package:thekingcoffee/core/components/ui/show_dialog/show_message_dialog.dart';
-import 'package:thekingcoffee/core/utils/utils.dart';
+import 'package:thekingcoffee/src/app/core/components/lib/change_language/change_language.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/show_dialog/loading_dialog.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/show_dialog/show_message_dialog.dart';
+import 'package:thekingcoffee/src/app/core/config.dart';
+import 'package:thekingcoffee/src/app/core/utils.dart';
+import 'package:thekingcoffee/src/app/core/validation.dart';
+import 'package:thekingcoffee/src/app/screens/login.dart';
+import 'package:thekingcoffee/src/app/streams/reset_pass_bloc.dart';
+import 'package:thekingcoffee/src/app/theme/styles.dart';
 
 class ResetPass extends StatefulWidget {
   ResetPass({Key key}) : super(key: key);
@@ -134,7 +134,8 @@ class _ResetPassState extends State<ResetPass> {
         resetpass.isValidInfo(_pass.text.trim().toString(),
                 _confirm.text.trim().toString()) ==
             true) {
-      if ((await reSetPassRes(code, idUser, idRequest, _pass.text.trim())) ==
+      if ((await api.reSetPassRes(
+              code, idUser, idRequest, _pass.text.trim())) ==
           true) {
         LoadingDialog.hideLoadingDialog(context);
         Navigator.of(context).pushReplacement(

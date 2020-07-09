@@ -1,16 +1,16 @@
 import 'package:datetime_picker_formfield/datetime_picker_formfield.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:thekingcoffee/app/bloc/signup_bloc.dart';
-import 'package:thekingcoffee/app/data/repository/signup_reposotory.dart';
-import 'package:thekingcoffee/app/screens/login.dart';
-import 'package:thekingcoffee/app/styles/styles.dart';
-import 'package:thekingcoffee/app/validation/validation.dart';
-import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
-import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog.dart';
-import 'package:thekingcoffee/core/components/ui/show_dialog/show_message_dialog.dart';
-import 'package:thekingcoffee/core/utils/utils.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:thekingcoffee/src/app/core/components/lib/change_language/change_language.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/show_dialog/loading_dialog.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/show_dialog/show_message_dialog.dart';
+import 'package:thekingcoffee/src/app/core/config.dart';
+import 'package:thekingcoffee/src/app/core/utils.dart';
+import 'package:thekingcoffee/src/app/core/validation.dart';
+import 'package:thekingcoffee/src/app/screens/login.dart';
+import 'package:thekingcoffee/src/app/streams/signup_bloc.dart';
+import 'package:thekingcoffee/src/app/theme/styles.dart';
 
 class SignUp extends StatefulWidget {
   @override
@@ -304,7 +304,7 @@ class SignUpState extends State<SignUp> {
             ) ==
             true) {
       LoadingDialog.hideLoadingDialog(context);
-      if ((await postSignUp(
+      if ((await api.postSignUp(
               _name.text.trim().toString(),
               _pass.text.trim().toString(),
               _phone.text.trim().toString(),

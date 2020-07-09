@@ -2,17 +2,16 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:thekingcoffee/app/config/config.dart';
-import 'package:thekingcoffee/app/data/repository/get_favorite_product.dart';
-import 'package:thekingcoffee/app/styles/styles.dart';
-import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
-import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
-import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
-import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog_order.dart';
-import 'package:thekingcoffee/core/components/widgets/drawline.dart';
-import 'package:thekingcoffee/core/components/widgets/favorite.dart';
-import 'package:thekingcoffee/core/components/widgets/rating.dart';
-import 'package:thekingcoffee/core/utils/utils.dart';
+import 'package:thekingcoffee/src/app/core/components/lib/change_language/change_language.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/draw_left/draw_left.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/drawline.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/favorite.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/home_cart/home_cart_coffee.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/rating.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/show_dialog/loading_dialog_order.dart';
+import 'package:thekingcoffee/src/app/core/config.dart';
+import 'package:thekingcoffee/src/app/core/utils.dart';
+import 'package:thekingcoffee/src/app/theme/styles.dart';
 
 class FavoritePage extends StatefulWidget {
   FavoritePage({Key key}) : super(key: key);
@@ -29,7 +28,7 @@ class FavoritePageState extends State<FavoritePage> {
 
   initData() async {
     var temp = [];
-    final result = await getFavoriteProduct();
+    final result = await api.getFavoriteProduct();
     if (result != null) {
       for (var item in result) {
         if (item['Loved'] == true) {
@@ -166,7 +165,7 @@ class FavoritePageState extends State<FavoritePage> {
                                                                         BorderRadius.circular(
                                                                             8.0),
                                                                     child: CachedNetworkImage(
-                                                                        imageUrl: Config.ip + data[index]['File_Path'],
+                                                                        imageUrl: domainAPI + data[index]['File_Path'],
                                                                         fit: BoxFit.cover,
                                                                         height: Dimension.getHeight(0.3),
                                                                         width: Dimension.getWidth(0.5),
@@ -177,7 +176,7 @@ class FavoritePageState extends State<FavoritePage> {
                                                                               )),
                                                                             )),
                                                                   ),
-                                                                  Config.isLogin ==
+                                                                  isLogin ==
                                                                           true
                                                                       ? data[index]['IsAvailable'] ==
                                                                               true

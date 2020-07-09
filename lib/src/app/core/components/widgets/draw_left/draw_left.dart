@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:thekingcoffee/src/app/core/config.dart';
 import 'package:thekingcoffee/src/app/core/components/lib/change_language/change_language.dart';
-import 'package:thekingcoffee/src/app/core/components/ui/home_cart/home_cart_coffee.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/home_cart/home_cart_coffee.dart';
+import 'package:thekingcoffee/src/app/core/config.dart';
 import 'package:thekingcoffee/src/app/core/utils.dart';
 import 'package:thekingcoffee/src/app/screens/account_detail.dart';
 import 'package:thekingcoffee/src/app/screens/earn_point.dart';
@@ -95,7 +95,7 @@ class _HomeMenuState extends State<HomeMenu> {
                         image: DecorationImage(
                             fit: BoxFit.fill,
                             image: NetworkImage(
-                              Config.ip +
+                              domainAPI +
                                   "/storage/images/kingcoffee/congan.png",
                             ))),
                   )),
@@ -211,7 +211,7 @@ class _HomeMenuState extends State<HomeMenu> {
                                           )),
                                     )),
                                 onPressed: () async {
-                                  Config.isLogin = false;
+                                  isLogin = false;
                                   listOrderProducts.clear();
                                   feeShip = 0;
                                   address.clear();

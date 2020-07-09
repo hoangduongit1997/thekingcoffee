@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intro_slider/intro_slider.dart';
 import 'package:intro_slider/slide_object.dart';
-import 'package:thekingcoffee/app/screens/login.dart';
-import 'package:thekingcoffee/app/styles/styles.dart';
-import 'package:thekingcoffee/core/components/ui/tutorial/tutorial_helper.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/tutorial/tutorial_helper.dart';
+import 'package:thekingcoffee/src/app/screens/login.dart';
+import 'package:thekingcoffee/src/app/theme/styles.dart';
 
 class Tutorial extends StatelessWidget {
   @override

@@ -1,11 +1,11 @@
 import 'dart:core';
 import 'package:flutter/material.dart';
-import 'package:thekingcoffee/app/styles/styles.dart';
-import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
-import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
-import 'package:thekingcoffee/core/components/ui/show_dialog/edit_order_dialog.dart';
-import 'package:thekingcoffee/core/utils/utils.dart';
 import 'package:thekingcoffee/main.dart';
+import 'package:thekingcoffee/src/app/core/components/lib/change_language/change_language.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/home_cart/home_cart_coffee.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/show_dialog/edit_order_dialog.dart';
+import 'package:thekingcoffee/src/app/core/utils.dart';
+import 'package:thekingcoffee/src/app/theme/styles.dart';
 
 class LoadingDialogOrder {
   Map<String, Object> selectedProduct = new Map();

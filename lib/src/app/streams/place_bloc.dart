@@ -1,12 +1,14 @@
 import 'dart:async';
-import 'package:thekingcoffee/src/app/data/repository/get_place.dart';
+
+import 'package:thekingcoffee/src/app/core/config.dart';
+
 class PlaceBloc {
   var _placeController = StreamController.broadcast();
   Stream get placeStream => _placeController.stream;
 
   void searchPlace(String keyword) {
     _placeController.sink.add("Search");
-    GetPlace.searchPlace(keyword).then((respone) {
+    api.searchPlace(keyword).then((respone) {
       _placeController.sink.add(respone);
     }).catchError(() {});
   }

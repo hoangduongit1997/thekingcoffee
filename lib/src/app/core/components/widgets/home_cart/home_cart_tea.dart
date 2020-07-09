@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:thekingcoffee/app/config/config.dart';
-import 'package:thekingcoffee/app/data/repository/get_tea_products.dart';
-import 'package:thekingcoffee/app/styles/styles.dart';
-import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
-import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
-import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog_order.dart';
-import 'package:thekingcoffee/core/components/widgets/drawline.dart';
-import 'package:thekingcoffee/core/components/widgets/favorite.dart';
-import 'package:thekingcoffee/core/components/widgets/rating.dart';
-import 'package:thekingcoffee/core/utils/utils.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:thekingcoffee/src/app/core/components/lib/change_language/change_language.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/drawline.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/favorite.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/home_cart/home_cart_coffee.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/rating.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/show_dialog/loading_dialog_order.dart';
+import 'package:thekingcoffee/src/app/core/config.dart';
+import 'package:thekingcoffee/src/app/core/utils.dart';
+import 'package:thekingcoffee/src/app/theme/styles.dart';
 
 class HomeCardTea extends StatefulWidget {
   HomeCardTea({Key key}) : super(key: key);
@@ -30,7 +29,7 @@ var promotionListTea = [];
 class _HomeCardTeaState extends State<HomeCardTea> {
   intDataTeaScreen() async {
     try {
-      final result = await getTeaProducts();
+      final result = await api.getTeaProducts();
       if (this.mounted) {
         if (result != null) {
           setState(() {
@@ -120,7 +119,7 @@ class _HomeCardTeaState extends State<HomeCardTea> {
                                                           BorderRadius.circular(
                                                               8.0),
                                                       child: CachedNetworkImage(
-                                                        imageUrl: Config.ip +
+                                                        imageUrl: domainAPI +
                                                             dataTea[index]
                                                                 ['File_Path'],
                                                         fit: BoxFit.fill,
@@ -141,7 +140,7 @@ class _HomeCardTeaState extends State<HomeCardTea> {
                                                     ),
                                                   ),
                                                 ),
-                                                Config.isLogin == true
+                                                isLogin == true
                                                     ? dataTea[index][
                                                                 'IsAvailable'] ==
                                                             true

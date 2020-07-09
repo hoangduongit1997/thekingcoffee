@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:thekingcoffee/app/bloc/place_bloc.dart';
-import 'package:thekingcoffee/app/data/model/get_place_item.dart';
-import 'package:thekingcoffee/app/styles/styles.dart';
-import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
-import 'package:thekingcoffee/core/utils/utils.dart';
+import 'package:thekingcoffee/src/app/core/components/lib/change_language/change_language.dart';
+import 'package:thekingcoffee/src/app/core/utils.dart';
+import 'package:thekingcoffee/src/app/model/get_place_item.dart';
+import 'package:thekingcoffee/src/app/streams/place_bloc.dart';
+import 'package:thekingcoffee/src/app/theme/styles.dart';
 
 class RidePickerPage extends StatefulWidget {
   final String selectedAddress;

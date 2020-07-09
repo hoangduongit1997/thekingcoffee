@@ -2,18 +2,17 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:thekingcoffee/app/config/config.dart';
-import 'package:thekingcoffee/app/data/repository/get_data_all_product.dart';
-import 'package:thekingcoffee/app/screens/dashboard.dart';
-import 'package:thekingcoffee/app/styles/styles.dart';
-import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
-import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
-import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
-import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog_order.dart';
-import 'package:thekingcoffee/core/components/widgets/drawline.dart';
-import 'package:thekingcoffee/core/components/widgets/favorite.dart';
-import 'package:thekingcoffee/core/components/widgets/rating.dart';
-import 'package:thekingcoffee/core/utils/utils.dart';
+import 'package:thekingcoffee/src/app/core/components/lib/change_language/change_language.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/draw_left/draw_left.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/drawline.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/favorite.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/home_cart/home_cart_coffee.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/rating.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/show_dialog/loading_dialog_order.dart';
+import 'package:thekingcoffee/src/app/core/config.dart';
+import 'package:thekingcoffee/src/app/core/utils.dart';
+import 'package:thekingcoffee/src/app/screens/dashboard.dart';
+import 'package:thekingcoffee/src/app/theme/styles.dart';
 
 class SeeAllProductType extends StatefulWidget {
   String title = "";
@@ -29,7 +28,7 @@ class _SeeAllProductTypeState extends State<SeeAllProductType> {
   var promotionListProduct = [];
   intDataScreen() async {
     try {
-      final result = await getDataAllProduct(widget.catagory);
+      final result = await api.getDataAllProduct(widget.catagory);
       if (this.mounted) {
         if (data != null) {
           setState(() {
@@ -162,7 +161,7 @@ class _SeeAllProductTypeState extends State<SeeAllProductType> {
                                                                             8.0),
                                                                 child:
                                                                     CachedNetworkImage(
-                                                                        imageUrl: Config.ip +
+                                                                        imageUrl: domainAPI +
                                                                             data[index][
                                                                                 'File_Path'],
                                                                         fit: BoxFit
@@ -180,8 +179,7 @@ class _SeeAllProductTypeState extends State<SeeAllProductType> {
                                                                               )),
                                                                             )),
                                                               ),
-                                                              Config.isLogin ==
-                                                                      true
+                                                              isLogin == true
                                                                   ? data[index]
                                                                               [
                                                                               'IsAvailable'] ==

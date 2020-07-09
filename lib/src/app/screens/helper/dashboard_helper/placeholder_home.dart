@@ -1,22 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:thekingcoffee/app/data/repository/get_coffee_products.dart';
-import 'package:thekingcoffee/app/data/repository/get_drinking_products.dart';
-import 'package:thekingcoffee/app/data/repository/get_food_products.dart';
-import 'package:thekingcoffee/app/data/repository/get_new_products.dart';
-import 'package:thekingcoffee/app/data/repository/get_tea_products.dart';
-import 'package:thekingcoffee/app/screens/find_food.dart';
-import 'package:thekingcoffee/app/screens/see_all_product_type.dart';
-import 'package:thekingcoffee/app/styles/styles.dart';
-import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
-import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
-import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
-import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_drinking.dart';
-import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_food.dart';
-import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_tea.dart';
-import 'package:thekingcoffee/core/components/ui/slider_card/new_products_slider.dart';
-import 'package:thekingcoffee/core/utils/utils.dart';
 import 'package:thekingcoffee/main.dart';
+import 'package:thekingcoffee/src/app/core/components/lib/change_language/change_language.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/draw_left/draw_left.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/home_cart/home_cart_coffee.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/home_cart/home_cart_drinking.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/home_cart/home_cart_food.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/home_cart/home_cart_tea.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/slider_card/new_products_slider.dart';
+import 'package:thekingcoffee/src/app/core/config.dart';
+import 'package:thekingcoffee/src/app/core/utils.dart';
+import 'package:thekingcoffee/src/app/screens/find_food.dart';
+import 'package:thekingcoffee/src/app/screens/see_all_product_type.dart';
+import 'package:thekingcoffee/src/app/theme/styles.dart';
 
 class PlaceholderMainWidget extends StatefulWidget {
   const PlaceholderMainWidget();
@@ -36,11 +32,11 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
 
   intDataHomeSlider() async {
     try {
-      final result = await getNewProducts();
-      final coffee = await isHasCoffeeProduct();
-      final tea = await isHaveTeaProducts();
-      final food = await isHaveFoodProducts();
-      final drinking = await isHaveDrinkingProducts();
+      final result = await api.getNewProducts();
+      final coffee = await api.isHasCoffeeProduct();
+      final tea = await api.isHaveTeaProducts();
+      final food = await api.isHaveFoodProducts();
+      final drinking = await api.isHaveDrinkingProducts();
       if (this.mounted) {
         setState(() {
           listNewProduct = result;
@@ -433,16 +429,16 @@ class PlaceholderMainWidgetState extends State<PlaceholderMainWidget> {
   Future<void> refreshPage() async {
     await Future.delayed(Duration(seconds: 2));
 
-    final resultNewProduct = await getNewProducts();
-    final resultCoffee = await getCoffeeProduct();
-    final resultTea = await getTeaProducts();
-    final resultDrinking = await getDrinkingProducts();
+    final resultNewProduct = await api.getNewProducts();
+    final resultCoffee = await api.getCoffeeProduct();
+    final resultTea = await api.getTeaProducts();
+    final resultDrinking = await api.getDrinkingProducts();
     if (this.mounted) {
       setState(() {
         listNewProduct = [];
       });
     }
-    final resultFood = await getFoodProducts();
+    final resultFood = await api.getFoodProducts();
 
     if (this.mounted) {
       setState(() {

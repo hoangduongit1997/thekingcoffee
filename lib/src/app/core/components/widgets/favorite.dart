@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:thekingcoffee/app/data/repository/set_loved_respository.dart';
-import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
+import 'package:thekingcoffee/src/app/core/components/lib/change_language/change_language.dart';
+import 'package:thekingcoffee/src/app/core/config.dart';
 
 class Favorite extends StatefulWidget {
   final Color color;
@@ -21,7 +21,7 @@ class _HeartState extends State<Favorite> {
     isClick = widget.isLike;
     return InkWell(
       onTap: () async {
-        if (await isLove(widget.idProduct) == 1) {
+        if (await api.isLove(widget.idProduct) == 1) {
           setState(() {
             widget.isLike = !widget.isLike;
           });

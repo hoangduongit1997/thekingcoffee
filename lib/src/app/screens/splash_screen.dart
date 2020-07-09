@@ -1,16 +1,13 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:thekingcoffee/app/config/config.dart';
-
-import 'package:thekingcoffee/app/screens/dashboard.dart';
-
-import 'package:thekingcoffee/app/screens/tutorial.dart';
-import 'package:thekingcoffee/app/styles/styles.dart';
-import 'package:thekingcoffee/app/validation/validation.dart';
-import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
-
-import 'package:thekingcoffee/core/utils/utils.dart';
+import 'package:thekingcoffee/src/app/core/components/lib/change_language/change_language.dart';
+import 'package:thekingcoffee/src/app/core/config.dart';
+import 'package:thekingcoffee/src/app/core/utils.dart';
+import 'package:thekingcoffee/src/app/core/validation.dart';
+import 'package:thekingcoffee/src/app/screens/dashboard.dart';
+import 'package:thekingcoffee/src/app/screens/tutorial.dart';
+import 'package:thekingcoffee/src/app/theme/styles.dart';
 
 class SplashScreen extends StatefulWidget {
   @override
@@ -33,11 +30,11 @@ class SplashScreenState extends State<SplashScreen> {
 
   onDoneLoading() async {
     if ((await Validation.isLogin()) == true) {
-      Config.isLogin = true;
+      isLogin = true;
       return Navigator.of(context).pushReplacement(
           MaterialPageRoute(builder: (context) => DashBoard()));
     }
-    Config.isLogin = false;
+    isLogin = false;
     return Navigator.of(context)
         .pushReplacement(MaterialPageRoute(builder: (context) => Tutorial()));
   }

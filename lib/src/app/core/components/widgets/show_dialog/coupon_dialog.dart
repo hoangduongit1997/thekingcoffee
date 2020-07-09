@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:thekingcoffee/app/bloc/coupon_bloc.dart';
-import 'package:thekingcoffee/app/data/repository/check_coupon.dart';
-import 'package:thekingcoffee/app/styles/styles.dart';
-import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
-import 'package:thekingcoffee/core/utils/utils.dart';
+import 'package:thekingcoffee/src/app/core/components/lib/change_language/change_language.dart';
+import 'package:thekingcoffee/src/app/core/config.dart';
+import 'package:thekingcoffee/src/app/core/utils.dart';
+import 'package:thekingcoffee/src/app/streams/coupon_bloc.dart';
+import 'package:thekingcoffee/src/app/theme/styles.dart';
 
 class CouponDialog extends StatefulWidget {
   @override
@@ -110,7 +110,7 @@ class CouponDialogState extends State<CouponDialog> {
 
   Future onApplyCode() async {
     if (couponBloc.isValidInfo(counponCode.text.toString().trim())) {
-      if (await checkCoupon(counponCode.text.toString().trim()) == 1) {
+      if (await api.checkCoupon(counponCode.text.toString().trim()) == 1) {
         print("dung roi");
 
         Navigator.of(context).pop(true);

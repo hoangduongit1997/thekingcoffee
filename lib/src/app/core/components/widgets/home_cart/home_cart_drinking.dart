@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:oktoast/oktoast.dart';
-import 'package:thekingcoffee/app/config/config.dart';
-import 'package:thekingcoffee/app/data/repository/get_drinking_products.dart';
-import 'package:thekingcoffee/app/styles/styles.dart';
-import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
-import 'package:thekingcoffee/core/components/ui/home_cart/home_cart_coffee.dart';
-import 'package:thekingcoffee/core/components/ui/show_dialog/loading_dialog_order.dart';
-import 'package:thekingcoffee/core/components/widgets/drawline.dart';
-import 'package:thekingcoffee/core/components/widgets/favorite.dart';
-import 'package:thekingcoffee/core/components/widgets/rating.dart';
-import 'package:thekingcoffee/core/utils/utils.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:thekingcoffee/src/app/core/components/lib/change_language/change_language.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/drawline.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/favorite.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/home_cart/home_cart_coffee.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/rating.dart';
+import 'package:thekingcoffee/src/app/core/components/widgets/show_dialog/loading_dialog_order.dart';
+import 'package:thekingcoffee/src/app/core/config.dart';
+import 'package:thekingcoffee/src/app/core/utils.dart';
+import 'package:thekingcoffee/src/app/theme/styles.dart';
 
 class HomeCardDrinking extends StatefulWidget {
   HomeCardDrinking({Key key}) : super(key: key);
@@ -30,7 +29,7 @@ var promotionListDrinking = [];
 class _HomeCardDrinkingState extends State<HomeCardDrinking> {
   intDataDrinkingScreen() async {
     try {
-      final result = await getDrinkingProducts();
+      final result = await api.getDrinkingProducts();
       if (this.mounted) {
         if (result != null) {
           setState(() {
@@ -121,7 +120,7 @@ class _HomeCardDrinkingState extends State<HomeCardDrinking> {
                                                                 .circular(8.0),
                                                         child:
                                                             CachedNetworkImage(
-                                                          imageUrl: Config.ip +
+                                                          imageUrl: domainAPI +
                                                               dataDrinking[
                                                                       index]
                                                                   ['File_Path'],
@@ -143,7 +142,7 @@ class _HomeCardDrinkingState extends State<HomeCardDrinking> {
                                                       ),
                                                     ),
                                                   ),
-                                                  Config.isLogin == true
+                                                  isLogin == true
                                                       ? dataDrinking[index][
                                                                   'IsAvailable'] ==
                                                               true

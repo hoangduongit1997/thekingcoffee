@@ -1,14 +1,14 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:thekingcoffee/app/bloc/bottom_navigation_bloc.dart';
-import 'package:thekingcoffee/app/config/config.dart';
-import 'package:thekingcoffee/app/screens/favorite_page.dart';
-import 'package:thekingcoffee/app/screens/helper/dashboard_helper/placeholder_home.dart';
-import 'package:thekingcoffee/app/screens/setting.dart';
-import 'package:thekingcoffee/app/screens/shopping_list.dart';
-import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 import 'package:thekingcoffee/main.dart';
+import 'package:thekingcoffee/src/app/core/components/lib/change_language/change_language.dart';
+import 'package:thekingcoffee/src/app/core/config.dart';
+import 'package:thekingcoffee/src/app/screens/favorite_page.dart';
+import 'package:thekingcoffee/src/app/screens/helper/dashboard_helper/placeholder_home.dart';
+import 'package:thekingcoffee/src/app/screens/setting.dart';
+import 'package:thekingcoffee/src/app/screens/shopping_list.dart';
+import 'package:thekingcoffee/src/app/streams/bottom_navigation_bloc.dart';
 
 class DashBoard extends StatefulWidget {
   @override
@@ -45,7 +45,7 @@ class HomeState extends State<DashBoard> with WidgetsBindingObserver {
         },
         child: Scaffold(
           resizeToAvoidBottomInset: false,
-          body: Config.isLogin == true
+          body: isLogin == true
               ? StreamBuilder<NavBarItem>(
                   stream: _bottomNavBarBloc.itemStream,
                   initialData: _bottomNavBarBloc.defaultItem,
@@ -84,7 +84,7 @@ class HomeState extends State<DashBoard> with WidgetsBindingObserver {
                     }
                   },
                 ),
-          bottomNavigationBar: Config.isLogin == true
+          bottomNavigationBar: isLogin == true
               ? StreamBuilder(
                   stream: _bottomNavBarBloc.itemStream,
                   initialData: _bottomNavBarBloc.defaultItem,
