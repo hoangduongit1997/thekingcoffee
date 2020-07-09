@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:thekingcoffee/app/data/repository/set_loved_respository.dart';
 import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 
@@ -7,7 +7,6 @@ class Favorite extends StatefulWidget {
   final Color color;
   bool isLike;
   final int idProduct;
-
   Favorite(this.color, this.isLike, this.idProduct);
 
   @override
@@ -27,14 +26,9 @@ class _HeartState extends State<Favorite> {
             widget.isLike = !widget.isLike;
           });
         } else {
-          Fluttertoast.showToast(
-              msg: allTranslations.text("error").toString(),
-              toastLength: Toast.LENGTH_SHORT,
-              gravity: ToastGravity.BOTTOM,
-              timeInSecForIosWeb: 1,
-              backgroundColor: Colors.redAccent,
-              textColor: Colors.white,
-              fontSize: 16.0);
+          showToast(
+            allTranslations.text("error").toString(),
+          );
         }
       },
       child: Container(

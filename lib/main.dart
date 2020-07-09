@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:thekingcoffee/app/bloc/number_bloc.dart';
 import 'package:thekingcoffee/app/screens/login.dart';
@@ -88,20 +89,29 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "The King Coffee",
-      theme: ThemeData(primaryColor: Colors.redAccent),
-      debugShowCheckedModeBanner: false,
-      localizationsDelegates: [
-        GlobalMaterialLocalizations.delegate,
-        GlobalWidgetsLocalizations.delegate,
-      ],
-      supportedLocales: allTranslations.supportedLocales(),
-      home: Scaffold(
-        resizeToAvoidBottomInset: false,
-        body: SplashScreen(),
+    return OKToast(
+      textStyle: TextStyle(
+        fontSize: 16.0,
       ),
-      routes: routes,
+      duration: Duration(seconds: 3),
+      position: ToastPosition.bottom,
+      textAlign: TextAlign.center,
+      child: MaterialApp(
+        title: "The King Coffee",
+        theme: ThemeData(primaryColor: Colors.redAccent),
+        debugShowCheckedModeBanner: false,
+        localizationsDelegates: [
+          GlobalMaterialLocalizations.delegate,
+          GlobalWidgetsLocalizations.delegate,
+          GlobalCupertinoLocalizations.delegate
+        ],
+        supportedLocales: allTranslations.supportedLocales(),
+        home: Scaffold(
+          resizeToAvoidBottomInset: false,
+          body: SplashScreen(),
+        ),
+        routes: routes,
+      ),
     );
   }
 }

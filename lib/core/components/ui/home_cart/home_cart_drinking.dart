@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
-
+import 'package:oktoast/oktoast.dart';
 import 'package:thekingcoffee/app/config/config.dart';
-
 import 'package:thekingcoffee/app/data/repository/get_drinking_products.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
@@ -403,16 +401,11 @@ class _HomeCardDrinkingState extends State<HomeCardDrinking> {
                                   onTap: () {
                                     if (dataDrinking[index]['IsAvailable'] ==
                                         false) {
-                                      Fluttertoast.showToast(
-                                          msg: allTranslations
-                                              .text("out_of_stock")
-                                              .toString(),
-                                          toastLength: Toast.LENGTH_SHORT,
-                                          gravity: ToastGravity.BOTTOM,
-                                          timeInSecForIosWeb: 1,
-                                          backgroundColor: Colors.redAccent,
-                                          textColor: Colors.white,
-                                          fontSize: 16.0);
+                                      showToast(
+                                        allTranslations
+                                            .text("out_of_stock")
+                                            .toString(),
+                                      );
                                     } else {
                                       LoadingDialogOrder.showLoadingDialog(
                                           context,

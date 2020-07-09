@@ -1,10 +1,9 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/data/repository/get_favorite_product.dart';
-
 import 'package:thekingcoffee/app/styles/styles.dart';
 import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
 import 'package:thekingcoffee/core/components/ui/draw_left/draw_left.dart';
@@ -97,16 +96,11 @@ class FavoritePageState extends State<FavoritePage> {
                           return GestureDetector(
                             onTap: () {
                               if (data[index]['IsAvailable'] == false) {
-                                Fluttertoast.showToast(
-                                    msg: allTranslations
-                                        .text("out_of_stock")
-                                        .toString(),
-                                    toastLength: Toast.LENGTH_SHORT,
-                                    gravity: ToastGravity.BOTTOM,
-                                    timeInSecForIosWeb: 1,
-                                    backgroundColor: Colors.redAccent,
-                                    textColor: Colors.white,
-                                    fontSize: 16.0);
+                                showToast(
+                                  allTranslations
+                                      .text("out_of_stock")
+                                      .toString(),
+                                );
                               } else {
                                 LoadingDialogOrder.showLoadingDialog(
                                     context,

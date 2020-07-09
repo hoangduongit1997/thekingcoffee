@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:thekingcoffee/app/data/repository/find_food.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
@@ -102,14 +102,9 @@ class _FindFoodState extends State<FindFood> {
                       });
                     } else {
                       LoadingDialog.hideLoadingDialog(context);
-                      Fluttertoast.showToast(
-                          msg: allTranslations.text("no_info").toString(),
-                          toastLength: Toast.LENGTH_SHORT,
-                          gravity: ToastGravity.BOTTOM,
-                          timeInSecForIosWeb: 1,
-                          backgroundColor: Colors.redAccent,
-                          textColor: Colors.white,
-                          fontSize: 16.0);
+                      showToast(
+                        allTranslations.text("no_info").toString(),
+                      );
                     }
                   },
                   style: StylesText.style15Black,
@@ -150,16 +145,11 @@ class _FindFoodState extends State<FindFood> {
                                   onTap: () {
                                     if (searchResult[index]['IsAvailable'] ==
                                         false) {
-                                      Fluttertoast.showToast(
-                                          msg: allTranslations
-                                              .text("out_of_stock")
-                                              .toString(),
-                                          toastLength: Toast.LENGTH_SHORT,
-                                          gravity: ToastGravity.BOTTOM,
-                                          timeInSecForIosWeb: 1,
-                                          backgroundColor: Colors.redAccent,
-                                          textColor: Colors.white,
-                                          fontSize: 16.0);
+                                      showToast(
+                                        allTranslations
+                                            .text("out_of_stock")
+                                            .toString(),
+                                      );
                                     } else {
                                       LoadingDialogOrder.showLoadingDialog(
                                           context,

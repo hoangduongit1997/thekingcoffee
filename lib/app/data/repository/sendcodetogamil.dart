@@ -1,7 +1,6 @@
 import 'dart:convert';
-import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:thekingcoffee/app/config/config.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:thekingcoffee/core/components/lib/change_language/change_language.dart';
@@ -23,23 +22,13 @@ Future<bool> sendCodeToGmail(String gmail) async {
         .timeout(const Duration(seconds: 4));
     prefs.setString('idRequest', idRequest);
     prefs.setInt('idUser', idUser);
-    Fluttertoast.showToast(
-        msg: allTranslations.text("gmail_auth").toString(),
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.redAccent,
-        textColor: Colors.white,
-        fontSize: 16.0);
+    showToast(
+      allTranslations.text("gmail_auth").toString(),
+    );
   } else {
-    Fluttertoast.showToast(
-        msg: allTranslations.text("invalid_send_code_to_gmail").toString(),
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.redAccent,
-        textColor: Colors.white,
-        fontSize: 16.0);
+    showToast(
+      allTranslations.text("invalid_send_code_to_gmail").toString(),
+    );
     status = false;
   }
   return status;

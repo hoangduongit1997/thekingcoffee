@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
+import 'package:oktoast/oktoast.dart';
 import 'package:thekingcoffee/app/bloc/coupon_bloc.dart';
 import 'package:thekingcoffee/app/data/repository/check_coupon.dart';
 import 'package:thekingcoffee/app/styles/styles.dart';
@@ -115,14 +115,9 @@ class CouponDialogState extends State<CouponDialog> {
 
         Navigator.of(context).pop(true);
       } else {
-        Fluttertoast.showToast(
-            msg: allTranslations.text("error").toString(),
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.BOTTOM,
-            timeInSecForIosWeb: 1,
-            backgroundColor: Colors.redAccent,
-            textColor: Colors.white,
-            fontSize: 16.0);
+        showToast(
+          allTranslations.text("error").toString(),
+        );
         print("loi roi");
         Navigator.of(context).pop();
       }
