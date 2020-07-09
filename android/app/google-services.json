@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "1051173672782",
+    "firebase_url": "https://thekingcoffee-49a91.firebaseio.com",
+    "project_id": "thekingcoffee-49a91",
+    "storage_bucket": "thekingcoffee-49a91.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1051173672782:android:08086c2fc999d4969f701f",
+        "android_client_info": {
+          "package_name": "com.hd.thekingcoffee"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1051173672782-l9e5d6a4h2q56t9al1c6n5e32a0cfqlh.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hd.thekingcoffee",
+            "certificate_hash": "10a1f50405d0c52cac36cb284a86cd609cf2219c"
+          }
+        },
+        {
+          "client_id": "1051173672782-03cofejihr9sa2o5m62ankosm2hujsll.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDY717uMnfgiHqJo27R-IfoEwBKIIsXksE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1051173672782-03cofejihr9sa2o5m62ankosm2hujsll.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

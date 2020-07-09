@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>1051173672782-hg3s6jcmt1r90j47j12bd2c0mgdsjs6v.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.1051173672782-hg3s6jcmt1r90j47j12bd2c0mgdsjs6v</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>1051173672782-l9e5d6a4h2q56t9al1c6n5e32a0cfqlh.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBaCvIrMXOc-zloG6yC694qjSCNuZUkjL0</string>
+	<key>GCM_SENDER_ID</key>
+	<string>1051173672782</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.hd.thekingcoffee</string>
+	<key>PROJECT_ID</key>
+	<string>thekingcoffee-49a91</string>
+	<key>STORAGE_BUCKET</key>
+	<string>thekingcoffee-49a91.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:1051173672782:ios:23dcb1a88ef5b0519f701f</string>
+	<key>DATABASE_URL</key>
+	<string>https://thekingcoffee-49a91.firebaseio.com</string>
+</dict>
+</plist>
